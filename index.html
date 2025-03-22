@@ -1,7 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I need to stop getting distracted</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(45deg, red, blue, purple);
+            animation: bg-shift 5s infinite alternate;
+        }
+
+        @keyframes bg-shift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .crazy-text {
+            font-size: 3rem;
+            text-align: center;
+            margin-top: 50px;
+            animation: wiggle 1s infinite alternate;
+            color: white;
+        }
+
+        @keyframes wiggle {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: bounce 2s infinite alternate;
+            border-radius: 50%;
+        }
+
+        @keyframes bounce {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -60%) scale(1.2); }
+        }
+
+        .button {
+            display: block;
+            margin: 100px auto;
+            padding: 10px 20px;
+            font-size: 2rem;
+            border: none;
+            background: lime;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <div class="crazy-text">Welcome to Chaos</div>
+    <div class="box"></div>
+    <button class="button" onclick="crazyAlert()">Click Me!</button>
+    
+    <script>
+        function crazyAlert() {
+            alert("Rawr");
+            document.body.style.background = `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`;
+        }
+    </script>
 </body>
 </html>
