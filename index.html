@@ -72,13 +72,14 @@
     <script>
         function crazyAlert() {
             alert("Rawr");
-            document.body.style.background = `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`;
+            document.body.style.background = `rgb(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)})`;
         }
     </script>
-    <textarea rows="5" cols="50" style="display: block; margin: 20px auto; font-size: 1rem;">
-        <a href="page1.html">Go to Page 1</a>
-        <a href="page2.html">Go to Page 2</a>        
-    </textarea>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="page1.html" style="font-size: 1.5rem; margin-right: 10px;">Go to Page 1</a>
+        <a href="page2.html" style="font-size: 1.5rem;">Go to Page 2</a>
+    </div>
     
 </body>
 </html>
