@@ -3,16 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math</title>
+    <title>Math Madness | Damian's Funky Notes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; background: lightblue; }
-        a { display: block; margin-top: 20px; font-size: 1.5rem; }
+        :root {
+            --primary: #800020;       /* Maroon */
+            --secondary: #FFD700;     /* Gold */
+            --accent: #4B0082;       /* Indigo */
+            --bg: #FFF5EE;           /* Seashell */
+            --text: #2F4F4F;         /* DarkSlateGray */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'ComicMath';
+            src: url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+        }
+
+        body {
+            font-family: 'Patrick Hand SC', cursive;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,215,0,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(128,0,32,0.1) 0%, transparent 20%);
+        }
+
+        /* Animated background elements */
+        .math-bg {
+            position: fixed;
+            opacity: 0.1;
+            z-index: -1;
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Header with funky shape */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            text-align: center;
+            position: relative;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(128, 0, 32, 0.3);
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: var(--secondary);
+            clip-path: polygon(0 0, 100% 0, 100% 20%, 0 100%);
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-shadow: 5px 5px 0 rgba(0,0,0,0.2);
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--secondary), white);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        /* Funky navigation */
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem auto;
+            flex-wrap: wrap;
+            max-width: 800px;
+        }
+
+        .nav-btn {
+            position: relative;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 20px rgba(75, 0, 130, 0.3);
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(75, 0, 130, 0.5);
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn i {
+            margin-right: 10px;
+        }
+
+        /* Content cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .math-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 5px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .math-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .math-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .math-card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 3px dashed var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .math-card p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Funky footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: var(--secondary);
+            clip-path: polygon(0 80%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .math-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Easter egg - clickable elements */
+        .easter-egg {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .easter-egg:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to my notes on math</h1>
-    <p>Rawr #2</p>
-    <a href="index.html">Back to Home</a>
-    <a href="page2.html">Go to Page 2</a>
+    <!-- Animated background elements -->
+    <div class="math-bg" style="top:10%; left:5%;">∫</div>
+    <div class="math-bg" style="top:30%; left:80%; animation-delay:2s;">π</div>
+    <div class="math-bg" style="top:60%; left:15%; animation-delay:4s;">∞</div>
+    <div class="math-bg" style="top:80%; left:70%; animation-delay:6s;">Δ</div>
+    <div class="math-bg" style="top:40%; left:50%; animation-delay:8s;">∑</div>
+
+    <header>
+        <h1>Math Madness!</h1>
+        <p class="subtitle">Where numbers meet fun and equations dance!</p>
+    </header>
+
+    <div class="nav-container">
+        <button class="nav-btn" onclick="location.href='index.html'">
+            <i class="fas fa-home"></i> Home Base
+        </button>
+        <button class="nav-btn" onclick="location.href='calculus.html'">
+            <i class="fas fa-calculator"></i> Calculus Club
+        </button>
+        <button class="nav-btn" onclick="location.href='algebra.html'">
+            <i class="fas fa-square-root-alt"></i> Algebra Alley
+        </button>
+        <button class="nav-btn" onclick="location.href='geometry.html'">
+            <i class="fas fa-shapes"></i> Geometry Garden
+        </button>
+    </div>
+
+    <div class="content-grid">
+        <div class="math-card">
+            <h2>Welcome Mathletes!</h2>
+            <p>This is your playground for all things mathematics! Dive into the wonderful world of numbers, shapes, and patterns.</p>
+            <p class="easter-egg" onclick="alert('You found the secret math message! 🎉')">Click me for a surprise!</p>
+        </div>
+
+        <div class="math-card">
+            <h2>Latest Discoveries</h2>
+            <p>Check out my newest math adventures:</p>
+            <ul style="list-style-type: none;">
+                <li>• The Joy of Prime Numbers</li>
+                <li>• Graphing Calculator Tricks</li>
+                <li>• Solving Real-World Problems</li>
+            </ul>
+        </div>
+
+        <div class="math-card">
+            <h2>Math Joke Corner</h2>
+            <p>Why was the equal sign so humble?</p>
+            <p style="font-style: italic; color: var(--accent);">Because it knew it wasn't less than or greater than anyone else!</p>
+            <button class="nav-btn" style="background: var(--secondary); color: var(--primary); margin-top: 1rem;" 
+                    onclick="document.getElementById('joke').innerHTML = 'What do you call a number that can\'t keep still? A roamin\' numeral!'">
+                More Jokes!
+            </button>
+            <p id="joke"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <h2 style="margin-bottom: 1rem;">Keep Calculating!</h2>
+            <p>Math isn't about numbers, it's about understanding. And having fun!</p>
+            <div style="margin-top: 2rem; font-size: 2rem;">
+                <i class="fas fa-calculator easter-egg" onclick="this.style.transform = 'rotate(360deg)'"></i>
+                <i class="fas fa-infinity easter-egg" onclick="this.style.color = getRandomColor()"></i>
+                <i class="fas fa-square-root-alt easter-egg" onclick="this.style.fontSize = '3rem'"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Easter egg functionality
+        document.querySelectorAll('.easter-egg').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transition = 'all 0.3s';
+            });
+        });
+
+        // Random color generator
+        function getRandomColor() {
+            const colors = ['#FFD700', '#800020', '#4B0082', '#2F4F4F'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Make math symbols bounce on page load
+        window.addEventListener('load', function() {
+            const symbols = document.querySelectorAll('.math-bg');
+            symbols.forEach((symbol, index) => {
+                symbol.style.animation = `float ${15 + index*2}s infinite linear`;
+            });
+        });
+    </script>
 </body>
 </html>
