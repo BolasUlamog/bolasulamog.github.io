@@ -3,16 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math</title>
+    <title>Cosmic Physics | Damian's Science Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; background: lightblue; }
-        a { display: block; margin-top: 20px; font-size: 1.5rem; }
+        :root {
+            --space: #0B0D17;       /* Deep space blue-black */
+            --nebula: #6F2DBD;     /* Purple nebula */
+            --star: #FFD700;       /* Golden stars */
+            --planet: #45B69C;     /* Teal planet */
+            --text: #D0D6F9;       /* Soft blue text */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'SpaceGrotesk';
+            src: url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--space);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(111,45,189,0.15) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(69,182,156,0.15) 0%, transparent 25%);
+        }
+
+        /* Animated stars */
+        .star {
+            position: fixed;
+            background-color: var(--star);
+            border-radius: 50%;
+            animation: twinkle 5s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Pulsing planet header */
+        header {
+            background: linear-gradient(135deg, var(--nebula), var(--space));
+            color: white;
+            padding: 3rem 0 5rem;
+            text-align: center;
+            position: relative;
+            margin-bottom: 3rem;
+            clip-path: ellipse(100% 100% at 50% 0%);
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%230B0D17'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--star), var(--planet));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        /* Space navigation */
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem auto;
+            flex-wrap: wrap;
+            max-width: 800px;
+        }
+
+        .nav-btn {
+            position: relative;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--planet);
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(69,182,156,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(69,182,156,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(69,182,156,0.3);
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Physics content cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .physics-card {
+            background: rgba(13, 17, 33, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            border: 1px solid rgba(69,182,156,0.3);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .physics-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--nebula), var(--star));
+        }
+
+        .physics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(111,45,189,0.4);
+        }
+
+        .physics-card h2 {
+            color: var(--star);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--planet);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Interactive elements */
+        .experiment-btn {
+            background: var(--nebula);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            font-weight: bold;
+        }
+
+        .experiment-btn:hover {
+            background: var(--planet);
+            transform: scale(1.05);
+        }
+
+        /* Animated footer */
+        footer {
+            background: linear-gradient(to top, var(--space), var(--nebula));
+            color: white;
+            text-align: center;
+            padding: 4rem 0 2rem;
+            margin-top: 5rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%236F2DBD'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .physics-card {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to my notes on math</h1>
-    <p>Rawr #2</p>
-    <a href="index.html">Back to Home</a>
-    <a href="page2.html">Go to Page 2</a>
+    <!-- Generate random stars -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(star);
+            }
+        });
+    </script>
+
+    <header>
+        <h1>Cosmic Physics</h1>
+        <p class="subtitle">Exploring the universe one equation at a time</p>
+    </header>
+
+    <div class="nav-container">
+        <button class="nav-btn" onclick="location.href='../'">
+            <i class="fas fa-rocket"></i> Launch Home
+        </button>
+        <button class="nav-btn" onclick="location.href='mechanics/'">
+            <i class="fas fa-atom"></i> Mechanics
+        </button>
+        <button class="nav-btn" onclick="location.href='relativity/'">
+            <i class="fas fa-globe-americas"></i> Relativity
+        </button>
+        <button class="nav-btn" onclick="location.href='thermo/'">
+            <i class="fas fa-fire"></i> Thermodynamics
+        </button>
+        <button class="nav-btn" onclick="location.href='em/'">
+            <i class="fas fa-fire"></i> Electricity and Magnetism
+        </button>
+    </div>
+
+    <div class="content-grid">
+        <div class="physics-card">
+            <h2>Welcome Physicists!</h2>
+            <p>This is your mission control for exploring the fundamental laws of the universe. From quantum quirks to cosmic scales, we've got it all.</p>
+            <p>Current mission status: <span id="mission-status">Exploring dark matter</span></p>
+            <button class="experiment-btn" onclick="document.getElementById('mission-status').textContent = 'Investigating quantum entanglement'">
+                New Experiment
+            </button>
+        </div>
+
+        <div class="physics-card">
+            <h2>Recent Discoveries</h2>
+            <ul style="list-style-type: none; line-height: 2;">
+                <li><i class="fas fa-meteor" style="color: var(--star);"></i> The Higgs Boson Explained</li>
+                <li><i class="fas fa-satellite" style="color: var(--planet);"></i> Gravitational Wave Detection</li>
+                <li><i class="fas fa-microscope" style="color: var(--nebula);"></i> Quantum Computing Breakthroughs</li>
+            </ul>
+        </div>
+
+        <div class="physics-card">
+            <h2>Physics Thought Experiment</h2>
+            <p>If you could travel at the speed of light, how would your perception of time change?</p>
+            <button class="experiment-btn" onclick="alert('According to special relativity, time would appear to stop for you! ⏱️')">
+                Reveal Answer
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <h2 style="margin-bottom: 1rem;">Continue Your Cosmic Journey</h2>
+        <p>The important thing is to never stop questioning - curiosity has its own reason for existing.</p>
+        <div style="margin-top: 2rem; font-size: 2rem;">
+            <i class="fas fa-atom" style="margin: 0 1rem; color: var(--star); cursor: pointer;" 
+               onclick="this.style.transform = this.style.transform === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)'"></i>
+            <i class="fas fa-satellite-dish" style="margin: 0 1rem; color: var(--planet); cursor: pointer;"
+               onclick="this.classList.toggle('fa-spin')"></i>
+        </div>
+    </footer>
 </body>
 </html>
