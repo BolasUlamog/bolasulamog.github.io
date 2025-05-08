@@ -35,19 +35,6 @@
             cursor: pointer;
             color: #2980b9;
         }
-        /* Custom cat icon using emoji */
-        summary::-webkit-details-marker {
-            display: none; /* Hides default triangle in WebKit browsers */
-        }
-        summary:before {
-            content: "🐱";
-            position: absolute;
-            left: 0;
-            transition: transform 0.2s;
-        }
-        details[open] summary:before {
-            content: "😼"; /* Different cat face when open */
-        }
         p {
             margin: 10px 0;
         }
