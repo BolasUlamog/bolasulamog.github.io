@@ -40,8 +40,26 @@
     x & f(x)\cos\theta & f(x)\sin\theta
     \end{bmatrix}\]
     \]
-    \[\]
-    \[\text{Surface area for a parametric  surface is: }\int_a^b\int_c^d{\mid\vec{r_u}\times\vec{r_v}\mid{du}{dv}}\]
+    \[\text{Surface area for a parametric equation is: }\int_a^b\int_c^d{\mid\vec{r_u}\times\vec{r_v}\mid{du}{dv}}\]
+    \[\text{We can see that }\vec{r_x}=
+    \begin{bmatrix}
+    1 & f'(x)\cos\theta & f'(x)\sin\theta
+    \end{bmatrix}
+    \]
+    \[\text{and }\vec{r_\theta}=
+    \begin{bmatrix}
+    0 & -f(x)\sin\theta & f(x)\cos\theta
+    \end{bmatrix}
+    \]
+    \[\text{So }\vec{r_x}\times\vec{r_\theta}=
+    \begin{vmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    1 & f'(x)\cos\theta & f'(x)\sin\theta \\
+    0 & -f(x)\sin\theta & f(x)\cos\theta
+    \end{vmatrix}
+    \]
+
+
 
   </div>
   <a href="..\">Back to home</a>
