@@ -44,7 +44,7 @@
     \[\text{Let }I(t)=\int_{0}^{\infty}{\frac{e^{-x^2}}{1+(\frac{x}{t})^2}}\text{ s.t. }I(\infty)=\int_{0}^{\infty}{e^{-x^2}dx}\]
     \[\text{Now apply the substitution }u=\frac{x}{t}, t\cdot{du}=dx\implies{I(t)}=t\int_0^{\infty}{\frac{e^{-u^2t^2}}{1+u^2}}du\]
     \[\text{Multiply by }e^{-t^2}\text{...}e^{-t^2}\frac{I(t)}{t}=\int_0^{\infty}{\frac{e^{-t^2(1+x^2)}}{1+x^2}}dx\]
-    \[\impies{\frac{d}{dt}}(t^{-1}e^{-t^2}I(t))=\int_0^{\infty}\frac{d}{dt}({\frac{e^{-t^2(1+x^2)}}{1+x^2}})dx=\int_0^{\infty}{-2te^{-t^2(1+x^2)}}dx=-2te^{-t^2}\int_0^{\infty}{e^{-t^2x^2}}dx=-2e^{-t^2}\int_0^{\infty}{e^{-u^2}}dx=-2e^{-t^2}I(\infty)\]
+    \[\implies{\frac{d}{dt}}(t^{-1}e^{-t^2}I(t))=\int_0^{\infty}\frac{d}{dt}({\frac{e^{-t^2(1+x^2)}}{1+x^2}})dx=\int_0^{\infty}{-2te^{-t^2(1+x^2)}}dx=-2te^{-t^2}\int_0^{\infty}{e^{-t^2x^2}}dx=-2e^{-t^2}\int_0^{\infty}{e^{-u^2}}dx=-2e^{-t^2}I(\infty)\]
   </div>
   <a href="..\">Back to home</a>
 </body>
