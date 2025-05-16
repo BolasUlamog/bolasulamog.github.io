@@ -45,7 +45,7 @@
     \[\text{Now apply the substitution }u=\frac{x}{t}, t\cdot{du}=dx\implies{I(t)}=t\int_0^{\infty}{\frac{e^{-u^2t^2}}{1+u^2}}du\]
     \[\text{Multiply by }e^{-t^2}\text{...}e^{-t^2}\frac{I(t)}{t}=\int_0^{\infty}{\frac{e^{-t^2(1+x^2)}}{1+x^2}}dx\]
     \[\implies{\frac{d}{dt}}(t^{-1}e^{-t^2}I(t))=\int_0^{\infty}\frac{d}{dt}({\frac{e^{-t^2(1+x^2)}}{1+x^2}})dx=\int_0^{\infty}{-2te^{-t^2(1+x^2)}}dx\]
-    \[=-2te^{-t^2}\int_0^{\infty}{e^{-t^2x^2}}dx=-2e^{-t^2}\int_0^{\infty}{e^{-u^2}}dx=-2e^{-t^2}I(\infty)\]
+    \[=-2te^{-t^2}\int_0^{\infty}{e^{-t^2x^2}}dx=-2e^{-t^2}\int_0^{\infty}{e^{-u^2}}du=-2e^{-t^2}I(\infty)\]
     \[\implies{\int_0^{\infty}\frac{d}{dt}}(t^{-1}e^{-t^2}I(t))dt=\int_0^{\infty}-2e^{-t^2}I(\infty)dt=-2I(\infty)^2\]
     \[\text{Since the left hand is equal to }-\lim_{t\to 0}\frac{I(t)}{t}=-\lim_{t\to 0}{\int_0^{\infty}{\frac{e^{-u^2t^2}}{1+u^2}}du}=-\int_0^{\infty}{\frac{1}{1+u^2}}du=-\lim_{x \to \infty}\arctan{x}=-\frac{\pi}{4}\text{, }\]
     \[\text{This means }{-\frac{\pi}{4}}=-2I(\infty)^2\implies{I(\infty)=\frac{\sqrt\pi}{2}}\]
