@@ -47,7 +47,9 @@
     \[\implies{\frac{d}{dt}}(t^{-1}e^{-t^2}I(t))=\int_0^{\infty}\frac{d}{dt}({\frac{e^{-t^2(1+x^2)}}{1+x^2}})dx=\int_0^{\infty}{-2te^{-t^2(1+x^2)}}dx\]
     \[=-2te^{-t^2}\int_0^{\infty}{e^{-t^2x^2}}dx=-2e^{-t^2}\int_0^{\infty}{e^{-u^2}}dx=-2e^{-t^2}I(\infty)\]
     \[\implies{\int_0^{\infty}\frac{d}{dt}}(t^{-1}e^{-t^2}I(t))dt=\int_0^{\infty}-2e^{-t^2}I(\infty)dt=-2I(\infty)^2\]
-    \[\text{Since the left hand is equal to }-\lim_{t\to 0}\frac{I(t)}{t}=-\lim_{t\to 0}{\int_0^{\infty}{\frac{e^{-u^2t^2}}{1+u^2}}du}=\int_0^{\infty}{\frac{1}{1+u^2}}du=\lim_{x \to \infty}\arctan{x}=\frac{\pi}{4}\]
+    \[\text{Since the left hand is equal to }-\lim_{t\to 0}\frac{I(t)}{t}=-\lim_{t\to 0}{\int_0^{\infty}{\frac{e^{-u^2t^2}}{1+u^2}}du}=-\int_0^{\infty}{\frac{1}{1+u^2}}du=-\lim_{x \to \infty}\arctan{x}=-\frac{\pi}{4}\text{, }\]
+    \[\text{This means }{-\frac{\pi}{4}}=-2I(\infty)^2\implies{I(\infty)=\frac{\sqrt\pi}{2}}\]
+    \[\implies2I(\infty)=\int_{-\infty}^{\infty}{e^{-x^2}dx}=\sqrt\pi\]
   </div>
   <a href="..\">Back to home</a>
 </body>
