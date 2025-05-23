@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,33 +9,34 @@
     <style>
         :root {
             --primary-color: #800020;
-            --secondary-color: #ffffff;
+            --secondary-color: #FFD700;
             --accent-color: #000000;
             --light-color: #f8f9fa;
-            --dark-color: #212529;
+            --dark-color: #121212;
             --text-color: #333;
             --text-light: #6c757d;
+            --neon-effect: 0 0 10px rgba(255, 215, 0, 0.8);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f9f9f9;
             color: var(--text-color);
             line-height: 1.6;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
@@ -44,48 +46,53 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 2px solid var(--secondary-color);
         }
-        
+
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
             display: flex;
             align-items: center;
+            font-family: 'Courier New', monospace;
+            text-shadow: var(--neon-effect);
         }
-        
+
         .logo i {
             margin-right: 10px;
             color: var(--secondary-color);
         }
-        
+
         nav ul {
             display: flex;
             list-style: none;
         }
-        
+
         nav ul li {
             margin-left: 1.5rem;
         }
-        
+
         nav ul li a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             padding: 0.5rem 0;
             position: relative;
+            font-family: 'Courier New', monospace;
         }
-        
+
         nav ul li a:hover {
             color: var(--secondary-color);
+            text-shadow: var(--neon-effect);
         }
-        
+
         nav ul li a::after {
             content: '';
             position: absolute;
@@ -96,79 +103,105 @@
             background-color: var(--secondary-color);
             transition: width 0.3s;
         }
-        
+
         nav ul li a:hover::after {
             width: 100%;
         }
-        
+
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
             color: white;
             padding: 5rem 0;
             text-align: center;
+            position: relative;
         }
-        
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            pointer-events: none;
+        }
+
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
+            position: relative;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 15px var(--secondary-color);
         }
-        
+
         .hero p {
             font-size: 1.2rem;
             max-width: 700px;
             margin: 0 auto 2rem;
+            position: relative;
+            font-style: italic;
         }
-        
+
         .search-bar {
             max-width: 600px;
             margin: 0 auto;
             position: relative;
         }
-        
+
         .search-bar input {
             width: 100%;
             padding: 15px 20px;
             border-radius: 50px;
             border: none;
             font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'Courier New', monospace;
         }
-        
+
         .search-bar button {
             position: absolute;
             right: 5px;
             top: 5px;
             background-color: var(--secondary-color);
-            color: white;
+            color: var(--dark-color);
             border: none;
             border-radius: 50px;
             padding: 10px 20px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
         }
-        
+
         .search-bar button:hover {
-            background-color: #2980b9;
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
         }
-        
+
         /* Subjects Section */
         .subjects {
             padding: 4rem 0;
+            background: linear-gradient(to bottom, #f9f9f9, #e9e9e9);
         }
-        
+
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
             position: relative;
         }
-        
+
         .section-title h2 {
             font-size: 2.2rem;
             color: var(--dark-color);
             display: inline-block;
+            font-family: 'Courier New', monospace;
+            text-shadow: 2px 2px 0 var(--secondary-color);
         }
-        
+
         .section-title h2::after {
             content: '';
             position: absolute;
@@ -178,48 +211,61 @@
             width: 80px;
             height: 3px;
             background-color: var(--secondary-color);
+            box-shadow: var(--neon-effect);
         }
-        
+
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
         }
-        
+
         .subject-card {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            position: relative;
         }
-        
+
         .subject-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary-color);
         }
-        
+
         .subject-card img {
             width: 100%;
             height: 180px;
             object-fit: cover;
+            filter: grayscale(30%);
+            transition: filter 0.3s;
         }
-        
+
+        .subject-card:hover img {
+            filter: grayscale(0%);
+        }
+
         .subject-content {
             padding: 1.5rem;
+            position: relative;
         }
-        
+
         .subject-content h3 {
             font-size: 1.3rem;
             margin-bottom: 0.5rem;
             color: var(--primary-color);
+            font-family: 'Courier New', monospace;
         }
-        
+
         .subject-content p {
             color: var(--text-light);
             margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
-        
+
         .subject-content a {
             display: inline-block;
             padding: 8px 15px;
@@ -227,425 +273,391 @@
             color: var(--dark-color);
             text-decoration: none;
             border-radius: 4px;
-            font-weight: 500;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            border: 1px solid transparent;
         }
-        
+
         .subject-content a:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        /* Quick Links */
+
+        .quick-links {
+            padding: 2rem 0;
             background-color: var(--primary-color);
+            color: white;
         }
-        
-        /* Recent Notes Section */
-        .recent-notes {
-            padding: 4rem 0;
-            background-color: #f1f5f9;
-        }
-        
-        .notes-list {
+
+        .link-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            text-align: center;
         }
-        
-        .note-card {
-            background-color: white;
+
+        .link-item {
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
-        
-        .note-card:hover {
+
+        .link-item:hover {
+            background-color: var(--secondary-color);
             transform: translateY(-5px);
         }
-        
-        .note-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+
+        .link-item a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
         }
-        
-        .note-category {
-            display: inline-block;
-            padding: 3px 10px;
-            background-color: var(--light-color);
-            color: var(--primary-color);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .note-date {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        .note-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+
+        .link-item:hover a {
             color: var(--dark-color);
         }
-        
-        .note-card p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+
+        .link-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
         }
-        
-        .note-card a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .note-card a i {
-            margin-left: 5px;
-            transition: transform 0.3s;
-        }
-        
-        .note-card a:hover i {
-            transform: translateX(3px);
-        }
-        
+
         /* Footer */
-        footer {
+        .simple-footer {
             background-color: var(--dark-color);
             color: white;
-            padding: 3rem 0 1.5rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--secondary-color);
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-column ul li a {
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: var(--secondary-color);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            transition: background-color 0.3s;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        .copyright {
+            padding: 2rem 0;
             text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bdc3c7;
-            font-size: 0.9rem;
+            border-top: 1px solid var(--secondary-color);
         }
-        
+
+        .simple-footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-shadow: var(--neon-effect);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
             }
-            
+
             .logo {
                 margin-bottom: 1rem;
             }
-            
+
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
+
             nav ul li {
                 margin: 0.5rem;
             }
-            
+
             .hero h1 {
                 font-size: 2.2rem;
             }
-            
-            .subject-grid, .notes-list {
+
+            .subject-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .terminal {
+                margin: 1rem auto;
             }
         }
     </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <i class="fas fa-book-open"></i>
-                <span>Damian's Notes</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Subjects</a></li>
-                    <li><a href="#">Notes</a></li>
-                    <li><a href="#">Practice</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Damian's cool notes</h1>
-            <p>Hey there! These are my notes on stuff</p>
-            <div class="search-bar">
-                <input type="text" placeholder="Search for notes, subjects, or topics...">
-                <button><i class="fas fa-search"></i> Search</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Subjects Section -->
-    <section class="subjects">
-        <div class="container">
-            <div class="section-title">
-                <h2>Notes and stuff: </h2>
-            </div>
-            <div class="subject-grid">
-                <!-- Subject Card 1 -->
-                <div class="subject-card">
-                    <img src="math/mathcover1.jpeg" alt="Mathematics">
-                    <div class="subject-content">
-                        <h3>Mathematics</h3>
-                        <p>Single variable calculus, multivariable calculus, linear algebra, differential equations, and more soon!</p>
-                        <a href="math/">View Notes <i class="fas fa-arrow-right"></i></a>
-                    </div>
+    <body>
+        <!-- Header -->
+        <header>
+            <div class="container header-container">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>Damian's notes</span>
                 </div>
-                
-                <!-- Subject Card 2 -->
-                <div class="subject-card">
-                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Physics">
-                    <div class="subject-content">
-                        <h3>Physics</h3>
-                        <p>Mechanics and E and M but will add more as I learn more!</p>
-                        <a href="physics/">View Notes <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <!-- Subject Card 3 -->
-                <div class="subject-card">
-                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chemistry">
-                    <div class="subject-content">
-                        <h3>Chemistry</h3>
-                        <p>I forgot a lot of this so relearning lol</p>
-                        <a href="chem/">View Notes <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <!-- Subject Card 4 -->
-                <div class="subject-card">
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Computer Science">
-                    <div class="subject-content">
-                        <h3>Computer Science</h3>
-                        <p>Random CS notes and shit</p>
-                        <a href="cs/">View Notes <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Subject Card 5 -->
-                <div class="subject-card">
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Computer Science">
-                    <div class="subject-content">
-                        <h3>Humanities and Social Sciences</h3>
-                        <p>Writing my AP Gov Notes here</p>
-                        <a href="humanities/">View Notes <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Subject Card 6 -->
-                <div class="subject-card">
-                    <img src="lifephoto.png" alt="Heart Heart Heart">
-                    <div class="subject-content">
-                        <h3>Life stuff</h3>
-                        <p>I dunno yet</p>
-                        <a href="life/">View Notes <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Recent Notes Section -->
-    <section class="recent-notes">
-        <div class="container">
-            <div class="section-title">
-                <h2>Recently Added Notes</h2>
-            </div>
-            <div class="notes-list">
-                <!-- Note Card 1 -->
-                <div class="note-card">
-                    <div class="note-header">
-                        <span class="note-category">Calculus</span>
-                        <span class="note-date">June 15, 2023</span>
-                    </div>
-                    <h3>Integration Techniques</h3>
-                    <p>Comprehensive guide to integration methods including substitution, integration by parts, partial fractions, and trigonometric substitutions.</p>
-                    <a href="#">Read More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <!-- Note Card 2 -->
-                <div class="note-card">
-                    <div class="note-header">
-                        <span class="note-category">Linear Algebra</span>
-                        <span class="note-date">June 12, 2023</span>
-                    </div>
-                    <h3>Matrix Operations</h3>
-                    <p>Detailed notes on matrix operations, determinants, eigenvalues, and eigenvectors with practical examples.</p>
-                    <a href="#">Read More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <!-- Note Card 3 -->
-                <div class="note-card">
-                    <div class="note-header">
-                        <span class="note-category">Physics</span>
-                        <span class="note-date">June 8, 2023</span>
-                    </div>
-                    <h3>Quantum Mechanics Basics</h3>
-                    <p>Introduction to quantum mechanics covering wave-particle duality, Schrödinger equation, and simple quantum systems.</p>
-                    <a href="#">Read More <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Damian's Notes</h3>
-                    <p>A jargon of stuff that I've learned and you can see it too!
-
-                    </p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Subjects</h3>
+                <nav>
                     <ul>
-                        <li><a href="math/">Mathematics</a></li>
-                        <li><a href="physics/">Physics</a></li>
-                        <li><a href="chem/">Chemistry</a></li>
-                        <li><a href="cs/">Computer Science</a></li>
-                        <li><a href="#">Humanities</a></li>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Knowledge Base</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Resources</a></li>
+                        <li><a href="#">About Me</a></li>
                     </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Lecture Notes</a></li>
-                        <li><a href="#">Practice Problems</a></li>
-                        <li><a href="#">Study Guides</a></li>
-                        <li><a href="#">Video Tutorials</a></li>
-                        <li><a href="#">Cheat Sheets</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Help</h3>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Contribute</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
+                </nav>
             </div>
-            <div class="copyright">
-                <p>&copy; 2025 Damian. My intellectual property haha.</p>
-            </div>
-        </div>
-    </footer>
+        </header>
 
-    <script>
-        // Simple JavaScript for enhanced interactivity
-        document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Damian's cool notes</h1>
+                <p>Hey there! These are my notes on stuff</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Food">
+                    <button><i class="fas fa-search"></i> ...Yummy</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Subjects Section -->
+        <section class="subjects">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Notes and Stuff: </h2>
+                </div>
+                <div class="subject-grid">
+                    <!-- Subject Card 1 -->
+                    <div class="subject-card">
+                        <img src="math/mathcover1.jpeg" alt="Mathematics">
+                        <div class="subject-content">
+                            <h3>Mathematics</h3>
+                            <p>From calculus to linear algebra - my journey through numbers and proofs.</p>
+                            <a href="math/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Subject Card 2 -->
+                    <div class="subject-card">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Physics">
+                        <div class="subject-content">
+                            <h3>Physics</h3>
+                            <p>Understanding the universe one equation at a time.</p>
+                            <a href="physics/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Subject Card 3 -->
+                    <div class="subject-card">
+                        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Computer Science">
+                        <div class="subject-content">
+                            <h3>Computer Science</h3>
+                            <p>Algorithms, data structures, and late-night coding sessions.</p>
+                            <a href="cs/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Subject Card 4 -->
+                    <div class="subject-card">
+                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Humanities">
+                        <div class="subject-content">
+                            <h3>Humanities</h3>
+                            <p>Thoughts on society, philosophy, and everything in between.</p>
+                            <a href="humanities/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Subject Card 5 -->
+                    <div class="subject-card">
+                        <img src="https://images.unsplash.com/photo-1519683109079-d5f539e1542f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Ideas">
+                        <div class="subject-content">
+                            <h3>Chemistry</h3>
+                            <p>Chemistry.</p>
+                            <a href="ideas/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Subject Card 6 -->
+                    <div class="subject-card">
+                        <img src="https://images.unsplash.com/photo-1519683109079-d5f539e1542f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Ideas">
+                        <div class="subject-content">
+                            <h3>Social Sciences</h3>
+                            <p>Social Sciences. </p>
+                            <a href="ss/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Subject Card 7 -->
+                    <div class="subject-card">
+                        <img src="lifephoto.png" alt="Life">
+                        <div class="subject-content">
+                            <h3>Life Stuff</h3>
+                            <p>Random thoughts, personal growth, and things I'm figuring out.</p>
+                            <a href="life/">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Quick Links -->
+        <section class="quick-links">
+            <div class="container">
+                <div class="link-grid">
+                    <div class="link-item">
+                        <i class="fas fa-fire"></i>
+                        <a href="#">Hot Topics</a>
+                    </div>
+                    <div class="link-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <a href="#">New Ideas</a>
+                    </div>
+                    <div class="link-item">
+                        <i class="fas fa-question"></i>
+                        <a href="#">Unanswered</a>
+                    </div>
+                    <div class="link-item">
+                        <i class="fas fa-book"></i>
+                        <a href="#">Resources</a>
+                    </div>
+                    <div class="link-item">
+                        <i class="fas fa-project-diagram"></i>
+                        <a href="#">Projects</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simple Footer -->
+        <footer class="simple-footer">
+            <div class="container">
+                <p>Made with <i class="fas fa-heart" style="color: #ff5f56;"></i> and <i class="fas fa-coffee"
+                        style="color: #6F4E37;"></i> by Damian</p>
+                <p>This is my digital garden - things grow, change, and sometimes die here.</p>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="#"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Enhanced JavaScript for interactivity
+            document.addEventListener('DOMContentLoaded', function () {
+                // Typewriter effect for terminal
+                const terminalText = [
+                    "damian@brain:~$ cat motivation.txt",
+                    "The more I learn, the more I realize how much I don't know.",
+                    "But that's the fun part.",
+                    "",
+                    "damian@brain:~$ ./start_learning.sh"
+                ];
+
+                const terminalBody = document.querySelector('.terminal-body');
+                let lineIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                let currentLine = '';
+
+                function typeTerminalText() {
+                    if (lineIndex < terminalText.length) {
+                        if (!isDeleting && charIndex <= terminalText[lineIndex].length) {
+                            currentLine = terminalText[lineIndex].substring(0, charIndex);
+                            charIndex++;
+                            setTimeout(typeTerminalText, Math.random() * 50 + 30);
+                        } else if (isDeleting && charIndex >= 0) {
+                            currentLine = terminalText[lineIndex].substring(0, charIndex);
+                            charIndex--;
+                            setTimeout(typeTerminalText, 30);
+                        } else {
+                            isDeleting = !isDeleting;
+                            if (!isDeleting) {
+                                lineIndex++;
+                            }
+                            setTimeout(typeTerminalText, 1000);
+                        }
+
+                        // Update the last paragraph before the cursor
+                        const paragraphs = terminalBody.querySelectorAll('p');
+                        const lastPara = paragraphs[paragraphs.length - 2];
+                        lastPara.textContent = currentLine;
+                    }
+                }
+
+                // Start the typewriter effect after a delay
+                setTimeout(typeTerminalText, 2000);
+
+                // Animate progress bars on scroll
+                function animateProgressBars() {
+                    const progressBars = document.querySelectorAll('.progress-fill');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    });
+                }
+
+                // Intersection Observer for progress bars
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animateProgressBars();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                const progressSection = document.querySelector('.progress-tracker');
+                if (progressSection) {
+                    observer.observe(progressSection);
+                }
+
+                // Hover effects for subject cards
+                const subjectCards = document.querySelectorAll('.subject-card');
+                subjectCards.forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        const randomDeg = (Math.random() * 10) - 5; // -5 to 5 degrees
+                        card.style.transform = `translateY(-10px) rotate(${randomDeg}deg)`;
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'translateY(0) rotate(0)';
                     });
                 });
+
+                // Search functionality
+                const searchInput = document.querySelector('.search-bar input');
+                const searchButton = document.querySelector('.search-bar button');
+
+                searchButton.addEventListener('click', function () {
+                    if (searchInput.value.trim() !== '') {
+                        alert(`Searching my brain for: "${searchInput.value}"\n(Imagine this actually works in the future)`);
+                    }
+                });
+
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+                        alert(`Searching my brain for: "${searchInput.value}"\n(Still imaginary, but cool right?)`);
+                    }
+                });
             });
-            
-            // Search functionality placeholder
-            const searchInput = document.querySelector('.search-bar input');
-            const searchButton = document.querySelector('.search-bar button');
-            
-            searchButton.addEventListener('click', function() {
-                if (searchInput.value.trim() !== '') {
-                    alert('Search functionality would show results for: ' + searchInput.value);
-                    // In a real implementation, this would redirect to search results
-                }
-            });
-            
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && searchInput.value.trim() !== '') {
-                    alert('Search functionality would show results for: ' + searchInput.value);
-                }
-            });
-        });
-    </script>
-</body>
+        </script>
+    </body>
+
 </html>
