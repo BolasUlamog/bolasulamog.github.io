@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Memory of Cosmo</title>
+    <style>
+        :root {
+            --soft-pink: #f8d7da;
+            --light-purple: #e2d4f0;
+            --text-color: #4a3a4f;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--soft-pink);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        .memorial-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #6d466b;
+            margin-bottom: 10px;
+        }
+        
+        .dates {
+            font-style: italic;
+            margin-bottom: 30px;
+            color: #7a6a7f;
+        }
+        
+        .tribute-text {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .gallery img:hover {
+            transform: scale(1.03);
+        }
+        
+        .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            padding: 20px;
+            border-left: 4px solid var(--light-purple);
+            margin: 40px 0;
+            background-color: rgba(255,255,255,0.7);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: var(--light-purple);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background-color 0.3s;
+        }
+        
+        .back-link:hover {
+            background-color: #c9b1e0;
+        }
+        
+        .bunny-icon {
+            font-size: 2rem;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="memorial-container">
+        <div class="bunny-icon">🐇</div>
+        <h1>Cosmo</h1>
+        <div class="dates">2018 - 2024</div>
+        
+        <div class="tribute-text">
+            <p>This page was made for my rabbit Cosmo. She died a while ago but sometimes it still affects me. </p>
+            
+            <p>As I wrote in one of my college essays, I "watch[ed] my rabbit [get] mauled right before my eyes, and fe[lt] her warm blood soak through my sweatshirt</p>
+
+            <p>I miss you!</p>
+        </div>
+        
+        <div class="gallery">
+            <img src="cosmo1.jpg" alt="Cosmo as a baby bunny">
+            <img src="cosmo2.jpg" alt="Cosmo eating her favorite treat">
+            <img src="cosmo3.jpg" alt="Cosmo relaxing">
+            <img src="cosmo4.jpg" alt="Close-up of Cosmo's face">
+            <img src="cosmo5.jpg" alt="Cosmo playing with toys">
+            <img src="cosmo6.jpg" alt="Cosmo in her favorite spot">
+        </div>
+        
+        <a href="../" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>
