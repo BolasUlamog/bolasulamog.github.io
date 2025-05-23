@@ -3,95 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Sciences</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
-            background-color: #0a0a0a;
-            color: #e0e0e0;
+            font-family: 'Lato', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 75% 30%, rgba(80, 0, 0, 0.4) 0%, transparent 40%),
-                linear-gradient(to bottom, #1a1a1a 0%, #0a0a0a 100%);
+            background-color: #f9f9f9;
         }
+        
         h1 {
-            border-bottom: 2px solid #800020;
-            padding-bottom: 1rem;
-            color: #d4af37;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 300;
-            font-size: 2.2rem;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-            margin-top: 0;
+            color: #800020;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
         }
-        p {
-            font-size: 1.3rem;
-            margin: 2rem 0;
-            color: #a78b71;
-            font-weight: bold;
+        
+        p.subheader {
+            color: #666;
             font-style: italic;
+            margin-bottom: 2rem;
         }
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-top: 3rem;
+        
+        .content-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
         }
-        a {
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 1.5rem;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, rgba(80, 0, 0, 0.7) 0%, rgba(50, 0, 0, 0.9) 100%);
-            border: 1px solid #d4af37;
-            border-radius: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        
+        .link-list {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .link-list li {
+            margin-bottom: 0.8rem;
+            list-style-type: none;
             position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(4px);
-            display: block;
-            text-align: center;
+            padding-left: 1.5rem;
         }
-        a:hover {
-            background: linear-gradient(135deg, rgba(100, 0, 0, 0.8) 0%, rgba(70, 0, 0, 1) 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        }
-        a::before {
-            content: "";
+        
+        .link-list li:before {
+            content: "•";
+            color: #d4af37;
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
-            transition: all 0.6s ease;
+            left: 0;
+            font-size: 1.2rem;
         }
-        a:hover::before {
-            left: 100%;
+        
+        a {
+            color: #800020;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+            border-bottom: 1px dotted transparent;
         }
-        a:last-child {
-            background: linear-gradient(135deg, rgba(40, 40, 40, 0.7) 0%, rgba(20, 20, 20, 0.9) 100%);
-            border-color: #a78b71;
+        
+        a:hover {
+            color: #a00030;
+            border-bottom-color: #d4af37;
         }
-        a:last-child:hover {
-            background: linear-gradient(135deg, rgba(60, 60, 60, 0.8) 0%, rgba(40, 40, 40, 1) 100%);
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .back-link:hover {
+            color: #800020;
         }
     </style>
 </head>
 <body>
-    <h1>I don't really know what I'm going to write here yet</h1>
-    <p>Rawr #2</p>
-    <div class="links-container">
-        <a href="https://maosc.net">You should check out my non profit!</a>
-        <a href="cosmo.html">My rabbit Cosmo :((</a>
-        <a href="../">Back to Home</a>
+    <div class="content-section">
+        <h1>I don't really know what I'm going to write here yet</h1>
+        <p class="subheader">Rawr #2</p>
+        
+        <ul class="link-list">
+            <li><a href="https://maosc.net">You should check out my non profit!</a></li>
+            <li><a href="cosmo.html">My rabbit Cosmo :((</a></li>
+        </ul>
+        
+        <a href="../" class="back-link">← Back to Home</a>
     </div>
 </body>
 </html>
