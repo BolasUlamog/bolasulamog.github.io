@@ -3,14 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random GitHub Page Redirect</title>
+    <title>Random Physics Problem</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .btn {
+            background: #4a6ee0;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover {
+            background: #3a5bd9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .emoji {
+            font-size: 24px;
+            margin-left: 8px;
+        }
+    </style>
 </head>
 <body>
-    <a href="#" onclick="redirectToRandomPage(); return false;">Click for a random page!</a>
+    <div class="container">
+        <h1>Random EM Practice Problem</h1>
+        <button class="btn" onclick="redirectToRandomPage()">
+            Generate Random Problem <span class="emoji">🎲</span>
+        </button>
+    </div>
 
     <script>
         function redirectToRandomPage() {
-            // List all possible sub-pages (replace these with your actual paths)
             const pages = [
                 "../physics/em/practice/17/em1.html",
                 "../physics/em/practice/17/em2.html",
@@ -23,11 +75,7 @@
                 "../physics/em/practice/17/em9.html",
                 "../physics/em/practice/17/em10.html",
             ];
-
-            // Randomly select one
             const randomPage = pages[Math.floor(Math.random() * pages.length)];
-
-            // Redirect to the selected page
             window.location.href = randomPage;
         }
     </script>
