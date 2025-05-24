@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice Problems</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; background: lightblue; }
-        a { display: block; margin-top: 20px; font-size: 1.5rem; }
-    </style>
+    <title>Random GitHub Page Redirect</title>
 </head>
 <body>
-    <h1>I don't really know what I'm going to write here yet</h1>
-    <p>Rawr #2</p>
-    <a href="https://maosc.net">You should check out my non profit!</a>
-    <a href="cosmo.html">My rabbit Cosmo :((</a>
-    <a href="../">Back to Home</a>
+    <a href="#" onclick="redirectToRandomPage(); return false;">Click for a random page!</a>
+
+    <script>
+        function redirectToRandomPage() {
+            // List all possible sub-pages (replace these with your actual paths)
+            const pages = [
+                "../physics/em/practice/17/em1.html",
+                "../physics/em/practice/17/em2.html",
+                "../physics/em/practice/17/em3.html",
+                "../physics/em/practice/17/em4.html",
+                "../physics/em/practice/17/em5.html",
+                "../physics/em/practice/17/em6.html",
+                "../physics/em/practice/17/em7.html",
+                "../physics/em/practice/17/em8.html",
+                "../physics/em/practice/17/em9.html",
+                "../physics/em/practice/17/em10.html",
+            ];
+
+            // Randomly select one
+            const randomPage = pages[Math.floor(Math.random() * pages.length)];
+
+            // Redirect to the selected page
+            window.location.href = randomPage;
+        }
+    </script>
 </body>
 </html>
