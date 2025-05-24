@@ -6,59 +6,50 @@
     <title>Practice Problems!</title>
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            max-width: 400px;
-            width: 90%;
+            font-family: 'Times New Roman', serif;
+            background: #f0f0f0;
+            margin: 40px auto;
+            max-width: 600px;
+            line-height: 1.6;
+            color: #333;
+            padding: 0 20px;
         }
         h1 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+            color: #0066cc;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
         }
-        .btn {
-            background: #4a6ee0;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        a {
+            color: #0066cc;
+            text-decoration: none;
         }
-        .btn:hover {
-            background: #3a5bd9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        a:hover {
+            text-decoration: underline;
         }
-        .btn:active {
-            transform: translateY(0);
+        .link-list {
+            margin-top: 20px;
         }
-        .emoji {
-            font-size: 24px;
-            margin-left: 8px;
+        .random-link {
+            font-size: 18px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Random Subject Practice Problem!</h1>
-        <button class="btn" onclick="redirectToRandomPage()">
-            Generate Random Problem <span class="emoji">🎲</span>
-        </button>
+    <h1>Practice Problems</h1>
+    <div class="link-list">
+        <a href="#" class="random-link" onclick="redirectToRandomPage(); return false;">
+            🔀 Load Random EM Problem
+        </a>
+    </div>
+    <div class="footer">
+        <p>Click the link above to jump to a random problem.</p>
     </div>
 
     <script>
