@@ -45,7 +45,16 @@
     <h1>Practice Problems</h1>
     <div class="link-list">
         <a href="#" class="random-link" onclick="redirectToRandomPage(); return false;">
+            🔀 Load Random Practice Problem
+        </a>
+        <a href="#" class="random-link" onclick="em(); return false;">
             🔀 Load Random EM Problem
+        </a>
+        <a href="#" class="random-link" onclick="multivar(); return false;">
+            🔀 Load Random multivariable calculus problem
+        </a>
+        <a href="#" class="random-link" onclick="singlevar(); return false;">
+            🔀 Load Random single variable calculus Problem
         </a>
     </div>
     <div class="footer">
@@ -77,6 +86,14 @@
             const randomPage = pages[Math.floor(Math.random() * pages.length)];
             window.location.href = randomPage;
         }
+        function singlevar() {
+            const pages = [
+                "../math/calculus/single/practice/index.html",
+                "../math/calculus/single/practice/p2.html",
+            ];
+            const randomPage = pages[Math.floor(Math.random() * pages.length)];
+            window.location.href = randomPage;
+        }
         function redirectToRandomPage() {
             const pages = [
                 "../math/calculus/multi/practice/index.html",
@@ -94,8 +111,7 @@
             ];
             const randomPage = pages[Math.floor(Math.random() * pages.length)];
             window.location.href = randomPage;
-        }
-        
+        }    
     </script>
 </body>
 </html>
