@@ -129,9 +129,35 @@
             <p>Differential equations are equations that have derivatives in them.</p>
         </section>
         <section id="seperable" class="card">
-            <h2>Introduction</h2>
+            <h2>Seperable Differential Equations</h2>
             <p>\(\text{Differential equations can be in several forms: }\)</p>
+            <p>\(\text{Here are some examples of }\textbf{seperable}\text{ differential equations: }\)</p>
             <p>\(\text{Differential form: }dyf(x)g(y)=dx\)</p>
+            <p>\(\text{Derivative form: }\frac{dy}{dx}=f(x)g(y)\)</p>
+        </section>
+        <section id="introduction" class="card">
+            <h2>Introduction</h2>
+            <p>\(\text{Now we will go beyond calc I: }\)</p>
+            <p>\(\text{Imagine a differential equation in the form }N(x,y)dy+M(x,y)dx=0\)</p>
+            <p>\(\text{Looking back on calc III, what does this remind you of?}\)</p>
+            <p>\(\text{Recall that the total differential }dF=\frac{\partial{F}}{\partial{y}}dy+\frac{\partial{F}}{\partial{x}}dx\text{. Let }\frac{\partial{F}}{\partial{y}}=N(x,y)\text{ and }\frac{\partial{F}}{\partial{x}}=M(x,y)\)</p>
+            <p>\(\text{This means, in the case of the above differential equation, }dF=0\implies{F}\text{ is some constant. }\)</p>
+            <p>\(\text{So, in order for F to exist, }N_x(x,y)=M_y(x,y)\text{ (Clairout's)}\)</p>
+
+        </section>
+        <section id="linear" class="card">
+            <h2>Linear Differential Equations</h2>
+            <p>\(\text{A }\textbf{linear }\text{differential equation is a differential equation in the form: }\)</p>
+            <p>\(a_n(x)y^{(n)}+...+a_1y'+a_0(x)y=g(x)\)</p>
+            <p>\(\text{For now, we will focus on linear equations in the form of }a_1(x)y'+a_0(x)y=g(x)\)</p>
+            <p>\(\text{Assuming }a_1(x)\neq0\text{, we can simplify this to }y'+\frac{a_0(x)}{a_1(x)}y=\frac{g(x)}{a_1(x)}\to{y}'+p(x)y=q(x)\)</p>
+            <p>\(\text{And we can actually use the product rule to solve this!}\)</p>
+            <p>\(\text{We can define some }\mu(x)\text{, where }\mu{p}=\mu'\)</p>
+            <p>\(\text{Now (multiplying by }\mu\text{), }\mu{y}'+\mu'y=q\mu\text{, and we know from product rule that }(\mu{y})'=\mu{y}'+\mu'y=q\mu\)</p>
+            <p>\((\mu{y})'=q\mu\implies\mu{y}=\int{q\mu}dx+C_1\implies{y}=\frac{\int{q\mu}dx+C_1}{\mu}\)</p>
+            <p>\(\text{But what is }\mu\text{?}\)</p>
+            <p>\(\mu{p}=\mu'\implies\frac{\mu'}{\mu}=p\implies(\ln{\mu})'=p\implies\mu=e^{\int{pdx}+C_2}=ae^{\int{pdx}}\text{, letting }C_2=a\)</p>
+            <p>\(\text{Now we know that }y=\frac{\int{q\mu}dx+C_1}{\mu}=\frac{\int{qae^{\int{pdx}}}dx+C_1}{ae^{\int{pdx}}}=\frac{\int{qe^{\int{pdx}}}dx+C}{e^{\int{pdx}}}\text{, where }C=\frac{C_1}{a}\text{!}\)</p>
         </section>
     </main>
 
