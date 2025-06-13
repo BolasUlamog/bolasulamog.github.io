@@ -13,7 +13,8 @@
     <style>
         body { text-align: center; font-family: Arial, sans-serif; background: lightblue; }
         a { display: block; margin-top: 20px; font-size: 1.5rem; }
-        #answerImage { display: none; margin: 0 auto; }
+        .answerImage { display: none; margin: 0 auto; }
+        .image-container { text-align: center; display: flex; justify-content: center; gap: 20px; }
     </style>
 </head>
 <body>
@@ -22,14 +23,23 @@
     <p>\(\text{1. }ay'+by=0, \text{where }a\text{ and }b\text{ are real numbers. }\)</p>
     <p>\(\text{2. }xy'+2y=\sin{x}\)</p>
     <p>\(\text{3. }\frac{dx}{dt}+\frac{x}{t}=t^2e^{t^3}\)</p>
-    <button onclick="document.getElementById('answerImage').style.display='block'">Reveal Answer</button>
-    <div style="text-align: center; display: flex; justify-content: center; gap: 20px;">
-        <img src="p2a.jpeg" alt="Multivar" width="400" height="400">
-        <img src="p2b.jpeg" alt="Multivar" width="400" height="400">
-        <img src="p2c.jpeg" alt="Multivar" width="400" height="400">
+    <button onclick="revealAnswers()">Reveal Answer</button>
+    <div class="image-container">
+        <img src="p2a.jpeg" alt="Answer 1" class="answerImage" width="400" height="400">
+        <img src="p2b.jpeg" alt="Answer 2" class="answerImage" width="400" height="400">
+        <img src="p2c.jpeg" alt="Answer 3" class="answerImage" width="400" height="400">
     </div>
     <a href="../">Back to Home</a>
     <a href="p3.html">Next Problem</a>
     <a href="../../../../practice/">Practice Problems Homepage</a>
+
+    <script>
+        function revealAnswers() {
+            const images = document.querySelectorAll('.answerImage');
+            images.forEach(img => {
+                img.style.display = 'block';
+            });
+        }
+    </script>
 </body>
 </html>
