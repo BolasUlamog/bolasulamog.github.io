@@ -173,10 +173,22 @@
             <p>\(y(x_0)=b_0,y'(x_0)=b_1,...,y^{(n-1)}(x_0)=b_{n-1}\)</p>
             <p>\(\textbf{Existence and Uniqueness Theorem}\)</p>
             <p>\(\text{If the functions }a_0,a_1,...a_{n-1}\text{ are all continuous in some open interval }I\text{ containing }x_0\text{ then there exists a unique solution on }I\text{.}\)</p>
-            <p>\(\text{So how do we solve the ODE: p_n(x)y^{(n)}+...+p_1y'+p_0(x)y=q(x)}\)</p>
+            <p>\(\text{So how do we solve the ODE: }p_n(x)y^{(n)}+...+p_1y'+p_0(x)y=q(x)\)</p>
             <p>\(\text{First, we can think of potential solutions that could work. }\)</p>
-            <p>\(\text{Ex. Consider the homogenous linear ODE p_n(x)y^{(n)}+...+p_1y'+p_0(x)y=0}\)</p>
+            <p>\(\text{Ex. Consider the homogenous linear ODE }p_n(x)y^{(n)}+...+p_1y'+p_0(x)y=0\)</p>
             <p>\(\text{If }y_1,y_2,...y_n\text{ are solutions to the ODE, then }y=c_1y_1+c_2y_2+...+c_ny_n\text{ is also a solution to the ODE.}\)</p>
+            <p>\(\text{This means that the span of }y_1,y_2,...,y_n\text{ is a subset of the solution space of the ODE}\)</p>
+            <p>\(\text{But is }y_k \text{ linearly independent? (Given the following definition):}\)</p>
+            <p>\(y_1,y_2,...y_n\text{ are linearly independent on an interval if }c_1y_1+c_2y_2+...+c_ny_n=0\implies{c}_1=c_2=...=c_n=0\)</p>
+            <p>\(\text{We can use something called the }\textbf{Wronskian}\text{ to find if solutions are linearly independent:}\)</p>
+            <p>\(W(y_1, \ldots, y_n)(x) = \begin{vmatrix}
+                y_1 & y_2 & \cdots & y_n \\
+                y_1' & y_2' & \cdots & y_n' \\
+                \vdots & \vdots & \ddots & \vdots \\
+                y_1^{(n-1)} & y_2^{(n-1)} & \cdots & y_n^{(n-1)} \\
+                \end{vmatrix}\)</p>
+            <p>\(\text{If the Wronskian is non-zero, the solutions are linearly independent. }\)</p>
+            <li><a href="practice/p4.html">Practice these!</a></li>
         </section>
     </main>
 
