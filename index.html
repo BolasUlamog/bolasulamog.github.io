@@ -1,593 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Damian's Notes</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #800020;
-            --secondary-color: #FFD700;
-            --accent-color: #000000;
-            --light-color: #f8f9fa;
-            --dark-color: #121212;
-            --text-color: #333;
-            --text-light: #6c757d;
-            --neon-effect: 0 0 10px rgba(255, 215, 0, 0.8);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: #f9f9f9;
-            color: var(--text-color);
+            font-family: 'Lato', Arial, sans-serif;
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
+            color: #333;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 2rem;
+            background-color: #f9f9f9;
         }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
+        
+        h1 {
+            color: #800020;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-            text-shadow: var(--neon-effect);
         }
-
-        .logo i {
-            margin-right: 10px;
-            color: var(--secondary-color);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 0;
-            position: relative;
-            font-family: 'Courier New', monospace;
-        }
-
-        nav ul li a:hover {
-            color: var(--secondary-color);
-            text-shadow: var(--neon-effect);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--secondary-color);
-            transition: width 0.3s;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            color: white;
-            padding: 5rem 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
-            pointer-events: none;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            position: relative;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 15px var(--secondary-color);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            position: relative;
+        
+        p.subheader {
+            color: #666;
             font-style: italic;
+            margin-bottom: 2rem;
         }
-
-        .search-bar {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 15px 20px;
-            border-radius: 50px;
-            border: none;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.9);
-            font-family: 'Courier New', monospace;
-        }
-
-        .search-bar button {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            border: none;
-            border-radius: 50px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-        }
-
-        .search-bar button:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Subjects Section */
-        .subjects {
-            padding: 4rem 0;
-            background: linear-gradient(to bottom, #f9f9f9, #e9e9e9);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--dark-color);
-            display: inline-block;
-            font-family: 'Courier New', monospace;
-            text-shadow: 2px 2px 0 var(--secondary-color);
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-color);
-            box-shadow: var(--neon-effect);
-        }
-
-        .subject-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .subject-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-            border: 1px solid transparent;
-            position: relative;
-        }
-
-        .subject-card:hover {
-            transform: translateY(-10px) rotate(2deg);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: var(--secondary-color);
-        }
-
-        .subject-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            filter: grayscale(30%);
-            transition: filter 0.3s;
-        }
-
-        .subject-card:hover img {
-            filter: grayscale(0%);
-        }
-
-        .subject-content {
+        
+        .content-section {
+            background: white;
             padding: 1.5rem;
-            position: relative;
-        }
-
-        .subject-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-family: 'Courier New', monospace;
-        }
-
-        .subject-content p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .subject-content a {
-            display: inline-block;
-            padding: 8px 15px;
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            text-decoration: none;
             border-radius: 4px;
-            font-weight: bold;
-            transition: all 0.3s;
-            font-family: 'Courier New', monospace;
-            border: 1px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
         }
-
-        .subject-content a:hover {
-            background-color: transparent;
-            color: var(--secondary-color);
-            border-color: var(--secondary-color);
-            transform: scale(1.05);
+        
+        .link-list {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
         }
-        /* Quick Links */
-
-        .quick-links {
-            padding: 2rem 0;
-            background-color: var(--primary-color);
-            color: white;
+        
+        .link-list li {
+            margin-bottom: 0.8rem;
+            list-style-type: none;
+            position: relative;
+            padding-left: 1.5rem;
         }
-
-        .link-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            text-align: center;
+        
+        .link-list li:before {
+            content: "•";
+            color: #d4af37;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
         }
-
-        .link-item {
-            padding: 1rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .link-item:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-5px);
-        }
-
-        .link-item a {
-            color: white;
+        
+        a {
+            color: #800020;
             text-decoration: none;
-            font-weight: bold;
-            display: block;
+            font-weight: 700;
+            transition: color 0.2s;
+            border-bottom: 1px dotted transparent;
         }
-
-        .link-item:hover a {
-            color: var(--dark-color);
+        
+        a:hover {
+            color: #a00030;
+            border-bottom-color: #d4af37;
         }
-
-        .link-item i {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            display: block;
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
         }
-
-        /* Footer */
-        .simple-footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            border-top: 1px solid var(--secondary-color);
-        }
-
-        .simple-footer p {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .footer-links a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .footer-links a:hover {
-            text-shadow: var(--neon-effect);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-            }
-
-            .logo {
-                margin-bottom: 1rem;
-            }
-
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            nav ul li {
-                margin: 0.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .subject-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .terminal {
-                margin: 1rem auto;
-            }
+        
+        .back-link:hover {
+            color: #800020;
         }
     </style>
 </head>
-
 <body>
-
-    <body>
-        <!-- Header -->
-        <header>
-            <div class="container header-container">
-                <div class="logo">
-                    <i class="fas fa-brain"></i>
-                    <span>Damian's notes</span>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#" class="active">Home</a></li>
-                        <li><a href="practice/">Practice Problems</a></li>
-                        <li><a href="#">Projects</a></li>
-                        <li><a href="#">Notes</a></li>
-                        <li><a href="#">About Me</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <h1>Damian's cool notes</h1>
-                <p>Hey there! These are my notes on stuff</p>
-                <div class="search-bar">
-                    <input type="text" placeholder="Food">
-                    <button><i class="fas fa-search"></i> ...Yummy</button>
-                </div>
-            </div>
-        </section>
+    <div class="content-section">
+        <h1>I don't really know what I'm going to write here yet</h1>
+        <p class="subheader">Rawr #2</p>
         
-        <!-- Subjects Section -->
-        <section class="subjects">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Notes and Stuff: </h2>
-                </div>
-                <div class="subject-grid">
-                    <!-- Subject Card 1 -->
-                    <div class="subject-card">
-                        <img src="math/mathcover1.jpeg" alt="Mathematics">
-                        <div class="subject-content">
-                            <h3>Mathematics</h3>
-                            <p>Calculus, linear algebra, algebra, and analysis</p>
-                            <a href="math/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Subject Card 2 -->
-                    <div class="subject-card">
-                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="Physics">
-                        <div class="subject-content">
-                            <h3>Physics</h3>
-                            <p>Mechanics, Electricity/Magnetism, Relativity, Optics</p>
-                            <a href="physics/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Subject Card 3 -->
-                    <div class="subject-card">
-                        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="Computer Science">
-                        <div class="subject-content">
-                            <h3>Computer Science</h3>
-                            <p>Mostly random coding projects (I lost like all them cus replit is an L)</p>
-                            <a href="cs/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Subject Card 4 -->
-                    <div class="subject-card">
-                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="Humanities">
-                        <div class="subject-content">
-                            <h3>Humanities</h3>
-                            <p>Some of my writing and college essays</p>
-                            <a href="humanities/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Subject Card 5 -->
-                    <div class="subject-card">
-                        <img src="https://images.unsplash.com/photo-1519683109079-d5f539e1542f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="Ideas">
-                        <div class="subject-content">
-                            <h3>Chemistry</h3>
-                            <p>Chemistry.</p>
-                            <a href="ideas/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Subject Card 6 -->
-                    <div class="subject-card">
-                        <img src="https://images.unsplash.com/photo-1519683109079-d5f539e1542f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="Ideas">
-                        <div class="subject-content">
-                            <h3>Social Sciences</h3>
-                            <p>History, gov, econ </p>
-                            <a href="ss/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Subject Card 7 -->
-                    <div class="subject-card">
-                        <img src="life/lifephoto.png" alt="Life">
-                        <div class="subject-content">
-                            <h3>Life Stuff</h3>
-                            <p>Random thoughts, personal growth, and things I'm figuring out.</p>
-                            <a href="life/">Explore <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- Quick Links -->
-        <section class="quick-links">
-            <div class="container">
-                <div class="link-grid">
-                    <div class="link-item">
-                        <i class="fas fa-fire"></i>
-                        <a href="#">Hot Topics</a>
-                    </div>
-                    <div class="link-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <a href="#">New Ideas</a>
-                    </div>
-                    <div class="link-item">
-                        <i class="fas fa-question"></i>
-                        <a href="#">Unanswered</a>
-                    </div>
-                    <div class="link-item">
-                        <i class="fas fa-book"></i>
-                        <a href="resources.html">Resources</a>
-                    </div>
-                    <div class="link-item">
-                        <i class="fas fa-project-diagram"></i>
-                        <a href="#">Projects</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Simple Footer -->
-        <footer class="simple-footer">
-            <div class="container">
-                <p>Made with <i class="fas fa-heart" style="color: #ff5f56;"></i> and <i class="fas fa-coffee"
-                        style="color: #6F4E37;"></i> by Damian</p>
-                <div class="footer-links">
-                    <a href="mailto:damian7burgess@gmail.com"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="https://github.com/BolasUlamog"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="https://www.instagram.com/bolasulamog/"><i class="fab fa-instagram"></i> Instagram</a>
-                </div>
-            </div>
-        </footer>
-
-        <script>
-            // Enhanced JavaScript for interactivity
-            document.addEventListener('DOMContentLoaded', function () {
-
-                // Hover effects for subject cards
-                const subjectCards = document.querySelectorAll('.subject-card');
-                subjectCards.forEach(card => {
-                    card.addEventListener('mouseenter', () => {
-                        const randomDeg = (Math.random() * 10) - 5; // -5 to 5 degrees
-                        card.style.transform = `translateY(-10px) rotate(${randomDeg}deg)`;
-                    });
-
-                    card.addEventListener('mouseleave', () => {
-                        card.style.transform = 'translateY(0) rotate(0)';
-                    });
-                });
-
-                // Search functionality
-                const searchInput = document.querySelector('.search-bar input');
-                const searchButton = document.querySelector('.search-bar button');
-
-                searchButton.addEventListener('click', function () {
-                    if (searchInput.value.trim() !== '') {
-                        alert(`Searching my brain for: "${searchInput.value}"\n(Imagine this actually works in the future)`);
-                    }
-                });
-
-                searchInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter' && searchInput.value.trim() !== '') {
-                        alert(`Searching my brain for: "${searchInput.value}"\n(Still imaginary, but cool right?)`);
-                    }
-                });
-            });
-        </script>
-    </body>
-
+        <ul class="link-list">
+            <li><a href="notes/">MY NOTES!</a></li>
+            <li><a href="https://maosc.net">You should check out my non profit!</a></li>
+            <li><a href="cosmo/">My rabbit Cosmo :((</a></li>
+        </ul>
+        
+        <a href="../" class="back-link">← Back to Home</a>
+    </div>
+</body>
 </html>
