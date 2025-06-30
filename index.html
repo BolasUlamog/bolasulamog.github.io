@@ -30,6 +30,9 @@
             margin: 0;
             padding: 0;
             transition: all 0.4s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         body.dark-mode {
@@ -45,6 +48,7 @@
             padding: 2rem;
             position: relative;
             z-index: 1;
+            flex: 1;
         }
         
         /* Geometric Background Elements */
@@ -152,6 +156,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
+            margin-bottom: 3rem;
         }
         
         .column {
@@ -175,6 +180,15 @@
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
+        }
+        
+        .column h2 a {
+            text-decoration: none;
+            color: inherit;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .column h2::after {
@@ -246,6 +260,34 @@
             font-size: 1.2rem;
         }
         
+        /* Footer with Social Links */
+        .footer {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-3px);
+            color: var(--primary);
+        }
+        
         @media (max-width: 768px) {
             .profile {
                 flex-direction: column;
@@ -262,6 +304,10 @@
             
             .header {
                 padding: 2rem;
+            }
+            
+            .social-links {
+                gap: 1rem;
             }
         }
     </style>
@@ -281,20 +327,18 @@
                 <img src="profile.jpg" alt="Damian" class="profile-pic">
                 <div class="profile-info">
                     <h1>Damian</h1>
-                    <div class="title">Founder at MAOSC | Tech Enthusiast</div>
+                    <div class="title">Freshman @ Stanford University | Math & Physics</div>
                 </div>
             </div>
             
             <div class="bio">
-                <p>I'm the founder of MAOSC, a non-profit organization focused on open source community building. With a background in technology and social impact, I bridge the gap between technical solutions and real-world problems.</p>
-                
-                <p>When I'm not working, you'll find me writing about technology, remembering my rabbit Cosmo who taught me more about life than any philosophy book, and exploring the intersection of creativity and systems thinking.</p>
+                <p>Hello! I am an incoming freshman at Stanford University passionate about mathematics and physics and I enjoy participating in competitions as well as hosting them! I also play the clarinet, enjoy tennis, soccer, hiking, refereeing football (soccer), and web development, and also be found writing or reading in my spare time.</p>
             </div>
         </div>
         
         <div class="columns">
             <div class="column">
-                <h2>Damian's Notes</h2>
+                <h2><a href="notes/">Damian's Notes</a></h2>
                 <ul class="links-list">
                     <li><a href="notes/projects.html">Current Projects</a></li>
                     <li><a href="notes/tech.html">Technical Writings</a></li>
@@ -316,6 +360,16 @@
             </div>
         </div>
     </div>
+    
+    <footer class="footer">
+        <div>Connect with me</div>
+        <div class="social-links">
+            <a href="https://linkedin.com/in/yourprofile" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://instagram.com/yourprofile" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/yourusername" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:your@email.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
     
     <script>
         // Dark Mode Toggle
