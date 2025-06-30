@@ -3,96 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <title>Damian's Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Lato', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: #f9f9f9;
+        :root {
+            /* Light Mode */
+            --bg: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text: #1a1a1a;
+            --primary: #6c5ce7;
+            --secondary: #00b894;
+            --accent: #fd79a8;
+            --border: rgba(0, 0, 0, 0.08);
+            
+            /* Dark Mode */
+            --bg-dark: #121212;
+            --card-bg-dark: rgba(30, 30, 30, 0.85);
+            --text-dark: #f0f0f0;
+            --border-dark: rgba(255, 255, 255, 0.08);
         }
         
-        h1 {
-            color: #800020;
-            border-bottom: 2px solid #d4af37;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            transition: all 0.4s ease;
+        }
+        
+        body.dark-mode {
+            --bg: var(--bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --text: var(--text-dark);
+            --border: var(--border-dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Geometric Background Elements */
+        .bg-element {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .bg-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: -100px;
+            left: -100px;
+        }
+        
+        .bg-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--secondary);
+            bottom: -200px;
+            right: -100px;
+        }
+        
+        /* Header Section */
+        .header {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            opacity: 0.1;
+        }
+        
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+        }
+        
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transform: rotate(-5deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-pic:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             font-weight: 700;
         }
         
-        p.subheader {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 2rem;
+        .profile-info .title {
+            font-size: 1.1rem;
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
         
-        .content-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
+        .bio {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            position: relative;
         }
         
-        .link-list {
-            margin: 1.5rem 0;
-            padding-left: 1.5rem;
+        .bio p {
+            margin-bottom: 1.2rem;
         }
         
-        .link-list li {
-            margin-bottom: 0.8rem;
-            list-style-type: none;
+        /* Columns */
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .column {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .column:hover {
+            transform: translateY(-5px);
+        }
+        
+        .column h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .column h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .links-list li {
+            margin-bottom: 1rem;
             position: relative;
             padding-left: 1.5rem;
         }
         
-        .link-list li:before {
-            content: "•";
-            color: #d4af37;
+        .links-list li::before {
+            content: '◆';
             position: absolute;
             left: 0;
+            color: var(--accent);
+            font-size: 0.8rem;
+            top: 3px;
+        }
+        
+        .links-list a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .links-list a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        /* Dark Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mode-toggle i {
             font-size: 1.2rem;
         }
         
-        a {
-            color: #800020;
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.2s;
-            border-bottom: 1px dotted transparent;
-        }
-        
-        a:hover {
-            color: #a00030;
-            border-bottom-color: #d4af37;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .back-link:hover {
-            color: #800020;
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-pic {
+                transform: rotate(0deg);
+            }
+            
+            .columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 2rem;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="content-section">
-        <h1>I don't really know what I'm going to write here yet</h1>
-        <p class="subheader">Rawr #2</p>
-        
-        <ul class="link-list">
-            <li><a href="notes/">MY NOTES!</a></li>
-            <li><a href="https://maosc.net">You should check out my non profit!</a></li>
-            <li><a href="cosmo/">My rabbit Cosmo :((</a></li>
-        </ul>
+    <div class="bg-element bg-1"></div>
+    <div class="bg-element bg-2"></div>
+    
+    <div class="mode-toggle" id="modeToggle">
+        <i class="fas fa-moon"></i>
     </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="profile">
+                <img src="profile.jpg" alt="Damian" class="profile-pic">
+                <div class="profile-info">
+                    <h1>Damian</h1>
+                    <div class="title">Founder at MAOSC | Tech Enthusiast</div>
+                </div>
+            </div>
+            
+            <div class="bio">
+                <p>I'm the founder of MAOSC, a non-profit organization focused on open source community building. With a background in technology and social impact, I bridge the gap between technical solutions and real-world problems.</p>
+                
+                <p>When I'm not working, you'll find me writing about technology, remembering my rabbit Cosmo who taught me more about life than any philosophy book, and exploring the intersection of creativity and systems thinking.</p>
+            </div>
+        </div>
+        
+        <div class="columns">
+            <div class="column">
+                <h2>Damian's Notes</h2>
+                <ul class="links-list">
+                    <li><a href="notes/projects.html">Current Projects</a></li>
+                    <li><a href="notes/tech.html">Technical Writings</a></li>
+                    <li><a href="https://maosc.net">MAOSC Non-Profit</a></li>
+                    <li><a href="notes/talks.html">Public Talks</a></li>
+                    <li><a href="notes/resources.html">Resources & Tools</a></li>
+                </ul>
+            </div>
+            
+            <div class="column">
+                <h2>Life Stuff</h2>
+                <ul class="links-list">
+                    <li><a href="cosmo/">Cosmo the Rabbit (1999-2014)</a></li>
+                    <li><a href="travel/">Travel Journals</a></li>
+                    <li><a href="music/">Music Collection</a></li>
+                    <li><a href="books/">Book Recommendations</a></li>
+                    <li><a href="thoughts/">Random Thoughts</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dark Mode Toggle
+        const modeToggle = document.getElementById('modeToggle');
+        const body = document.body;
+        
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if(body.classList.contains('dark-mode')) {
+                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.header, .column').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
