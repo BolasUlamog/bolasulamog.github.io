@@ -37,68 +37,6 @@
             --border: var(--border-dark);
         }
 
-        /* Navigation Header */
-        .nav-header {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            background: var(--card-bg);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-        }
-
-        nav ul li a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -273,17 +211,22 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
             .header-content {
                 flex-direction: column;
                 text-align: center;
@@ -297,26 +240,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation Header -->
-    <header class="nav-header">
-        <div class="nav-container">
-            <div class="logo">Damian's Clarinet</div>
-            <nav>
-                <ul>
-                    <li><a href="../">Home</a></li>
-                    <li><a href="../practice/">Practice Problems</a></li>
-                    <li><a href="../projects/">Projects</a></li>
-                    <li><a href="../about/">About Me</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
     <div class="mode-toggle" id="modeToggle">
         <i class="fas fa-moon"></i>
     </div>
     
     <div class="container">
+        <a href="../" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to main
+        </a>
+        
         <div class="page-header">
             <div class="header-content">
                 <div class="header-text">
@@ -334,13 +266,15 @@
                 </div>
                 <div class="performance-content">
                     <h3>Rhapsody in Blue</h3>
-                    <p>Performance of Gershwins's Rhapsody in Blue (me on the clarinet)</p>
+                    <p>Performance of Gershwin's Rhapsody in Blue (me on the clarinet)</p>
                     <div class="performance-meta">
                         <span>Santa Rosa Symphony Youth Orchestra</span>
                         <span>May 2024</span>
                     </div>
                 </div>
             </div>
+            
+            <!-- Add more performances as needed -->
         </div>
     </div>
 
