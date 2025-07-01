@@ -4,187 +4,244 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosmic Physics | Damian's Science Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --space: #0B0D17;       /* Deep space blue-black */
-            --nebula: #6F2DBD;     /* Purple nebula */
-            --star: #FFD700;       /* Golden stars */
-            --planet: #45B69C;     /* Teal planet */
-            --text: #D0D6F9;       /* Soft blue text */
+            /* Light Mode */
+            --bg: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text: #1a1a1a;
+            --primary: #6c5ce7;
+            --secondary: #00b894;
+            --accent: #fd79a8;
+            --border: rgba(0, 0, 0, 0.08);
+            
+            /* Dark Mode (Space Theme) */
+            --bg-dark: #0B0D17;       /* Deep space */
+            --card-bg-dark: rgba(30, 30, 50, 0.85);
+            --text-dark: #D0D6F9;      /* Soft blue */
+            --primary-dark: #6F2DBD;   /* Purple nebula */
+            --secondary-dark: #45B69C; /* Teal planet */
+            --accent-dark: #FFD700;   /* Golden stars */
+            --border-dark: rgba(255, 255, 255, 0.08);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        @font-face {
-            font-family: 'SpaceGrotesk';
-            src: url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
-        }
-
+        
         body {
             font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--space);
+            background: var(--bg);
             color: var(--text);
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            transition: all 0.4s ease;
             min-height: 100vh;
-            position: relative;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(111,45,189,0.15) 0%, transparent 25%),
-                radial-gradient(circle at 80% 70%, rgba(69,182,156,0.15) 0%, transparent 25%);
+            display: flex;
+            flex-direction: column;
         }
-
-        /* Animated stars */
-        .star {
+        
+        body.dark-mode {
+            --bg: var(--bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --text: var(--text-dark);
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --border: var(--border-dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        
+        /* Space Particles */
+        .space-particle {
             position: fixed;
-            background-color: var(--star);
             border-radius: 50%;
-            animation: twinkle 5s infinite ease-in-out;
-            z-index: -1;
+            filter: blur(1px);
+            opacity: 0.6;
+            z-index: 0;
+            pointer-events: none;
+            animation: float-up linear infinite;
+            color: var(--accent);
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
         }
-
-        /* Pulsing planet header */
-        header {
-            background: linear-gradient(135deg, var(--nebula), var(--space));
-            color: white;
-            padding: 3rem 0 5rem;
-            text-align: center;
-            position: relative;
+        
+        /* Header Section */
+        .header {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
             margin-bottom: 3rem;
-            clip-path: ellipse(100% 100% at 50% 0%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
         }
-
-        header::after {
-            content: "";
+        
+        .header::before {
+            content: '';
             position: absolute;
-            bottom: -50px;
-            left: 0;
-            width: 100%;
+            top: 0;
+            right: 0;
+            width: 100px;
             height: 100px;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%230B0D17'/%3E%3C/svg%3E");
-            background-size: cover;
-            background-repeat: no-repeat;
+            background: var(--primary);
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            opacity: 0.1;
         }
-
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--star), var(--planet));
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 1rem 0;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            font-weight: 700;
         }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+        
+        .header .subtitle {
+            font-size: 1.1rem;
             color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
-
-        /* Space navigation */
+        
+        /* Navigation */
         .nav-container {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
-            margin: 3rem auto;
+            margin: 2rem 0;
             flex-wrap: wrap;
-            max-width: 800px;
         }
-
+        
         .nav-btn {
-            position: relative;
-            padding: 1rem 2rem;
-            background: transparent;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
             color: var(--text);
-            border: 2px solid var(--planet);
-            border-radius: 50px;
-            font-family: inherit;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-
-        .nav-btn::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(69,182,156,0.3), transparent);
-            transition: 0.5s;
-        }
-
+        
         .nav-btn:hover {
-            background: rgba(69,182,156,0.2);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(69,182,156,0.3);
+            border-color: var(--primary);
+            color: var(--primary);
         }
-
-        .nav-btn:hover::before {
-            left: 100%;
+        
+        .nav-btn i {
+            font-size: 1.1rem;
         }
-
-        /* Physics content cards */
+        
+        /* Content Grid */
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            padding: 0 2rem;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
-
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         .physics-card {
-            background: rgba(13, 17, 33, 0.7);
-            border-radius: 15px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            border: 1px solid rgba(69,182,156,0.3);
-            backdrop-filter: blur(5px);
             position: relative;
-            overflow: hidden;
+            transition: transform 0.3s ease;
         }
-
-        .physics-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--nebula), var(--star));
-        }
-
+        
         .physics-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(111,45,189,0.4);
         }
-
+        
         .physics-card h2 {
-            color: var(--star);
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-            border-bottom: 2px solid var(--planet);
-            padding-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            position: relative;
             display: inline-block;
+            color: var(--accent);
         }
-
-        /* Interactive elements */
+        
+        .physics-card h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .physics-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .physics-card li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .physics-card li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.8rem;
+            top: 3px;
+        }
+        
+        .physics-card a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .physics-card a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
         .experiment-btn {
-            background: var(--nebula);
+            background: var(--primary);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
@@ -194,129 +251,168 @@
             transition: all 0.3s;
             font-family: inherit;
             font-weight: bold;
+            backdrop-filter: blur(5px);
         }
-
+        
         .experiment-btn:hover {
-            background: var(--planet);
+            background: var(--secondary);
             transform: scale(1.05);
         }
-
-        /* Animated footer */
-        footer {
-            background: linear-gradient(to top, var(--space), var(--nebula));
-            color: white;
-            text-align: center;
-            padding: 4rem 0 2rem;
-            margin-top: 5rem;
-            position: relative;
-        }
-
-        footer::before {
-            content: "";
-            position: absolute;
-            top: -50px;
-            left: 0;
-            width: 100%;
+        
+        /* Dark Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            width: 50px;
             height: 50px;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%236F2DBD'/%3E%3C/svg%3E");
-            background-size: cover;
-            background-repeat: no-repeat;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .physics-card {
-                padding: 1.5rem;
-            }
+        
+        .mode-toggle i {
+            font-size: 1.2rem;
+        }
+        
+        /* Footer */
+        .footer {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-3px);
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-    <!-- Generate random stars -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                star.style.width = `${Math.random() * 3 + 1}px`;
-                star.style.height = star.style.width;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                document.body.appendChild(star);
-            }
-        });
-    </script>
-
-    <header>
-        <h1>Physics!! :D</h1>
-        <p class="subtitle">I put way too much work into web dev</p>
-    </header>
-
-    <div class="nav-container">
-        <button class="nav-btn" onclick="location.href='../'">
-            <i class="fas fa-rocket"></i> Launch Home
-        </button>
-        <button class="nav-btn" onclick="location.href='mechanics/'">
-            <i class="fas fa-atom"></i> Mechanics
-        </button>
-        <button class="nav-btn" onclick="location.href='relativity/'">
-            <i class="fas fa-globe-americas"></i> Relativity
-        </button>
-        <button class="nav-btn" onclick="location.href='thermo/'">
-            <i class="fas fa-fire"></i> Thermodynamics
-        </button>
-        <button class="nav-btn" onclick="location.href='em/'">
-            <i class="fas fa-fire"></i> Electricity and Magnetism
-        </button>
+    <!-- Space Particles -->
+    <div class="mode-toggle" id="modeToggle">
+        <i class="fas fa-moon"></i>
     </div>
-
-    <div class="content-grid">
-        <div class="physics-card">
-            <h2>1</h2>
-            <p>Yap.</p>
-            <p>Yap: <span id="mission-status">Yap</span></p>
-            <button class="experiment-btn" onclick="document.getElementById('mission-status').textContent = 'yap'">
-                New Experiment
-            </button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Cosmic Physics</h1>
+            <div class="subtitle">Exploring the universe one equation at a time</div>
         </div>
-
-        <div class="physics-card">
-            <h2>Recent Discoveries</h2>
-            <ul style="list-style-type: none; line-height: 2;">
-                <li><i class="fas fa-meteor" style="color: var(--star);"></i> The Higgs Boson Explained</li>
-                <li><i class="fas fa-satellite" style="color: var(--planet);"></i> Gravitational Wave Detection</li>
-                <li><i class="fas fa-microscope" style="color: var(--nebula);"></i> Quantum Computing Breakthroughs</li>
-            </ul>
+        
+        <div class="nav-container">
+            <a href="../index.html" class="nav-btn">
+                <i class="fas fa-rocket"></i> Launch Home
+            </a>
+            <a href="mechanics/" class="nav-btn">
+                <i class="fas fa-atom"></i> Mechanics
+            </a>
+            <a href="relativity/" class="nav-btn">
+                <i class="fas fa-globe-americas"></i> Relativity
+            </a>
+            <a href="thermo/" class="nav-btn">
+                <i class="fas fa-fire"></i> Thermodynamics
+            </a>
+            <a href="em/" class="nav-btn">
+                <i class="fas fa-bolt"></i> Electromagnetism
+            </a>
         </div>
+        
+        <div class="content-grid">
 
-        <div class="physics-card">
-            <h2>Flashcard</h2>
-            <p>Question?</p>
-            <button class="experiment-btn" onclick="alert('Idk! ⏱️')">
-                Reveal Answer
-            </button>
+            <div class="physics-card">
+                <h2>Resources I used</h2>
+                <ul>
+                    <li><a href="quantum/"><i class="fas fa-atom"></i> Quantum Physics Notes</a></li>
+                    <li><a href="relativity/"><i class="fas fa-globe-americas"></i> Relativity Resources</a></li>
+                    <li><a href="cosmology/"><i class="fas fa-star"></i> Cosmology Studies</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-
-    <footer>
-        <h2 style="margin-bottom: 1rem;">Continue Your Cosmic Journey</h2>
-        <p>The important thing is to never stop questioning - curiosity has its own reason for existing.</p>
-        <div style="margin-top: 2rem; font-size: 2rem;">
-            <i class="fas fa-atom" style="margin: 0 1rem; color: var(--star); cursor: pointer;" 
-               onclick="this.style.transform = this.style.transform === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)'"></i>
-            <i class="fas fa-satellite-dish" style="margin: 0 1rem; color: var(--planet); cursor: pointer;"
-               onclick="this.classList.toggle('fa-spin')"></i>
+    
+    <footer class="footer">
+        <div>Connect with me</div>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/bolasulamog/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/BolasUlamog" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:damianb@stanford.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
         </div>
     </footer>
+    
+    <script>
+        // Create space particles
+        function createParticles() {
+            const symbols = ['✧', '✦', '✹', '✺', '✶', '✷', '✵', '❂', '❉', '❊'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'space-particle';
+                particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.fontSize = `${Math.random() * 20 + 10}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(particle);
+            }
+        }
+        
+        // Dark Mode Toggle
+        const modeToggle = document.getElementById('modeToggle');
+        const body = document.body;
+        
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if(body.classList.contains('dark-mode')) {
+                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Initialize particles when page loads
+        window.addEventListener('load', createParticles);
+        
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.header, .physics-card').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
