@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Notes | Damian's Notes</title>
+    <title>Humanities | Damian's Notes</title>
+    <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -17,13 +20,10 @@
             --accent: #fd79a8;
             --border: rgba(0, 0, 0, 0.08);
             
-            /* Dark Mode (Space Theme) */
-            --bg-dark: #0B0D17;       /* Deep space */
-            --card-bg-dark: rgba(30, 30, 50, 0.85);
-            --text-dark: #D0D6F9;      /* Soft blue */
-            --primary-dark: #6F2DBD;   /* Purple nebula */
-            --secondary-dark: #45B69C; /* Teal planet */
-            --accent-dark: #FFD700;   /* Golden stars */
+            /* Dark Mode */
+            --bg-dark: #121212;
+            --card-bg-dark: rgba(30, 30, 30, 0.85);
+            --text-dark: #f0f0f0;
             --border-dark: rgba(255, 255, 255, 0.08);
         }
         
@@ -43,9 +43,6 @@
             --bg: var(--bg-dark);
             --card-bg: var(--card-bg-dark);
             --text: var(--text-dark);
-            --primary: var(--primary-dark);
-            --secondary: var(--secondary-dark);
-            --accent: var(--accent-dark);
             --border: var(--border-dark);
         }
         
@@ -58,8 +55,8 @@
             flex: 1;
         }
         
-        /* Space Particles */
-        .space-particle {
+        /* Particle Background Elements */
+        .particle {
             position: fixed;
             border-radius: 50%;
             filter: blur(1px);
@@ -67,7 +64,6 @@
             z-index: 0;
             pointer-events: none;
             animation: float-up linear infinite;
-            color: var(--accent);
         }
         
         @keyframes float-up {
@@ -90,7 +86,6 @@
             margin-bottom: 3rem;
             position: relative;
             overflow: hidden;
-            text-align: center;
         }
         
         .header::before {
@@ -100,7 +95,7 @@
             right: 0;
             width: 100px;
             height: 100px;
-            background: var(--primary);
+            background: var(--accent);
             clip-path: polygon(0 0, 100% 0, 100% 100%);
             opacity: 0.1;
         }
@@ -108,7 +103,7 @@
         .header h1 {
             font-size: 2.5rem;
             margin: 0 0 1rem 0;
-            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -172,7 +167,7 @@
             }
         }
         
-        .physics-card {
+        .math-card {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             background: var(--card-bg);
@@ -183,20 +178,19 @@
             transition: transform 0.3s ease;
         }
         
-        .physics-card:hover {
+        .math-card:hover {
             transform: translateY(-5px);
         }
         
-        .physics-card h2 {
+        .math-card h2 {
             font-size: 1.5rem;
             margin-top: 0;
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
-            color: var(--accent);
         }
         
-        .physics-card h2::after {
+        .math-card h2::after {
             content: '';
             position: absolute;
             left: 0;
@@ -207,19 +201,19 @@
             border-radius: 2px;
         }
         
-        .physics-card ul {
+        .math-card ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
         
-        .physics-card li {
+        .math-card li {
             margin-bottom: 1rem;
             position: relative;
             padding-left: 1.5rem;
         }
         
-        .physics-card li::before {
+        .math-card li::before {
             content: '◆';
             position: absolute;
             left: 0;
@@ -228,35 +222,16 @@
             top: 3px;
         }
         
-        .physics-card a {
+        .math-card a {
             color: var(--text);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
         }
         
-        .physics-card a:hover {
+        .math-card a:hover {
             color: var(--primary);
             padding-left: 5px;
-        }
-        
-        .experiment-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            margin-top: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
-        }
-        
-        .experiment-btn:hover {
-            background: var(--secondary);
-            transform: scale(1.05);
         }
         
         /* Dark Mode Toggle */
@@ -311,50 +286,44 @@
     </style>
 </head>
 <body>
-    <!-- Space Particles -->
+    <!-- Particle background elements -->
     <div class="mode-toggle" id="modeToggle">
         <i class="fas fa-moon"></i>
     </div>
     
     <div class="container">
         <div class="header">
-            <h1>Physics Notes</h1>
-            <div class="subtitle">Physics is pretty cool</div>
+            <h1>Humanities Notes</h1>
+            <div class="subtitle">Mostly random humanities stuff</div>
         </div>
         
         <div class="nav-container">
-            <a href="../index.html" class="nav-btn">
-                <i class="fas fa-rocket"></i> Launch Home
+            <a href="../" class="nav-btn">
+                <i class="fas fa-home"></i> Home
             </a>
-            <a href="mechanics/" class="nav-btn">
-                <i class="fas fa-atom"></i> Mechanics
+            <a href="english/creative/" class="nav-btn">
+                <i class="fas fa-calculator"></i> Create Writing
             </a>
-            <a href="relativity/" class="nav-btn">
-                <i class="fas fa-globe-americas"></i> Relativity
-            </a>
-            <a href="thermo/" class="nav-btn">
-                <i class="fas fa-fire"></i> Thermodynamics
-            </a>
-            <a href="em/" class="nav-btn">
-                <i class="fas fa-bolt"></i> Electromagnetism
+            <a href="english/formal/" class="nav-btn">
+                <i class="fas fa-square-root-alt"></i> School Essays
             </a>
         </div>
         
         <div class="content-grid">
-
-            <div class="physics-card">
-                <h2>Exterior resources I used for hs/AP physics</h2>
+            <div class="math-card">
+                <h2>Random Math & Proofs</h2>
                 <ul>
-                    <li><a href="https://www.youtube.com/@WeAreShowboat">We Are Snowboat</a></li>
-                    <li><a href="https://www.youtube.com/watch?v=J-h-h-writo&list=PLMZPbQXg9nt5V6t-dX93TCriDgzDKCcAr">University Physics with Dr. Viv</a></li>
-                    <li><a href="https://www.princetonreview.com/">Princeton Review Books</a></li>
+                    <li><a href="eulerthing.html">Euler's use of sine to find \(\zeta{(2)}\)</a></li>
+                    <li><a href="denseinreals.html">First real analysis proof</a></li>
+                    <li><a href="feynman.html">Use of Feynman Substitution to find the Gaussian Integral</a></li>
                 </ul>
             </div>
-            <div class="physics-card">
-                <h2>Physics Resources</h2>
+            
+            <div class="math-card">
+                <h2>Mathematics Resources</h2>
                 <ul>
                     <li><a href="../practice/">Practice Problems</a></li>
-                    <li><a href="../math/">Math Notes</a></li>
+                    <li><a href="../physics/">Physics Notes</a></li>
                     <li><a href="../cs/">Computer Science Notes</a></li>
                 </ul>
             </div>
@@ -372,14 +341,16 @@
     </footer>
     
     <script>
-        // Create space particles
+        // Create particles
         function createParticles() {
-            const symbols = ['✧', '✦', '✹', '✺', '✶', '✷', '✵', '❂', '❉', '❊'];
+            const symbols = ['∫', 'π', '∞', 'Δ', '∑', '∏', '√', '∂', '≈', '≠'];
+            const colors = ['#6c5ce7', '#00b894', '#fd79a8', '#fdcb6e', '#0984e3'];
             
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'space-particle';
+                particle.className = 'particle';
                 particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.color = colors[Math.floor(Math.random() * colors.length)];
                 particle.style.fontSize = `${Math.random() * 20 + 10}px`;
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
@@ -415,7 +386,7 @@
             });
         }, { threshold: 0.1 });
         
-        document.querySelectorAll('.header, .physics-card').forEach(el => {
+        document.querySelectorAll('.header, .math-card').forEach(el => {
             el.style.opacity = 0;
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'all 0.6s ease';
