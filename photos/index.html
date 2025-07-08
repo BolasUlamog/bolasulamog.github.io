@@ -331,10 +331,41 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Back to Home Button */
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.8rem 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-home:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
     </style>
 </head>
 
 <body>
+    <a href="../index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
     <div class="bg-element bg-1"></div>
     <div class="bg-element bg-2"></div>
 
@@ -357,6 +388,26 @@
         </div>
 
         <div class="photo-grid">
+
+            <!-- Photo 90 -->
+            <div class="photo-card" data-category="music">
+                <img src="pics/91.jpeg" alt="All-Northern Clarinet section" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">All-Northern Clarinets</h3>
+                    <p class="photo-date">February 2025</p>
+                    <p class="photo-desc">All-Northern Clarinet section</p>
+                </div>
+            </div>
+
+            <!-- Photo 90 -->
+            <div class="photo-card" data-category="people">
+                <img src="pics/90.jpeg" alt="First picture with baby!" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Pookie</h3>
+                    <p class="photo-date">February 2025</p>
+                    <p class="photo-desc">First picture with baby!</p>
+                </div>
+            </div>
 
             <!-- Photo 89 -->
             <div class="photo-card" data-category="music">
