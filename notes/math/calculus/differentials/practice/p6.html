@@ -23,7 +23,8 @@
     <p>\(\text{1. }\)</p>
     <p>\(\text{2. }3y'+4y=5\)</p>
     <p>\(\text{3. }y^{(3)}+y'=0\)</p>
-    <button onclick="document.getElementById('answerImage').style.display='block'">Reveal Answer</button>
+    
+    <button onclick="revealAnswers()">Reveal Answer</button>
     <div class="image-container">
         <img src="p6a.jpeg" alt="Answer 1" class="answerImage" width="400" height="400">
         <img src="p6b.jpeg" alt="Answer 2" class="answerImage" width="400" height="400">
@@ -32,5 +33,14 @@
     <a href="../">Back to Home</a>
     <a href="p6.html">Next Problem</a>
     <a href="../../../../practice/">Practice Problems Homepage</a>
+
+    <script>
+        function revealAnswers() {
+            const images = document.querySelectorAll('.answerImage');
+            images.forEach(img => {
+                img.style.display = 'block';
+            });
+        }
+    </script>
 </body>
 </html>
