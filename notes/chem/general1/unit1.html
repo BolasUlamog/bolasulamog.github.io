@@ -128,6 +128,11 @@
             border-radius: 5%;
             text-align: center;
         }
+        .middle {
+            text-align: center;
+            text-size-adjust: 1.2rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -138,7 +143,7 @@
             <nav>
                 <ul>
                     <li><a href="../">Home</a></li>
-                    <li><a href="practice/">Practice Problems</a></li>
+                    <li><a href="practice/p1.html">Practice Problems</a></li>
                     <li><a href="#next unit">Next Unit</a></li>
                 </ul>
             </nav>
@@ -147,11 +152,13 @@
 
     <main class="container">
         <section id="introduction" class="card">
-            <h2>Matter</h2>
+            <h2>Classifications of matter</h2>
             <p>What is matter?</p>
             <p>- Anything that has mass and volume</p>
             <p>- Made of atoms</p>
-            <p><strong>- Can be solids, liquids, and gas</strong></p>
+            <div class="middle"> 
+                <p><strong>Can be solids, liquids, and gas</strong></p>
+            </div>
             <div class="compare-3">
                 <p><strong>Solids</strong></p>
                 <p>Definite shape and volume</p>
@@ -170,8 +177,84 @@
                 <img src="photos/gas.png"
                     alt="Gas" width="100" height="75">
             </div>
-            <p>\(\ce{ CO2 + C <=> 2CO }\)</p>
+            <p>How else can we classify matter?</p>
+            <div class="compare-2">
+                <p><strong>Elements</strong></p>
+                <p>Singular element</p>
+                <ul>
+                    <li>\(\ce{Na}\)</li>
+                    <li>\(\ce{N2,O2,F2}\)</li>
+                    <li>\(\ce{Fe,Ag,Au}\)</li>
+                </ul>
+            </div>
+            <div class="compare-2">
+                <p><strong>Compounds</strong></p>
+                <p>Two or more different types of elements bonded together</p>
+                <p></p>  
+                <ul>
+                    <li>\(\ce{H2O}\)</li>
+                    <li>\(\ce{NaCl}\)</li>
+                    <li>\(\ce{C6H12O6}\)</li>
+                </ul>
+            </div>
+            <p>We can also classify matter like this: </p>
+            <div class="compare-2">
+                <p><strong>Pure Substances</strong></p>
+                <p>Pure element (like \(\ce{O2}\)) or pure compound (like \(\ce{H2O}\))</p>
+                <ul>
+                    <li>Water (\(\ce{H2O}\))</li>
+                    <li>Table Salt (\(\ce{NaCl}\))</li>
+                    <li>Glucose (\(\ce{C6H12O6}\))</li>
+                </ul>
+            </div>
+            <div class="compare-2">
+                <p><strong>Mixtures</strong></p>
+                <p>Made of two or more different types of non-bonded compounds or elements</p>
+                <ul>
+                    <li>Salt Water (\(\ce{H2O + NaCl}\))</li>
+                    <li>\(\ce{C6H12O6 + NaCl}\)</li>
+                    <li>\(\ce{C6H12O6 + H2O}\)</li>
+                </ul>
+            </div>
+            <p>And mixtures can be further divided into the following subcategories: </p>
+            <div class="compare-2">
+                <p><strong>Homogeneous Mixtures</strong></p>
+                <p>Uniform composition throughout</p>
+                <ul>
+                    <li>Salt Water*</li>
+                    <li>Air</li>
+                    <li>Un-curdled milk</li>
+                </ul>
+            </div>
+            <div class="compare-2">
+                <p><strong>Heterogeneous Mixtures</strong></p>
+                <p>Non-uniform composition</p>
+                <ul>
+                    <li>Oil and Water</li>
+                    <li>Sand and Salt</li>
+                    <li>Salad and pizza</li>
+                </ul>
+            </div>
+            <p>*In the case of salt water, if you add too much salt it stops dissolving in the water and is thus Heterogeneous</p>
         </section>
+        <section id="Chemical Properties/Change" class="card">
+            <h2>Chemical Properties/Change</h2>
+            <p><strong>If a change changes one substance into another it is a chemical change</strong></p>
+            <div class="compare-2">
+                <p><strong>Chemical properties/change</strong></p>
+                <ul>
+                    <li>Burning paper on fire: \(\ce{C6H12O6 -> CO2+H2O}\)</li>
+                    <li>Combustion/Flammability</li>
+                </ul>
+            </div>
+            <div class="compare-2">
+                <p><strong>Physical Properties/Change</strong></p>
+                <ul>
+                    <li>Tearing paper in half: \(\ce{C6H12O6 -> CO2+H2O}\)</li>
+                    <li>Freezing/melting things</li>
+                </ul>
+            </div>
+        </section>  
     </main>
     <footer class="site-footer">
         <div class="container">
