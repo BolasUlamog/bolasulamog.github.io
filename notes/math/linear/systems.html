@@ -245,13 +245,72 @@
             </p>
             <p>\(\text{In order to solve a system using an augmented matrix, we want to get it into either }\textbf{Row Echelon Form }\text{or }\textbf{Reduced Row Echelon Form}\)</p>
             <details>
-                <summary>\(\text{Reduced Row Ecehlon Form}\)</summary>
+                <summary>\(\text{Reduced Row Ecehlon Form (RREF) and Row Echelon Form (REF)}\)</summary>
                 <p>\(\text{A matrix is in reduced row echelon form if:}\)</p>
                 <ul>
                     <li>\(\text{If a row does not consist entirely of 0s, the first non-zero number in the row is a 1 (called the leading 1)}\)</li>
-                    <li>\(\text{}\)</li>
-                    <li>\(\text{}\)</li>
+                    <li>\(\text{If there are any rows that consist entirely of 0s, they are grouped at the bottom of the matrix}\)</li>
+                    <li>\(\text{If there are two successive rows that have a leading 1, the leading 1 in the bottom row is farther to the right}\)</li>
+                    <li>\(\text{Each column that has a leading one has 0s in the rest of the column}\)</li>
                 </ul>
+                <p>\(\text{Here are some examples of matrices in RREF form: }\)</p>
+                <p>
+                    \[
+                    \begin{bmatrix}
+                    1 & 0 & 0 & 5 \\
+                    0 & 1 & 0 & 3 \\
+                    0 & 0 & 1 & -1 
+                    \end{bmatrix}, 
+                    \begin{bmatrix}
+                    1 & 0 & 0 \\
+                    0 & 1 & 0 \\
+                    0 & 0 & 1
+                    \end{bmatrix},
+                    \begin{bmatrix}
+                    0 & 0 \\
+                    0 & 0
+                    \end{bmatrix},
+                    \begin{bmatrix}
+                    0 & 1 & 2 & 0 & -1 \\
+                    0 & 0 & 0 & 1 & 3 \\
+                    0 & 0 & 0 & 0 & 0 \\
+                    0 & 0 & 0 & 0 & 0
+                    \end{bmatrix},
+                    \begin{bmatrix}
+                    1 & 0 & 0 & * \\
+                    0 & 1 & 0 & * \\
+                    0 & 0 & 1 & * \\
+                    0 & 0 & 0 & 0
+                    \end{bmatrix}
+                    \]
+                </p>
+                <p>\(\textbf{A matrix that has the first three properties is in REF form}\)</p>
+                <p>\(\text{Here are some examples of matrices in REF form but not in RREF: }\)</p>
+                <p>
+                    \[
+                    \begin{bmatrix}
+                    1 & 2 & 3 \\
+                    0 & 1 & 4 \\
+                    0 & 0 & 1
+                    \end{bmatrix},
+                    \begin{bmatrix}
+                    1 & 0 & 6 & 5 \\
+                    0 & 1 & 0 & 3 \\
+                    0 & 0 & 1 & -1
+                    \end{bmatrix},
+                    \begin{bmatrix}
+                    1 & 0 & 0 \\
+                    0 & 1 & 1 \\
+                    0 & 0 & 1
+                    \end{bmatrix},
+                    \begin{bmatrix}
+                    1 & * & * & * \\
+                    0 & 1 & * & * \\
+                    0 & 0 & 1 & * \\
+                    0 & 0 & 0 & 0
+                    \end{bmatrix}
+                    \]
+                </p>
             </details>
         </section>
     </main>
