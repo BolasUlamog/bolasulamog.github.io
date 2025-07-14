@@ -223,7 +223,27 @@
             </p>
             <p>\(\text{The way we construct augmented matrices is by taking the coefficient in from of each variable and putting it in its respective spot.}\)</p>
             <p>\(\text{The RHS of the equation is simply augmented on the right side of the matrix.}\) <a href=practice/p2.html>Practice this!</a></p>
-
+            <p>\(\text{There are a variety of elementary row operations that allow one to use a augmented matrix to solve a system: }\)</p>
+            <p>\(\textbf{In a system we can }\text{both sides of an equation by a non-zero constant}\to\text{multiply a row by a non-zero constant}\)</p>
+            <p>\(\text{Interchange two equations}\to\text{Interchange any two rows}\)</p>
+            <p>\(\text{Add a constant times one equation to another}\to\text{Add a constant times one row to another}\)</p>
+            <p>\(\text{Matrices that can be equal to each other following a series of elementary row operations are called }\textbf{row equivilent}\)</p>
+            <p>
+                \[
+                \text{For example these matrices are row equivilient:}
+                \begin{bmatrix}
+                1 & 2 & 3 \\
+                2 & 5 & 6
+                \end{bmatrix}
+                \mathrel{\underset{\sim}{R}}
+                \begin{bmatrix}
+                1 & 2 & 3 \\
+                0 & 1 & 0
+                \end{bmatrix}
+                \text{ by }R_2-2R_1\to{R_2}
+                \]
+            </p>
+            <p>\(\text{In order to solve a system using an augmented matrix, we want it to be in either }\textbf{ Row Echelon Form }\text{or }\textbf{Reduced Row Echelon Form}\)</p>
         </section>
     </main>
 
