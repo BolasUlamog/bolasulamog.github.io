@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feynman Substitution</title>
+  <script 
+    type="text/javascript" 
+    id="MathJax-script" 
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .math-display {
+      margin: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>\(\text{A short "proof" of DeMoivre's Theorem}\)</h1>
+
+  <div class="math-display">
+    \[\text{We know the following taylor series: }\]
+    \[\cos{x}=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\frac{x^6}{6!}+...=\sum_{n=0}^\infty{\frac{(-1)^nx^{2n}}{(2n)!}}\]
+    \[\sin{x}=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}+...=\sum_{n=0}^\infty{\frac{(-1)^nx^{2n+1}}{(2n+1)!}}\]
+    \[e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^5}{5!}+...=\sum_{n=0}^\infty{\frac{x^n}{n!}}\]
+    \[\text{We can use these taylor series to find the following: }\]
+    \[\text{Remembering }i^4k+2=-1\text{ and }i^4k=1, i\in\mathbb{Z}^+\text{, }\]
+    \[\cos{x}=1+\frac{i^2x^2}{2!}+\frac{i^4x^4}{4!}+\frac{i^6x^6}{6!}+...=\sum_{n=0}^\infty{\frac{(ix)^{2n}}{(2n)!}}\text{ and }\]
+    \[i\sin{x}=ix-i\frac{x^3}{3!}+i\frac{x^5}{5!}-i\frac{x^7}{7!}+...=ix+\frac{(ix)^3}{3!}+\frac{(ix)^5}{5!}+\frac{(ix)^7}{7!}+...=\sum_{n=0}^\infty{\frac{(ix)^{2n+1}}{(2n+1)!}}\]
+    \[\text{Noting }e^{ix}=\sum_{n=0}^\infty{\frac{(ix)^n}{n!}}\text{, then }e^{ix}=\cos{x}+i\sin{x}\text{ and }e^{i\beta}=\cos{\beta}+i\sin{\beta}\text{ for some }\beta\in\mathbb{R}\]
+    \[\text{Now we know that if we raise some complex number }r\cos{x}+ri\sin{x}\text{ to the nth power...}\]
+    \[\text{Letting }\beta=nx,(r\cos{x}+ri\sin{x})^n=(re^{ix})^n=r^ne^{i\beta}=r^n\cos{xn}+r^ni\sin{xn}\text{      }\blacksquare\]
+  </div>
+  <a href="..\">Back to home</a>
+</body>
+</html>
