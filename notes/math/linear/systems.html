@@ -312,6 +312,60 @@
                     \]
                 </p>
             </details>
+            <details>
+                <summary>\(\text{What does RREF tell us?}\)</summary>
+                <p>\(\text{An example of a RREF of a system with a unique solution: }\)</p>
+                <p>
+                    \[
+                    \begin{bmatrix}
+                    1 & 0 & 0 & a \\
+                    0 & 1 & 0 & b \\
+                    0 & 0 & 1 & c
+                    \end{bmatrix}
+                    \text{corresponds to the equations }
+                    \begin{align*}
+                    x_1 &= a \\
+                    x_2 &= b \\
+                    x_3 &= c
+                    \end{align*}
+                    \implies\text{the system has a unique solution } (a,b,c)
+                    \]
+                </p>
+                <p>\(\text{An example of a RREF of a system with no solutions (inconsistent): }\)</p>
+                <p>
+                    \[
+                    \begin{bmatrix}
+                    1 & 0 & 0 & a \\
+                    0 & 1 & 0 & b \\
+                    0 & 0 & 0 & c
+                    \end{bmatrix}
+                    \text{(in the case }c\neq0\text{) corresponds to the equations }
+                    \begin{align*}
+                    x_1 &= a \\
+                    x_2 &= b \\
+                    0 &= c
+                    \end{align*}
+                    \implies\text{the system has no solutions since }c\neq0
+                    \]
+                </p>
+                <p>\(\text{An example of a RREF of a system with infinite solutions: }\)</p>
+                <p>
+                    \[
+                    \begin{bmatrix}
+                    1 & 0 & 1 & a \\
+                    0 & 1 & 2 & b \\
+                    0 & 0 & 0 & 0
+                    \end{bmatrix}
+                    \text{corresponds to the parametric equations }
+                    \begin{align*}
+                    x_1 &= a - x_3 \\
+                    x_2 &= b - 2x_3 \\
+                    \end{align*}
+                    \]
+                </p>
+                <a href="practice/p3.html">Practice this!</a>
+            </details>
+            <p>\(\text{We can use the elementary row operations to get a matrix into RREF or REF.}\)</p>
         </section>
     </main>
 
