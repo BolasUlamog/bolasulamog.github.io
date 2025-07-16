@@ -369,9 +369,120 @@
             <p>\(\text{We can use the elementary row operations to get a matrix into RREF or REF.}\)</p>
             <details>
                 <summary>\(\text{A general algorithm for converting a matrix into RREF form}\)</summary>
-                <p>
-                    
-                </p>
+                <p>\(1. \text{ Locate the leftmost column that does not consist entirely of zeros}\)</p>
+                <p>\(2. \text{ Interchange the top row with another row, if necessary, to bring a nonzero entry to the top of the column found in Step 1}\)</p>
+                <p>\(3. \text{ Letting the entry at the top of the column mentioned in step 1 be equal to }a\text{, multiply the first row by }\frac{1}{a}\text{ in order to have a leading one}\)</p>
+                <p>\(4. \text{ Add multiples of the top row to each row beneath it s.t. all entries below the leading 1 are zero. }\)</p>
+                <p>\(5. \text{ Repeat steps 1-4, pretending the row you just dealt with (and the rows before that) don't exist}\)</p>
+                <p>\(6. \text{ Repeat step 5 for all rows. You matrix should be in REF now.}\)</p>
+                <p>\(7. \text{ Introduce 0s above the ones starting from the rightmost non-zero row and moving leftwards. }\)</p>
+                <details>
+                    <summary>\(\text{Example 1 (see if you can see why each matrix is row-equivilient)}\)</summary>
+                    <p>
+                        \(
+                        \begin{bmatrix}
+                        2 & 5 & 6 \\
+                        1 & 2 & 3 \\
+                        0 & 2 & 1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & 2 & 3 \\
+                        2 & 5 & 6 \\
+                        0 & 2 & 1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & 2 & 3 \\
+                        0 & 1 & 0 \\
+                        0 & 2 & 1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & 2 & 3 \\
+                        0 & 1 & 0 \\
+                        0 & 0 & 1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & 2 & 0 \\
+                        0 & 1 & 0 \\
+                        0 & 0 & 1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & 0 & 0 \\
+                        0 & 1 & 0 \\
+                        0 & 0 & 1
+                        \end{bmatrix}
+                        \)
+                    </p>
+                </details>
+                <details>
+                    <summary>\(\text{Example 2}\)</summary>
+                    <p>
+                        \(
+                        \begin{bmatrix}
+                        0 & 5 & 10 & 3 \\
+                        2 & 7 & 3 & 0 \\
+                        0 & 2 & 1 & -1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        2 & 7 & 3 & 0 \\
+                        0 & 5 & 10 & 3 \\
+                        0 & 2 & 1 & -1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & \frac{7}{2} & \frac{3}{2} & 0 \\
+                        0 & 5 & 10 & 3 \\
+                        0 & 2 & 1 & -1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & \frac{7}{2} & \frac{3}{2} & 0 \\
+                        0 & 1 & 2 & \frac{3}{5} \\
+                        0 & 2 & 1 & -1
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & \frac{7}{2} & \frac{3}{2} & 0 \\
+                        0 & 1 & 2 & \frac{3}{5} \\
+                        0 & 0 & -3 & -\frac{11}{5}
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \begin{bmatrix}
+                        1 & \frac{7}{2} & \frac{3}{2} & 0 \\
+                        0 & 1 & 2 & \frac{3}{5} \\
+                        0 & 0 & 1 & \frac{11}{15}
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}}
+                        \)
+                    </p>
+                    <p>
+                        \(    
+                        \begin{bmatrix}
+                        1 & \frac{7}{2} & \frac{3}{2} & 0 \\
+                        0 & 1 & 0 & -\frac{13}{15} \\
+                        0 & 0 & 1 & \frac{11}{15}
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}} 
+                        \begin{bmatrix}
+                        1 & \frac{7}{2} & 0 & -\frac{11}{10} \\
+                        0 & 1 & 0 & -\frac{13}{15} \\
+                        0 & 0 & 1 & \frac{11}{15}
+                        \end{bmatrix}
+                        \mathrel{\underset{\sim}{R}} 
+                        \begin{bmatrix}
+                        1 & 0 & 0 & \frac{29}{15} \\
+                        0 & 1 & 0 & -\frac{13}{15} \\
+                        0 & 0 & 1 & \frac{11}{15}
+                        \end{bmatrix}
+                        \)
+                    </p>
+                </details>
+                <a href="practice/p4.html">Practice this!</a>
             </details>
             <p></p>
         </section>
