@@ -484,10 +484,30 @@
                 </details>
                 <a href="practice/p4.html">Practice this!</a>
             </details>
+            <p>\(\text{This algorithm for reducing a matrix to RREF is called }\textbf{Guass-Jordan}\text{ elminiation.}\)</p>
+            <p>\(\text{When the matrix is only reduced to REF (steps 1-6) and back-substituion is employed, this is called }\textbf{Guassian}\text{ eliminination}\)</p>
             <p></p>
         </section>
+        <section id="Homogeneous Linear Systems" class="card">
+            <h2>Homogeneous Linear Systems</h2>
+            <p>\(\text{A system of linear equation is homogeneous if all the constant terms are zero or if it's in the following form: }\)</p>
+            <p>
+                \[
+                \begin{align*}
+                a_{11}x_1 + a_{12}x_2 + ... + a_{1n}x_n &= 0 \\
+                a_{21}x_1 + a_{22}x_2 + ... + a_{2n}x_n &= 0 \\
+                \vdots \qquad\qquad\qquad \vdots \qquad\qquad &\vdots \quad \vdots \\
+                a_{m1}x_1+a_{m2}x_2+...+a_{mn}x_n &= 0
+                \end{align*}
+                \]
+            </p>
+            <p>\(\text{Every homogeneous system of linear equations is consistent, having }(0,0,...,0)\text{ as a solution.}\)</p>
+            <p>\(\text{This means the system either only has the trivial solution or has infinitely many solutions in addition to the trivial solution.}\)</p>
+            <p><strong>Theorem 1.1: </strong>If a homogeneous linear system has \(n\) unknowns, and if the RREF of its augmented matrix has \(r\) nonzero rows, then the system has \(n-r\) free variables. </p>
+            <p><strong>Theorem 1.2: </strong>A homogeneous linear system with more unknownsthan equations has infinitely many solutions.</p>
+        </section>
     </main>
-
+    
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2025 Damian</p>
