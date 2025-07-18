@@ -8,6 +8,27 @@
         body { text-align: center; font-family: Arial, sans-serif; background: lightblue; }
         a { display: block; margin-top: 20px; font-size: 1.5rem; }
         #answerImage { display: none; margin: 0 auto; }
+
+        details {
+            background: lightblue;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        summary::marker {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        summary {
+            list-style-type: '🔒 ';
+        }
+
+        details[open]>summary {
+            list-style-type: '🔓 ';
+        }
     </style>
 </head>
 <body>

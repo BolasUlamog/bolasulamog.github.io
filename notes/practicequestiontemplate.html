@@ -1,34 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real analysis practice</title>
-    <script 
-    type="text/javascript" 
-    id="MathJax-script" 
-    async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+    <title>Practice Problem</title>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; background: lightblue; }
-        a { display: block; margin-top: 20px; font-size: 1.5rem; }
-        #answerImage { display: none; margin: 0 auto; }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: lightblue;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        #answerImage {
+            display: none;
+            margin: 0 auto;
+        }
+
+        details {
+            background: lightblue;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        summary::marker {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        summary {
+            list-style-type: '🔒 ';
+        }
+
+        details[open]>summary {
+            list-style-type: '🔓 ';
+        }
     </style>
+
 </head>
+
 <body>
-    <h1>Problem 1</h1>
-    <p>\(\text{Are the following fields?}\)</p>
-    <p>\(\text{1. The two elements 0 and 1 under standard addition and multiplication rules}\)</p>
-    <p>\(\text{2. The two elements 0 and 1;}\)</p>
-    <p>\(\text{Addition is defined by }0+0=1+1=0\text{ and }1+0=0+1=1\)</p>
-    <p>\(\text{Multiplication is defined by }0\cdot0=0\cdot1=1\cdot0=0\text{ and }1\cdot1=1\)</p>
-    <button onclick="document.getElementById('answerImage').style.display='block'">Reveal Answer</button>
-    <div style="text-align: center;">
-        <img id="answerImage" src="p.jpg" alt="Multivar" width="400" height="600">
-    </div>
+    <h1>Problem n</h1>
+    <p></p>
+    <details>
+        <summary>Click to reveal the answer</summary>
+        <p>Answer: </p>
+        <img id="answerImage" src="images/answer.png" alt="Answer Image">
+
+    </details>
     <a href="../">Back to Home</a>
     <a href="p2.html">Next Problem</a>
     <a href="../../../../practice/">Practice Problems Homepage</a>
 </body>
+
 </html>
