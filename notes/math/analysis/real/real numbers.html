@@ -108,6 +108,15 @@
                 width: 95%;
             }
         }
+
+        details {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -147,8 +156,37 @@
             <p>\(\text{Regarding properties }\textbf{(A) }\text{ through }\textbf{ (H)}\text{, a set with these properties is called an }\textbf{ordered field}\)</p>
             <p><li><a href="practice/p2.html">Practice this!</a></li></p>
         </section>
-        <section>
-            
+        <section id="supremum" class="card">
+            <h2>The Supremum of a Set</h2>
+            <p>\(\text{A set }S\text{ of real numbers is }\textbf{bounded above }\text{if there is a real number }b\text{ such that }x\leq{b}\text{ whenever }x\in{S}.\)</p>
+            <p>\(\text{This means: }\)</p>
+            <ul>
+                <li>\(b\text{ is an upper bound of }S\)</li>
+                <li>\(\text{If some } a>b\text{, }a\text{ is an upper bound of }S \text{ because of property }\textbf{(G)}\text{ (ordered fields are transitive)}\)</li>
+            </ul>
+            <p>\(\text{If }\beta\text{ is an upper bound of }S\text{, and there exists no number less than }\beta\text{ that is also a lower bound of }S\text{, then }\beta\text{ is a}\textbf{ supremum}\text{ of }S\)</p>
+            <p>\(\text{The notation for this is }\beta=\sup{S}\)</p>
+            <details>
+                <summary>Examples</summary>
+                <p>\(\text{Consider the example in which }S\text{ is the set of non-negative integers. }\)</p>
+                <ul>
+                    <li>\(\text{Since all }x\in{S}<{0}\text{, 0 is an upper bound of }S\)</li>
+                    <li>\(\text{There are also no upper bounds of }S\text{ that are less than 0 (per the definition of the set)}\)</li>
+                    <ul>
+                        <li>\(\text{If you subtract some number }\epsilon\text{ from 0, there will still be a larger negative number}\)</li>
+                    </ul>
+                    <li>\(\text{Therefore }\sup{S}=0\)</li>
+                    <li>\(\text{Now we know that for some set }S\text{, }\sup{S}\text{ isn't nessasarely in }S\)</li>
+                </ul>
+                <p>\(\text{Now consider the example in which }S\text{ is the set of negative integers}\)</p>
+                <ul>
+                    <li>\(\text{Since all }x\in{S}<{0}\text{, 0 is an upper bound of }S\)</li>
+                    <li>\(\text{However, }-1\text{ is also an upper bound of }S\text{, and }-1<{0}.\)</li>
+                    <li>\(\text{And }-2\text{ isn't an upper bound of }S\)</li>
+                    <li>\(\text{Therefore }\sup{S}=-1\)</li>
+                </ul>
+            </details>
+
         </section>
 
     <footer class="site-footer">
