@@ -648,22 +648,48 @@
             <p>\(\text{Observe the following partitioned matrices: }\)</p>
             <p>
                 \[
-                \begin{bmatrix}
-                a & b & c \\
+                A=\left[
+                \begin{array}{c & c & c|c}
+                a_{11} & a_{12} & a_{13} & a_{14}  \\
+                a_{21} & a_{22} & a_{23} & a_{24} \\
                 \hline
-                d & e & f \\
-                g & h & i \\
+                a_{31} & a_{32} & a_{33} & a_{34}
+                \end{array}
+                \right]=\begin{bmatrix}
+                A_{11} & A_{12} \\
+                A_{21} & A_{22}
                 \end{bmatrix}
                 \]
-            
                 \[
-                \begin{bmatrix}
-                a & b & \vline & c \\
-                d & e & \vline & f \\ \hline
-                g & h & \vline & i \\
+                B=\left[
+                \begin{array}{}
+                b_{11} & b_{12} & b_{13} & b_{14} \\
+                \hline
+                b_{21} & b_{22} & b_{23} & b_{24} \\
+                \hline
+                b_{31} & b_{32} & b_{33} & b_{34}
+                \end{array}
+                \right]=\begin{bmatrix}
+                \vec{b_{1}} \\
+                \vec{b_{2}} \\
+                \vec{b_{3}}
                 \end{bmatrix}
-                \]  
-            </p>          
+                \]
+                \[
+                C=\left[
+                \begin{array}{c|c}
+                c_{11} & c_{12} & c_{13} & c_{14} \\
+                c_{21} & c_{22} & c_{23} & c_{24} \\
+                c_{31} & c_{32} & c_{33} & c_{34}
+                \end{array}
+                \right]=\begin{bmatrix}
+                \vec{c_{1}} & \vec{c_{2}} & \vec{c_{3}} & \vec{c_{4}}
+                \end{bmatrix}
+                \]
+            </p>
+            <details>
+                <summary>Uses of Partioning</summary>
+            </details>
         </section>
     </main>
 
