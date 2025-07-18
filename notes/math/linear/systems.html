@@ -570,6 +570,76 @@
                 <p><strong>Definition 4: </strong> Let \(A\) be some matrix and \(c\) be some scalar. The product \(cA\) is the matrix obtained by multiplying each entry of \(A\) by \(c\)</p>
                 <p>\(\text{Using matrix notation, if }A=[a_{ij}], (cA)_{ij}=c(A)_{ij}=ca_{ij}\)</p>
                 <p><strong>Definition 5: </strong> The product of two matrices \(A\) and \(B\) is defined in the case where \(A\) is an \(m\times{r}\) matrix and \(B\) is an \(r\times{n}\) matrix. The product \(AB\) is the matrix obtained whose entry \(a_{ij}\) is equal to the sum of the products of the entries of the \(i\text{th}\) row of matrix \(A\) with the corresponding entries from column \(j\) of matrix \(B\)</p>
+                <p>\(\text{Using matrix notation, }(AB)_{ij}=a_{i1}b_{1j}+a_{i2}b_{2j}+a_{i3}b_{3j}+...+a_{ir}b_{rj}\)</p>
+                <details>
+                    <summary>\(\text{Examples of each matrix operation}\)</summary>
+                    <p>
+                        \[
+                        \text{Let }A=\begin{bmatrix}
+                        1 & 2 & 3 \\
+                        4 & 5 & 6
+                        \end{bmatrix},
+                        B=\begin{bmatrix}
+                        7 & 8 & 9 \\
+                        10 & 11 & 12
+                        \end{bmatrix},
+                        C=\begin{bmatrix}
+                        13 & 14 \\ 
+                        15 & 16 \\
+                        17 & 18
+                        \end{bmatrix}
+                        \]
+                    </p>
+                    <p>
+                        \[
+                        \text{Addition/Subtraction and scalar multiplication: }
+                        \]
+                        \(
+                        A+B=\begin{bmatrix}
+                        1+7 & 2+8 & 3+9 \\
+                        4+10 & 5+11 & 6+12
+                        \end{bmatrix}=\begin{bmatrix}
+                        8 & 10 & 12 \\
+                        14 & 16 & 18
+                        \end{bmatrix}
+                        \text{ and }A-B=\begin{bmatrix}
+                        1-7 & 2-8 & 3-9 \\
+                        4-10 & 5-11 & 6-12
+                        \end{bmatrix}=\begin{bmatrix}
+                        -6 & -6 & -6 \\
+                        -6 & -6 & -6
+                        \end{bmatrix}=-6\begin{bmatrix}
+                        1 & 1 & 1 \\
+                        1 & 1 & 1
+                        \end{bmatrix}
+                        \)
+                        \[
+                        \text{Matrix Multiplication: }
+                        \]
+                        \[
+                        AB \text{ is undefined since the number of columns in }A\text{ does not equal the number of rows in }B \\
+                        \]
+                        \[
+                        \text{However, }AC=\begin{bmatrix}
+                        1 & 2 & 3 \\
+                        4 & 5 & 6
+                        \end{bmatrix}\begin{bmatrix}
+                        13 & 14 \\
+                        15 & 16 \\
+                        17 & 18
+                        \end{bmatrix}\text{ which is }(2\times{3})\times{(3\times{2})}\text{ which results in a }2\times{2}\text{ matrix}
+                        \]
+                        \[
+                        AC=\begin{bmatrix}
+                        1\cdot13+ 2\cdot15+3\cdot17 & 1\cdot14+2\cdot16+3\cdot18 \\
+                        4\cdot13+5\cdot15+6\cdot17 & 4\cdot14+5\cdot16+6\cdot18
+                        \end{bmatrix}=\begin{bmatrix}
+                        94 & 108 \\
+                        229 & 264
+                        \end{bmatrix}\text{ but }CA\text{ is undefined. }
+                        \]
+                    </p>
+                </details>
             </details>
         </section>
     </main>
