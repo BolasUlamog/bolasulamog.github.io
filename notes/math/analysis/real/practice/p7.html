@@ -51,10 +51,14 @@
 
 <body>
     <h1>Problem 7</h1>
-    <p>\(\text{Prove that the rational numbers are dense in the reals}\)</p>
+    <p>\(\text{Prove that the irrational numbers are dense in the reals}\)</p>
     <details>
         <summary>Reveal Answer</summary>
-        <img src="p7.jpeg" alt="real analysis" width="400" height="600">
+        <p>\(\text{Since the rational numberes are dense in the reals (Thrm 1.4), there exists rational numbers }r_1\text{ and }r_2\text{ such that }a<{r_1}<{r_2}<{b}\text{ for some open interval }(a,b)\in\mathbb{R}\)</p>
+        <p>\(\text{We need to show there exists some irrational }\omega\in(r_1,r_2)\to{r_1}<\omega<{r_2}. \text{ Notice that }r_1+(r_2-r_1)=r_2\not\in(r_1,r_2)\text{ but }r_1+\lambda(r_2-r_1)\in(r_1,r_2), \lambda\in(0,1)\)</p>
+        <p>\(\text{Letting }\lambda\text{ be some irrational number, }r_1+\lambda(r_2-r_2)\text{ is irrational as well, and we can let }\omega=r_1+\lambda(r_2-r_1)\)</p>
+        <p>\(\text{We can also show this for the specific example }\lambda=\frac{1}{\sqrt{2}}\to\omega=r_1+\frac{1}{\sqrt{2}}(r_2-r_1)\in(r_1,r_2)\implies\text{ the irrationals are dense in the reals}\)</p>
+        <p>\(\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\blacksquare\)</p>
     </details>
     <a href="../">Back to Home</a>
     <a href="p8.html">Next Problem</a>
