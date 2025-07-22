@@ -51,30 +51,30 @@
 </head>
 
 <body>
-    <h1>Problem from 1995 Putnam</h1>
-    <p>\(\text{Let }\)</p>
-    <p>\(1. A\subset\mathbb{R}\text{, closed under }\times\)</p>
-    <p>\(2. B,C\text{ disjoint subsets of }A\)</p>
-    <p>\(3. A=B\cup{C}\)</p>
-    <p>\(4. x,y,z\in{B}\implies{xyz}\in{B}\)</p>
-    <p>\(5. x,y,z\in{C}\implies{xyz}\in{C}\)</p>
-    <p>\(\text{Prove (At least) one of }B,C\text{ closed under }\times\)</p>
+    <h1>1995 A-1</h1>
+    <p>Let \(S\) be a set of real numbers which is closed under
+        multiplication (that is, if \(a\) and \(b\) are in \(S\), then so is \(ab\)).
+        Let \(T\) and \(U\) be disjoint subsets of \(S\) whose union is
+        \(S\). Given that the product of any three (not necessarily
+        distinct) elements of \(T\) is in \(T\) and that the product of
+        any three elements of \(U\) is in \(U\), show that at least one
+        of the two subsets \(T\),\(U\) is closed under multiplication.</p>
     <details>
         <summary>Click to reveal the answer</summary>
-        <p>\(\text{Essentially we have to prove that either }b_1,b_2\in{B}\implies{b_1b_2\in{B}}\text{ or }c_1,c_2\in{C}\implies{c_1c_2\in{C}}\)</p>
+        <p>\(\text{Essentially we have to prove that either }t_1,t_2\in{T}\implies{t_1t_2\in{T}}\text{ or }u_1,u_2\in{U}\implies{u_1u_2\in{U}}\)</p>
         <p>\(\text{ We can attempt this using contradiction.}\)</p>
-        <p>\(\text{We can assume that there exists some }b_1,b_2\in{B}\text{ such that }b_1b_2\not\in{B}\text{ and some }c_1,c_2\in{C}\text{ such that }{c_1c_2\not\in{C}}\)</p>
-        <p>\(\text{Since }B\subset{A},C\subset{A}\text{ and }A\text{ is closed under }\times\text{, we know }b_1b_2\in{A}\text{ and }c_1c_2\in{A}\)</p>
-        <p>\(\text{Since }b_1b_2\in{A}\text{ and }b_1b_2\not\in{B},b_1b_2\in{C}\text{ since }B\text{ and }C\text{ are disjoint subsets of }A\text{ and }A=B\cup{C}\)</p>
-        <p>\(\text{Using the same logic, }c_1c_2\in{B}\)</p>
-        <p>\(\text{Using statement 5, since }b_1b_2,c_1,c_2\in{C},b_1b_2c_1c_2\in{C}\)</p>
-        <p>\(\text{However, since }b_1,b_2,c_1c_2\in{B},b_1b_2c_1c_2\in{B}\)</p>
-        <p>\(\text{Since }B\text{ and }C\text{ are disjoint this is a contradiction meaning at least one of the subsets is closed under }\times\)</p>
+        <p>\(\text{We can assume that there exists some }t_1,t_2\in{T}\text{ such that }t_1t_2\not\in{T}\text{ and some }u_1,u_2\in{U}\text{ such that }{u_1u_2\not\in{U}}\)</p>
+        <p>\(\text{Since }T\subset{S},U\subset{S}\text{ and }S\text{ is closed under }\times\text{, we know }t_1t_2\in{S}\text{ and }u_1u_2\in{S}\)</p>
+        <p>\(\text{Since }t_1t_2\in{S}\text{ and }t_1t_2\not\in{T},t_1t_2\in{U}\text{ since }T\text{ and }U\text{ are disjoint subsets of }S\text{ and }S=T\cup{U}\)</p>
+        <p>\(\text{Using the same logic, }u_1u_2\in{T}\)</p>
+        <p>\(\text{Using statement 5, since }t_1t_2,u_1,u_2\in{U},t_1t_2u_1u_2\in{U}\)</p>
+        <p>\(\text{However, since }t_1,t_2,u_1u_2\in{T},t_1t_2u_1u_2\in{T}\)</p>
+        <p>\(\text{Since }T\text{ and }U\text{ are disjoint this is a contradiction meaning at least one of the subsets is closed under }\times\)</p>
         <p>\(\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\blacksquare\)</p>
         <img id="answerImage" src="images/answer.png" alt="Answer Image">
 
     </details>
-    <a href="../">Back to Home</a>
+    <a href="../">Tack to Home</a>
     <a href="p2.html">Next Problem</a>
 </body>
 
