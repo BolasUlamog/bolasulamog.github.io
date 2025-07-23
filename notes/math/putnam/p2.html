@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Putnam Problem </title>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: lightblue;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        #answerImage {
+            display: none;
+            margin: 0 auto;
+        }
+
+        details {
+            background: lightblue;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        summary::marker {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        summary {
+            list-style-type: '🔒 ';
+        }
+
+        details[open]>summary {
+            list-style-type: '🔓 ';
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>1995 A-2</h1>
+    <p>For what pairs \((a,b)\) of positive real numbers does the improper integral</p>
+    <p>\[\int_b^\infty\Biggl(\sqrt{\sqrt{x+a}-\sqrt{x}}-\sqrt{\sqrt{x}-\sqrt{x-b}}\Biggr)dx\] converge?</p>
+    <details>
+        <summary>Click to reveal the answer</summary>
+        <p>\(\text{We can first attempt to simplify the integrand, since }\sqrt{x+a}-\sqrt{x}=\frac{a}{\sqrt{x}\sqrt{x+a}}\)</p>
+        <p>\[\text{Using this we eventually have }\int_b^\infty\Biggl(\sqrt{\sqrt{x+a}-\sqrt{x}}-\sqrt{\sqrt{x}-\sqrt{x-b}}\Biggr)dx=\int_b^\infty\Biggl(\sqrt{\frac{a}{\sqrt{x}\sqrt{x+a}}}-\sqrt{\frac{b}{\sqrt{x}\sqrt{x-b}}}\Biggr)dx\]</p>
+        <p>\[=\int_b^\infty\Biggl(\sqrt{\frac{a}{\sqrt{x^2+ax}}}-\sqrt{\frac{b}{\sqrt{x^2-bx}}}\Biggr)dx=\int_b^\infty\Biggl(\frac{\sqrt{a}}{\sqrt[4]{x^2+ax}}-\frac{\sqrt{b}}{\sqrt[4]{x^2-bx}}\Biggr)dx=\int_b^\infty\Biggl(\frac{\sqrt{a}}{\sqrt{x}\sqrt[4]{1+\frac{a}{x}}}-\frac{\sqrt{b}}{\sqrt{x}\sqrt[4]{1-\frac{b}{x}}}\Biggr)dx\]</p>
+        <p>\[=\int_b^\infty\frac{1}{x^{1/2}}\Biggl(\frac{\sqrt{a}}{\sqrt[4]{1+\frac{a}{x}}}-\frac{\sqrt{b}}{\sqrt[4]{1-\frac{b}{x}}}\Biggr)dx\]</p>
+        <p>\[\text{Now consider the taylor series expansion of }(1+t)^{\alpha}\]</p>
+        <p>\[f(t)=(1+t)^{\alpha},f(0)=1; f'(t)=\alpha(1+t)^{\alpha-1},f'(0)=\alpha,...\]</p>
+        <p>\[\text{Since when }|t|\ll{1}\text{ (as }x \text{ approaches }\infty\text{)},(1+\frac{a}{x})^{-1/4}\approx1+\alpha{t}=1-\frac{a}{4x}\text{ and }(1-\frac{b}{x})^{-1/4}\approx1+\frac{b}{4x}\]</p>
+        <p>\[\implies\int_b^\infty\frac{1}{x^{1/2}}\Biggl(\frac{\sqrt{a}}{\sqrt[4]{1+\frac{a}{x}}}-\frac{\sqrt{b}}{\sqrt[4]{1-\frac{b}{x}}}\Biggr)dx\approx\int_b^\infty\frac{1}{x^{1/2}}\Biggl(\sqrt{a}\Bigl(1-\frac{a}{4x}\Bigr)-\sqrt{b}\Bigl(1+\frac{b}{4x}\Bigr)\Biggr)dx\]</p>
+        <p>\[\text{Note }\sqrt{a}\Bigl(1-\frac{a}{4x}\Bigr)-\sqrt{b}\Bigl(1+\frac{b}{4x}\Bigr)=\Bigl(\sqrt{a}-\frac{a^{3/2}}{4x}\Bigr)-\Bigl(\sqrt{b}+\frac{b^{3/2}}{4x}\Bigr)=\sqrt{a}-\sqrt{b}-\frac{a^{3/2}+b^{3/2}}{4x}\]</p>
+        <p>\[\implies\int_b^\infty\Biggl(\sqrt{\sqrt{x+a}-\sqrt{x}}-\sqrt{\sqrt{x}-\sqrt{x-b}}\Biggr)dx\approx\int_b^\infty\frac{\sqrt{a}-\sqrt{b}}{x^{1/2}}-\frac{a^{3/2}+b^{3/2}}{4x^{3/2}}+...dx\]</p>
+        <P>\[\text{ (Notice that any power after that, if you do the taylor expansion farther is in the form }\frac{p(a,b)}{x^n},\text{ where }n\geq2\text{, which converges)}\]</p>
+        <p>\[\text{So in order for }\int_b^\infty\Biggl(\sqrt{\sqrt{x+a}-\sqrt{x}}-\sqrt{\sqrt{x}-\sqrt{x-b}}\Biggr)dx\text{ to converge, }\sqrt{a}=\sqrt{b}\implies{a}=b\]</p>
+        <p>\(\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\blacksquare\)</p>
+        <img id="answerImage" src="images/answer.png" alt="Answer Image">
+
+    </details>
+    <a href="../">Back to Home</a>
+    <a href="p2.html">Next Problem</a>
+</body>
+
+</html>
