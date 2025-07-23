@@ -52,10 +52,75 @@
 
 <body>
     <h1>1996 B-4</h1>
-    <p></p>
+    <p>For any square matrix \(A\), we can define \(\sin{A}\) by the </p>
+    <p>usual power series: </p>
+    <p>\[\sin{A}=\sum_{n=0}^\infty{\frac{(-1)^n}{(2n+1)!}A^{2n+1}}\]</p>
+    <p>Prove or disproof: There exists a \(2\times{2}\) matrix with</p>
+    <p>real entries such that </p>
+    <p>\[\sin{A}=\begin{bmatrix}
+        0 & 1996 \\
+        0 & 1
+    \end{bmatrix}\]</p>
     <details>
         <summary>Click to reveal the answer</summary>
-        <p></p>
+        <p>\(\text{We can start this proof by listing a series of known trig identities that may be useful: }\)</p>
+        <p>\(\cos{A}=\sum_{n=0}^\infty{\frac{(-1)^n}{(2n1)!}A^{2n}},\sin^2A+\cos^2A=I=\begin{bmatrix}
+            1 & 0 \\
+            0 & 1
+        \end{bmatrix}
+            \)</p>
+        <p>\(\text{Naturally, }\sin^2{A}=\begin{bmatrix}
+            1 & 1996 \\
+            0 & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+            1 & 1996 \\
+            0 & 1
+            \end{bmatrix}=
+            \begin{bmatrix}
+            1 & 3992 \\
+            0 & 1
+            \end{bmatrix}
+            \implies
+            \cos^2{A}=\begin{bmatrix}
+            0 & -3992 \\
+            0 & 0
+            \end{bmatrix}\)
+        </p>
+        <p>\(\text{However, there is no matrix }B=\sin{A}\text{ such that }B^2=\begin{bmatrix}
+            0 & -3992 \\ 
+            0 & 0 
+            \end{bmatrix}\)
+        </p>
+        <p>
+            \(\text{We can show this because let }
+            \begin{bmatrix}
+                a & b \\
+                c & d
+            \end{bmatrix}
+            \begin{bmatrix} 
+                a & b \\
+                c & d
+            \end{bmatrix}
+            =\begin{bmatrix}
+                a^2+bc & ab+bd \\
+                ac+cd & bc+d^2
+            \end{bmatrix}
+            =\begin{bmatrix}
+                0 & \beta \\
+                0 & 0
+            \end{bmatrix}
+            \)
+        </p>
+        <p>\(\implies{a^2+bc=0, b(a+d)=\beta,c(a+d)=0,bc+d^2=0}\)</p>
+        <p>\(\text{Since }b(a+d)=\beta\not=0,\text{ neither }b\text{ nor }(a+d)=0\)</p>
+        <p>\(\text{This means }c=0\implies{a}=0\implies{d}=0\)</p>
+        <p>\(\text{But since }a+d\not=0,\text{ this is a contradiction so there is no }A\text{ such that }\sin{A}=\begin{bmatrix}
+            0 & 1996 \\
+            0 & 1
+        \end{bmatrix}\)</p>
+        <p>\(\text{*We can also say that }\sin{A}\text{ is a nilpotent matrix.}\)</p>
+
         <img id="answerImage" src="images/answer.png" alt="Answer Image">
 
     </details>
