@@ -52,14 +52,19 @@
 
 <body>
     <h1>1999 A-4</h1>
-    <p></p>
+    <p>Sum the series: </p>
+    <p>\[\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m^2n}{3^m(n3^m+m3^n)}\]</p>
     <details>
         <summary>Click to reveal the answer</summary>
-        <p>Sum the series: </p>
-        <p>\(\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m^2n}{3^m(n3^m+m3^n)}\)</p>
-
-        <img id="answerImage" src="images/answer.png" alt="Answer Image">
-
+        <p>\[\text{First, we can simplify and let }S=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m^2n}{3^m(n3^m+m3^n)}=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{\frac{m^2n}{m^2n}}{\frac{3^m}{m}\frac{(n3^m+m3^n)}{mn}}=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{1}{\frac{3^m}{m}(\frac{3^m}{m}+\frac{3^n}{n})}\]</p>
+        <p>\[\text{Letting }x=\frac{3^m}{m}\text{ and }y=\frac{3^n}{n},S=\sum\sum\frac{1}{x(x+y)}\text{ (Not indexing cus it will be undone eventually)}\]</p>
+        <p>\[\text{Notice that if we switch the roles of }x\text{ and }y,S=\sum\sum\frac{1}{y(y+x)}=\sum\sum\frac{1}{x(x+y)}\]</p>
+        <p>\[\implies{S}=\frac{1}{2}\sum\sum\frac{1}{x(x+y)}+\frac{1}{y(x+y)}=\frac{1}{2}\sum\sum\frac{x+y}{xy(x+y)}=\frac{1}{2}\sum\sum\frac{1}{xy}\]</p>
+        <p>\[=\frac{1}{2}\sum\sum\frac{1}{xy}=\frac{1}{2}\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m}{3^m}\cdot\frac{n}{3^n}=\frac{1}{2}\Bigl(\sum_{m=1}^{\infty}\frac{m}{3^m}\Bigr)^2\]</p>
+        <p>\[\sum_{m=1}^{\infty}\frac{m}{3^m}=\frac{1}{3}+2\cdot\frac{1}{9}+3\cdot\frac{1}{27}+4\cdot\frac{1}{81}=\sum_{x=1}^{\infty}\frac{1}{3^x}+\sum_{x=2}^{\infty}\frac{1}{3^x}+\sum_{x=3}^{\infty}\frac{1}{3^x}+...\]</p>
+        <p>\[=\sum_{x=1}^{\infty}\frac{1}{3^x}+\frac{1}{3}\sum_{x=1}^{\infty}\frac{1}{3^x}+\frac{1}{9}\sum_{x=1}^{\infty}\frac{1}{3^x}+...=\sum_{x=0}^{\infty}\frac{1}{3^x}\sum_{x=1}^{\infty}\frac{1}{3^x}=\frac{1}{3}\Bigl(\sum_{x=0}^{\infty}\frac{1}{3^x}\Bigr)^2=\frac{1}{3}\cdot\frac{9}{4}=\frac{3}{4}\]</p>
+        <p>\[\implies{S}=\frac{1}{2}\cdot\Bigl(\frac{3}{4}\Bigr)^2=\frac{1}{2}\cdot\frac{9}{16}=\frac{9}{32}\]</p>
+        <p>\(\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\blacksquare\)</p>
     </details>
     <a href="../">Back to Home</a>
     <a href="p4.html">Next Problem</a>
