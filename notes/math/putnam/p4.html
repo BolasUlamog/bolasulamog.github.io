@@ -51,20 +51,39 @@
 </head>
 
 <body>
-    <h1>1999 A-4</h1>
-    <p>Sum the series: </p>
-    <p>\[\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m^2n}{3^m(n3^m+m3^n)}\]</p>
+    <h1>1999 A-1</h1>
+    <p>\(\text{Find polynomials }f(x),g(x),\text{ and }h(x),\text{ if they exist, such }\)</p>
+    <p>\(\text{that for all }x,\)</p>
+    <p>\[
+        |f(x)|-|g(x)|+h(x)=\Biggl\{
+        \begin{align*}
+        -1 \qquad&\text{if }x<-1 \\
+        3x+2 \:&\text{if}-1\leq{x}\leq0 \\
+        -2x+2 \:&\text{if }x>0 \\
+        \end{align*}
+        \]
+    </p>
     <details>
         <summary>Click to reveal the answer</summary>
-        <p>\[\text{First, we can simplify and let }S=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m^2n}{3^m(n3^m+m3^n)}=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{\frac{m^2n}{m^2n}}{\frac{3^m}{m}\frac{(n3^m+m3^n)}{mn}}=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{1}{\frac{3^m}{m}(\frac{3^m}{m}+\frac{3^n}{n})}\]</p>
-        <p>\[\text{Letting }x=\frac{3^m}{m}\text{ and }y=\frac{3^n}{n},S=\sum\sum\frac{1}{x(x+y)}\text{ (Not indexing cus it will be undone eventually)}\]</p>
-        <p>\[\text{Notice that if we switch the roles of }x\text{ and }y,S=\sum\sum\frac{1}{y(y+x)}=\sum\sum\frac{1}{x(x+y)}\]</p>
-        <p>\[\implies{S}=\frac{1}{2}\sum\sum\frac{1}{x(x+y)}+\frac{1}{y(x+y)}=\frac{1}{2}\sum\sum\frac{x+y}{xy(x+y)}=\frac{1}{2}\sum\sum\frac{1}{xy}\]</p>
-        <p>\[=\frac{1}{2}\sum\sum\frac{1}{xy}=\frac{1}{2}\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{m}{3^m}\cdot\frac{n}{3^n}=\frac{1}{2}\Bigl(\sum_{m=1}^{\infty}\frac{m}{3^m}\Bigr)^2\]</p>
-        <p>\[\sum_{m=1}^{\infty}\frac{m}{3^m}=\frac{1}{3}+2\cdot\frac{1}{9}+3\cdot\frac{1}{27}+4\cdot\frac{1}{81}=\sum_{x=1}^{\infty}\frac{1}{3^x}+\sum_{x=2}^{\infty}\frac{1}{3^x}+\sum_{x=3}^{\infty}\frac{1}{3^x}+...\]</p>
-        <p>\[=\sum_{x=1}^{\infty}\frac{1}{3^x}+\frac{1}{3}\sum_{x=1}^{\infty}\frac{1}{3^x}+\frac{1}{9}\sum_{x=1}^{\infty}\frac{1}{3^x}+...=\sum_{x=0}^{\infty}\frac{1}{3^x}\sum_{x=1}^{\infty}\frac{1}{3^x}=\frac{1}{3}\Bigl(\sum_{x=0}^{\infty}\frac{1}{3^x}\Bigr)^2=\frac{1}{3}\cdot\frac{9}{4}=\frac{3}{4}\]</p>
-        <p>\[\implies{S}=\frac{1}{2}\cdot\Bigl(\frac{3}{4}\Bigr)^2=\frac{1}{2}\cdot\frac{9}{16}=\frac{9}{32}\]</p>
-        <p>\(\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\blacksquare\)</p>
+        <p>\(\text{Since each part of the piece wise is linear, we can first try to assume that }f(x),g(x),h(x)\text{ are all linear functions. }\)</p>
+        <p>\(\text{First we can simply denote }\mathcal{R}\text{ as the current "state" of the piecewise: }\mathcal{R}_1(x)=-1,\mathcal{R}_2(x)=3x+2,\text{etc.}\)</p>
+        <p>\(\text{Since }\mathcal{R}_2-\mathcal{R}_1=3x+3,\text{ there is a "jump" of }3x+3\)</p>
+        <p>\(\text{Notice how the function }|x|-2\text{ has a jump from }-x\text{ to }x,\text{ or a jump of }2x\)</p>
+        <p>\[\text{This means }f(x)=\frac{|\Delta\mathcal{R}|}{2}=\frac{3x+3}{2}\text{ (not }g(x)\text{ since the change was positive)}\]</p>
+        <p>\[\text{We can apply the similar logic for }g(x): \mathcal{R}_3-\mathcal{R}_2=-5x\implies{g(x)}=\frac{5x}{2}\]</p>
+        <p>\[
+            \text{So far...}
+            \Biggl\lvert\frac{3x+3}{2}\Biggr\lvert-\Biggl\lvert\frac{5x}{2}\Biggr\lvert+h(x)=\Biggl\{
+            \begin{align*}
+            -1 \qquad&\text{if }x<-1 \\
+            3x+2 \:&\text{if}-1\leq{x}\leq0 \\
+            -2x+2 \:&\text{if }x>0 \\
+            \end{align*}
+            \]
+        </p>
+        <p>\[\text{Now we find an }h(x)\text{ such that }h(x)=-1-|f(x)|+|g(x)|\text{ (when }x<-1\text{)}\]</p>
+        <p>\[\implies{h(x)}=-1-\frac{5x}{2}+\frac{3x+3}{2}=-x+\frac{1}{2}\]</p>
+        <p></p>
     </details>
     <a href="../">Back to Home</a>
     <a href="p4.html">Next Problem</a>
