@@ -3,15 +3,46 @@
 <head>
     <title>Cookie Puzzle</title>
     <script>
+        // Set cookie when page loads
+        window.onload = function() {
+            // Set expiration date (7 days from now)
+            const daysToExpire = 7;
+            const date = new Date();
+            date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            
+            // Create the cookie
+            document.cookie = 'hello=there; ${expires}; path=/';
+            
+            // Update status
+            document.getElementById('cookieStatus').innerHTML = 
+                'Cookie set automatically!<br>Name: hello<br>Value: there<br>Expires: ${date.toLocaleString()}';
+        };
+
         function setCookie() {
-            const r = "aGVsbG8=";
-            const s = "dGhlIHNlY3JldCBpcyA=";
-            const t = "J2JhbmFuYXMgYXJlIG5vdCB3aGF0IHRoZXkgc2VlbSc=";
-            const msg = atob(r + s + t);
-            document.cookie = "_ga=GA1.2.${btoa(msg)}; max-age=31536000";
+            // Get the cookie name and value from the form
+            const cookieName = document.getElementById('cookieName').value || 'testCookie';
+            const cookieValue = document.getElementById('cookieValue').value || 'testValue';
+            
+            // Set expiration date (7 days from now)
+            const daysToExpire = 7;
+            const date = new Date();
+            date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            
+            // Create the cookie
+            document.cookie = '${cookieName}=${cookieValue}; ${expires}; path=/';
+            
+            // Show confirmation
+            document.getElementById('cookieStatus').innerHTML = 
+                'Cookie set!<br>Name: ${cookieName}<br>Value: ${cookieValue}<br>Expires: ${date.toLocaleString()}';
         }
-        document.cookie = "username=John Doe"; 
-        window.onload = setCookie;
+        
+        function checkCookies() {
+            const cookies = document.cookie;
+            document.getElementById('cookieStatus').innerHTML = 
+                cookies ? 'Current cookies: ${cookies}' : "No cookies found";
+        }
     </script>
     <style>
         body {
