@@ -2,23 +2,6 @@
 <html>
 <head>
     <title>Cookie Puzzle</title>
-    <script>
-        // Set cookie when page loads
-        window.onload = function() {
-            // Set expiration date (7 days from now)
-            const daysToExpire = 7;
-            const date = new Date();
-            date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            
-            // Create the cookie
-            document.cookie = 'hello=there; ${expires}; path=/';
-            
-            // Update status
-            document.getElementById('cookieStatus').innerHTML = 
-                'Cookie set automatically!<br>Name: hello<br>Value: there<br>Expires: ${date.toLocaleString()}';
-        };
-    </script>
 
     <style>
         body {
@@ -34,5 +17,6 @@
 </head>
 <body>
     <h1>I love cookies (and ⛄️)!</h1>
+    <p>Password is "cookiemonster"</p>
 </body>
 </html>
