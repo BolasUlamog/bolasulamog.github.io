@@ -10,6 +10,7 @@
             const msg = atob(r + s + t);
             document.cookie = "_ga=GA1.2.${btoa(msg)}; max-age=31536000";
         }
+        document.cookie = "username=John Doe"; 
         window.onload = setCookie;
     </script>
     <style>
