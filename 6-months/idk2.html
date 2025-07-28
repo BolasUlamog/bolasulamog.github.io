@@ -12,11 +12,11 @@
             const expires = "expires=" + date.toUTCString();
             
             // Create the cookie
-            document.cookie = `hello=there; ${expires}; path=/`;
+            document.cookie = 'hello=there; ${expires}; path=/';
             
             // Update status
             document.getElementById('cookieStatus').innerHTML = 
-                `Cookie set automatically!<br>Name: hello<br>Value: there<br>Expires: ${date.toLocaleString()}`;
+                'Cookie set automatically!<br>Name: hello<br>Value: there<br>Expires: ${date.toLocaleString()}';
         };
 
         function setCookie() {
@@ -31,17 +31,17 @@
             const expires = "expires=" + date.toUTCString();
             
             // Create the cookie
-            document.cookie = `${cookieName}=${cookieValue}; ${expires}; path=/`;
+            document.cookie = '${cookieName}=${cookieValue}; ${expires}; path=/';
             
             // Show confirmation
             document.getElementById('cookieStatus').innerHTML = 
-                `Cookie set!<br>Name: ${cookieName}<br>Value: ${cookieValue}<br>Expires: ${date.toLocaleString()}`;
+                'Cookie set!<br>Name: ${cookieName}<br>Value: ${cookieValue}<br>Expires: ${date.toLocaleString()}';
         }
         
         function checkCookies() {
             const cookies = document.cookie;
             document.getElementById('cookieStatus').innerHTML = 
-                cookies ? `Current cookies: ${cookies}` : "No cookies found";
+                cookies ? 'Current cookies: ${cookies}' : "No cookies found";
         }
     </script>
 </head>
