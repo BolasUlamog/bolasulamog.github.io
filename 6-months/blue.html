@@ -1,41 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>I like cookies :)</title>
+    <title>Cookie Puzzle</title>
     <script>
-        // Set cookie clue
-        document.cookie = "clue=67 104 101 99 107 32 110 101 116 119 111 114 107 32 116 97 98; path=/; max-age=3600";
-        
-        // Make a network request with the hidden URL
-        window.onload = function() {
-            fetch("https://bolasulamog.github.io/six-months/98qwcer7n", {
-                method: 'HEAD', // Only fetch headers, not content
-                headers: {
-                    "X-Secret-Location": "https://bolasulamog.github.io/six-months/98qwcer7n",
-                    "X-Clue": "The real treasure is in the headers"
-                }
-            }).catch(() => {}); // Silently fail (will still show in Network tab)
-        };
+        // Set cookie with ASCII hint about Network tab
+        document.cookie = "clue=01000011 01101000 01100101 01100011 01101011 00100000 01110100 01101000 01100101 00100000 01001110 01100101 01110100 01110111 01101111 01110010 01101011 00100000 01110100 01100001 01100010; path=/; max-age=3600";
     </script>
     <style>
         body {
             background-image: url('snowman.html.jpg');
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
+            margin: center;
         }
         h1 {
             text-align: center;
             color: yellow;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            background-color: rgba(0,0,0,0.5);
-            padding: 20px;
-            border-radius: 10px;
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
@@ -48,14 +27,15 @@
                 ?.split('=')[1];
             
             if (clue) {
-                alert(decodeURIComponent(clue) + "\n\n(Look for the failed request in Network tab)");
+                // Convert binary to text
+                const text = clue.split(' ').map(bin => 
+                    String.fromCharCode(parseInt(bin, 2))
+                ).join('');
+                alert(text); // Will show "Check the Network tab"
             } else {
                 alert("No clues found. Enable cookies!");
             }
         }
-        
-        // Auto-show cookie hint after 5 seconds if no interaction
-        setTimeout(checkCookie, 5000);
     </script>
 </body>
 </html>
