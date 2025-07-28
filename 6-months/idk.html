@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secret Message</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        #secretButton {
+            background: #000;
+            color: #000;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        #secretButton:hover {
+            color: #fff; /* Only reveals it's a button on hover */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Invisible button (hover to barely see) -->
+<button id="secretButton">.........</button>
+
+<!-- Empty container for decrypted content -->
+<div id="messageContainer"></div>
+
+<script>
+    // The encrypted message (pre-encrypted using AES-256)
+    // This is NOT the original message - it's already encrypted
+    const encryptedMessage = "U2FsdGVkX19v5G4gRG9nZSB8aGJzHp9R3q5XQ3JfZ+Y0ZJ5AeM4="; 
+    
+    document.getElementById('secretButton').addEventListener('click', function() {
+        const password = prompt("Enter the password (hint: our special date MMDD):");
+        
+        try {
+            // Decrypt with CryptoJS
+            const decrypted = CryptoJS.AES.decrypt(
+                encryptedMessage,
+                password
+            ).toString(CryptoJS.enc.Utf8);
+            
+            if (!decrypted) throw new Error();
+            
+            document.getElementById('messageContainer').innerHTML = decrypted;
+        } catch (e) {
+            alert("Wrong password! Try again.");
+        }
+    });
+</script>
+</body>
+</html>
