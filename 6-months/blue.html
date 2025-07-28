@@ -18,32 +18,8 @@
             document.getElementById('cookieStatus').innerHTML = 
                 'Cookie set automatically!<br>Name: hello<br>Value: there<br>Expires: ${date.toLocaleString()}';
         };
-
-        function setCookie() {
-            // Get the cookie name and value from the form
-            const cookieName = document.getElementById('cookieName').value || 'testCookie';
-            const cookieValue = document.getElementById('cookieValue').value || 'testValue';
-            
-            // Set expiration date (7 days from now)
-            const daysToExpire = 7;
-            const date = new Date();
-            date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            
-            // Create the cookie
-            document.cookie = '${cookieName}=${cookieValue}; ${expires}; path=/';
-            
-            // Show confirmation
-            document.getElementById('cookieStatus').innerHTML = 
-                'Cookie set!<br>Name: ${cookieName}<br>Value: ${cookieValue}<br>Expires: ${date.toLocaleString()}';
-        }
-        
-        function checkCookies() {
-            const cookies = document.cookie;
-            document.getElementById('cookieStatus').innerHTML = 
-                cookies ? 'Current cookies: ${cookies}' : "No cookies found";
-        }
     </script>
+
     <style>
         body {
             background-image: url('snowman.html.jpg');
