@@ -20,22 +20,5 @@
 </head>
 <body>
     <h1>I love cookies (and ⛄️)!</h1>
-    <script>
-        function checkCookie() {
-            const clue = document.cookie.split('; ')
-                .find(row => row.startsWith('clue='))
-                ?.split('=')[1];
-            
-            if (clue) {
-                // Convert binary to text
-                const text = clue.split(' ').map(bin => 
-                    String.fromCharCode(parseInt(bin, 2))
-                ).join('');
-                alert(text); // Will show "Check the Network tab"
-            } else {
-                alert("No clues found. Enable cookies!");
-            }
-        }
-    </script>
 </body>
 </html>
