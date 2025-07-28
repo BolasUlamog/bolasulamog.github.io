@@ -312,20 +312,16 @@
         }
     </style>
     <script>
-        // Set cookie when page loads
         window.onload = function() {
-            // Set expiration date (7 days from now)
-            const daysToExpire = 7;
+            const daysToExpire = 1;
             const date = new Date();
             date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
             const expires = "expires=" + date.toUTCString();
             
-            // Create the cookie
-            document.cookie = 'hello=there; ${expires}; path=/';
+            document.cookie = 'snowball=fight; ${expires}; path=/';
             
-            // Update status
             document.getElementById('cookieStatus').innerHTML = 
-                'Cookie set automatically!<br>Name: hello<br>Value: there<br>Expires: ${date.toLocaleString()}';
+                'Cookie set automatically!<br>Name: snowball<br>Value: fight<br>Expires: ${date.toLocaleString()}';
         };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
