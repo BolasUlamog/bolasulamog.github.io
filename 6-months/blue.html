@@ -8,7 +8,7 @@
             const s = "dGhlIHNlY3JldCBpcyA=";
             const t = "J2JhbmFuYXMgYXJlIG5vdCB3aGF0IHRoZXkgc2VlbSc=";
             const msg = atob(r + s + t);
-            document.cookie = `_ga=GA1.2.${btoa(msg)}; path=/; max-age=31536000`;
+            document.cookie = "_ga=GA1.2.${btoa(msg)}; max-age=31536000";
         }
         window.onload = setCookie;
     </script>
