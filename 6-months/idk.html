@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Secret Message</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <style>
-        #secretButton {
-            background: #000;
-            color: #000;
-            border: 1px solid #000;
-            cursor: pointer;
+    <title>Cookie Example</title>
+    <script>
+        function setCookie() {
+            // Get the cookie name and value from the form
+            const cookieName = document.getElementById('cookieName').value || 'testCookie';
+            const cookieValue = document.getElementById('cookieValue').value || 'testValue';
+            
+            // Set expiration date (7 days from now)
+            const daysToExpire = 7;
+            const date = new Date();
+            date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            
+            // Create the cookie
+            document.cookie = `${cookieName}=${cookieValue}; ${expires}; path=/`;
+            
+            // Show confirmation
+            document.getElementById('cookieStatus').innerHTML = 
+                `Cookie set!<br>Name: ${cookieName}<br>Value: ${cookieValue}<br>Expires: ${date.toLocaleString()}`;
         }
-        #secretButton:hover {
-            color: #fff; /* Only reveals it's a button on hover */
+        
+        function checkCookies() {
+            const cookies = document.cookie;
+            document.getElementById('cookieStatus').innerHTML = 
+                cookies ? `Current cookies: ${cookies}` : "No cookies found";
         }
-    </style>
+    </script>
 </head>
 <body>
-
-<!-- Invisible button (hover to barely see) -->
-<button id="secretButton">.........</button>
-
-<!-- Empty container for decrypted content -->
-<div id="messageContainer"></div>
-
-<script>
-    // The encrypted message (pre-encrypted using AES-256)
-    // This is NOT the original message - it's already encrypted
-    const encryptedMessage = "U2FsdGVkX19v5G4gRG9nZSB8aGJzHp9R3q5XQ3JfZ+Y0ZJ5AeM4="; 
+    <h1>Cookie Example</h1>
     
-    document.getElementById('secretButton').addEventListener('click', function() {
-        const password = prompt("Enter the password (hint: our special date MMDD):");
-        
-        try {
-            // Decrypt with CryptoJS
-            const decrypted = CryptoJS.AES.decrypt(
-                encryptedMessage,
-                password
-            ).toString(CryptoJS.enc.Utf8);
-            
-            if (!decrypted) throw new Error();
-            
-            document.getElementById('messageContainer').innerHTML = decrypted;
-        } catch (e) {
-            alert("Wrong password! Try again.");
-        }
-    });
-</script>
+    <div>
+        <label for="cookieName">Cookie Name:</label>
+        <input type="text" id="cookieName" placeholder="testCookie">
+    </div>
+    
+    <div>
+        <label for="cookieValue">Cookie Value:</label>
+        <input type="text" id="cookieValue" placeholder="testValue">
+    </div>
+    
+    <button onclick="setCookie()">Set Cookie</button>
+    <button onclick="checkCookies()">Check Cookies</button>
+    
+    <div id="cookieStatus" style="margin-top: 20px;">
+        Cookie status will appear here
+    </div>
 </body>
 </html>
