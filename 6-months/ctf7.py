@@ -3,7 +3,7 @@ import hashlib
 import time
 
 def generate_flag():
-    random.seed(int(time.time()))  # What can you get out of this? (Note it uses a seeded flag)
+    random.seed(int(time.time()))  # What can you get out of this? (Note it uses a seeded pseudo-random generator)
     flag = f"flag{{{'%064x' % random.getrandbits(256)}}}"  # 64-char hex
     return flag, hashlib.sha256(flag.encode()).hexdigest()
 
