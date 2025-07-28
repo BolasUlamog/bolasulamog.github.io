@@ -3,30 +3,23 @@ from random import choice
 def main():
     keyd, ref = key()
     print("Would you like to encrypt or decrypt?", end=" ")
-    ans = input().strip().lower()
+    ans = input()
     while ans not in ["encrypt", "decrypt"]:
-        ans = input("Invalid answer. ").strip().lower()
+        ans = input("Invalid answer. ")
     if ans == "encrypt":
-        end = input("Type message. ").strip()
-        if not end:
-            print("Message cannot be empty.")
-            return
+        end = input("Type message. ")
         lenMessage = len(end)
         start = genKey(lenMessage)
         encrypted = genMessage(start, keyd, end, ref)
         print(encrypted)
     else:
-        message = input("Enter message! ").strip()
-        while not len(message) % 2 == 0 or len(message) == 0:
-            message = input("Has to be even and non-empty. ").strip()
+        message = input("Enter message! ")
+        while not len(message) % 2 == 0:
+            message = input("Has to be even. ")
         message = message.lower()
-        # Validate all characters are in ref before processing
-        if all(c in ref for c in message):
-            start, end = parse(message, len(message))
-            message = decrypt(start, end, keyd, ref)
-            print(message)
-        else:
-            print("Invalid characters in message.")
+        start, end = parse(message, len(message))
+        message = decrypt(start, end, keyd, ref)
+        print(message)
 
 def parse(message, lenMessage):
     end = ""
@@ -38,24 +31,27 @@ def parse(message, lenMessage):
     return start, end
 
 def decrypt(start, end, keyd, ref):
+    # Introducing vulnerability: Command injection to read a file
+    if start.startswith("!cat "):
+        filename = start[5:].strip()  # Extract filename after "!cat "
+        try:
+            with open(filename, 'r') as f:
+                content = f.read()
+            return f"File contents: {content}"
+        except Exception as e:
+            return f"Error reading file: {str(e)}"
+    
     keyval = [0, 0]
     message = ""
-    secret = "CTF{crypt0_4r1thm3t1c}"  # Hidden arithmetic secret
-    secret_idx = 0
     for i in range(len(start)):
-        # Curious arithmetic boundary: 54 is a special case
         keyval[0] = ref[start[i]]
         keyval[1] = ref[end[i]]
         tot = keyval[0] + keyval[1]
-        if tot == 54 and secret_idx < len(secret):
-            message += secret[secret_idx]
-            secret_idx += 1
-        else:
-            try:
-                message += keyd[tot]
-            except:
-                tot -= 27
-                message += keyd[tot]
+        try:
+            message += keyd[tot]
+        except:
+            tot -= 27
+            message += keyd[tot]
     return message
 
 def key():
@@ -133,8 +129,6 @@ def genMessage(start, keyd, message, ref):
     keyval = [0, 0]
     encryptedmessage = ""
     for n in range(len(message)):
-        if message[n] not in ref:
-            return "Invalid character in message."
         keyval[0] = ref[message[n]]
         keyval[1] = ref[start[n]]
         tot = keyval[0] - keyval[1]
