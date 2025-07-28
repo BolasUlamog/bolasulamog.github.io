@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cookie Puzzle</title>
+    <script>
+        document.cookie = "clue=Check%20the%20Network%20tab; path=/; max-age=3600";
+    </script>
+    <style>
+        body {
+            background-image: url('snowman.html.jpg');
+            margin: center;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>I love cookies (and ⛄️)!</h1>
+    <script>
+        function checkCookie() {
+            const clue = document.cookie.split('; ')
+                .find(row => row.startsWith('clue='))
+                ?.split('=')[1];
+            
+            if (clue) alert(decodeURIComponent(clue));
+            else alert("No clues found. Enable cookies!");
+        }
+    </script>
+    <button onclick="checkCookie()">Check for Clues</button>
+</body>
+</html>
