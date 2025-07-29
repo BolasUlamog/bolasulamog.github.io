@@ -35,10 +35,15 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
+        .link-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
         a {
             display: inline-block;
             text-align: center;
-            margin-top: 20px;
+            align-self: center;
             padding: 10px 20px;
             background: #007BFF;
             color: white;
@@ -53,7 +58,9 @@
 </head>
 <body>
     <p>It seems that the next link is somewhere in this folder: </p>
-    <a href="ctf10/">CTF 10</a>
+    <div class="link-container">
+        <a href="ctf10/">CTF 10</a>
+    </div>
 </body>
 <!-- I love grep, and btw...the flag looks like an actual ctf flag this time! -->
 <!-- But you can simply append the flag contents to a ".html" and voilà-->
