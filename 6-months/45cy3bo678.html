@@ -8,24 +8,44 @@
     <script>document.oncontextmenu = () => false;</script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
+            padding: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
             color: #333;
         }
+        h1 {
+            color: #222;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
         p {
-            color: #666;
+            color: #444;
+            line-height: 1.6;
+            font-size: 1.1em;
         }
         .container {
             max-width: 800px;
-            margin: auto;
+            margin: 50px auto;
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        a:hover {
+            background: #0056b3;
         }
     </style>
 </head>
