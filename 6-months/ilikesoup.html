@@ -9,11 +9,13 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-image: url('clouds.jpg');
             font-family: 'Poppins', sans-serif;
+            text-align: center;
         }
 
         h1 {
@@ -21,6 +23,19 @@
             color: #fff;
             text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             animation: bubble 3s infinite ease-in-out;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 0.5rem 0;
+        }
+
+        a {
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: underline;
+            margin-top: 1rem;
         }
 
         @keyframes bubble {
