@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
+            line-height: 1.2;
             color: #333;
             margin: 0;
             padding: 0;
@@ -162,17 +162,27 @@
     <main class="container">
         <section id="Basic Scripting" class="card">
             <h2>Basic Scripting</h2>
-            <p>hello</p>
+            <p>Here we will construct our first script (in bash)</p>
+            <p>First find the IP of some of machine on your network and ping it. </p>
+            <p>Notice how we can store the response in the txt file with the command <strong>ping -c 1 192.168.1.78 > ip.txt</strong></p>
+            <p>Notice what the response looks like when the host isn't up. </p>
+            <p>We can use the differences to create a script that tells us which IPs are up in a certain range. </p>
+            <p>Now we want to isolate just the IP address from responses whos hosts are up: </p>
+            <p>We can use the command <strong>cat ip.txt | grep "64 bytes" | cut -d " " -f 4 | tr -d ":"</strong> to isolate the IP addresses</p>
             <img src="2-1.png" width="750"></img>
+            <p>We can use this command to create a bash script that runs the command for every IP address in a certain range: </p>
             <img src="2-2.png" width="750"></img>
+            <p>Notice how nobody has executible permissions on the bash script, so we can use the <strong>chmod</strong> command to enable those privleges: </p>
             <img src="2-3.png" width="750"></img>
+            <p>Now we can run the command (with input) and even save it to a text file: </p>
             <img src="2-4.png" width="750"></img>
+            <p>However, if the user doesn't input any parameters, we can program it to spit something besides a bunch of errors: </p>
             <img src="2-5.png" width="750"></img>
             <img src="2-6.png" width="750"></img>
+            <p>Now we can run nmap scans using a bash script in the terminal: </p>
             <img src="2-7.png" width="750"></img>
         </section>
     </main>
-
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2025 Damian</p>
