@@ -53,11 +53,24 @@
 <body>
     <h1>1999 A-5</h1>
     <p>Show that the improper integral </p>
-    <p>\[\lim_{B\to\infty}\int_0^B\sin{x}\sin{x^2}\,dx\]</p>
+    <p>\[\lim_{B\to\infty}\int_0^B\sin{(x)}\sin{(x^2)}\,dx\]</p>
+    <p>converges. </p>
     <details>
         <summary>Click to reveal the answer</summary>
-        <p>\[\frac{e^{ix}-e^{-ix}}{2i}\]</p>
-        <p>\[\sum_0^{\infty}\frac{(-1)^nx^{2n+1}}{(2n+1)!}\]</p>
+        <p>\[\text{Firstly, we know that }\sin{x}=\frac{e^{ix}-e^{-ix}}{2i}\]</p>
+        <p>\[\text{Let }I=\lim_{B\to\infty}\int_0^B\sin{(x)}\sin{(x^2)}\,dx\text{ and }\lim_{B\to\infty}\int_0^B\sin{(x)}\sin{(x^2)}\,dx=\lim_{B\to\infty}\int_0^B\frac{e^{ix}-e^{-ix}}{2i}\frac{e^{ix^2}-e^{-ix^2}}{2i}\,dx\]</p>
+        <p>\[=\lim_{B\to\infty}\int_0^B\frac{(e^{ix}-e^{-ix})(e^{ix^2}-e^{-ix^2})}{-4}\,dx=-\frac{1}{4}\lim_{B\to\infty}\int_0^B(e^{ix}-e^{-ix})(e^{ix^2}-e^{-ix^2})\,dx\]</p>
+        <p>\[=-\frac{1}{4}\lim_{B\to\infty}\int_0^Be^{ix+ix^2}-e^{ix-ix^2}-e^{-ix+ix^2}+e^{-ix-ix^2}\,dx\]</p>
+        <p>\[=-\frac{1}{4}\lim_{B\to\infty}\biggl(\int_0^Be^{i(x+x^2)}\,dx-\int_0^Be^{i(x-x^2)}\,dx-\int_0^Be^{i(-x+x^2)}\,dx+\int_0^Be^{i(-x-x^2)}\,dx\biggr)\]</p>
+        <p>\[\text{We can simplify by completeing the square for each }e^{iP(x)}:\]</p>
+        <p>\[I=-\frac{1}{4}\lim_{B\to\infty}\biggl(\int_0^Be^{i((x+\frac{1}{2})^2-\frac{1}{4})}\,dx-\int_0^Be^{-i((x-\frac{1}{2})^2+\frac{1}{4})}\,dx-\int_0^Be^{i((x-\frac{1}{2})^2-\frac{1}{4})}\,dx+\int_0^Be^{-i((x+\frac{1}{2})^2+\frac{1}{4})}\,dx\biggr)\]</p>
+        <p>\[\text{For each integral we can apply the appropriate substituion: }\]</p>
+        <p>\[I=-\frac{1}{4}\lim_{B\to\infty}\biggl(\int_{\frac{1}{2}}^Be^{i(u^2-\frac{1}{4})}\,du-\int_{-\frac{1}{2}}^Be^{-i(u^2+\frac{1}{4})}\,du-\int_{-\frac{1}{2}}^Be^{i(u^2-\frac{1}{4})}\,du+\int_{\frac{1}{2}}^Be^{-i(u^2+\frac{1}{4})}\,du\biggr)\]</p>
+        <p>\[=-\frac{1}{4}\lim_{B\to\infty}\biggl(\int_{\frac{1}{2}}^Be^{-i/4}e^{ix^2}\,dx-\int_{-\frac{1}{2}}^Be^{-i/4}e^{-ix^2}\,dx-\int_{-\frac{1}{2}}^Be^{-i/4}e^{ix^2}\,dx+\int_{\frac{1}{2}}^Be^{-i/4}e^{-ix^2}\,dx\biggr)\]</p>
+        <p>\[=-\frac{1}{4}e^{-i/4}\lim_{B\to\infty}\biggl(\int_{\frac{1}{2}}^Be^{ix^2}\,dx-\int_{-\frac{1}{2}}^Be^{ix^2}\,dx-\int_{-\frac{1}{2}}^Be^{-ix^2}\,dx+\int_{\frac{1}{2}}^Be^{-ix^2}\,dx\biggr)\]</p>
+        <p>\[=-\frac{1}{4}e^{-i/4}\lim_{B\to\infty}\biggl(\int_{\frac{1}{2}}^Be^{ix^2}\,dx-\int_{\frac{1}{2}}^Be^{ix^2}\,dx-\int_{-\frac{1}{2}}^{\frac{1}{2}}e^{ix^2}\,dx-\int_{-\frac{1}{2}}^{\frac{1}{2}}e^{-ix^2}\,dx-\int_{\frac{1}{2}}^Be^{-ix^2}\,dx+\int_{\frac{1}{2}}^Be^{-ix^2}\,dx\biggr)\]</p>
+        <p>\[=\frac{1}{4}e^{-i/4}\lim_{B\to\infty}\biggl(\int_{-\frac{1}{2}}^{\frac{1}{2}}e^{ix^2}\,dx+\int_{-\frac{1}{2}}^{\frac{1}{2}}e^{-ix^2}\,dx\biggr)\]</p>
+        <p>\[\text{This obviously converges. }\]</p>
     </details>
     <a href="../">Back to Home</a>
     <a href="p4.html">Next Problem</a>
