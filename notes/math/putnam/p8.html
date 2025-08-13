@@ -58,7 +58,19 @@
         <summary>Click to reveal the answer</summary>
         <p>\[\text{We can let our parabola be in the form }kx^2\text{ and our circle be }x^2+(y-1)^2=1\]</p>
         <p>\[\text{This lets us only have to maniuplate have one variable for }kx^2\text{ and we know that for any }kx^2\text{, the bottom of the parabola is the bottom of the circle}\]</p>
-        <img src="image.png"></img>
+        <img src="image.png" width="200"></img>
+        <p>\[\text{Now we can represent the arclength of our parabola with }L=2\int_0^{x_1}{\sqrt{1+k^2x^2}}\,dx\text{, where the parabola intersects the circle at }(x_1,y_1)\]</p>
+        <p>\[\text{To find }x_1\text{: }x^2+(kx^2-1)^2=1\implies{x^2}+k^2x^4-2kx^2+1=1\implies1+k^2x^2-2k=0\implies{x_1}=\frac{\sqrt{2k+1}}{k}\]</p>
+        <p>\[\text{To find }y_1\text{: }\frac{y}{k}+(y-1)^2=1\implies\frac{y}{k}+y^2-2y+1=1\implies\frac{1}{k}+y=2\implies{y_0}=\frac{2k-1}{k}\]</p>
+        <p>\[\text{So }L=2\int_0^{\frac{\sqrt{2k+1}}{k}}{\sqrt{1+k^2x^2}}\,dx\]</p>
+        <p>\[\text{We can perform a hyperbolic trig sub and evaluate the indefinite integral: }kx=\sinh{t},dx=\frac{\cosh{t}}{k}\,dt\]</p>
+        <p>\[I=\int{\sqrt{1+k^2x^2}}\,dx=\int{\cosh{t}}\cdot\frac{\cosh{t}}{k}\,dt=\frac{1}{2k}\int{1+\cosh{2t}}\,dt=\frac{1}{2k}\biggl(t+\frac{1}{2}\sinh{2t}\biggr)+C=\frac{1}{2k}\biggl(t+\sinh{t}\cosh{t}\biggr)+C\]</p>
+        <p>\[\text{Changing bounds: }t_1=\text{arcsinh}\,kx_1\implies{t_1}=\text{arcsinh}\,\sqrt{2k+1}\]</p>
+        <p>\[\text{So }L=\frac{1}{k}\biggl(\text{arcsinh}\,\sqrt{2k+1}+\sqrt{(2k+1)(2k+2)}\biggr)\]</p>
+        <p>\[\text{We can try plugging in a few test values of }k:\]</p>
+        <p>\[k=1:L=\text{arcsinh}\,{3}+\sqrt{12}\text{. Since we know arcsinh}\,x=\ln{\bigl(x+\sqrt{x^2+1}\bigr)},L=\ln{\bigl(3+\sqrt{10}\bigr)}+\sqrt{12}\]</p>
+        <p>\[\text{Since }e\leq3\leq{3+\sqrt{10}},\ln{\bigl(3+\sqrt{10}\bigr)}\geq1\text{ and since }3^2=9,\sqrt{12}>3\implies{L\rvert_{k=1}>4}\]</p>
+
     </details>
     <a href="../">Back to Home</a>
     <a href="p4.html">Next Problem</a>
