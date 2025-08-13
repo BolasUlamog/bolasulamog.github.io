@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damian's Clarinet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text: #1a1a1a;
+            --primary: #6c5ce7;
+            --secondary: #00b894;
+            --accent: #fd79a8;
+            --border: rgba(0, 0, 0, 0.08);
+            --bg-dark: #121212;
+            --card-bg-dark: rgba(30, 30, 30, 0.85);
+            --text-dark: #f0f0f0;
+            --border-dark: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            transition: all 0.4s ease;
+            min-height: 100vh;
+        }
+
+        body.dark-mode {
+            --bg: var(--bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --text: var(--text-dark);
+            --border: var(--border-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            opacity: 0.1;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .header-text h1 {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header-text p {
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        /* Performance Grid */
+        .performances-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .performance-card {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .performance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .performance-content {
+            padding: 1.5rem;
+        }
+
+        .performance-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .performance-content h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .performance-content p {
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .performance-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Dark Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .performances-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="mode-toggle" id="modeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="container">
+        <a href="../" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to main
+        </a>
+        
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Desmos graphs!</h1>
+                    <p>Desmos art I've made for myself and people I love!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="performances-grid">
+
+            <div class="performance-card">
+                <div class="video-container">
+                    <iframe src="https://www.desmos.com/calculator/wuug4dv1px?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder=0></iframe>
+                </div>
+                <div class="performance-content">
+                    <h3>Spaceship</h3>
+                    <p>Using recursive functions and knowledge of julia sets to create a spaceship and the POLYGON tool on desmos for the stars. </p>
+                    <div class="performance-meta">
+                        <span>August 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-card">
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/2ZLVpWB1ByY?si=tHOlVAoT6i5RI14R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="performance-content">
+                    <h3>Mendelssohn Konzertstück No.2, Op.114</h3>
+                    <p>Performance of Mendelssohn's concertpiece in C with Roy Zajac and Marilyn raising money for YO tour</p>
+                    <div class="performance-meta">
+                        <span>Trio</span>
+                        <span>May 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-card">
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/AYwSqD862Ck?si=KMYDw2WAJ2WRJE71" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="performance-content">
+                    <h3>Rhapsody in Blue</h3>
+                    <p>Performance of Gershwin's Rhapsody in Blue (me on the clarinet)</p>
+                    <div class="performance-meta">
+                        <span>Santa Rosa Symphony Youth Orchestra</span>
+                        <span>May 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-card">
+                <iframe width="373.333333333" height="210" src="https://www.youtube.com/embed/_Yk9-Q55Q0Y?si=K6O08moeLIL0cYnv&amp;start=326" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="performance-content">
+                    <h3>Scheherazade Mvt. 2</h3>
+                    <p>Performance of Scheherazade by Nikolai Rimsky-Korsakov (clarinet solo at 5:29)</p>
+                    <div class="performance-meta">
+                        <span>Santa Rosa Symphony Youth Orchestra</span>
+                        <span>May 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>Connect with me</div>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/bolasulamog/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/BolasUlamog" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:damianb@stanford.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const modeToggle = document.getElementById('modeToggle');
+        const body = document.body;
+        
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if(body.classList.contains('dark-mode')) {
+                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Animate cards on load
+        document.querySelectorAll('.performance-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `all 0.4s ease ${index * 0.1}s`;
+            
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
