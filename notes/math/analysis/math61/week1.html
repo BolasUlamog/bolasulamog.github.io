@@ -217,8 +217,69 @@
             <p>By another lemma and the fact \(1\) is the inverse of \(-1\) we know \((-1)(-1)=1\)</p>
             <p>Hence \(1>0\) which is a contradiction. </p>
         </details>
-
-
+        <h2>Completeness</h2>
+        <p>An ordered field \((\mathbb{F},+,\cdot)\) is <strong>complete</strong> if any \(S\subseteq\mathbb{F}\) that is bounded above has a least upper bound. From now on, take \(\mathbb{R}\) to be the ONLY complete ordered field. </p>
+        <details>
+            <summary>Definition/Notation: Bounds</summary>
+            <p>1. \[S\subseteq{\mathbb{F}}\text{ is  }\left\{\begin{array}
+                \text{\text{bdd above}} \\
+                \text{bdd below}
+                \end{array}\right\}\text{ if }\exists\alpha\in\mathbb{F}\text{ s.t. }\left\{\begin{array}
+                x\leq\alpha \\
+                x\geq\alpha
+                \end{array}\right\},\forall{x}\in{S}\]
+            </p>
+            <p>
+                Such \(\alpha\) is called \[\left\{\begin{array}
+                \text{\text{an upper bound}} \\
+                \text{ a lower bound}
+                \end{array}\right\}\]
+            </p>
+            <p>Ex. \((0,1)\in\mathbb{R}\): \(1,15,100^{100}\) upper bounds</p>
+            <p><br></p>
+            <ul>
+                <li>\(S\subseteq\mathbb{F}\) is bounded if it's bounded above and below</li>
+                <li>\(S\subseteq\mathbb{F}. \beta\in\mathbb{F}\) is a least upper bound if the following both hold: </li>
+                <ul>
+                    <li>\(\beta\) is an upper bound of \(S\)</li>
+                    <li>If \(\alpha\) is an upper bound of \(S\) then \(\beta\leq{\alpha}\). Similarly for the greatest lower bound. </li>
+                </ul>
+                <li>Denote the least upper bound of \(S\) as \(\sup{S}\) and the greatest lower bound of \(S\) as \(\inf{S}\). </li>
+            </ul>
+            <p><strong>rmk: </strong>\(\sup{S}\) need not be in \(S\)</p>
+        </details>
+        <h2>\(\mathbb{N}, \mathbb{Z}, \mathbb{Q}\)</h2>
+        <details>
+            <summary>Definitions (click to expand)</summary>
+            <p>
+                1. The <strong>natural numbers</strong> are defined as
+                \[
+                \mathbb{N} = \{1, 1+1, 1+1+1, \ldots\}\subseteq{\mathbb{R}}
+                \]
+            </p>
+            <p>
+                2. The <strong>integers</strong> are defined as
+                \[
+                \mathbb{Z} = \mathbb{N} \cup \{0\} \cup \{-n : n \in \mathbb{N}\}\subseteq{\mathbb{R}}
+                \]
+            </p>
+            <p>
+                3. The <strong>rational numbers</strong> are defined as
+                \[
+                \mathbb{Q} = \left\{\frac{a}{b} : a, b \in \mathbb{Z}, b \neq 0\right\}
+                \]
+            </p>
+        </details>
+        <h2>Prop: Archimedian Principle</h2>
+        <p>This is one of the most fundemental and important ideas in real analysis. There are many ways to write this that are equivilient but we will prove the version that states that \(\mathbb{N}\) is not bounded above. In fact, this is equiviliant to stating that for any two positive real numbers \(a,b\) there exists a natural number \(n\) such that \(a<{n}\cdot{b}\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Assume for the sake of contradiction that \(\mathbb{N}\) were bounded above. If it were, because of completeness, then there exists \(\alpha=\sup\mathbb{N}\)</p>
+            <p>\(\implies{n}\leq{\alpha},\forall{n}\in\mathbb{N}\)</p>
+            <p>\(\implies{n+1}\leq{\alpha},\forall{n}\in\mathbb{N}\)</p>
+            <p>\(\implies{n}\leq{\alpha-1}\) which is a contradiction since \(\alpha\) is the sup. </p>
+            <p>Hence \(\mathbb{N}\) is not bdd above. \(\qquad\blacksquare\)</p>
+        </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
