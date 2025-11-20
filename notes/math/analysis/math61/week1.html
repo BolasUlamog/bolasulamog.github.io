@@ -66,7 +66,6 @@
         p {
             line-height: 1.5;
         }
-        
     </style>
 </head>
 
@@ -109,21 +108,21 @@
                     a + b = b + a, \quad ab = ba
                     \]
                 </li>
-        
+
                 <li><strong>F2 — Associativity:</strong>
                     <br>For all \(a, b, c \in \mathbb{F}\),
                     \[
                     (a + b) + c = a + (b + c), \quad (ab)c = a(bc)
                     \]
                 </li>
-        
+
                 <li><strong>F3 — Distributivity:</strong>
                     <br>For all \(a, b, c \in \mathbb{F}\),
                     \[
                     a(b + c) = ab + ac
                     \]
                 </li>
-        
+
                 <li><strong>F4 — Identities Exist:</strong>
                     <br>There are special elements \(0, 1 \in \mathbb{F}\) such that
                     \[
@@ -131,14 +130,14 @@
                     \quad \forall a \in \mathbb{F}
                     \]
                 </li>
-        
+
                 <li><strong>F5 — Additive Inverse:</strong>
                     <br>For every \(a \in \mathbb{F}\), there exists \(-a\) such that
                     \[
                     a + (-a) = 0
                     \]
                 </li>
-        
+
                 <li><strong>F6 — Multiplicative Inverse:</strong>
                     <br>For every \(a \neq 0\), there exists \(a^{-1}\) such that
                     \[
@@ -147,7 +146,7 @@
                 </li>
             </ul>
         </details>
-        
+
         <h2>Lemma: Inverses are unique</h2>
         <p>(If \(a+b=0\) and \(a+c=0\) then \(b=c\))</p>
         <details>
@@ -181,7 +180,8 @@
         </details>
         <h1>Lecture 2</h1>
         <h2>Order Axioms</h2>
-        <p>\((\mathbb{F},+,\cdot)\) is an ordered if there exists a subset \(\mathbb{P}\subseteq\mathbb{F}\) s.t. the following order axioms hold: </p>
+        <p>\((\mathbb{F},+,\cdot)\) is an ordered if there exists a subset \(\mathbb{P}\subseteq\mathbb{F}\) s.t. the
+            following order axioms hold: </p>
         <details>
             <summary><strong>Order Axioms (O1–O2)</strong> — click to expand</summary>
             <ul>
@@ -212,17 +212,19 @@
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Assume \(1<{0}\) (\(1\neq{0}\) by F4)</p>
-            <p>\(\implies{(-1)>0}\) by (F4) and (O1)</p>
-            <p>\((-1)(-1)>0\) by O2</p>
-            <p>By lemma \((-1)(-1)\) is the inverse of \(-1\)</p>
-            <p>By another lemma and the fact \(1\) is the inverse of \(-1\) we know \((-1)(-1)=1\)</p>
-            <p>Hence \(1>0\) which is a contradiction. </p>
+                    <p>\(\implies{(-1)>0}\) by (F4) and (O1)</p>
+                    <p>\((-1)(-1)>0\) by O2</p>
+                    <p>By lemma \((-1)(-1)\) is the inverse of \(-1\)</p>
+                    <p>By another lemma and the fact \(1\) is the inverse of \(-1\) we know \((-1)(-1)=1\)</p>
+                    <p>Hence \(1>0\) which is a contradiction. </p>
         </details>
         <h2>Completeness</h2>
-        <p>An ordered field \((\mathbb{F},+,\cdot)\) is <strong>complete</strong> if any \(S\subseteq\mathbb{F}\) that is bounded above has a least upper bound. From now on, take \(\mathbb{R}\) to be the ONLY complete ordered field. </p>
+        <p>An ordered field \((\mathbb{F},+,\cdot)\) is <strong>complete</strong> if any \(S\subseteq\mathbb{F}\) that
+            is bounded above has a least upper bound. From now on, take \(\mathbb{R}\) to be the ONLY complete ordered
+            field. </p>
         <details>
             <summary>Definition/Notation: Bounds</summary>
-            <p>1. \[S\subseteq{\mathbb{F}}\text{ is  }\left\{\begin{array}
+            <p>1. \[S\subseteq{\mathbb{F}}\text{ is }\left\{\begin{array}
                 \text{\text{bdd above}} \\
                 \text{bdd below}
                 \end{array}\right\}\text{ if }\exists\alpha\in\mathbb{F}\text{ s.t. }\left\{\begin{array}
@@ -240,12 +242,15 @@
             <p><br></p>
             <ul>
                 <li>\(S\subseteq\mathbb{F}\) is bounded if it's bounded above and below</li>
-                <li>\(S\subseteq\mathbb{F}. \beta\in\mathbb{F}\) is a least upper bound if the following both hold: </li>
+                <li>\(S\subseteq\mathbb{F}. \beta\in\mathbb{F}\) is a least upper bound if the following both hold:
+                </li>
                 <ul>
                     <li>\(\beta\) is an upper bound of \(S\)</li>
-                    <li>If \(\alpha\) is an upper bound of \(S\) then \(\beta\leq{\alpha}\). Similarly for the greatest lower bound. </li>
+                    <li>If \(\alpha\) is an upper bound of \(S\) then \(\beta\leq{\alpha}\). Similarly for the greatest
+                        lower bound. </li>
                 </ul>
-                <li>Denote the least upper bound of \(S\) as \(\sup{S}\) and the greatest lower bound of \(S\) as \(\inf{S}\). </li>
+                <li>Denote the least upper bound of \(S\) as \(\sup{S}\) and the greatest lower bound of \(S\) as
+                    \(\inf{S}\). </li>
             </ul>
             <p><strong>rmk: </strong>\(\sup{S}\) need not be in \(S\)</p>
         </details>
@@ -272,10 +277,14 @@
             </p>
         </details>
         <h2>Prop: Archimedian Principle</h2>
-        <p>This is one of the most fundemental and important ideas in real analysis. There are many ways to write this that are equivilient but we will prove the version that states that \(\mathbb{N}\) is not bounded above. In fact, this is equiviliant to stating that for any two positive real numbers \(a,b\) there exists a natural number \(n\) such that \(a<{n}\cdot{b}\)</p>
+        <p>This is one of the most fundemental and important ideas in real analysis. There are many ways to write this
+            that are equivilient but we will prove the version that states that \(\mathbb{N}\) is not bounded above. In
+            fact, this is equiviliant to stating that for any two positive real numbers \(a,b\) there exists a natural
+            number \(n\) such that \(a<{n}\cdot{b}\) </p>
         <details>
             <summary>Proof (click to expand)</summary>
-            <p>Assume for the sake of contradiction that \(\mathbb{N}\) were bounded above. If it were, because of completeness, then there exists \(\alpha=\sup\mathbb{N}\)</p>
+            <p>Assume for the sake of contradiction that \(\mathbb{N}\) were bounded above. If it were, because
+                        of completeness, then there exists \(\alpha=\sup\mathbb{N}\)</p>
             <p>\(\implies{n}\leq{\alpha},\forall{n}\in\mathbb{N}\)</p>
             <p>\(\implies{n+1}\leq{\alpha},\forall{n}\in\mathbb{N}\)</p>
             <p>\(\implies{n}\leq{\alpha-1}\) which is a contradiction since \(\alpha\) is the sup. </p>
@@ -284,22 +293,28 @@
         <h2>Sequences</h2>
         <p>A <strong>sequence</strong> of real numbers is a map \(\mathbb{N}\to\mathbb{R}\). We denote this by \[\{a_n\}_{n=1}^\infty\text{, where }a_n=a(n)\]</p>
         <h2>Definition of the limit</h2>
-        <p>Let \(\{a_n\}_{n=1}^\infty\subseteq{\mathbb{R}}\). We say \(\{a_n\}_{n=1}^\infty\) has a limit \(L\in\mathbb{R}\), write \(\lim_{n\to\infty}a_n=L\) if \[\text{ for all }\epsilon>0,\exists{N\in{\mathbb{N}}}\text{ s.t. }|a_n-L|<{\epsilon},\forall{n\geq{N}}\]</p>
-        <p>\[\{a_n\}^\infty_{n=1}\subseteq\mathbb{R} \text{ is }\left\{\begin{array}
-            \text{\text{convergent if it has a limit}} \\
-            \text{divergent otherwise}
-            \end{array}\right\}\]</p>
+        <p>Let \(\{a_n\}_{n=1}^\infty\subseteq{\mathbb{R}}\). We say \(\{a_n\}_{n=1}^\infty\) has a limit \(L\in\mathbb{R}\), write \(\lim_{n\to\infty}a_n=L\) if \[\text{ for all }\epsilon>0,\exists{N\in{\mathbb{N}}}\text{ s.t. }|a_n-L|<{\epsilon},\forall{n\geq{N}}\]< /p>
+        <p>\[\{a_n\}^\infty_{n=1}\subseteq\mathbb{R} \text{ is }\left\{\begin{array}\text{\text{convergent if it has a limit}} \\\text{divergent otherwise}\end{array}\right\}\]</p>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
         <h2>Prop: </h2>
-        <p>If \(\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}\) is bdd above and increasing \((a_n)\leq{a_{n+1}}\) then \(\{a_n\}^\infty_{n=1}\) is convergent and is equal to \(\sup{a_n}\)</p>
+        <p>If \(\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}\) is bdd above and increasing
+                            \((a_n)\leq{a_{n+1}}\) then \(\{a_n\}^\infty_{n=1}\) is convergent and is equal to
+                            \(\sup{a_n}\)</p>
         <details>
             <summary>Proof (click to expand)</summary>
-            <p>Let \(\alpha=\sup{S}\) which we know exists because of the completeness property of the reals. </p>
+            <p>Let \(\alpha=\sup{S}\) which we know exists because of the completeness property of the
+                                reals. </p>
             <p>Now we will prove that there exists \(a_j\) s.t. \(\alpha>a_j>\alpha-\frac{1}{j}\)</p>
-            <p>Pf: Suppose not for the sake of contradiction. This means that \(\alpha-\frac{1}{j}\) is an upper bound which is a contradiction since \(\alpha\) is the sup. Therefore this is true. </p>
-            <p>Now we know that since \(\alpha-\frac{1}{j}<{a_j}<\alpha\), \(|\alpha-a_j|<|\alpha-\frac{1}{j}|\)</p>
-            <p>Now, for all \(\varepsilon>0\), there exists some \(\frac{1}{J}, J\in{\mathbb{N}}\) such that \(1>J\varepsilon\implies\frac{1}{J}>\epsilon\) (Archimedian). </p>
-            <p>This means that for all \(j>J\) (or \(\frac{1}{j}<\frac{1}{J} \)), \(\lvert{a_j}-\alpha\rvert\leq\frac{1}{j}<\frac{1}{J}<\varepsilon\).</p>
+            <p>Pf: Suppose not for the sake of contradiction. This means that \(\alpha-\frac{1}{j}\) is
+                                an upper bound which is a contradiction since \(\alpha\) is the sup. Therefore this is
+                                true. </p>
+            <p>Now we know that since \(\alpha-\frac{1}{j}<{a_j}<\alpha\),
+                                    \(|\alpha-a_j|<|\alpha-\frac{1}{j}|\)</p>
+            <p>Now, for all \(\varepsilon>0\), there exists some \(\frac{1}{J},
+                                        J\in{\mathbb{N}}\) such that \(1>J\varepsilon\implies\frac{1}{J}>\epsilon\)
+                                        (Archimedian). </p>
+            <p>This means that for all \(j>J\) (or \(\frac{1}{j}<\frac{1}{J} \)),
+                                            \(\lvert{a_j}-\alpha\rvert\leq\frac{1}{j}<\frac{1}{J}<\varepsilon\).</p>
         </details>
     </div>
 </body>
