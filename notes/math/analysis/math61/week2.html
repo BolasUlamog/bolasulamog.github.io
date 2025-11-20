@@ -96,6 +96,22 @@
             <p>Let \([c_1,d_1]\) be \([c,\frac{c+d}{2}]\) or \([\frac{c+d}{2},d]\) s.t. \([c_1,d_1]\) has infinetly many terms and \(a_{n(1)}\in[c_1,d_1]\)</p>
             <p>Using the same idea has before, let \([c_2,d_2]\) be \([c_1,\frac{c_1+d_1}{2}]\) or \(\frac{c_1+d_1}{2},d_1\) s.t. \([c_2,d_2]\) has infinetly many terms and take \(a_{n(2)}\in[c_2,d_2]\) with \(n(2)>n(1)\)</p>
             <p>Continuing this process we see that \([c,d]\supseteq[c_1,d_1]\supseteq[c_2,d_2]\supseteq...\)</p>
+            <p>Noticing that \(d_k-c_k=\frac{d-c}{2^k}\) and there exists a subsequence \(\{a_{n(k)}\}^\infty_{n=1}\) s.t. \(a_{n(k)}\in[c_k,d_k]\), we first want to prove two things. </p>
+            <p>Claim 1: \(\{c_k\}^\infty_{k=1}\) is convergent and converges to \(L\)</p>
+            <p>Pf: Since \(\{c_k\}_{k=1}^\infty\) is an increasing sequence that is bdd above so by lemma last week, it is convergent. </p>
+            <p>Claim 2: \(\lim_{k\to\infty}{a_{n(k)}}=L\)</p>
+            <p>Pf. Let \(\varepsilon>0\). Observe</p>
+            <ul>
+                <li>\(\exists{K_1}\in{\mathbb{N}}\text{ s.t. }|c_k-L|<\frac{\varepsilon}{2}\text{ for all }{k\geq{K_1}}\)</li>
+                <li>\(\exists{K_2}\in\mathbb{N}\text{ s.t. }2^{-k}<\frac{1}{k}<\frac{\varepsilon}{2(d-c)}\text{ for all }k\geq{k_2}\)</li>
+            </ul>
+            <p>Now we simply choose \(k=\max(k_1,k_2)\) and use triangle inequality: </p>
+            <p>\[|a_{n(k)}-L|=|(a_{n(k)}-c_k)+(c_k+L)|\leq|a_{n(k)}-c_k|+|c_k-L|\leq{\frac{d-c}{2^k}}+|c_k-L|<\varepsilon\]</p>
+        </details>
+        <h2>Lemma: Limit Laws</h2>
+        <details>
+            <summary>Statement and Proof (click to expand)</summary>
+            <p>You should have learned these in calc and proof is left as an exercise to the reader ;)</p>
         </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
