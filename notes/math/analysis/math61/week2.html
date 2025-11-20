@@ -81,7 +81,22 @@
             <p>Using the definition of convergence with \(\varepsilon=1, \exists{L}\in{\mathbb{R}}\) and \(N\in{\mathbb{N}}\) s.t. \(|a_n-L|<{1}\forall{n>N}\)</p>
             <p>Hence \(|a_n|\leq{\max\{|L|+1,|a_1|,|a_2|,...,|a_{N+1}|\}}=c\qquad\blacksquare\)</p>
         </details>
-
+        <p>We will now prove a very important theorem in real analyis, but first observe the following...</p>
+        <p>Consider a sequence \(-1,1,-1,1,-1,1,...\) that is bdd but not convergent. We can observe that if we remove a lot of terms, the remaining sequence is convergent. </p>
+        <h2>Def Subsequence</h2>
+        <p>If \(\{a_n\}^\infty_{n=1}\subseteq\mathbb{R}\) is a sequence, call \[\{a_{f(k)}\}^\infty_{k=1}\text{ a subsequence of }a\text{ if }f\text{ is a fcn }f:\mathbb{N}\to\mathbb{N}\text{ and }f(k)<{f(k+1)}\]</p>
+        <p>Notation: Often we write using \(\{a_{n(k)}\}^\infty_{n=1}\) or \(\{a_{n_k}\}_{k=1}^\infty\)</p>
+        <h2>Theorem: Bolzano-Weierstrass</h2>
+        <p>Any bdd sequence is \(\mathbb{R}\) has a convergent subsequence. </p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Let \(\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}\) and suppose \(c\leq{a_n}\leq{d}\), for all \(n\in{\mathbb{N}}\)</p>
+            <img src="week2pic1.png" alt="BW1" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
+            <p>One interval clearly has infinetly many terms.</p>
+            <p>Let \([c_1,d_1]\) be \([c,\frac{c+d}{2}]\) or \([\frac{c+d}{2},d]\) s.t. \([c_1,d_1]\) has infinetly many terms and \(a_{n(1)}\in[c_1,d_1]\)</p>
+            <p>Using the same idea has before, let \([c_2,d_2]\) be \([c_1,\frac{c_1+d_1}{2}]\) or \(\frac{c_1+d_1}{2},d_1\) s.t. \([c_2,d_2]\) has infinetly many terms and take \(a_{n(2)}\in[c_2,d_2]\) with \(n(2)>n(1)\)</p>
+            <p>Continuing this process we see that \([c,d]\supseteq[c_1,d_1]\supseteq[c_2,d_2]\supseteq...\)</p>
+        </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
