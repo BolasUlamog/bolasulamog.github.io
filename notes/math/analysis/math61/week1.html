@@ -66,6 +66,7 @@
         p {
             line-height: 1.5;
         }
+        
     </style>
 </head>
 
@@ -203,7 +204,7 @@
         </details>
         <details>
             <summary>Notation: Order Relations</summary>
-            <p>1. Write \(a>0\) for \(p\in\mathbb{P}\)</p>
+            <p>1. Write \(a>0\) for \(a\mathbb{P}\)</p>
             <p>2. Write \(a>b\) or \(b<{a}\) if \(a-b=a+(-b)>0\)</p>
             <p>3. Write \(a\geq{b}, b\leq{a}\) if (\(a>b\) or \(a=b\))</p>
         </details>
@@ -280,7 +281,26 @@
             <p>\(\implies{n}\leq{\alpha-1}\) which is a contradiction since \(\alpha\) is the sup. </p>
             <p>Hence \(\mathbb{N}\) is not bdd above. \(\qquad\blacksquare\)</p>
         </details>
+        <h2>Sequences</h2>
+        <p>A <strong>sequence</strong> of real numbers is a map \(\mathbb{N}\to\mathbb{R}\). We denote this by \[\{a_n\}_{n=1}^\infty\text{, where }a_n=a(n)\]</p>
+        <h2>Definition of the limit</h2>
+        <p>Let \(\{a_n\}_{n=1}^\infty\subseteq{\mathbb{R}}\). We say \(\{a_n\}_{n=1}^\infty\) has a limit \(L\in\mathbb{R}\), write \(\lim_{n\to\infty}a_n=L\) if \[\text{ for all }\epsilon>0,\exists{N\in{\mathbb{N}}}\text{ s.t. }|a_n-L|<{\epsilon},\forall{n\geq{N}}\]</p>
+        <p>\[\{a_n\}^\infty_{n=1}\subseteq\mathbb{R} \text{ is }\left\{\begin{array}
+            \text{\text{convergent if it has a limit}} \\
+            \text{divergent otherwise}
+            \end{array}\right\}\]</p>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
+        <h2>Prop: </h2>
+        <p>If \(\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}\) is bdd above and increasing \((a_n)\leq{a_{n+1}}\) then \(\{a_n\}^\infty_{n=1}\) is convergent and is equal to \(\sup{a_n}\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Let \(\alpha=\sup{S}\) which we know exists because of the completeness property of the reals. </p>
+            <p>Now we will prove that there exists \(a_j\) s.t. \(\alpha>a_j>\alpha-\frac{1}{j}\)</p>
+            <p>Pf: Suppose not for the sake of contradiction. This means that \(\alpha-\frac{1}{j}\) is an upper bound which is a contradiction since \(\alpha\) is the sup. Therefore this is true. </p>
+            <p>Now we know that since \(\alpha-\frac{1}{j}<{a_j}<\alpha\), \(|\alpha-a_j|<|\alpha-\frac{1}{j}|\)</p>
+            <p>Now, for all \(\varepsilon>0\), there exists some \(\frac{1}{J}, J\in{\mathbb{N}}\) such that \(1>J\varepsilon\implies\frac{1}{J}>\epsilon\) (Archimedian). </p>
+            <p>This means that for all \(j>J\) (or \(\frac{1}{j}<\frac{1}{J} \)), \(\lvert{a_j}-\alpha\rvert\leq\frac{1}{j}<\frac{1}{J}<\varepsilon\).</p>
+        </details>
     </div>
 </body>
 
