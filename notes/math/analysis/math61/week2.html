@@ -113,6 +113,50 @@
             <summary>Statement and Proof (click to expand)</summary>
             <p>You should have learned these in calc and proof is left as an exercise to the reader ;)</p>
         </details>
+        <h2>Lemma: </h2>
+        <p>If \(\lim_{n\to\infty}a_n=A,\lim_{n\to\infty}b_n=B\), and \(a_n<{b_n}\) for all \(n\in{\mathbb{N}}\) then \(A\leq{B}\)</p>
+        <p><strong>Rmk: </strong>It doesn't imply \(A<{B}\) (ex. consider \(a_n=0,b_n=\frac{1}{n})\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Assume not for the sake of contradiction. Then \(A>B\)</p>
+            <p>By definition of limits: </p>
+            <p>\[|a_n-A|<\frac{A-B}{2}\text{ for all }n\geq{N_1}\]</p>
+            <p>\[|b_n-B|<\frac{A-B}{2}\text{ for all }n\geq{N_2}\]</p>
+            <p>If we choose \(n\geq{\max\{N_1,N_2\}}\), we know that </p>
+            <p>\[a_n>A-\frac{A-B}{2}\geq{B+\frac{A-B}{2}}>b_n\]</p>
+            <p>However, this is a contradiction so \(A\geq{B}\)</p>
+        </details>
+        <h2>Continuous Functions</h2>
+        <p>Intuitively, continuous functions are something like this: </p>
+        <img src="week2pic2.png" alt="cont1" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
+        <p>You may also remember a definition of continuity that involves not lifting up a pen when drawing a function. </p>
+        <p>Here we will define it rigorously: </p>
+        <p>First we will define the notion of a limit: </p>
+        <p>Given a function \(f[a,b]\to\mathbb{R}\)</p>
+        <p>\[\text{If }c\in[a,b]\text{ we say }\lim_{x\to{c}}=L\text{ if for all }\varepsilon>0, \text{ there exists }\delta>0\text{ s.t. }\]\[|f(x)-L|<\epsilon\text{ whenever }|x-c|<\delta\text{ and }x\in[a,b]\]</p>
+        <p>\(f\) is continuous at \(c\) if \(\lim_{x\to{c}}f(x)=f(c)\). </p>
+        <p>\[\text{ie., for all }\varepsilon>0,\text{ there exists }\delta>0\text{ s.t. }|f(x)-f(c)|<\varepsilon\text{ whenever }|x-c|<\delta\]</p>
+        <h2>Lemma: </h2>
+        <p>Suppose \(f[a,b]\to\mathbb{R}\text{ continuous at }c\in[a,b]\)</p>
+        <p>Then for any sequence, \[\{x_n\}_{n=1}^\infty\subseteq{\mathbb{R}}\text{ s.t. }x_n\in[a,b]\,\text{and }\lim_{n\to\infty}x_n=c, \text{ it holds that }\lim_{n\to{\infty}}f(x_n)=f(c)\]</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>We WTS there exists \(N\in\mathbb{N}\) s.t. \(|f(x_n)-f(c)|<\varepsilon\) for all \(n\geq{N}\)</p>
+            <p>By continuity, there exists \(\delta>0\) s.t. \(|f(x)-f(c)|<\varepsilon\) whenever \(|x-c|<\delta\)</p>
+            <p>We also know that \(\lim_{n\to{\infty}}x_n=c\) which means there exists \(N\in\mathbb{N}\) s.t. \(|x_n-c|<\delta\) for all \(n>N\)</p>
+            <p>Combining, we get \(|f(x_n)-f(c)|<\varepsilon\) for all \(n\in\mathbb{N}\)</p>
+            <p>Rmk: The converse is all true. </p>
+        </details>
+        <h2>Thm:</h2>
+        <p>Suppose \(f:[a,b]\to\mathbb{R}\) is continuous. Then </p>
+        <ul>
+            <li>1. \(f\) is bounded (ie. \(\{f(x):x\in[a,b]\}\))</li>
+            <li>2. \(f\) achieves max and min \((\exists\,c_1,c_2\text{ s.t. }f(c_1)\leq{f(x)}\leq{f(c_2)})\)</li>
+        </ul>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf #1: Assume not for the sake of contradiction. </p>
+        </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
