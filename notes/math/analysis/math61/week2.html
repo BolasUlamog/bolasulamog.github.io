@@ -156,6 +156,45 @@
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Pf #1: Assume not for the sake of contradiction. </p>
+            <p>This means for all \(c>0\), there exists \(x\) s.t. \(|f(x)|>c\)</p>
+            <p>Additionally, there exists \(x_n\) s.t. \(|f(x_n)|>n\). Since \(x_n\) is bounded by B-W, there exists a subsequence \(x_{n(k)}\) and \(c\in\mathbb{R}\) s.t. \(\lim_{n\to\infty}x_{n(k)}=c\)</p>
+            <p>By lemma, \(c\in[a,b]\)</p>
+            <p>Hence, by another lemma and continuity of \(f\), \(\lim_{k\to\infty}f({x_n(k)})=f(c)\)</p>
+            <p>Hence, \(\{f(x_{n(k)})\}^\infty_{n=1}\) is convergent and is thus bounded. </p>
+            <p>But \(|f(x_{n(k)})>n_k\geq{k}\) so \(\{f(x_{n(k)})\}^\infty_{n=1}\) is not bounded which is a contradiction!</p>
+            <p><br></p>
+            <p>Pf #2: Since \[\{f(x):x\in[a,b]\}\text{ is bounded, }\alpha=\sup\{f(x):x\in[a,b]\}\text{ exists}\qquad\]</p>
+            <p>The rest is hw</p>
+        </details>
+        <h2>Squeeze thm: </h2>
+        <p>If \(a_n\leq{b_n}\leq{c_n}\) and \(\lim{a_n}=\lim{c}_n=\ell\) then \(\lim{b_n}=\ell\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>We know that \[|a_n-\ell|<\frac{\varepsilon}{2}\text{ whenever }n\geq{N_1}\]</p>
+            <p>We also know that \[|c_n-\ell|<\frac{\varepsilon}{2}\text{ whenever }n\geq{N_2}\]</p>
+            <p>Take \(N=\max\{N_1,N_2\}\). Now we have that either \(|a_n-\ell|\geq|b_n-\ell|\) or \(|c_n-\ell|\geq|b_n-\ell|\) using the appropriate casework. </p>
+            <p>Therefore, \[|b_n-\ell|<\max\{|a_n-\ell|,|c_n-\ell|\}<\varepsilon\qquad\qquad\square\]</p>
+        </details>
+        <h2>Lemma: </h2>
+        <p>\(f\) is continuous at \(c\) if and only if \(\lim_{n\to\infty}f(x_n)=f(c)\)</p>
+        <h2>Theorem: Intermediate value theorem</h2>
+        <p>If \(f:[a,b]\to\mathbb{R}\) continuous, \(A\in\mathbb{R}\), \(f(a)\leq{A}\) and \(f(b)\geq{A}\), then there exists \(c\in[a,b]\) s.t. \(f(c)=A\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Before we begin, we want to state the following two lemmas: </p>
+            <p>Lemma 1: If \([a,b]\supseteq[a_1,b_1]\subseteq[a_2,b_2]...\) s.t. \(b_n-a_n=\frac{b-a}{2^n}\), and suppose \(\gamma_n\in[a_n,b_n]\). Then \(\{y_n\}_{n=1}^\infty\) is convergent and \(\lim{\gamma_n}=\lim{a_n}\)</p>
+            <p>Lemma 2: If \(\{x_n\}_{n=1}^\infty\subseteq\mathbb{R}, \lim{x_n}=x\), then if \(x_n\geq{A}\forall{n}\in{\mathbb{N}}\) then \(x\geq{A}\) (proved last week)</p>
+            <p>Consider a subdivision of \([a,b]\) similar of what is used to prove BW: </p>
+            <img src="week2pic3.png" alt="IVT1" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
+            <p>Note that either \(f(\frac{a+b}{2})\geq{A}\) or \(f(\frac{a+b}{2})\leq{A}\) (or both)</p>
+            <p>If \(f(\frac{a+b}{2})\geq{A}\), let \([a,b_1]=[a_1,\frac{a+b}{2}]\)</p>
+            <p>If \(f(\frac{a+b}{2})\leq{A}\), let \([a_1,b_1]=[{\frac{a+b}{2}},b]\)</p>
+            <p>Each time we get an interval \(\frac{1}{2}\) the length of the first...and we repeat this to get \([a_1,b_1]\supseteq[a_2,b_2],...\)</p>
+            <p>We eventually get \(b_n-a_n=\frac{b-a}{2^n}\) for all \(n\in\mathbb{N}\) s.t. \(f(a_n)\leq{A}\) and \(f(b_n)\geq{A}\) for all \(n\in{N}\)</p>
+            <p>By lemma 1, there exists \(c\in[a,b]\) s.t. \(\lim{a_n}=c=\lim{b_n}\)</p>
+            <p>We claim that \(f(c)=A\). </p>
+            <p>Pf: By lemma and continuous, \(\lim{f(a_n)}=f(c)=\lim{f(b_n)}\)</p>
+            <p>By lemma 2 and \(f(a_n)\leq{A}\), this means that \(f(c)\leq{A}\) and \(f(b_n)\geq{A}\). This implies that \(f(c)=A\). </p>
         </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
