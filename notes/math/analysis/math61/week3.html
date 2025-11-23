@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math 61 - Week 1</title>
+    <title>Math 61 - Week 3</title>
     <!-- Include MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
@@ -48,33 +48,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Math 61 - Week 1</h1>
+        <h1>Math 61 - Week 3</h1>
 
-        <h2>Definition: Function</h2>
-        <p>A <strong>function</strong> \(f: A \to B\) is a relation such that each element \(a \in A\) is associated with exactly one element \(b \in B\).</p>
+        <h2>Differentiable forms in \(\mathbb{R}^n\)</h2>
+        <p>Given \(f:[a,b]\to\mathbb{R}, c\in[a,b]\), we say \(f\) is differentiable at \(c\) if \(\lim_{h\to0}\frac{f(c+h)-f(c)}{h}\) exists. </p>
 
         <details>
-            <summary>Proof / Example</summary>
+            <summary>Proof (click to expand)</summary>
             <p>Consider \(f: \mathbb{R} \to \mathbb{R}\) given by \(f(x) = x^2\).</p>
             <ul>
                 <li>Each real number \(x\) has exactly one image \(x^2\).</li>
                 <li>Hence \(f\) is a function.</li>
             </ul>
         </details>
-
-        <h2>Theorem: Injective Function</h2>
-        <p>A function \(f: A \to B\) is <strong>injective</strong> if \(f(a_1) = f(a_2) \implies a_1 = a_2\).</p>
-
-        <details>
-            <summary>Proof / Example</summary>
-            <p>Example: \(f(x) = 2x + 1\) is injective because if \(2x_1 + 1 = 2x_2 + 1\), then \(x_1 = x_2\).</p>
-        </details>
-
-        <h2>Exercises</h2>
-        <ul>
-            <li>Give an example of a surjective function from \(\mathbb{R} \to \mathbb{R}\).</li>
-            <li>Prove that \(f(x) = x^3\) is injective.</li>
-        </ul>
 
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
