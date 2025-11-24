@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math 61 - Week 4</title>
+    <!-- Include MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #f0f8ff; 
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 { color: #003366; text-align: center; }
+        details {
+            margin: 15px 0;
+            padding: 15px;
+            border-left: 4px solid #0055aa;
+            background-color: #f7fbff;
+            border-radius: 6px;
+        }
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+        }
+        summary:hover {
+            color: #0055aa;
+        }
+        a { color: #003366; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        ul { padding-left: 20px; }
+        p { line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Math 61 - Week 4</h1>
+
+        <h2>Continuity in Multiple Dimensions</h2>
+        <p>Given \(A\subseteq\mathbb{R}^n\), \(f:A\to\mathbb{R}^m\), \(a\in{A}\), we say \(f\) is continuous at \(a\) if for all \(\varepsilon>0\) there exists a \(\delta>0\) s.t. \(\|f(x)-f(a)\|<\varepsilon\) whenever \(\|x-a\|<\delta\) and \(x\in{A}\)</p>
+        <p>\(f\) is continuuous if it is continuous at all \(a\in{A}\)</p>
+        <details>
+            <summary>Notation and Definitions</summary>
+            <p>1. \(A\subseteq\mathbb{R}^n\). We say \(a\in{A}\) is an isolated point if there exists \(\rho>0\) s.t. \(B_\rho(a)\cap{A}=\{a\}\)</p>
+            <p>2. \(A\subseteq\mathbb{R}^n,f:A\to\mathbb{R}^m, a\in{A}\) is not an isolated pt. We say \(\lim_{x\to{a}}=L\in\mathbb{R}^m\)</p>
+            <p>3. \(f\) is continuous at an non-isolated point iff \(\lim_{x\to{a}}f(x)=f(a)\)</p>
+            <p>We can also say for (3) that if \(A\subseteq\mathbb{R}^n,f:A\to\mathbb{R}^m,a\in{A}\) that \(f\) is continuous at \(A\iff\) for any sequence \(\{a^{(k)}\}^\infty_{n=1}\subseteq{A}\), it holds that \(\lim_{k\to\infty}f(a^{(k)})=f(a)\)</p>
+        </details>
+        <h2>Thm: </h2>
+        <p>If \(A\subseteq\mathbb{R}^m\) compact, \(f:A\to\mathbb{R}\) continuous, then \(f\) is bounded and achieves max and min</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Suppose not for the sake of contradiction</p>
+            <p>Then for all \(k\in\mathbb{N}\) there exists \(x^{(k)}\in{A}\) s.t. \(||f(x^{(k)})||\geq{k}\)</p>
+            <p>Since \(A\) is compact, there exists a subsequence \(\{x^{(k_j)}\}_{j=1}^\infty\) and \(a\in{A}\) s.t. \(\lim_{j\to\infty}x^{(k_j)}=a\)</p>
+            <p>By continuity, \(\lim_{j\to\infty}f(x^{k_j}=f(a)\) which is convergent and thus bounded which is a contradiction. </p>
+        </details>
+        <h2>Metric Spaces</h2>
+        <p>\((X,d)\) is a metric space if \(X\) is a set and \(d:X\times{X}\to\mathbb{R}\) satisfies</p>
+        <ul>
+            <li>(M1): \(d(x,y)\geq0\) for all \(x,y\in{X}\) and ''\(=\)"\(\iff{x=y}\)</li>
+            <li>(M2): \(d(x,y)=d(y,x)\) for all \(x,y\in{X}\)</li>
+            <li>(M3): \(d(x,z)\leq{d(x,y)+d(y,z)}\) for all \(x,y,z\in{X}\)</li>
+        </ul>
+        <details>
+            <summary>Examples</summary>
+            <ul>
+                <li>1. \[X=\mathbb{R}^n, d(x,y)=||x-y||=\sqrt{\sum_{i=1}^n(x_i-y_i)^2}\]</li>
+                <li>2. \[X\subseteq{\mathbb{R^n}}, d(x,y)=||x-y||\]</li>
+                <li>3. \[X\text{ set. }d(x,y)=\binom{1\text{ if }x\neq{y}}{0\text{ if }x=y}\]</li>
+                <li>4. \[V\text{ vector space over }\mathbb{R},||\cdot||:V\to\mathbb{R}\text{ norm }\]</li>
+            </ul>
+        </details>
+        <details>
+            <summary>Balls, open/closed sets, and limit points in metric spaces</summary>
+            <p>1. \(\{x_n\}_{n=1}^\infty\subseteq{X}, \lim_{x\to\infty}x_n=x\in{X}\) if for all \(\varepsilon>0\) there exists \(N\in\mathbb{N}\) s.t. \(d(x_n,x)<\varepsilon\) whenever \(n\geq{N}\)</p>
+            <p>2. \(y\in{X},\rho>0\). Our ball, \(B_\rho(x)=\{x\in{X}:d(x,y)<\rho\}\)</p>
+            <p>3. \(A\subseteq{X},x\in{X}\) is a limit point of \(A\) if there exists \(\{a_n\}^\infty_{n=1}\subseteq{A}\) s.t. \(\lim_{n\to\infty}a_n=x\)</p>
+            <p>4. \(A\subseteq{X}\) is open if for all \(x\in{A}\) there exists \(\rho>0\) s.t. \(B_\rho(a)\leq{A}\)</p>
+            <p>5. \(A\subseteq{X}\) is closed if it contains all its limit points. </p>
+            <p>6. \(A\subseteq{X}\) is bounded if there exists \(y\in{X}, \rho>0\) s.t. \(A\subseteq{B_\rho(y)}\)</p>
+            <p>7. \(A\subseteq{X}\) is compact if for any \(\{a_n\}^\infty_{n=1}\subseteq{A}\) there exists \(\{a_{n_k}\}^\infty_{k=1}\) and \(a\in{A}\) s.t. \(\lim_{k\to\infty}a_{n_k}=a\)</p>
+        </details>
+        <h2>Prop: </h2>
+        <p>1. \(X,\phi\) open and closed, respectively</p>
+        <p>2. \[\binom{\text{Union}}{\text{Intersection}}\text{ of }\binom{X}{\phi}\text{ is }\binom{\text{open}}{\text{closed}}\]</p>
+        <p>3. \[\text{Finite }\binom{\text{Intersection}}{\text{Union}}\text{ of }\binom{X}{\phi}\text{ is }\binom{\text{open}}{\text{closed}}\]</p>
+        <h2>Thm:</h2>
+        <p>\((X,d)\) metric spaces and \(A\subseteq{X}\). If \(A\) is compact then \(A\) is closed and bounded</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf (boundedness): Suppose not for the sake of contradiction</p>
+            <p>This means for all \(y\) s.t. </p>
+        </details>
+        <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
+    </div>
+</body>
+</html>
