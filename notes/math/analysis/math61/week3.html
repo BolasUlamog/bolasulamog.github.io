@@ -117,7 +117,24 @@
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Sketch of pf: We prove by induction on \(n\). The base case was proven last week. Assume the result up to dimension \(n-1\). </p>
+            <p>Let \(\{a^{k}\}_{k=1}^\infty\subseteq{\mathbb{R}^n}\). Write \(a^{(k)}=(a^{(k)}_1,..,a_{n-1}^{(k)},a_n^{(k)}=(a^{1(k)},a_{n}^{(k)})\), where \((a^{1k})=(a_1^{(k)},...,a_{n-1}^{(k)})\)</p>
+            <p>By induction, there exists a subsequence \(\{a^{k_j}\}\) of \(\{a^{k}\}\) s.t. \(\lim_{j\to\infty}a^{(k_j)}\) exists. </p>
+            <p>By BW in \(\mathbb{R}\), there exists a subsequence \(\{a_n^{(k_{j_\ell})}\}^\infty_{\ell=1} \text{ of }\{a_n^{(k_j)}\}^\infty_{j=1}\) s.t. \(\lim_{\ell\to\infty}a_n^{(k_{j\ell})}\) exists. </p>
+            <p>THe end is proving \(\{a^{(k_{j\ell})}\}^\infty_{\ell=1}\subset\mathbb{R}^n\) is convergent and that is left as an exercise.</p>
         </details>
+        <h2>Open and closed sets in \(\mathbb{R}^n\)</h2>
+        <p>We should remember the following notation: </p>
+        <img src="Week3pic1.png" alt="ball" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
+        <p>In \(\mathbb{R}^n\), an open set is something akin to the circle on the left and a closed set is something akin to the circle in the right. </p>
+        <h2>Def Ball:</h2>
+        <p>For \(x\in\mathbb{R}^n,\rho>0\), define \(B_\rho(x)=\{y\in\mathbb{R}^n:||x-y||<\rho\}\)</p>
+        <h2>Def Open:</h2>
+        <p>\(U\subseteq{\mathbb{R}^n}\) is open if for all \(x\in{U}\) there exists some \(\rho>0\) s.t. \(B_\rho(x)\subseteq{U}\)</p>
+        <h2>Def Limit Point:</h2>
+        <p>\(A\subseteq{\mathbb{R}^n}\). We say \(b\in\mathbb{R}^n\) is a limit point of \(A\) if there exists \(\{a^{(k)}\}^\infty_{k=1}\subseteq\mathbb{R}^n\), \(a^{(k)}\in{A}\) s.t. \(b=\lim_{k\to\infty}a^{(k)}\)</p>
+        <p>Rmk: \(A\subseteq\{\text{limit points of }A\}\)</p>
+        <h2>Def Closed:</h2>
+        <p>\(K\subseteq\mathbb{R}^n\) is closed if it contains all its limit points. </p>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
