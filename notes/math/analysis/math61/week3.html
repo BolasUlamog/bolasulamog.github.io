@@ -52,15 +52,46 @@
 
         <h2>Differentiable forms in \(\mathbb{R}^n\)</h2>
         <p>Given \(f:[a,b]\to\mathbb{R}, c\in[a,b]\), we say \(f\) is differentiable at \(c\) if \(\lim_{h\to0}\frac{f(c+h)-f(c)}{h}\) exists. </p>
-
+        <p>We denote the limit, if it exists, by \(f'(c)\) or \(\frac{df}{dx}(c)\) (The def of limit given by \(\varepsilon-\delta\) as in last view)</p>
         <details>
-            <summary>Proof (click to expand)</summary>
-            <p>Consider \(f: \mathbb{R} \to \mathbb{R}\) given by \(f(x) = x^2\).</p>
+            <summary>Deritative laws</summary>
             <ul>
-                <li>Each real number \(x\) has exactly one image \(x^2\).</li>
-                <li>Hence \(f\) is a function.</li>
+                <li>Assume \(f,g\) differentiable at \(c\). This implies that \(\alpha{f}+\beta{g}\) is differentiable at \(c\). Moreover, \((\alpha{f}+\beta{g})'(c)=\alpha{f'(c)}+\beta{g'(c)}\)</li>
+                <li>\(f[a,b]\to\mathbb{R}\) constant (ie \(f(x)=f(y)\) for all \(x,y\in[a,b]\)) then \(f\) is differentiable at \(c\) for all \(c\in(a,b)\) and \(f'(c)=0\) for all \(c\in(a,b)\)</li>
+                <li>\(f:[a,b]\to\mathbb{R},f(x)=x\). Then \(f\) is differentiable at \(c\) for all \(c\in(a,b)\) and \(f'(c)=1\) for all \(c\in(a,b)\)</li>
             </ul>
         </details>
+        <h2>Mean Value Theorem:</h2>
+        <p>\(f:[a,b]\to\mathbb{R}\) continuous and \(f\) differentiable at every point \(c\in(a,b)\)</p>
+        <p>That means there exists \(c\in(a,b)\) s.t. \(f'(c)=\frac{f(b)-f(a)}{b-a}\)</p>
+        <h2>Rolle's Theorem:</h2>
+        <p>\(f:[a,b]\to\mathbb{R}\) continuous and \(f\) differentiable at every point in \(c\in(a,b)\). Supppose \(f(b)=0=f(a)\). Then there exists \(c\in(a,b)\) s.t. \(f'(c)=0\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>We will first prove Rolle's theorem and use that to prove MVT: </p>
+            <p>Rmk: If \(f\) is constant then we are done and and \(f'(c)=0\)</p>
+            <p>Otherwise, either \(\exists{x_0}\in(a,b)\) s.t. \(f(x_0)>0\) or \(\exists{x_0}\in(a,b)\) s.t. \(f(x_0)<{0}\)</p>
+            <p>In the former case, there exists \(c\in[a,b]\) s.t. \(f(x)\leq{f(c)}\) for all \(x\in[a,b]\). Since \(f(c)\geq{f(x_0)}>0\), we know \(c\in(a,b)\)</p>
+            <p>Claim: \(f'(c)=0\)</p>
+            <p>Pf: We know \[f'(c)=\lim_{x\to{c}}\frac{f(x)-f(c)}{x-c}\]</p>
+            <p>Take \(x_n\) with \(\lim{x_n}=c, c<{x}_n<{b}\)</p>
+            <p>We know \[f'(c)=\lim_{n\to\infty}\frac{f(x_n)-f(c)}{x_n-c}, \text{ where }\frac{f(x_n)-f(c)}{x_n-c}\leq{0}\implies{f'(c)\leq{0}}\]</p>
+            <p>On the other hand, take \(\{x_n\}^\infty_{n=1}\) with \(\lim{x_n}=c, a<{x}_n<{c}\)</p>
+            <p>Then \[f'(c)=\lim_{n\to\infty}\frac{f(x_n)-f(c)}{x_n-c}\text{ and }\frac{f(x_n)-f(c)}{x_n-c}\geq{0}\implies{f'(c)\geq{0}}\]</p>
+            <p>Hence, \(f'(c)=0 \qquad\qquad\square\)</p>
+            <p>Now we prove MVT: </p>
+            <p>Given \(f\) , define \(g:[a,b]\to\mathbb{R}\) by </p>
+            <p>\[g(x)=f(x)-f(a)-\frac{f(b)-f(a)}{b-a}\]</p>
+            <p>We claim rolle's theorem applies because \(g(a)=0\) and \(g(b)=0\)</p>
+            <p>By Rolle's theorem, there exists \(c\in(a,b)\) s.t. \[0=g'(c)=\left(f(c)-f(a)-\frac{f(b)-f(a)}{b-a}(x-a)\right)'=f'(c)-\frac{f(b)-f(a)}{b-a}\]</p>
+            <p>This implies that \[f'(c)=\frac{f(b)-f(a)}{b-a}\]</p>
+        </details>
+        <h2>Analysis in \(\mathbb{R}^n\)</h2>
+        <p>Def: A sequence in \(\mathbb{R}^n\) is a map: \(\mathbb{N}\to\mathbb{R}^n\)</p>
+        <p>We denote by \(\{a_k\}_{k=1}^\infty\) or \(\{a^{(k)}\}^\infty_{k=1}\). When using \(\{a^{(k)}\}\) notation, we can denote \(a^{(k)}=\left(a_1^{(k)},...,a_n^{(k)}\right)\)</p>
+        <h2>Definition limit</h2>
+        <p>Given \(\{a^{(k)}\}^{\infty}_{n=1}\subseteq\mathbb{R}^n\), \(a\in\mathbb{R}^n\), we say \[\lim_{k\to\infty}a^{(k)}=a\text{ if for all }\varepsilon>0\text{ there exists }\mathcal{K}\in\mathbb{N}\text{ s.t. }||a^{(k)}-a||<\varepsilon\text{ whenever }k\leq\mathcal{K}\]</p>
+        <p>Here, \(||\cdot||\) is defined by \(||b||=\sqrt{b\cdot{b}}=\sqrt{\sum_{i=1}^{n}b_i^2}\)</p>
 
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
