@@ -50,7 +50,7 @@
     <div class="container">
         <h1>Math 61 - Week 3</h1>
 
-        <h2>Differentiable forms in \(\mathbb{R}^n\)</h2>
+        <h2>Differentiable forms in \(\mathbb{R}\)</h2>
         <p>Given \(f:[a,b]\to\mathbb{R}, c\in[a,b]\), we say \(f\) is differentiable at \(c\) if \(\lim_{h\to0}\frac{f(c+h)-f(c)}{h}\) exists. </p>
         <p>We denote the limit, if it exists, by \(f'(c)\) or \(\frac{df}{dx}(c)\) (The def of limit given by \(\varepsilon-\delta\) as in last view)</p>
         <details>
@@ -92,7 +92,32 @@
         <h2>Definition limit</h2>
         <p>Given \(\{a^{(k)}\}^{\infty}_{n=1}\subseteq\mathbb{R}^n\), \(a\in\mathbb{R}^n\), we say \[\lim_{k\to\infty}a^{(k)}=a\text{ if for all }\varepsilon>0\text{ there exists }\mathcal{K}\in\mathbb{N}\text{ s.t. }||a^{(k)}-a||<\varepsilon\text{ whenever }k\leq\mathcal{K}\]</p>
         <p>Here, \(||\cdot||\) is defined by \(||b||=\sqrt{b\cdot{b}}=\sqrt{\sum_{i=1}^{n}b_i^2}\)</p>
-
+        <p>Def \(\{a^{(k)}\}_{n=1}^\infty\) is convergent if \(\exists{a}\in\mathbb{R}^n\) s.t. \(\lim_{k\to\infty}a^{(k)}=a\)</p>
+        <h2>Lemma: </h2>
+        <p>\(\{a^{(k)}\}^\infty_{k=1}\subseteq{\mathbb{R}^n}, a\in\mathbb{R}^n\). Then \(\lim{a^{(k)}}=n\iff\lim{a_i^{(k)}=a_i}\) for all \(i=1,2,..,n\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf \((\impliedby)\): Let \(\varepsilon>0\). Since \(\lim{a_i^{(k)}}=a_i\) for every \(i=1,..,k\) there exists \(\mathcal{K}_i\in\mathbb{N}\) s.t. </p>
+            <p>\[|a_i^{(k)}-a_i|<\frac{\varepsilon}{\sqrt{n}},\text{ whenever }k\geq{\mathcal{K_i}}\]</p>
+            <p>Let \(\mathcal{K}=\max\{\mathcal{K}_1,...,\mathcal{K}_n\}\)</p>
+            <p>Then \[||a^{(k)}-a||=\left(\sum_{i=1}^n|a^{(k)}-a_i|^2\right)^{1/2}<\left(\sum{\left(\frac{\varepsilon}{\sqrt{n}}\right)^2}\right)^{1/2}=\varepsilon\implies\lim_{k\to\infty}a^{(k)}=a\]</p>
+            <p>Pf \((\implies)\): Exercise</p>
+        </details>
+        <p>Note that some things from \(\mathbb{R}\) do not generalize (can't talk about increasing sequence), but two important results still hold: </p>
+        <h2>Def: </h2>
+        <p>\[S\subseteq\mathbb{R}^n\text{ is bounded if there exists }c>0\text{ s.t. }||x||<{c}\text{ for all }s\in{S}\]</p>
+        <h2>Prop: </h2>
+        <p>If \(\{a^{(k)}\}^\infty_{k=1}\subseteq{\mathbb{R}^n}\) is convergent, then it is bounded. </p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: We know that if \(\{a^{(k)}\}_{k=1}^\infty\) is convergent then for all \(i\), there exists \(c_i>0\) s.t. \(|a_i^{(k)}|\leq{c_i}\) for all \(k\in\mathbb{N}\)</p>
+            <p>This means that \[\|a^{(k)}\|=\left(\sum_{i=1}^n(a_i)^2\right)^{1/2}\leq\left(\sum_{i=1}^n(c_i)^2\right)^{1/2}=c\qquad\square\]</p>
+        </details>
+        <h2>Thm: Bolzano-Weierstrauss in \(\mathbb{R}^n\)</h2>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Sketch of pf: We prove by induction on \(n\). The base case was proven last week. Assume the result up to dimension \(n-1\). </p>
+        </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
