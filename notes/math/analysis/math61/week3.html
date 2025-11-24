@@ -135,6 +135,35 @@
         <p>Rmk: \(A\subseteq\{\text{limit points of }A\}\)</p>
         <h2>Def Closed:</h2>
         <p>\(K\subseteq\mathbb{R}^n\) is closed if it contains all its limit points. </p>
+        <p>Note that a set can be open AND closed or neither</p>
+        <ul>
+            <li>\((a,b]\)</li>
+            <li>\(\mathbb{R}^n\) and \(\varnothing\) are both open and closed</li>
+        </ul>
+        <h2>Prop: </h2>
+        <p>\[\text{If }\{u_\alpha\}_{\alpha\in\Gamma}\text{ is a collection of open sets in }\mathbb{R}^n\text{ then }\bigcup_{\alpha\in\Gamma}u_\alpha\text{ is open. }\]</p>
+        <p>\[\text{If }\{k_\alpha\}_{\alpha\in\Gamma}\text{ is a collection of closed sets in }\mathbb{R}^n\text{ then }\bigcap_{\alpha\in\Gamma}k_\alpha\text{ is closed. }\]</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: \(x\in\bigcup_{\alpha\in\Gamma}u_\alpha\implies\text{ there exists }\alpha_0\in\Gamma\) s.t. \(x\in{u}_{\alpha0}\)</p>
+            <p>\(\implies\exists\rho>0\text{ s.t. }B_\rho(x)\subseteq{u_{\alpha_0}}\)</p>
+            <p>\(\implies\exists\rho>0\text{ s.t. }B_\rho(x)\subseteq{\bigcup_{\alpha\in\Gamma}}u_\alpha\qquad\square\)</p>
+            <p>We should attempt a contradiction for the other proof (exercise)</p>
+        </details>
+        <h2>Prop: \(U\subseteq{\mathbb{R}^n}\text{ open }\iff\mathbb{R}^n\backslash{U}\text{ is closed}.\)</h2>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>pf: \((\implies): U\subseteq\mathbb{R}^n\) open. Let \(z\in\mathbb{R}^n\) be a limit point of \(\mathbb{R}^n\backslash{U}\).</p>
+            <p>We WTS \(z\notin{U}.\)</p>
+            <p>If \(z\in{U}\), there exists \(\rho>0\) s.t. \(B_\rho(z)\subseteq{U}. \)</p>
+            <p>On the other hand, since \(z\) is a limit point of \(\mathbb{R}^n\backslash{U}\) then there exists \(y\in\mathbb{R}^n\backslash{U}\) s.t. \(\|y-z\|<\rho\). Hence \(y\in\mathbb{R}^n\backslash{U}\) and \(y\in{B_\rho(z)\subset{U}}\) which is a contradiction!</p>
+            <p>\((\impliedby)\): We prove the contrapositive</p>
+            <p>\(U\) is not open</p>
+            <p>\(\implies\exists{x}\in{U}\) s.t. for all \(\rho>0\) there exists \(y_\rho\in{B_\rho}(x)\) and \(y_\rho\in\mathbb{R}^n\backslash{U}\). </p>
+            <p>\(\implies\exists{x}\in{U}\) s.t. \(\forall{j}\in\mathbb{N}\exists{y}\in\mathbb{N},y^{(j)}\in{B_j}(x)\) and \(y^{(j)}\in\mathbb{R}^{k}\backslash{U}\)</p>
+            <p>\(\implies\exists{x\in{U}}\) which is a limit point of \(\mathbb{R}^n\backslash{U}\)</p>
+            <p>\(\implies\mathbb{R}^n\backslash{U}\) is not closed. </p>
+        </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
