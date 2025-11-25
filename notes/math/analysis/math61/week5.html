@@ -50,18 +50,66 @@
     <div class="container">
         <h1>Math 61 - Week 5</h1>
 
-        <h2>Continuity in Multiple Dimensions</h2>
-        <p>A <strong>function</strong> \(f: A \to B\) is a relation such that each element \(a \in A\) is associated with exactly one element \(b \in B\).</p>
-
+        <h2>Series</h2>
+        <p>Def \(\{a_k\}^\infty_{k=1}\subseteq{\mathbb{R}^n}\). We say that \(\sum_{k=1}^\infty{a_k}=s\in\mathbb{R}^n\) if the sequence of partial sums \(s_j=\sum_{k=1}^{j}a_k\) if \(\lim_{j\to\infty}s_j=s\)</p>
+        <p>In particular, \(1-0+1-0+1...\) does not converge. </p>
+        <p>We say \(\sum_{n=1}^\infty{a_k}\) converges if there exists \(s\in\mathbb{R}^n\) s.t. \(\sum_{k=1}^\infty{a_k}=S\) and diverges otherwise. </p>
+        <h2>Prop: </h2>
+        <p>Suppose \(\{a_k\}^\infty_{k=1}\subseteq{\mathbb{R}^n}\) and \(\sum_{a_k}\) converges. Then \(\lim{a_k}=0\)</p>
         <details>
-            <summary>Proof / Example</summary>
-            <p>Consider \(f: \mathbb{R} \to \mathbb{R}\) given by \(f(x) = x^2\).</p>
-            <ul>
-                <li>Each real number \(x\) has exactly one image \(x^2\).</li>
-                <li>Hence \(f\) is a function.</li>
-            </ul>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Let \(\varepsilon>0\)</p>
+            <p>We WTS \(\|a_k\|<\varepsilon\) whenever \(k\geq\mathcal{K}\)</p>
+            <p>By assumption, there exists \(S\in{\mathbb{R}^n}\) s.t. \(\sum{a_k}=S\) </p>
+            <p>Note that \(\|S_j-S\|<\frac{\varepsilon}{2}\) whenever \(j\geq{\mathcal{J}}\). Now let \(\mathcal{K}=\mathcal{J+1}\). </p>
+            <p>Now we know that \[\|a_k\|=\|S_k-S_{k-1}\|\leq\|S-S_k\|+\|S-S_{k-1}\|<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon\qquad\square\]</p>
         </details>
-
+        <h2>Prop</h2>
+        <p>Suppose \(\{a_k\}^\infty_{k=1}\subseteq{\mathbb{R}}\) and \(a_k\geq{0}\) for all \(k\in\mathbb{N}\)</p>
+        <p>Then \(\sum_{k=1}^\infty{a_k}\) converging \(\iff\) the sequence \(\{S_j\}^\infty_{j=1}\) is bounded above. </p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Observe that \(\{s_j\}_{j=1}^\infty\) is increasing since \(S_k\geq{0}\) for all \(k\in\mathbb{N}\). Recall from week 1 that an increasing sequence is convergent iff it is bounded above. </p>
+            <p>Rmk: Not in that sufficies to check \(\{S_{j_\ell}\}^\infty_{\ell=1}\) for some subsequence</p>
+        </details>
+        <h2>Example: Geometric series:</h2>
+        <p>\[\sum_{n=1}^\infty{r^k}\text{ is }\binom{\text{convergent}}{\text{divergent}}\text{ if }\binom{r\in(0,1)}{r\in[1,\infty)}\]</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Suppose \(r\neq{1}\)</p>
+            <p>Then \(S_j=1+r+...+r^j\) and \(r{s_j}=r+...+r^j+r^{j+1}\)</p>
+            <p>\(\implies(r-1)s_j=r^{j-1}-1\)</p>
+            <p>\(\implies{s_j}=\frac{r^{j+1}-1}{r-1}\) is \(\binom{\text{bdd}}{\text{unbounded}}\text{ if }\binom{r\in(0,1)}{r\in[1,\infty)}\)</p>
+        </details>
+        <h2>Example: Harmonic Series</h2>
+        <p>\[\sum_{k=1}^\infty\frac{1}{k}\text{ diverges }\]</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>\[\text{Notice that }S=\sum_{k=1}^{2i}\frac{1}{k}=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6}+\frac{1}{7}+\frac{1}{8}...+\frac{1}{2^{i-1}+1}+...+\frac{1}{2^i}\]</p>
+            <p>\[\text{Notice that }S\leq\frac{1}{2}+\frac{1}{2}+\left(\frac{1}{4}+\frac{1}{4}\right)+\left(\frac{1}{8}\cdot{4}\right)+...+\left(\frac{1}{2j}\cdot{2^{j-1}}\right)\]</p>
+            <p>\[\geq{\frac{1}{2}\cdot{j}+1}=\frac{j+1}{2}\text{ unbdd. }\]</p>
+        </details>
+        <h2>Example: p-series</h2>
+        <p>\[\sum_{k=1}^\infty\frac{1}{k^p}\text{ converges if }p\in\mathbb{Z},p\geq{2}\]</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: </p>
+            <p>\[\sum_{k=1}^{2^{j-1}}\frac{1}{k^p}=1+\frac{1}{2^p}+\frac{1}{3^p}+\frac{1}{4^p}+...+\]</p>
+            <p>\[=1+(\frac{1}{2^p}+\frac{1}{3^p}+...\]</p>
+            <p>\[\leq{1}+\left(\frac{1}{2^p}+\frac{1}{2^p}\right)+\left(\frac{1}{4^p}+...+\frac{1}{4^p}\right)+...+\frac{1}{2^{p(j-1)}}\]</p>
+            <p>\[\leq1+\left(\frac{1}{2}\right)^{p-1}+\left(\frac{1}{2}\right)^{p-1}+...+\left(\frac{1}{2^{j-1}}\right)^{p-1}\]</p>
+            <p>Since \(p>1\), \(\frac{1}{2^{p-1}}<{1}\) hence this is bounded in \(j\) by Ex. 1. Hence this is convergent.</p>
+        </details>
+        <h2>Def Absolutely Convergent</h2>
+        <p>Given \(\{a_k\}^\infty_{k=1}\subseteq{\mathbb{R}}\). We say \(\sum_{k=1}^\infty{a_k}\) is absolutely convergent if \(\sum_{k=1}^\infty|a_k|\) is convergent. </p>
+        <h2>Thm: </h2>
+        <p>If \(\sum{a_k}\) is absolutely convergent, then it is convergent. </p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: </p>
+            <p>Let </p>
+        </details>
+        
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>

@@ -104,8 +104,40 @@
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Pf (boundedness): Suppose not for the sake of contradiction</p>
-            <p>This means for all \(y\) s.t. </p>
+            <p>This means for all \(y\) s.t. \(B_\rho(y)\supseteq{A}\)</p>
+            <p>This means there exists \(a_n\in{A}\) but \(a_n\notin{B_n}(y)\) (ie \(d(a_n,y)\geq{n}\))</p>
+            <p>However, by compactness, there exists some subsequence \(\lim_{k\to\infty}a_{n_k}=a\). Then by prop, \(\{a_{n_k}\}^\infty_{k=1}\) is bounded but \(d(a_{n_k})\geq{n_k}\geq{k}\) Contradiction!</p>
+            <p>Pf: Closedness: </p>
+            <p>Suppose \(x\in{X}\) is a limit point of \(A\). We WTS \(x\in{A}\)</p>
+            <p>By def, there exists \(\{x_n\}^\infty_{n=1}\subset{A}\) s.t. \(\lim_{n\to\infty}a_n=x\)</p>
+            <p>By compactness, there exists \(\{a_{n_k}\}^\infty_{n=1}\) s.t. \(\lim{a_{n_k}}=a\in{A}\)</p>
         </details>
+        <h2>Def Continuity: </h2>
+        <p>Given \((X,d_x),(Y,d_y)\) metric spaces and \(f:X\to{Y}\)</p>
+        <ul>
+            <li>1. Given \(c\in{x}\) we say \(f\) is continuous at \(c\) if for all \(\varepsilon>0\) there exists \(\delta>0\) s.t. \(d_Y(f(x),f(c))<\varepsilon\) whenever \(d_X(x,c)<\delta\) and \(x\in{X}\)</li>
+            <li>2. \(f\) is continuous if its continuous at all points</li>
+        </ul>
+        <h2>Lemma:</h2>
+        <p>\(f\) is continuous at \(c\iff\) for any \(\{x_n\}^\infty_{n=1}\subseteq{X},\lim_{n\to\infty}x_n=c\), it holds that \(\lim_{n\to\infty}f(x_n)=f(c)\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Same as before</p>
+        </details>
+        <h2>Thm: </h2>
+        <p>\((X,d_X),(Y,d_Y),X\text{ compact}, f:X\to{y}\) continuous. Then \(f(x)=\{f(x):x\in{X}\}\) is also compact :D</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Let \(\{y_n\}^\infty_{n=1}\subseteq{f(X)}\). There there exists \(x_n\in{X}\) s.t. \(y_n=f(x_n)\)</p>
+            <p>By compactness of \(X\), there exists a subsequence \(\{x_{n_k}\}^\infty_{k=1}\) and \(x\in{x}\) s.t. \(\lim{x_{n_k}}=x\)</p>
+            <p>By continuity of \(f\) and lemma, \(\lim{y_{n_k}}=\lim{f(x_{n_k})}=f(x)\in{f(X)}\)</p>
+        </details>
+        <h2>Cor:</h2>
+        <p>Given \((X,d_X)\) compact. \(f:X\to\mathbb{R}\) is continuous then</p>
+        <ul>
+            <li>1. \(f(x)\) is odd</li>
+            <li>2. \(\exists{c_1,c_2}\in{X}\) s.t. \(f(c_1)\leq{f(x)}\leq{f(c_2)}\)</li>
+        </ul>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
