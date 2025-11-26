@@ -107,9 +107,58 @@
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Pf: </p>
-            <p>Let </p>
+            <p>Let \(p_k=\binom{a_k\text{ if }a_k>0}{0\text{ if }a_k\leq{0}},q_k=\binom{-a_k\text{ if }a_k>{0}}{0\text{ if }a_k\leq{0}}\) for all \(k\). </p>
+            <p>\[\sum_{k=1}^\infty|a_k|=\sum_{k=1}^\infty{p_k+q_k}\text{ and }\sum_{k=1}^\infty{a_k}=\sum_{k=1}^\infty{p_k-q_k}\]</p>
+            <p>\[\sum_{k=1}^\infty|a_k|\text{ convergent }\implies\,\sum_{k=1}^j|a_k|\text{ is bdd. }\]</p>
+            <p>\[\text{Then }\sum_{k=1}^j{p_k}\leq\sum_{k=1}^j|a_k|\implies\sum_{k=1}^j{p_k}\text{ bdd }\implies\sum_{k=1}^\infty{p_k}\text{ converges. }\]</p>
+            <p>\[\text{We can do the same for }\sum_{k=1}^j{a_k}\leq\sum_{k=1}^j{a_k}\implies\sum{q_k}\text{ converges}\]</p>
+            <p>This means that \[\sum_{k=1}^\infty{a_k}=\sum_{k=1}^\infty\left(p_k-q_k\right)\text{ converges. }\]</p>
         </details>
-        
+        <h2>Def: </h2>
+        <p>Given \(\{a_k\}^\infty_{k=1}\subseteq\mathbb{R}\), we say \(\sum_{k=1}^\infty{a_{j(k)}}\) is a rearrangement of the original sum if \(j:\mathbb{N}\to\mathbb{N}\) is a bijection. </p>
+        <h2>Thm (Absolutely convergent series and rearrangements): </h2>
+        <p>\(\{a_k\}_{k=1}^\infty\subseteq\mathbb{R}\). Suppose \(\sum_{k=1}^\infty{a_k}\) converges absolutely. Then any rearrangement \(\sum_{k=1}^\infty{a_{j_k}}\) also converges and \(\sum_{k=1}^\infty{a_{j(k)}}=\sum_{k=1}^\infty{a_k}\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Step 1: special case \(a_k\geq{0}\text{ for all }{k}\in\mathbb{N}\)</p>
+            <p>Suppose \(\sum_{k=1}^\infty{a_k}=S\)</p>
+            <p>This means that \(\{\sum_{k=1}^\ell{a_k}\}_{\ell=1}^\infty\) is bdd above by \(S\) and \(S\) is the sup. By lemma, in order to show that \(\sum_{k=1}^\infty{a_{j(k)}}\) is convergent it suffices to show that \(\sum_{k=1}^\ell{a_{j(k)}}\) is bounded above. </p>
+            <p>For every \(\ell\in\mathbb{N}\), define \(p(\ell)=\max\{j_1,...,j_\ell\}\)</p>
+            <p>In particular, \(\sum_{k=1}^\ell{a_{j(k)}}\leq\sum_{k=1}^{p(\ell)}a_k\leq{S}\) for all \(\ell\in\mathbb{N}\)</p>
+            <p>Hence, \(\sum_{k=1}^\infty{a_{j(k)}}\) converges. Since \(\sum_{k=1}^\ell{a_{j(k)}}\) is increasing, \[\sum_{k=1}^\infty{a_{j(k)}}=\sup_{\ell}\left(\sum_{k=1}^\ell{a_{j(k)}}\right)\leq{S}=\sum_{k=1}^\infty{a_k}\]</p>
+            <p>Step 2:</p>
+            <p>Define \(p_k=a_k\text{ if }a_k\geq{0}\text{ and }0\text{ otherwise}\)</p>
+            <p>We define \(q_k\) similarly. </p>
+            <p>Since \(\sum_{k=1}^\infty{a_k}\) is absolutely convergent, by argument yesterday \(\sum_{k=1}^\infty{p_k},\sum_{k=1}^\infty{q_k}\text{ convergent}\)</p>
+            <p>We know that \(\sum_{k=1}p_{j(k)}=\sum_{k=1}p_k\) and \(\sum_{k=1}q_{j(k)}=\sum_{k=1}q_k\)</p>
+            <p>Hence \[\sum{a_{j(k)}}=\sum{p_{j(k)}}-\sum{q_{j(k)}}\text{ converges to }\sum{p_k}-\sum{q_k}\]</p>
+        </details>
+        <h2>Differentiation in Higher Dimensions</h2>
+        <img src="Week5pic1.png" alt="differentiation" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
+        <p>Here, we want to find something that can approximate a function with a sort of plane. </p>
+        <p>Def derivative: </p>
+        <p>Given \(f:U\to\mathbb{R}^m, U\subseteq{\mathbb{R}^n}\) open; \(c\in{U}. \)</p>
+        <p>We say \(f\) is differentiable at \(c\) if there exists \(A\in\mathbb{R}^{m\times{n}}\) (an mxn matrix) s.t. \[\lim_{h\to0}\frac{\|f(c+h)-f(c)+Ah\|}{\|h\|}=0\]</p>
+        <p>1. If such an \(A\) exists, it is called the derivative matrix of \(f\) at \(c\), denoted by \(Df(c)\)</p>
+        <p>2. We say \(f\) is differentiable if it is differentiable at every point in \(U\).</p>
+        <h2>Lemma</h2>
+        <p>If we define \(\|A\|=\left(\sum_{i,j}(a_{ij})^2\right)^{1/2}\), then \(\|Ax\|\leq\|A\|\|x\|\)</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Write \(A=a_{ij}\). We know that \[\|Ax\|^2=\sum_{i=1}^n{a_i\cdot{x}}^2\leq\sum_{i=1}^n\|a_i\|^2\|x\|^2\text{ (cauchy-schwarz)}\]</p>
+            <p>\[\leq\|x\|^2\sum_{i=1}^n\sum_{j=1}^n{a_{ij}^2}=\|A\|^2\|x\|^2. \text{ Now we simply take the square root. }\]</p>
+        </details>
+        <h2>Prop: </h2>
+        <p>Given \(f:U\to\mathbb{R}^m,U\subseteq\mathbb{R}^n\) open. \(c\in{U}\). If \(f\) is differentiable at \(c\), then \(f\) is continuous at \(c\). </p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Pf: Since \(U\) is open, there exists \(\rho>0\) s.t. \(B_\rho(c)\subseteq{U}\)</p>
+            <p>Using the def with \(\varepsilon=1\), we obtain that there exists \(\delta_0\in(0,\rho)\) s.t. \[\frac{\|f(c+h)-f(c)-Ah\|}{\|h\|}<{1}, \text{ whenever }0\leq\|h\|<\delta_0\]</p>
+            <p>Let \(\varepsilon>0\). We WTS there exists \(\delta\in(0,\rho)\) s.t. \(\|f(x)-f(c)\|<\varepsilon\) whenever \(\|x-c\|<\delta\)</p>
+            <p>Reworded, this is simply we want to show there exists \(\delta\) s.t. \(\|f(c+h)-f(c)\|<\varepsilon\) whenever \(\|h\|<\delta\). </p>
+            <p>Let \(\delta=\min\{\delta_0,\frac{\varepsilon}{2},\frac{\varepsilon}{2\|A\|}\}\) (if \(A\) is non-zero)</p>
+            <p>Now \(\|f(c+h)-f(c)\|\leq\|f(c+h)-f(c)-Ah\|+\|Ah\|<\|h\|+\|A\|\|h\|\leq\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon\)</p>
+        </details>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
