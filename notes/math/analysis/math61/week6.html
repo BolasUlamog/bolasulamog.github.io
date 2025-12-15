@@ -14,33 +14,72 @@
 <body>
     <div class="container">
         <h1>Math 61 - Week 6</h1>
-
-        <h2 class="definition">Definition: Function</h2>
-        <p>A <strong>function</strong> \(f: A \to B\) is a relation such that each element \(a \in A\) is associated with exactly one element \(b \in B\).</p>
-
+        <h2>Q: How to compute \((Df)(a)\)?</h2>
+        <p>Here we will give an example: \(f:\mathbb{R}^2\to\mathbb{R}^3\), \(f=(x_1x_2^2, \sin{x_2},e^{x_1}x_2)\)</p>
+        <h2 class="definition">Def Directional Derivative</h2>
+        <p>\(a\in{U},v\in\mathbb{R}^n\). Define the directional derivative of \(f\) at a direction \(v\) by \[(D_vf)(a)=\lim_{k\to0}\frac{f(a+kv)-f(a)}{k}=\left(\lim_{k\to0}\frac{f_1(a+kv)-f_1(a)}{k},...,\lim_{k\to0}\frac{f_m(a+kv)-f_m(a)}{k}\right)\]</p>
+        <p>Note that this is the same as the derivative of 1 variable function \(g(t)=f(a+tv)\) at \(t=0\).</p>
+        <p>Additionally, in the case \(v=e_j=(0,0,...,1,0,...,0)\in\mathbb{R}^n\), the directional derivative is called a partial derivative denoted \((D_jf)(a)\) or \(\frac{\partial{f}}{\partial{x_j}}(a)\)</p>
+        <h2 class="theorem">Theorem: </h2>
+        <p>Suppose \(f\) is differentiable at \(a\in{U}\). Then for any \(v\in\mathbb{R}^n\), the directional derivative \((D_vf)(a)\) exists and is given by \((D_vf)(a)\) exists and is given by \(\underbrace{(D_vf)(a)}_{\mathbb{R}^m}=\underbrace{[(Df)(a)]}_{\mathbb{R}^{m\times{n}}}\underbrace{v}_{\mathbb{R}^n}\)</p>
         <details>
-            <summary>Proof / Example</summary>
-            <p>Consider \(f: \mathbb{R} \to \mathbb{R}\) given by \(f(x) = x^2\).</p>
-            <ul>
-                <li>Each real number \(x\) has exactly one image \(x^2\).</li>
-                <li>Hence \(f\) is a function.</li>
-            </ul>
+            <summary>Proof (click to expand)</summary>
+            <p>Let \(\varepsilon>0\). We WTS there exists \(\delta\) s.t. \(\|\frac{f(a+kv)-f(a)}{k}-(Df)(a)v\|\) if \(0<|k|<\delta\)</p>
+            <p>If \(v=0\), then this is obvious. Assume now that \(v\neq{0}\). </p>
+            <p>By definition of \((Df)(a)\), there exists \(\delta'>0\) s.t. \[\frac{\|f(a+h)-f(a)-(Df)(a)h\|}{\|h\|}<\frac{\varepsilon}{\|v\|}\text{ whenever }\|h\|<\delta'\]</p>
+            <p>Let \(\delta=\frac{\delta'}{\|v\|}\). Suppose \(0<|k|<\delta\). Then \(h=kv\) satisfies \(0<\|h\|\|k\|<\delta\|v\|<\delta'\)</p>
+            <p>Hence \[\frac{\|f(a+kv)-f(a)-(Df)(a)kv\|}{\|k\|\|v\|}<\frac{\varepsilon}{\|v\|}\implies\|\frac{f(a+kv)-f(a)}{k}-(Df)(a)v\|<\varepsilon\]</p>
         </details>
-
-        <h2 class="theorem">Theorem: Injective Function</h2>
-        <p>A function \(f: A \to B\) is <strong>injective</strong> if \(f(a_1) = f(a_2) \implies a_1 = a_2\).</p>
-
-        <details>
-            <summary>Proof / Example</summary>
-            <p>Example: \(f(x) = 2x + 1\) is injective because if \(2x_1 + 1 = 2x_2 + 1\), then \(x_1 = x_2\).</p>
-        </details>
-
-        <h2>Exercises</h2>
+        <h2 class="corollary">Cor:</h2>
+        <p>Assume \(f\) differentiable at \(a\)</p>
         <ul>
-            <li>Give an example of a surjective function from \(\mathbb{R} \to \mathbb{R}\).</li>
-            <li>Prove that \(f(x) = x^3\) is injective.</li>
+            <li>1. \((D_jf)(a)=(Df)(a)e_j=\) jth column of \((Df)(a)\)</li>
+            <li>2. Suppose \(v=\sum_{j=1}^nv_je_j\). Then \((D_vf)(a)=\sum_{j=1}^n{v_j}(D_jf)(a)\)</li>
         </ul>
-
+        <h2 class="theorem">Theorem: </h2>
+        <p>Given \(U\subseteq{\mathbb{R}^n}\) open, \(f:U\to\mathbb{R}^m\)</p>
+        <p>Suppose there exists \(a\in{U}\) and \(\rho>0\), \(D_jf\) exists everywhere in \(B_\rho(a)\) for all \(j\) and assume \(D_j(f)\) is continuous at \(a\). Then \(f\) is differentiable at \(a\). </p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Let \(\varepsilon>0\). We WTS that \(\frac{\|f(a+h)-f(a)-\sum_{j=1}^n(D_jf)(a)h_j\|}{\|h\|}<\varepsilon\) whenever \(0<\|h\|<\delta\). Here \(h=\sum_{j=1}^nh_je_j\)</p>
+            <p>Define \(h^{(k)}=\sum_{j=1}^kh_je_j,k=1,...,n\)</p>
+            <p>\[f(a+h)-f(a)=f(a+h^{(n)})-f(a+h^{(n-1)})+f(a+h^{(n-1)})\]
+                \[-f(a+h^{(n-2)})+...+f(a+h^{(1)})-f(a)\]</p>
+            <p>Now \(f(a+h^{(k)})-f(a+h^{(k-1)})=f(a+h^{(k-1)}+h_ke_k)-f(a+h^{(k-1)})\)</p>
+            <p>\(=h_k(D_kf)(a+h^{(k-1)}+\theta_kh_ke_k)\) for some \(\theta\in(0,1)\) by MVT</p>
+            <p>Hence \[\frac{\|f(a+h)-f(a)-\sum_{j=1}^n(D_jf)(a)h_j\|}{\|h\|}\]</p>
+            <p>\[=\frac{\|\sum_{j=1}^n[h_j(D_jf)(a+h^{(j-1)}+\theta_jh_je_j)]-(D_jf)(a)\|}{\|h\|}\]</p>
+            <p>\[\leq\frac{\|h\|\sum_{j=1}^n\|(D_jf)(a+h^{(j-1)}+\theta_jh_je_j)-(D_jf)(a)\|}{\|h\|}\]</p>
+            <p>\[=\sum_{j=1}^n\|(D_jf)(a+h^{(j-1)}+\theta_jh_je_j)-D_jf(a)\|\]</p>
+            <p>Since \(D_jf\) is continuous at \(a\), there exists \(\delta_j\in(0,\rho)\) s.t. \(\|D_jf(x)-(D_jf)(a)\|<\frac{\varepsilon}{n}\) whenever \(\|x-a\|<\delta\). Then \(\|h^{(j-1)}-\theta_jh_je_j\|<\delta\) for all \(j\). </p>
+            <p>Hence, from the calculations above, </p>
+            <p>\[\frac{\|f(a+h)-f(a)-\sum_{j=1}^n(D_jf)(a)h_j\|}{\|h\|}<\sum_{j=1}^n\frac{\varepsilon}{n}=\varepsilon\]</p>
+        </details>
+        <h2 class="theorem">Theorem: Chain Rule</h2>
+        <p>Assume \(U\subseteq\mathbb{R}^n,V\subseteq\mathbb{R}^m\) open. \(f:U\to{V},g:V\to\mathbb{R}^\ell\)</p>
+        <p>Suppose \(f\) is differentiable at \(a\in{U}\) and \(g\) is differentiable at \(f(a)\in{V}\). Then \(g\circ{f}:U\to\mathbb{R}^\ell\) is differentiable at \(a\). Morover, </p>
+        <p>\[\underbrace{D(g\circ{f})(a)}_{\mathbb{R}^{\ell\times{n}}}=\underbrace{[Dg(f(a))]}_{\mathbb{R}^{\ell\times{m}}}\underbrace{[Df(a)]}_{\mathbb{R}^{m\times{n}}}\]</p>
+        <details>
+            <summary>Proof (click to expand)</summary>
+            <p>Let \(\varepsilon>0\)</p>
+            <p>We WTS there exists \(\delta>0\) s.t. \(B_\delta(a)\subseteq{U}\) and \(\|(g\circ{f})(a+h)-(g\circ{f})(a)-[Dg(f(a))][Df(a)]h\|<\varepsilon\|h\|\) whenever \(\|h\|<\delta\)</p>
+            <p>Let \(\varepsilon_1,\varepsilon_2\) be numbers depending on \(\varepsilon\) to be chosen later</p>
+            <p>For any given \(\varepsilon_1>0\), there exists \(\delta_1>0\) s.t. \(B_{\delta_1}(a)\subseteq{U}\) and \(\|f(a+h)-f(a)-(Df)(a)h\|<\varepsilon_1\|h\|\) whenever \(\|h\|<\delta_1\)</p>
+            <p>Additionally, for any given \(\varepsilon_2>0\) there exists \(\delta_2>0\) s.t. \(B_{\delta_2}(f(a))\subseteq{V}\) and \(\|g(y)-g(f(a))-(Dg)(f(a))(y-f(a))\|<\varepsilon_2\|y-f(a)\|\) whenever \(\|y-f(a)\|<\varepsilon_2\)</p>
+            <p>Since \(f\) is differentiable at \(a\) it is continuous at \(a\) and then there exists \(\delta_3>0\) s.t. \(\|f(a+h)-f(a)\|<\delta_2\) whenever \(h<\delta_3\), letting \(y=f(a+h)\)</p>
+            <p>For fixed \(\varepsilon_1,\varepsilon_2>0\), take \(\delta_1,\delta_2,\delta_3\) as above. Now suppose \(\|h\|<\min\{\delta_1,\delta_3\}\)</p>
+            <p>Then \[\|(g\circ{f})(a+h)-(g\circ{f})(a)-[(Dg)(f(a))][Df(a)]h\|\leq\|g(f(a+h))-g(f(a))-(Dg)(f(a))(f(a+h)-f(a))\|+\|Dg(f(a))...\|\text{(triangle)}\]</p>
+            <p>\[\leq\varepsilon_2\|f(a+h)-f(a)\|+\|Dg(f(a))\|\|f(a+h)-f(a)-Df(a)h\|\]</p>
+            <p>\[<\varepsilon_2\|f(a+h)-f(a)\|+\|Dg(f(a))\|\varepsilon_1\|h\|\]</p>
+            <p>\[\leq\varepsilon_2(\|f(a+h)-f(a)-Df(a)h\|+\|Df(a)h\|+\|Dg(f(a))\varepsilon_1\|)\]</p>
+            <p>\[<\varepsilon_1\varepsilon_2\|h\|+\varepsilon_2\|Df(a)h\|+\|Dg(f(a))\|\varepsilon_1\|h\|\]</p>
+            <p>\[\leq(\varepsilon_1\varepsilon_2+\varepsilon_2\|Df(a)\|+\varepsilon_1\|Dg(a)\|\|f(a)\|)\|h\|\]</p>
+            <p>Now choose \(\varepsilon_1,\varepsilon_2\) s.t. the quantity above is less than epsilon and then choose \(\delta\leq\frac{1}{2}\min\{\delta_1,\delta_2\}\)</p>
+        </details>
+        <h2 class="corollary">Cor:</h2>
+        <p>\(f,g\) as above. Then \(D_i(g\circ{f})(a)=\sum_{k=1}^m(D_kg_i)(f(a))(D_if_k)(a)\)</p>
+        <h2 class="corollary">Cor: 1D chain rule</h2>
+        <p>If \(n=m=1\), \((g\circ{f})'(a)=g'(f(a))f'(a)\)</p>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>
     </div>
 </body>
