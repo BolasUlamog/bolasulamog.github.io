@@ -39,7 +39,7 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   
   /* Spacing */
-  --container-max: 780px;
+  --container-max: 960px;
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 1.5rem;
@@ -274,13 +274,43 @@ details[open] summary {
 
 /* Proof content inside details */
 details > *:not(summary) {
-  padding: 0 var(--space-md);
+  padding-left: var(--space-lg);
+  padding-right: var(--space-md);
   animation: fadeSlideIn var(--duration-normal) var(--ease-out-expo);
 }
 
+/* First element after summary needs top padding */
+details > summary + * {
+  padding-top: var(--space-sm);
+}
+
+/* Last element needs bottom padding */
 details > p:last-child,
 details > ul:last-child {
   padding-bottom: var(--space-md);
+}
+
+/* Tighter spacing for paragraphs inside proofs */
+details p {
+  margin: 0.4em 0;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  line-height: 1.6;
+}
+
+details ul,
+details ol {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* Block math inside proofs: no background, minimal spacing */
+details mjx-container[display="true"] {
+  margin: 0.25em 0 !important;
+  padding: 0.25rem 0;
+  background: transparent;
+  border-left: none;
+  box-shadow: none;
 }
 
 @keyframes fadeSlideIn {
