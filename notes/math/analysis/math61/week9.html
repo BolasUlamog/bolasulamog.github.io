@@ -3,54 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math 61 - Week 1</title>
+    <title>Math 61 - Week 9</title>
     <!-- Include MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #f0f8ff; 
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
-        h1, h2 { color: #003366; text-align: center; }
-        details {
-            margin: 15px 0;
-            padding: 15px;
-            border-left: 4px solid #0055aa;
-            background-color: #f7fbff;
-            border-radius: 6px;
-        }
-        summary {
-            font-weight: bold;
-            cursor: pointer;
-        }
-        summary:hover {
-            color: #0055aa;
-        }
-        a { color: #003366; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        ul { padding-left: 20px; }
-        p { line-height: 1.5; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Math 61 - Week 1</h1>
+        <h1>Math 61 - Week 9</h1>
 
-        <h2>Definition: Function</h2>
+        <h2 class="definition">Definition: Function</h2>
         <p>A <strong>function</strong> \(f: A \to B\) is a relation such that each element \(a \in A\) is associated with exactly one element \(b \in B\).</p>
 
         <details>
@@ -62,7 +27,7 @@
             </ul>
         </details>
 
-        <h2>Theorem: Injective Function</h2>
+        <h2 class="theorem">Theorem: Injective Function</h2>
         <p>A function \(f: A \to B\) is <strong>injective</strong> if \(f(a_1) = f(a_2) \implies a_1 = a_2\).</p>
 
         <details>

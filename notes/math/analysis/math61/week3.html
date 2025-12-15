@@ -9,48 +9,13 @@
     <script id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #f0f8ff; 
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
-        h1, h2 { color: #003366; text-align: center; }
-        details {
-            margin: 15px 0;
-            padding: 15px;
-            border-left: 4px solid #0055aa;
-            background-color: #f7fbff;
-            border-radius: 6px;
-        }
-        summary {
-            font-weight: bold;
-            cursor: pointer;
-        }
-        summary:hover {
-            color: #0055aa;
-        }
-        a { color: #003366; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        ul { padding-left: 20px; }
-        p { line-height: 1.5; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Math 61 - Week 3</h1>
 
-        <h2>Differentiable forms in \(\mathbb{R}\)</h2>
+        <h2 class="definition">Differentiable forms in \(\mathbb{R}\)</h2>
         <p>Given \(f:[a,b]\to\mathbb{R}, c\in[a,b]\), we say \(f\) is differentiable at \(c\) if \(\lim_{h\to0}\frac{f(c+h)-f(c)}{h}\) exists. </p>
         <p>We denote the limit, if it exists, by \(f'(c)\) or \(\frac{df}{dx}(c)\) (The def of limit given by \(\varepsilon-\delta\) as in last view)</p>
         <details>
@@ -61,10 +26,10 @@
                 <li>\(f:[a,b]\to\mathbb{R},f(x)=x\). Then \(f\) is differentiable at \(c\) for all \(c\in(a,b)\) and \(f'(c)=1\) for all \(c\in(a,b)\)</li>
             </ul>
         </details>
-        <h2>Mean Value Theorem:</h2>
+        <h2 class="theorem">Mean Value Theorem:</h2>
         <p>\(f:[a,b]\to\mathbb{R}\) continuous and \(f\) differentiable at every point \(c\in(a,b)\)</p>
         <p>That means there exists \(c\in(a,b)\) s.t. \(f'(c)=\frac{f(b)-f(a)}{b-a}\)</p>
-        <h2>Rolle's Theorem:</h2>
+        <h2 class="theorem">Rolle's Theorem:</h2>
         <p>\(f:[a,b]\to\mathbb{R}\) continuous and \(f\) differentiable at every point in \(c\in(a,b)\). Supppose \(f(b)=0=f(a)\). Then there exists \(c\in(a,b)\) s.t. \(f'(c)=0\)</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -86,14 +51,14 @@
             <p>By Rolle's theorem, there exists \(c\in(a,b)\) s.t. \[0=g'(c)=\left(f(c)-f(a)-\frac{f(b)-f(a)}{b-a}(x-a)\right)'=f'(c)-\frac{f(b)-f(a)}{b-a}\]</p>
             <p>This implies that \[f'(c)=\frac{f(b)-f(a)}{b-a}\]</p>
         </details>
-        <h2>Analysis in \(\mathbb{R}^n\)</h2>
+        <h2 class="definition">Analysis in \(\mathbb{R}^n\)</h2>
         <p>Def: A sequence in \(\mathbb{R}^n\) is a map: \(\mathbb{N}\to\mathbb{R}^n\)</p>
         <p>We denote by \(\{a_k\}_{k=1}^\infty\) or \(\{a^{(k)}\}^\infty_{k=1}\). When using \(\{a^{(k)}\}\) notation, we can denote \(a^{(k)}=\left(a_1^{(k)},...,a_n^{(k)}\right)\)</p>
-        <h2>Definition limit</h2>
+        <h2 class="definition">Definition limit</h2>
         <p>Given \(\{a^{(k)}\}^{\infty}_{n=1}\subseteq\mathbb{R}^n\), \(a\in\mathbb{R}^n\), we say \[\lim_{k\to\infty}a^{(k)}=a\text{ if for all }\varepsilon>0\text{ there exists }\mathcal{K}\in\mathbb{N}\text{ s.t. }||a^{(k)}-a||<\varepsilon\text{ whenever }k\leq\mathcal{K}\]</p>
         <p>Here, \(||\cdot||\) is defined by \(||b||=\sqrt{b\cdot{b}}=\sqrt{\sum_{i=1}^{n}b_i^2}\)</p>
         <p>Def \(\{a^{(k)}\}_{n=1}^\infty\) is convergent if \(\exists{a}\in\mathbb{R}^n\) s.t. \(\lim_{k\to\infty}a^{(k)}=a\)</p>
-        <h2>Lemma: </h2>
+        <h2 class="lemma">Lemma: </h2>
         <p>\(\{a^{(k)}\}^\infty_{k=1}\subseteq{\mathbb{R}^n}, a\in\mathbb{R}^n\). Then \(\lim{a^{(k)}}=n\iff\lim{a_i^{(k)}=a_i}\) for all \(i=1,2,..,n\)</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -104,16 +69,16 @@
             <p>Pf \((\implies)\): Exercise</p>
         </details>
         <p>Note that some things from \(\mathbb{R}\) do not generalize (can't talk about increasing sequence), but two important results still hold: </p>
-        <h2>Def: </h2>
+        <h2 class="definition">Def: </h2>
         <p>\[S\subseteq\mathbb{R}^n\text{ is bounded if there exists }c>0\text{ s.t. }||x||<{c}\text{ for all }s\in{S}\]</p>
-        <h2>Prop: </h2>
+        <h2 class="proposition">Prop: </h2>
         <p>If \(\{a^{(k)}\}^\infty_{k=1}\subseteq{\mathbb{R}^n}\) is convergent, then it is bounded. </p>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Pf: We know that if \(\{a^{(k)}\}_{k=1}^\infty\) is convergent then for all \(i\), there exists \(c_i>0\) s.t. \(|a_i^{(k)}|\leq{c_i}\) for all \(k\in\mathbb{N}\)</p>
             <p>This means that \[\|a^{(k)}\|=\left(\sum_{i=1}^n(a_i)^2\right)^{1/2}\leq\left(\sum_{i=1}^n(c_i)^2\right)^{1/2}=c\qquad\square\]</p>
         </details>
-        <h2>Thm: Bolzano-Weierstrauss in \(\mathbb{R}^n\)</h2>
+        <h2 class="theorem">Thm: Bolzano-Weierstrauss in \(\mathbb{R}^n\)</h2>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Sketch of pf: We prove by induction on \(n\). The base case was proven last week. Assume the result up to dimension \(n-1\). </p>
@@ -122,25 +87,25 @@
             <p>By BW in \(\mathbb{R}\), there exists a subsequence \(\{a_n^{(k_{j_\ell})}\}^\infty_{\ell=1} \text{ of }\{a_n^{(k_j)}\}^\infty_{j=1}\) s.t. \(\lim_{\ell\to\infty}a_n^{(k_{j\ell})}\) exists. </p>
             <p>THe end is proving \(\{a^{(k_{j\ell})}\}^\infty_{\ell=1}\subset\mathbb{R}^n\) is convergent and that is left as an exercise.</p>
         </details>
-        <h2>Open and closed sets in \(\mathbb{R}^n\)</h2>
+        <h2 class="definition">Open and closed sets in \(\mathbb{R}^n\)</h2>
         <p>We should remember the following notation: </p>
         <img src="Week3pic1.png" alt="ball" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
         <p>In \(\mathbb{R}^n\), an open set is something akin to the circle on the left and a closed set is something akin to the circle in the right. </p>
-        <h2>Def Ball:</h2>
+        <h2 class="definition">Def Ball:</h2>
         <p>For \(x\in\mathbb{R}^n,\rho>0\), define \(B_\rho(x)=\{y\in\mathbb{R}^n:||x-y||<\rho\}\)</p>
-        <h2>Def Open:</h2>
+        <h2 class="definition">Def Open:</h2>
         <p>\(U\subseteq{\mathbb{R}^n}\) is open if for all \(x\in{U}\) there exists some \(\rho>0\) s.t. \(B_\rho(x)\subseteq{U}\)</p>
-        <h2>Def Limit Point:</h2>
+        <h2 class="definition">Def Limit Point:</h2>
         <p>\(A\subseteq{\mathbb{R}^n}\). We say \(b\in\mathbb{R}^n\) is a limit point of \(A\) if there exists \(\{a^{(k)}\}^\infty_{k=1}\subseteq\mathbb{R}^n\), \(a^{(k)}\in{A}\) s.t. \(b=\lim_{k\to\infty}a^{(k)}\)</p>
         <p>Rmk: \(A\subseteq\{\text{limit points of }A\}\)</p>
-        <h2>Def Closed:</h2>
+        <h2 class="definition">Def Closed:</h2>
         <p>\(K\subseteq\mathbb{R}^n\) is closed if it contains all its limit points. </p>
         <p>Note that a set can be open AND closed or neither</p>
         <ul>
             <li>\((a,b]\)</li>
             <li>\(\mathbb{R}^n\) and \(\varnothing\) are both open and closed</li>
         </ul>
-        <h2>Prop: </h2>
+        <h2 class="proposition">Prop: </h2>
         <p>\[\text{If }\{u_\alpha\}_{\alpha\in\Gamma}\text{ is a collection of open sets in }\mathbb{R}^n\text{ then }\bigcup_{\alpha\in\Gamma}u_\alpha\text{ is open. }\]</p>
         <p>\[\text{If }\{k_\alpha\}_{\alpha\in\Gamma}\text{ is a collection of closed sets in }\mathbb{R}^n\text{ then }\bigcap_{\alpha\in\Gamma}k_\alpha\text{ is closed. }\]</p>
         <details>
@@ -150,7 +115,7 @@
             <p>\(\implies\exists\rho>0\text{ s.t. }B_\rho(x)\subseteq{\bigcup_{\alpha\in\Gamma}}u_\alpha\qquad\square\)</p>
             <p>We should attempt a contradiction for the other proof (exercise)</p>
         </details>
-        <h2>Prop: \(U\subseteq{\mathbb{R}^n}\text{ open }\iff\mathbb{R}^n\backslash{U}\text{ is closed}.\)</h2>
+        <h2 class="proposition">Prop: \(U\subseteq{\mathbb{R}^n}\text{ open }\iff\mathbb{R}^n\backslash{U}\text{ is closed}.\)</h2>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>pf: \((\implies): U\subseteq\mathbb{R}^n\) open. Let \(z\in\mathbb{R}^n\) be a limit point of \(\mathbb{R}^n\backslash{U}\).</p>
@@ -164,13 +129,13 @@
             <p>\(\implies\exists{x\in{U}}\) which is a limit point of \(\mathbb{R}^n\backslash{U}\)</p>
             <p>\(\implies\mathbb{R}^n\backslash{U}\) is not closed. </p>
         </details>
-        <h2>Cor: </h2>
+        <h2 class="corollary">Cor: </h2>
         <p>\(k\subseteq\mathbb{R}^n\) closed and bounded. Then suppose \(\{a^{(k)}\}^\infty_{k=1}\subseteq{k}\). Then there exists a subsequence \(\{a^{(k_j)}\}^\infty_{j=1}\) and \(a\in{K}\) s.t. \(\lim_{j\to\infty}a^{(k_j)}=a\)</p>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Pf: Since \(k\) is bounded, \(\{a^{(k)}\}^\infty_{k=1}\) is a bounded sequence. Hence there exists \(\{a^{(k_j)}\}^\infty_{j=1}\) and \(a\in\mathbb{R}\) s.t. \(\lim_{j\to\infty}a^{(k_j)}=a\) by BW. Now \(a\) is a limit point of \(k\) and since \(k\) is closed, \(a\in{k}\)</p>
         </details>
-        <h2>Def Compact: </h2>
+        <h2 class="definition">Def Compact: </h2>
         <p>We say \(K\subseteq\mathbb{R}^n\) is compact if for all \(\{a^{(k)}\}_{n=1}^\infty\subseteq{K}\) there exists a subsequence \(\{a^{(k_j)}\}^\infty_{j=1}\) and \(a\in{K}\) s.t. \(\lim_{j\to\infty}a^{(k_j)}=a\)</p>
         <p>(In \(\mathbb{R}^n\), closed + bounded \(\implies\) compact)</p>
         <p><a href="index.html">Back to Math 61 Table of Contents</a></p>

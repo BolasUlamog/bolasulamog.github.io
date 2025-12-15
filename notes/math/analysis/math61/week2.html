@@ -9,71 +9,14 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h1,
-        h2 {
-            color: #003366;
-            text-align: center;
-        }
-
-        details {
-            margin: 15px 0;
-            padding: 15px;
-            border-left: 4px solid #0055aa;
-            background-color: #f7fbff;
-            border-radius: 6px;
-        }
-
-        summary {
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        summary:hover {
-            color: #0055aa;
-        }
-
-        a {
-            color: #003366;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        p {
-            line-height: 1.5;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="container">
         <h1>Math 61 - Week 2</h1>
 
-        <h2>Prop: </h2>
+        <h2 class="proposition">Prop: </h2>
         <p>\(\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}\) is a convergent sequence. Then \(\{a_n\}^\infty_{n=1}\) is bounded. </p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -83,10 +26,10 @@
         </details>
         <p>We will now prove a very important theorem in real analyis, but first observe the following...</p>
         <p>Consider a sequence \(-1,1,-1,1,-1,1,...\) that is bdd but not convergent. We can observe that if we remove a lot of terms, the remaining sequence is convergent. </p>
-        <h2>Def Subsequence</h2>
+        <h2 class="definition">Def Subsequence</h2>
         <p>If \(\{a_n\}^\infty_{n=1}\subseteq\mathbb{R}\) is a sequence, call \[\{a_{f(k)}\}^\infty_{k=1}\text{ a subsequence of }a\text{ if }f\text{ is a fcn }f:\mathbb{N}\to\mathbb{N}\text{ and }f(k)<{f(k+1)}\]</p>
         <p>Notation: Often we write using \(\{a_{n(k)}\}^\infty_{n=1}\) or \(\{a_{n_k}\}_{k=1}^\infty\)</p>
-        <h2>Theorem: Bolzano-Weierstrass</h2>
+        <h2 class="theorem">Theorem: Bolzano-Weierstrass</h2>
         <p>Any bdd sequence is \(\mathbb{R}\) has a convergent subsequence. </p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -108,12 +51,12 @@
             <p>Now we simply choose \(k=\max(k_1,k_2)\) and use triangle inequality: </p>
             <p>\[|a_{n(k)}-L|=|(a_{n(k)}-c_k)+(c_k+L)|\leq|a_{n(k)}-c_k|+|c_k-L|\leq{\frac{d-c}{2^k}}+|c_k-L|<\varepsilon\]</p>
         </details>
-        <h2>Lemma: Limit Laws</h2>
+        <h2 class="lemma">Lemma: Limit Laws</h2>
         <details>
             <summary>Statement and Proof (click to expand)</summary>
             <p>You should have learned these in calc and proof is left as an exercise to the reader ;)</p>
         </details>
-        <h2>Lemma: </h2>
+        <h2 class="lemma">Lemma: </h2>
         <p>If \(\lim_{n\to\infty}a_n=A,\lim_{n\to\infty}b_n=B\), and \(a_n<{b_n}\) for all \(n\in{\mathbb{N}}\) then \(A\leq{B}\)</p>
         <p><strong>Rmk: </strong>It doesn't imply \(A<{B}\) (ex. consider \(a_n=0,b_n=\frac{1}{n})\)</p>
         <details>
@@ -126,7 +69,7 @@
             <p>\[a_n>A-\frac{A-B}{2}\geq{B+\frac{A-B}{2}}>b_n\]</p>
             <p>However, this is a contradiction so \(A\geq{B}\)</p>
         </details>
-        <h2>Continuous Functions</h2>
+        <h2 class="definition">Continuous Functions</h2>
         <p>Intuitively, continuous functions are something like this: </p>
         <img src="week2pic2.png" alt="cont1" style="display: block; margin: 0 auto; max-width: 40%; height: auto;">
         <p>You may also remember a definition of continuity that involves not lifting up a pen when drawing a function. </p>
@@ -136,7 +79,7 @@
         <p>\[\text{If }c\in[a,b]\text{ we say }\lim_{x\to{c}}=L\text{ if for all }\varepsilon>0, \text{ there exists }\delta>0\text{ s.t. }\]\[|f(x)-L|<\epsilon\text{ whenever }|x-c|<\delta\text{ and }x\in[a,b]\]</p>
         <p>\(f\) is continuous at \(c\) if \(\lim_{x\to{c}}f(x)=f(c)\). </p>
         <p>\[\text{ie., for all }\varepsilon>0,\text{ there exists }\delta>0\text{ s.t. }|f(x)-f(c)|<\varepsilon\text{ whenever }|x-c|<\delta\]</p>
-        <h2>Lemma: </h2>
+        <h2 class="lemma">Lemma: </h2>
         <p>Suppose \(f[a,b]\to\mathbb{R}\text{ continuous at }c\in[a,b]\)</p>
         <p>Then for any sequence, \[\{x_n\}_{n=1}^\infty\subseteq{\mathbb{R}}\text{ s.t. }x_n\in[a,b]\,\text{and }\lim_{n\to\infty}x_n=c, \text{ it holds that }\lim_{n\to{\infty}}f(x_n)=f(c)\]</p>
         <details>
@@ -147,7 +90,7 @@
             <p>Combining, we get \(|f(x_n)-f(c)|<\varepsilon\) for all \(n\in\mathbb{N}\)</p>
             <p>Rmk: The converse is all true. </p>
         </details>
-        <h2>Thm:</h2>
+        <h2 class="theorem">Thm:</h2>
         <p>Suppose \(f:[a,b]\to\mathbb{R}\) is continuous. Then </p>
         <ul>
             <li>1. \(f\) is bounded (ie. \(\{f(x):x\in[a,b]\}\))</li>
@@ -166,7 +109,7 @@
             <p>Pf #2: Since \[\{f(x):x\in[a,b]\}\text{ is bounded, }\alpha=\sup\{f(x):x\in[a,b]\}\text{ exists}\qquad\]</p>
             <p>The rest is hw</p>
         </details>
-        <h2>Squeeze thm: </h2>
+        <h2 class="theorem">Squeeze thm: </h2>
         <p>If \(a_n\leq{b_n}\leq{c_n}\) and \(\lim{a_n}=\lim{c}_n=\ell\) then \(\lim{b_n}=\ell\)</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -175,9 +118,9 @@
             <p>Take \(N=\max\{N_1,N_2\}\). Now we have that either \(|a_n-\ell|\geq|b_n-\ell|\) or \(|c_n-\ell|\geq|b_n-\ell|\) using the appropriate casework. </p>
             <p>Therefore, \[|b_n-\ell|<\max\{|a_n-\ell|,|c_n-\ell|\}<\varepsilon\qquad\qquad\square\]</p>
         </details>
-        <h2>Lemma: </h2>
+        <h2 class="lemma">Lemma: </h2>
         <p>\(f\) is continuous at \(c\) if and only if \(\lim_{n\to\infty}f(x_n)=f(c)\)</p>
-        <h2>Theorem: Intermediate value theorem</h2>
+        <h2 class="theorem">Theorem: Intermediate value theorem</h2>
         <p>If \(f:[a,b]\to\mathbb{R}\) continuous, \(A\in\mathbb{R}\), \(f(a)\leq{A}\) and \(f(b)\geq{A}\), then there exists \(c\in[a,b]\) s.t. \(f(c)=A\)</p>
         <details>
             <summary>Proof (click to expand)</summary>

@@ -9,48 +9,13 @@
     <script id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #f0f8ff; 
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
-        h1, h2 { color: #003366; text-align: center; }
-        details {
-            margin: 15px 0;
-            padding: 15px;
-            border-left: 4px solid #0055aa;
-            background-color: #f7fbff;
-            border-radius: 6px;
-        }
-        summary {
-            font-weight: bold;
-            cursor: pointer;
-        }
-        summary:hover {
-            color: #0055aa;
-        }
-        a { color: #003366; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        ul { padding-left: 20px; }
-        p { line-height: 1.5; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Math 61 - Week 4</h1>
 
-        <h2>Continuity in Multiple Dimensions</h2>
+        <h2 class="definition">Continuity in Multiple Dimensions</h2>
         <p>Given \(A\subseteq\mathbb{R}^n\), \(f:A\to\mathbb{R}^m\), \(a\in{A}\), we say \(f\) is continuous at \(a\) if for all \(\varepsilon>0\) there exists a \(\delta>0\) s.t. \(\|f(x)-f(a)\|<\varepsilon\) whenever \(\|x-a\|<\delta\) and \(x\in{A}\)</p>
         <p>\(f\) is continuuous if it is continuous at all \(a\in{A}\)</p>
         <details>
@@ -60,7 +25,7 @@
             <p>3. \(f\) is continuous at an non-isolated point iff \(\lim_{x\to{a}}f(x)=f(a)\)</p>
             <p>We can also say for (3) that if \(A\subseteq\mathbb{R}^n,f:A\to\mathbb{R}^m,a\in{A}\) that \(f\) is continuous at \(A\iff\) for any sequence \(\{a^{(k)}\}^\infty_{n=1}\subseteq{A}\), it holds that \(\lim_{k\to\infty}f(a^{(k)})=f(a)\)</p>
         </details>
-        <h2>Thm: </h2>
+        <h2 class="theorem">Thm: </h2>
         <p>If \(A\subseteq\mathbb{R}^m\) compact, \(f:A\to\mathbb{R}\) continuous, then \(f\) is bounded and achieves max and min</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -69,7 +34,7 @@
             <p>Since \(A\) is compact, there exists a subsequence \(\{x^{(k_j)}\}_{j=1}^\infty\) and \(a\in{A}\) s.t. \(\lim_{j\to\infty}x^{(k_j)}=a\)</p>
             <p>By continuity, \(\lim_{j\to\infty}f(x^{k_j}=f(a)\) which is convergent and thus bounded which is a contradiction. </p>
         </details>
-        <h2>Metric Spaces</h2>
+        <h2 class="definition">Metric Spaces</h2>
         <p>\((X,d)\) is a metric space if \(X\) is a set and \(d:X\times{X}\to\mathbb{R}\) satisfies</p>
         <ul>
             <li>(M1): \(d(x,y)\geq0\) for all \(x,y\in{X}\) and ''\(=\)"\(\iff{x=y}\)</li>
@@ -95,11 +60,11 @@
             <p>6. \(A\subseteq{X}\) is bounded if there exists \(y\in{X}, \rho>0\) s.t. \(A\subseteq{B_\rho(y)}\)</p>
             <p>7. \(A\subseteq{X}\) is compact if for any \(\{a_n\}^\infty_{n=1}\subseteq{A}\) there exists \(\{a_{n_k}\}^\infty_{k=1}\) and \(a\in{A}\) s.t. \(\lim_{k\to\infty}a_{n_k}=a\)</p>
         </details>
-        <h2>Prop: </h2>
+        <h2 class="proposition">Prop: </h2>
         <p>1. \(X,\phi\) open and closed, respectively</p>
         <p>2. \[\binom{\text{Union}}{\text{Intersection}}\text{ of }\binom{X}{\phi}\text{ is }\binom{\text{open}}{\text{closed}}\]</p>
         <p>3. \[\text{Finite }\binom{\text{Intersection}}{\text{Union}}\text{ of }\binom{X}{\phi}\text{ is }\binom{\text{open}}{\text{closed}}\]</p>
-        <h2>Thm:</h2>
+        <h2 class="theorem">Thm:</h2>
         <p>\((X,d)\) metric spaces and \(A\subseteq{X}\). If \(A\) is compact then \(A\) is closed and bounded</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -112,19 +77,19 @@
             <p>By def, there exists \(\{x_n\}^\infty_{n=1}\subset{A}\) s.t. \(\lim_{n\to\infty}a_n=x\)</p>
             <p>By compactness, there exists \(\{a_{n_k}\}^\infty_{n=1}\) s.t. \(\lim{a_{n_k}}=a\in{A}\)</p>
         </details>
-        <h2>Def Continuity: </h2>
+        <h2 class="definition">Def Continuity: </h2>
         <p>Given \((X,d_x),(Y,d_y)\) metric spaces and \(f:X\to{Y}\)</p>
         <ul>
             <li>1. Given \(c\in{x}\) we say \(f\) is continuous at \(c\) if for all \(\varepsilon>0\) there exists \(\delta>0\) s.t. \(d_Y(f(x),f(c))<\varepsilon\) whenever \(d_X(x,c)<\delta\) and \(x\in{X}\)</li>
             <li>2. \(f\) is continuous if its continuous at all points</li>
         </ul>
-        <h2>Lemma:</h2>
+        <h2 class="lemma">Lemma:</h2>
         <p>\(f\) is continuous at \(c\iff\) for any \(\{x_n\}^\infty_{n=1}\subseteq{X},\lim_{n\to\infty}x_n=c\), it holds that \(\lim_{n\to\infty}f(x_n)=f(c)\)</p>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Pf: Same as before</p>
         </details>
-        <h2>Thm: </h2>
+        <h2 class="theorem">Thm: </h2>
         <p>\((X,d_X),(Y,d_Y),X\text{ compact}, f:X\to{y}\) continuous. Then \(f(x)=\{f(x):x\in{X}\}\) is also compact :D</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -132,7 +97,7 @@
             <p>By compactness of \(X\), there exists a subsequence \(\{x_{n_k}\}^\infty_{k=1}\) and \(x\in{x}\) s.t. \(\lim{x_{n_k}}=x\)</p>
             <p>By continuity of \(f\) and lemma, \(\lim{y_{n_k}}=\lim{f(x_{n_k})}=f(x)\in{f(X)}\)</p>
         </details>
-        <h2>Cor:</h2>
+        <h2 class="corollary">Cor:</h2>
         <p>Given \((X,d_X)\) compact. \(f:X\to\mathbb{R}\) is continuous then</p>
         <ul>
             <li>1. \(f(x)\) is odd</li>

@@ -9,64 +9,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h1,
-        h2 {
-            color: #003366;
-            text-align: center;
-        }
-
-        details {
-            margin: 15px 0;
-            padding: 15px;
-            border-left: 4px solid #0055aa;
-            background-color: #f7fbff;
-            border-radius: 6px;
-        }
-
-        summary {
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        summary:hover {
-            color: #0055aa;
-        }
-
-        a {
-            color: #003366;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        p {
-            line-height: 1.5;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -78,7 +21,7 @@
             <span>\(\mathbb{R}\)</span>.
         </p>
 
-        <h2>The Three Axioms for \(\mathbb{R}\)</h2>
+        <h2 class="theorem">The Three Axioms for \(\mathbb{R}\)</h2>
 
         <ol>
             <li><strong>Arithmetic:</strong> Field axioms</li>
@@ -97,7 +40,7 @@
 
         <hr>
 
-        <h2>Definition — Field</h2>
+        <h2 class="definition">Definition — Field</h2>
         <p>
             \((\mathbb{F}, +, \cdot)\) is called a <strong>field</strong> if it satisfies
             the following properties:
@@ -151,7 +94,7 @@
             </ul>
         </details>
 
-        <h2>Lemma: Inverses are unique</h2>
+        <h2 class="lemma">Lemma: Inverses are unique</h2>
         <p>(If \(a+b=0\) and \(a+c=0\) then \(b=c\))</p>
         <details>
             <summary>Proof (click to expand)</summary>
@@ -164,7 +107,7 @@
             <p>\(=0+c\) (F1)</p>
             <p>\(=c\) (F4)</p>
         </details>
-        <h2>Lemma: \(0\cdot{a}=0\text{ and } (-1)\cdot{a}=-a\text{ for all }a\in\mathbb{F}\)</h2>
+        <h2 class="lemma">Lemma: \(0\cdot{a}=0\text{ and } (-1)\cdot{a}=-a\text{ for all }a\in\mathbb{F}\)</h2>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Proof of part 1: </p>
@@ -182,8 +125,8 @@
             <p>\(=0\) (Part 1)</p>
             <p>Hence by uniqueness of inverses, \(-1\cdot{a}=-a\)</p>
         </details>
-        <h1>Lecture 2</h1>
-        <h2>Order Axioms</h2>
+        <h1 class="lecture">Lecture 2</h1>
+        <h2 class="definition">Order Axioms</h2>
         <p>\((\mathbb{F},+,\cdot)\) is an ordered if there exists a subset \(\mathbb{P}\subseteq\mathbb{F}\) s.t. the
             following order axioms hold: </p>
         <details>
@@ -212,7 +155,7 @@
             <p>2. Write \(a>b\) or \(b<{a}\) if \(a-b=a+(-b)>0\)</p>
             <p>3. Write \(a\geq{b}, b\leq{a}\) if (\(a>b\) or \(a=b\))</p>
         </details>
-        <h2>Lemma: \(1>0\)</h2>
+        <h2 class="lemma">Lemma: \(1>0\)</h2>
         <details>
             <summary>Proof (click to expand)</summary>
             <p>Assume \(1<{0}\) (\(1\neq{0}\) by F4)</p>
@@ -222,7 +165,7 @@
                     <p>By another lemma and the fact \(1\) is the inverse of \(-1\) we know \((-1)(-1)=1\)</p>
                     <p>Hence \(1>0\) which is a contradiction. </p>
         </details>
-        <h2>Completeness</h2>
+        <h2 class="definition">Completeness</h2>
         <p>An ordered field \((\mathbb{F},+,\cdot)\) is <strong>complete</strong> if any \(S\subseteq\mathbb{F}\) that
             is bounded above has a least upper bound. From now on, take \(\mathbb{R}\) to be the ONLY complete ordered
             field. </p>
@@ -258,7 +201,7 @@
             </ul>
             <p><strong>rmk: </strong>\(\sup{S}\) need not be in \(S\)</p>
         </details>
-        <h2>\(\mathbb{N}, \mathbb{Z}, \mathbb{Q}\)</h2>
+        <h2 class="definition">\(\mathbb{N}, \mathbb{Z}, \mathbb{Q}\)</h2>
         <details>
             <summary>Definitions (click to expand)</summary>
             <p>
@@ -280,7 +223,7 @@
                 \]
             </p>
         </details>
-        <h2>Prop: Archimedian Principle</h2>
+        <h2 class="proposition">Prop: Archimedian Principle</h2>
         <p>This is one of the most fundemental and important ideas in real analysis. There are many ways to write this
             that are equivilient but we will prove the version that states that \(\mathbb{N}\) is not bounded above. In
             fact, this is equiviliant to stating that for any two positive real numbers \(a,b\) there exists a natural
@@ -294,12 +237,12 @@
             <p>\(\implies{n}\leq{\alpha-1}\) which is a contradiction since \(\alpha\) is the sup. </p>
             <p>Hence \(\mathbb{N}\) is not bdd above. \(\qquad\blacksquare\)</p>
         </details>
-        <h2>Sequences</h2>
+        <h2 class="definition">Sequences</h2>
         <p>A <strong>sequence</strong> of real numbers is a map \(\mathbb{N}\to\mathbb{R}\). We denote this by \[\{a_n\}_{n=1}^\infty\text{, where }a_n=a(n)\]</p>
-        <h2>Definition of the limit</h2>
+        <h2 class="definition">Definition of the limit</h2>
         <p>Let \(\{a_n\}_{n=1}^\infty\subseteq{\mathbb{R}}\). We say \(\{a_n\}_{n=1}^\infty\) has a limit \(L\in\mathbb{R}\), write \(\lim_{n\to\infty}a_n=L\) if \[\text{ for all }\epsilon>0,\exists{N\in{\mathbb{N}}}\text{ s.t. }|a_n-L|<{\epsilon},\forall{n\geq{N}}\]< /p>
         <p>\[\{a_n\}^\infty_{n=1}\subseteq\mathbb{R} \text{ is }\left\{\begin{array}\text{\text{convergent if it has a limit}} \\\text{divergent otherwise}\end{array}\right\}\]</p>
-        <h2>Prop: </h2>
+        <h2 class="proposition">Prop: </h2>
         <p>If \(\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}\) is bdd above and increasing
                             \((a_n)\leq{a_{n+1}}\) then \(\{a_n\}^\infty_{n=1}\) is convergent and is equal to
                             \(\sup{a_n}\)</p>
