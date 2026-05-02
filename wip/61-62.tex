@@ -1652,6 +1652,112 @@ Then $\tilde{u}_{j+1} \neq 0$ (otherwise $v_{j+1} \in \text{span}(v_1, \ldots, v
 Set $u_{j+1} = \frac{\tilde{u}_{j+1}}{\|\tilde{u}_{j+1}\|}$.
 \end{proof}
 
+\subsection{Eigenvalues and the Spectral Theorem}
+
+Now we come to one of the most important results in linear algebra: the Spectral Theorem for symmetric matrices.
+
+\begin{defn}{Characteristic Polynomial}{char_poly}
+Let $A$ be an $n \times n$ matrix. The \textbf{characteristic polynomial} of $A$ is
+\[p_A(\lambda) = \det(A - \lambda I)\]
+This is a degree $n$ polynomial in $\lambda$, with leading coefficient $(-1)^n$.
+\end{defn}
+
+\begin{defn}{Eigenvalue and Eigenvector}{eigenvalue}
+Let $A$ be an $n \times n$ matrix.
+\begin{enumerate}
+    \item The \textbf{eigenvalues} of $A$ are the roots of the characteristic polynomial, i.e., values $\lambda$ such that $\det(A - \lambda I) = 0$.
+    \item An \textbf{eigenvector} corresponding to eigenvalue $\lambda$ is a nonzero vector $v \in \mathbb{R}^n$ such that $Av = \lambda v$.
+\end{enumerate}
+\end{defn}
+
+\begin{remark}
+By the Fundamental Theorem of Algebra, every $n \times n$ matrix has exactly $n$ eigenvalues (counting multiplicity), though some may be complex. We're mainly interested in the case where eigenvalues are real.
+\end{remark}
+
+\begin{lem}{Properties of Eigenvalues}{eigen_properties}
+Let $A$ be an $n \times n$ matrix with eigenvalues $\lambda_1, \ldots, \lambda_n$. Then:
+\begin{enumerate}
+    \item $\det A = \lambda_1 \cdots \lambda_n$ (product of eigenvalues)
+    \item For $\lambda \in \mathbb{R}$: $\lambda$ is an eigenvalue $\iff$ $\exists v \neq 0$ with $Av = \lambda v$
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+For (1): Set $\lambda = 0$ in $\det(A - \lambda I) = (-1)^n(\lambda - \lambda_1) \cdots (\lambda - \lambda_n)$.
+
+For (2): $\det(A - \lambda I) = 0 \iff N(A - \lambda I) \neq \{0\} \iff \exists v \neq 0$ with $(A - \lambda I)v = 0 \iff Av = \lambda v$.
+\end{proof}
+
+\begin{lem}{Eigenvalues of Symmetric Matrices are Real}{symmetric_real_eigen}
+If $A$ is a real symmetric matrix, then all eigenvalues of $A$ are real.
+\end{lem}
+
+\begin{proof}
+Suppose $Av = \lambda v$ for some $v \neq 0$ (possibly complex). Taking the conjugate transpose:
+\[\bar{v}^T A = \bar{\lambda} \bar{v}^T\]
+since $A = A^T$ and $A$ is real. Multiplying the original equation by $\bar{v}^T$:
+\[\bar{v}^T A v = \lambda \bar{v}^T v = \lambda \|v\|^2\]
+But also $\bar{v}^T A v = \bar{\lambda} \bar{v}^T v = \bar{\lambda} \|v\|^2$.
+
+Since $\|v\|^2 \neq 0$, we get $\lambda = \bar{\lambda}$, so $\lambda$ is real.
+\end{proof}
+
+\begin{thm}{Spectral Theorem}{spectral_thm}
+Let $A$ be a real symmetric $n \times n$ matrix. Then there exists an orthonormal basis $\{v_1, \ldots, v_n\}$ of $\mathbb{R}^n$ consisting of eigenvectors of $A$.
+\end{thm}
+
+\begin{proof}
+We proceed by induction on $n$.
+
+\textbf{Base case:} $n = 1$ is trivial --- $A$ is just a scalar and $\mathbb{R}^1$ has the standard basis.
+
+\textbf{Inductive step:} Assume the theorem holds for $(n-1) \times (n-1)$ symmetric matrices.
+
+\textit{Step 1: Find a first eigenvector.}
+
+Consider the quadratic form $Q(x) = x^T A x = \sum_{i,j} a_{ij} x_i x_j$.
+
+Restricted to the unit sphere $S^{n-1}$, $Q$ is continuous on a compact set, so it attains a minimum at some point $v_1 \in S^{n-1}$.
+
+Since $Q(x) = \|x\|^2 Q(\hat{x})$ where $\hat{x} = x/\|x\|$, the function $\|x\|^{-2} Q(x)$ also attains its minimum at $v_1$.
+
+Taking the gradient and setting it to zero (this is a constrained optimization on the sphere, using Lagrange multipliers), we find that
+\[Av_1 = \lambda_1 v_1\]
+where $\lambda_1 = Q(v_1)$ is the minimum value. So $v_1$ is an eigenvector!
+
+\textit{Step 2: Restrict to the orthogonal complement.}
+
+Let $V = \text{span}\{v_1\}$ and $V^\perp$ be its orthogonal complement. Since $\dim V = 1$, we have $\dim V^\perp = n - 1$.
+
+\textbf{Claim:} $A$ maps $V^\perp$ to itself, i.e., if $w \perp v_1$, then $Aw \perp v_1$.
+
+\textit{Proof of claim:} For $w \in V^\perp$:
+\[\langle Aw, v_1 \rangle = \langle w, A^T v_1 \rangle = \langle w, Av_1 \rangle = \langle w, \lambda_1 v_1 \rangle = \lambda_1 \langle w, v_1 \rangle = 0\]
+using that $A = A^T$ (symmetric).
+
+\textit{Step 3: Apply induction.}
+
+Choose an orthonormal basis $\{w_1, \ldots, w_{n-1}\}$ for $V^\perp$. The restriction $A|_{V^\perp}: V^\perp \to V^\perp$ is represented by some $(n-1) \times (n-1)$ matrix $A_0$ relative to this basis.
+
+One can check that $A_0$ is also symmetric (same argument using $A = A^T$).
+
+By the inductive hypothesis, there exists an orthonormal basis $\{u_2, \ldots, u_n\}$ of $\mathbb{R}^{n-1}$ consisting of eigenvectors of $A_0$:
+\[A_0 u_j = \lambda_j u_j \text{ for } j = 2, \ldots, n\]
+
+Define $v_j = \sum_{i=1}^{n-1} (u_j)_i w_i \in V^\perp$ for $j = 2, \ldots, n$.
+
+Then $\{v_1, v_2, \ldots, v_n\}$ is an orthonormal basis for $\mathbb{R}^n$ (since $v_1 \perp V^\perp$ and $\{v_2, \ldots, v_n\}$ is orthonormal in $V^\perp$), and each $v_j$ is an eigenvector of $A$.
+\end{proof}
+
+\begin{cor}{Diagonalization of Symmetric Matrices}{diag_symmetric}
+If $A$ is a real symmetric matrix, then there exists an orthogonal matrix $Q$ such that $Q^T A Q$ is diagonal. The diagonal entries are the eigenvalues of $A$.
+\end{cor}
+
+\begin{proof}
+Let $\{v_1, \ldots, v_n\}$ be the orthonormal eigenvector basis from the Spectral Theorem. Let $Q$ be the matrix with columns $v_1, \ldots, v_n$. Then $Q$ is orthogonal and
+\[Q^T A Q = \begin{pmatrix} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{pmatrix}\]
+\end{proof}
+
 
 % ==================== WEEK 8 ====================
 \chapter{Integration and the Fundamental Theorem}
@@ -2027,6 +2133,137 @@ The main theorems connecting linear algebra and analysis in this course:
     \item \textbf{Hessian as a quadratic form:} The second derivative test uses positive definiteness of the Hessian matrix.
     \item \textbf{Inverse Function Theorem:} $f$ is locally invertible near $a$ iff $Df(a)$ is invertible (i.e., $\det Df(a) \neq 0$).
 \end{enumerate}
+\end{remark}
+
+\section{Advanced Analysis: Contraction Mapping and Function Theorems}
+
+\subsection{Contraction Mapping Principle}
+
+\begin{defn}{Contraction}{contraction}
+Let $E \subseteq \mathbb{R}^n$. A map $f: E \to \mathbb{R}^n$ is a \textbf{contraction} if there exists $\theta \in (0, 1)$ such that
+\[\|f(x) - f(y)\| \leq \theta \|x - y\| \quad \forall x, y \in E\]
+\end{defn}
+
+\begin{thm}{Contraction Mapping Theorem}{contraction_mapping}
+Let $E \subseteq \mathbb{R}^n$ be closed and let $f: E \to E$ be a contraction (so $f(E) \subseteq E$). Then $f$ has a unique fixed point, i.e., there exists a unique $z \in E$ such that $f(z) = z$.
+\end{thm}
+
+\begin{proof}
+The proof is constructive --- we'll actually find the fixed point!
+
+Pick any $x_0 \in E$ and define iteratively:
+\[x_k = f(x_{k-1}) \text{ for } k \geq 1\]
+
+\textbf{Step 1: The sequence is Cauchy.}
+
+By the contraction property:
+\[\|x_{k+1} - x_k\| = \|f(x_k) - f(x_{k-1})\| \leq \theta \|x_k - x_{k-1}\|\]
+
+By induction: $\|x_{k+1} - x_k\| \leq \theta^k \|x_1 - x_0\|$.
+
+For $\ell > k$:
+\begin{align*}
+\|x_\ell - x_k\| &\leq \sum_{j=k}^{\ell-1} \|x_{j+1} - x_j\| \\
+&\leq \sum_{j=k}^{\ell-1} \theta^j \|x_1 - x_0\| \\
+&\leq \frac{\theta^k}{1 - \theta} \|x_1 - x_0\|
+\end{align*}
+Since $\theta^k \to 0$, the sequence is Cauchy.
+
+\textbf{Step 2: The limit is a fixed point.}
+
+Since $E$ is closed and $\{x_k\}$ is Cauchy in $E$, it converges to some $z \in E$.
+
+Since $f$ is continuous (contractions are Lipschitz, hence continuous):
+\[f(z) = f(\lim_{k \to \infty} x_k) = \lim_{k \to \infty} f(x_k) = \lim_{k \to \infty} x_{k+1} = z\]
+
+\textbf{Step 3: Uniqueness.}
+
+If $f(z) = z$ and $f(w) = w$, then $\|z - w\| = \|f(z) - f(w)\| \leq \theta \|z - w\|$.
+
+Since $\theta < 1$, this forces $\|z - w\| = 0$, so $z = w$.
+\end{proof}
+
+\begin{remark}
+The contraction mapping theorem is incredibly useful! It gives both existence and uniqueness, plus a practical algorithm (iteration) to find the fixed point.
+\end{remark}
+
+\subsection{Inverse Function Theorem}
+
+The Inverse Function Theorem tells us when a $C^1$ map is locally invertible.
+
+\begin{thm}{Inverse Function Theorem}{IFT}
+Let $U \subseteq \mathbb{R}^n$ be open, $f: U \to \mathbb{R}^n$ be $C^1$, and $x_0 \in U$ with $Df(x_0)$ invertible. Then there exist open sets $V, W$ with $x_0 \in V$ and $f(x_0) \in W$ such that:
+\begin{enumerate}
+    \item $f|_V: V \to W$ is a bijection
+    \item The inverse $g: W \to V$ is also $C^1$
+    \item $Dg(y) = (Df(g(y)))^{-1}$ for all $y \in W$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}[Sketch]
+\textbf{Step 1: Reduce to the case $Df(x_0) = I$.}
+
+If $Df(x_0) = A$ is invertible, consider $\tilde{f}(x) = A^{-1} f(x)$. Then $D\tilde{f}(x_0) = A^{-1} A = I$.
+
+If the theorem holds for $\tilde{f}$, it holds for $f$.
+
+\textbf{Step 2: Setup.}
+
+Since $Df$ is continuous and $Df(x_0) = I$, there exists $\rho > 0$ such that $\|Df(x) - I\| < \frac{1}{2}$ for $x \in B_\rho(x_0)$.
+
+\textbf{Step 3: Injectivity.}
+
+For $x, y \in B_\rho(x_0)$:
+\[\|f(x) - f(y) - (x - y)\| = \left\|\int_0^1 (Df(x + t(y-x)) - I)(y - x) \, dt\right\| \leq \frac{1}{2}\|x - y\|\]
+
+Hence $\|f(x) - f(y)\| \geq \frac{1}{2}\|x - y\|$, so $f$ is injective on $B_\rho(x_0)$.
+
+\textbf{Step 4: Surjectivity (using contraction mapping).}
+
+For any $v$ near $f(x_0)$, we want to find $x$ with $f(x) = v$.
+
+Define $F_v(x) = x - f(x) + v$. We show $F_v$ is a contraction on a closed ball centered at $x_0$:
+
+$\|F_v(x) - F_v(y)\| = \|(x - f(x)) - (y - f(y))\| \leq \frac{1}{2}\|x - y\|$.
+
+By the Contraction Mapping Theorem, $F_v$ has a fixed point $x$, meaning $x = x - f(x) + v$, i.e., $f(x) = v$.
+
+\textbf{Step 5: Differentiability of inverse.}
+
+The formula $Dg(y) = (Df(g(y)))^{-1}$ follows from differentiating $f(g(y)) = y$ using the chain rule.
+\end{proof}
+
+\subsection{Implicit Function Theorem}
+
+The Implicit Function Theorem is closely related to the IFT and tells us when we can solve equations locally.
+
+\begin{thm}{Implicit Function Theorem}{ImplicitFT}
+Let $U \subseteq \mathbb{R}^n \times \mathbb{R}^m$ be open and $F: U \to \mathbb{R}^m$ be $C^1$. Suppose $(a, b) \in U$ satisfies $F(a, b) = 0$ and the partial derivative $D_y F(a, b): \mathbb{R}^m \to \mathbb{R}^m$ is invertible.
+
+Then there exist open neighborhoods $V$ of $a$ in $\mathbb{R}^n$ and $W$ of $b$ in $\mathbb{R}^m$, and a unique $C^1$ function $g: V \to W$ such that:
+\begin{enumerate}
+    \item $g(a) = b$
+    \item $F(x, g(x)) = 0$ for all $x \in V$
+    \item $Dg(x) = -(D_y F(x, g(x)))^{-1} D_x F(x, g(x))$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}[Sketch]
+Define $\Phi: U \to \mathbb{R}^n \times \mathbb{R}^m$ by $\Phi(x, y) = (x, F(x, y))$.
+
+Then $D\Phi(a, b) = \begin{pmatrix} I & 0 \\ D_x F & D_y F \end{pmatrix}$, which is invertible since $D_y F$ is invertible.
+
+By the Inverse Function Theorem, $\Phi$ has a local inverse $\Psi = (\Psi_1, \Psi_2)$.
+
+For $(x, 0)$ near $(a, 0)$: $\Psi(x, 0) = (x, g(x))$ for some function $g$.
+
+Then $\Phi(x, g(x)) = (x, 0)$ implies $F(x, g(x)) = 0$.
+
+The formula for $Dg$ follows from differentiating $F(x, g(x)) = 0$.
+\end{proof}
+
+\begin{remark}
+The IFT and Implicit FT are fundamental tools in differential geometry --- they let us show that submanifolds defined by equations are ``nice'' smooth objects.
 \end{remark}
 
 
@@ -3069,6 +3306,52 @@ For the torus $T^2 = S^1 \times S^1$ with coordinates $\phi_1, \phi_2$:
     \item $H^1(T^2) = \mathbb{R}^2$, generated by $[d\phi_1]$ and $[d\phi_2]$
     \item $H^2(T^2) = \mathbb{R}$, generated by $[d\phi_1 \wedge d\phi_2]$
 \end{itemize}
+\end{thm}
+
+\section{Lie Derivatives (Brief Overview)}
+
+The Lie derivative measures how a tensor field changes along the flow of a vector field.
+
+\begin{defn}{Flow of a Vector Field}{flow}
+Let $X$ be a vector field on $U \subseteq \mathbb{R}^n$. The \textbf{flow} of $X$ is the family of diffeomorphisms $\phi_t: U \to U$ satisfying:
+\[\frac{d}{dt} \phi_t(p) = X(\phi_t(p)), \quad \phi_0 = \text{id}\]
+Intuitively, $\phi_t(p)$ follows the integral curve of $X$ starting at $p$ for time $t$.
+\end{defn}
+
+\begin{defn}{Lie Derivative of a Function}{lie_fn}
+For a smooth function $f$ and vector field $X$:
+\[\mathcal{L}_X f = \frac{d}{dt}\Big|_{t=0} (\phi_t^* f) = \frac{d}{dt}\Big|_{t=0} f \circ \phi_t = X(f) = df(X)\]
+This is just the directional derivative of $f$ along $X$.
+\end{defn}
+
+\begin{defn}{Lie Derivative of a Differential Form}{lie_form}
+For a $k$-form $\omega$ and vector field $X$:
+\[\mathcal{L}_X \omega = \frac{d}{dt}\Big|_{t=0} \phi_t^* \omega\]
+This measures the ``rate of change'' of $\omega$ as we flow along $X$.
+\end{defn}
+
+\begin{thm}{Cartan's Magic Formula}{cartan}
+For a vector field $X$ and $k$-form $\omega$:
+\[\mathcal{L}_X \omega = d(\iota_X \omega) + \iota_X (d\omega)\]
+where $\iota_X$ is the \textbf{interior product} (contraction): $(\iota_X \omega)(v_1, \ldots, v_{k-1}) = \omega(X, v_1, \ldots, v_{k-1})$.
+\end{thm}
+
+\begin{remark}
+Cartan's formula is incredibly useful because it expresses the Lie derivative purely in terms of $d$ and $\iota_X$, without needing to compute the flow explicitly.
+\end{remark}
+
+\begin{defn}{Lie Bracket}{lie_bracket}
+For vector fields $X, Y$, the \textbf{Lie bracket} $[X, Y]$ is the vector field defined by:
+\[[X, Y](f) = X(Y(f)) - Y(X(f))\]
+This measures the ``failure of commutativity'' of flows: if $[X, Y] = 0$, the flows of $X$ and $Y$ commute.
+\end{defn}
+
+\begin{thm}{Properties of Lie Derivative}{lie_props}
+\begin{enumerate}
+    \item $\mathcal{L}_X$ is a derivation: $\mathcal{L}_X(\omega \wedge \eta) = (\mathcal{L}_X \omega) \wedge \eta + \omega \wedge (\mathcal{L}_X \eta)$
+    \item $\mathcal{L}_X$ commutes with $d$: $\mathcal{L}_X(d\omega) = d(\mathcal{L}_X \omega)$
+    \item $[\mathcal{L}_X, \mathcal{L}_Y] = \mathcal{L}_{[X,Y]}$ (Jacobi identity)
+\end{enumerate}
 \end{thm}
 
 \begin{exercises}
