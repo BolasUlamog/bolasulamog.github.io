@@ -73,25 +73,32 @@
             color: var(--text-muted);
         }
 
-        .placeholder {
+        .pdf-link {
             background: var(--bg-card);
             border: 2px dashed rgba(255,255,255,0.15);
             border-radius: 12px;
-            padding: 3rem 2rem;
+            padding: 1.5rem 2rem;
             text-align: center;
             margin: 2rem 0;
         }
 
-        .placeholder h2 {
+        .pdf-link a {
             font-family: var(--handwritten);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text);
+            font-size: 1.3rem;
+            color: var(--chalk-pink);
         }
 
-        .placeholder p {
+        .pdf-link a:hover {
+            color: var(--chalk-blue);
+        }
+
+        .content ul {
+            margin: 0.5rem 0 1.5rem 1.5rem;
             color: var(--text-muted);
-            margin: 0;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -100,23 +107,32 @@
         <a href="../../" class="back-link">← back to home</a>
 
         <h1>SMT Power Round</h1>
-        <div class="meta">Stanford Math Tournament — Problem Writing</div>
+        <div class="meta">Stanford Math Tournament 2026 — Problem Writing</div>
 
         <div class="content">
             <p>
-                Wrote the Power Round for Stanford Math Tournament. The power round is a 
-                proof-based team round that explores a single mathematical topic in depth.
+                Co-authored the Power Round for <a href="https://stanfordmathtournament.org" target="_blank">Stanford Math Tournament</a> 2026. 
+                The power round is a proof-based team round where teams work together to explore a single mathematical topic in depth through a series of connected problems.
             </p>
 
-            <div class="placeholder">
-                <h2>~ problems available after SMT ~</h2>
-                <p>Topic and problems will be posted after the competition.</p>
+            <p>
+                We actually wrote two power rounds this year—the first one ended up being too hard, 
+                so we pivoted and wrote a new one on <strong>matroids</strong>. Matroids are a beautiful 
+                abstraction that generalize the notion of linear independence from vector spaces to 
+                more general combinatorial structures.
+            </p>
+
+            <div class="pdf-link">
+                <a href="power round 2026.pdf" target="_blank">📄 View the Power Round (PDF)</a>
             </div>
 
             <p>
-                <strong>Related:</strong> Also involved with <a href="https://maosc.net">MAOSC</a>, 
-                a math competition organization I co-founded.
+                <strong>Links:</strong>
             </p>
+            <ul>
+                <li><a href="https://stanfordmathtournament.org" target="_blank">Stanford Math Tournament</a></li>
+                <li><a href="https://maosc.net" target="_blank">MAOSC</a> — a math competition organization I founded</li>
+            </ul>
         </div>
     </div>
 </body>
