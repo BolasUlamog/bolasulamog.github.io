@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lighter Painter — Damian Burgess</title>
+    <title>Mechanical Light Painter — Damian Burgess</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
             --chalk-pink: #ff6b9d;
             --chalk-blue: #64b5f6;
             --chalk-green: #81c784;
+            --chalk-yellow: #ffd54f;
             --handwritten: 'Caveat', cursive;
             --sans: 'Inter', -apple-system, sans-serif;
         }
@@ -35,7 +36,7 @@
         a:hover { text-decoration: underline; }
 
         .container {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
@@ -70,36 +71,124 @@
 
         .content p {
             margin-bottom: 1.25rem;
-            color: var(--text-muted);
+            color: var(--text);
         }
 
-        .placeholder {
-            background: var(--bg-card);
-            border: 2px dashed rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .placeholder h2 {
+        .content h2 {
             font-family: var(--handwritten);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text);
+            font-size: 1.8rem;
+            color: var(--chalk-yellow);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .placeholder p {
-            color: var(--text-muted);
-            margin: 0;
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
         }
 
-        .tech {
-            color: var(--text);
-        }
-
-        .tech strong {
+        .tech-tag {
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.15);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             color: var(--chalk-blue);
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.2);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            transition: all 0.2s;
+        }
+
+        .github-link:hover {
+            border-color: var(--chalk-blue);
+            text-decoration: none;
+        }
+
+        .process-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .process-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .process-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--chalk-pink);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .photo-grid img:hover {
+            border-color: var(--chalk-green);
+            transform: scale(1.02);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            font-family: var(--handwritten);
         }
     </style>
 </head>
@@ -107,24 +196,70 @@
     <div class="container">
         <a href="../../" class="back-link">← back to home</a>
 
-        <h1>Lighter Painter</h1>
-        <div class="meta">EE14N Project — Stanford, Spring 2026</div>
+        <h1>Mechanical Light Painter</h1>
+        <div class="meta">EE14N: Things About Stuff — Stanford, December 2025</div>
 
         <div class="content">
             <p>
-                Light painting project from EE14N (Intro to Electrical Engineering) at Stanford. 
-                Built an LED array system for creating long-exposure photography art.
+                A machine that creates light paintings automatically. Built with a partner for EE14N, 
+                this project combines 3D-printed hardware, Arduino-controlled lasers, and Python 
+                software that interprets images and converts them into stepper motor coordinates.
             </p>
 
-            <div class="placeholder">
-                <h2>~ project documentation coming soon ~</h2>
-                <p>Photos, schematics, and writeup to be added.</p>
+            <h2>How it works</h2>
+            <ul class="process-list">
+                <li>Python script takes an input image and processes it into coordinate paths</li>
+                <li>Coordinates are sent to an Arduino controlling stepper motors</li>
+                <li>Motors move a laser pointer to trace the image in 3D space</li>
+                <li>Long-exposure photography captures the laser path as a light painting</li>
+            </ul>
+
+            <h2>Tech stack</h2>
+            <div class="tech-list">
+                <span class="tech-tag">Arduino</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Stepper Motors</span>
+                <span class="tech-tag">Lasers</span>
+                <span class="tech-tag">3D Printing</span>
             </div>
 
-            <p class="tech">
-                <strong>Technologies:</strong> Arduino, LED strips, POV display principles
-            </p>
+            <a href="https://github.com/BolasUlamog/ee14n/tree/main/tutorial" class="github-link" target="_blank">
+                📁 View code on GitHub →
+            </a>
+
+            <h2>Photos</h2>
+            <div class="photo-grid">
+                <img src="IMG_7290.JPG" alt="Light painter setup" onclick="openLightbox(this)">
+                <img src="IMG_7322.JPG" alt="Light painting in progress" onclick="openLightbox(this)">
+                <img src="IMG_7326.JPG" alt="Light painting result" onclick="openLightbox(this)">
+                <img src="IMG_7327.JPG" alt="Light painting result" onclick="openLightbox(this)">
+                <img src="IMG_4567.JPG" alt="Hardware setup" onclick="openLightbox(this)">
+                <img src="IMG_4601.jpeg" alt="Project photo" onclick="openLightbox(this)">
+                <img src="IMG_0028.JPG" alt="Project photo" onclick="openLightbox(this)">
+                <img src="AE0BB64B-A3BE-4CF1-86E6-2A76960DE97F.JPG" alt="Light painting" onclick="openLightbox(this)">
+                <img src="E403DFE1-40AC-412E-B113-5B1405B0FE36.JPG" alt="Light painting" onclick="openLightbox(this)">
+            </div>
         </div>
     </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">×</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        function openLightbox(img) {
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
 </body>
 </html>
