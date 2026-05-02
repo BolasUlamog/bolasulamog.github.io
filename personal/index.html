@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal — Damian Burgess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-pink: #ff6b9d;
+            --chalk-blue: #64b5f6;
+            --chalk-yellow: #ffd54f;
+            --chalk-green: #81c784;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 16px;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .back-link {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--chalk-pink); }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-family: var(--handwritten);
+            font-size: 3rem;
+            color: var(--chalk-pink);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            font-family: var(--handwritten);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--chalk-yellow);
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .link-card {
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 10px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .link-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-3px) rotate(1deg);
+            border-color: var(--chalk-blue);
+        }
+
+        .link-card .emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-card h3 {
+            font-family: var(--handwritten);
+            font-size: 1.4rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .link-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .photo-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .photo-item:hover {
+            border-color: var(--chalk-pink);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .see-more {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--chalk-blue);
+            font-family: var(--handwritten);
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .see-more:hover { color: var(--chalk-pink); }
+
+        .section-intro {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: var(--chalk-pink); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5rem; }
+            .link-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../" class="back-link">← back to home</a>
+
+        <header>
+            <h1>Personal Stuff 🌙</h1>
+            <p>The less professional side</p>
+        </header>
+
+        <div class="section">
+            <h2>Life Things</h2>
+            <div class="link-grid">
+                <a href="../cosmo/" class="link-card">
+                    <div class="emoji">🐇</div>
+                    <h3>Cosmo</h3>
+                    <p>My rabbit (2018–2024)</p>
+                </a>
+                <a href="../clarinet/" class="link-card">
+                    <div class="emoji">🎵</div>
+                    <h3>Clarinet</h3>
+                    <p>Performances</p>
+                </a>
+                <a href="../playlists/" class="link-card">
+                    <div class="emoji">🎧</div>
+                    <h3>Playlists</h3>
+                    <p>Study music</p>
+                </a>
+                <a href="../6-months/" class="link-card">
+                    <div class="emoji">💝</div>
+                    <h3>CTF for Lisa</h3>
+                    <p>6-month puzzle</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Photos</h2>
+            <p class="section-intro">A few favorites. Not a photographer, but I try.</p>
+            <div class="photo-grid">
+                <div class="photo-item"><img src="../photos/pics/85.jpeg" alt="Fluffy clouds sunset"></div>
+                <div class="photo-item"><img src="../photos/pics/38.jpeg" alt="Zion National Park"></div>
+                <div class="photo-item"><img src="../photos/pics/25.jpeg" alt="Rainbow on Mist trail"></div>
+                <div class="photo-item"><img src="../photos/pics/51.jpeg" alt="Carlsbad caverns"></div>
+                <div class="photo-item"><img src="../photos/pics/54.jpeg" alt="Wallpaper sunset"></div>
+                <div class="photo-item"><img src="../photos/pics/28.jpeg" alt="Half Dome"></div>
+                <div class="photo-item"><img src="../photos/pics/145.jpeg" alt="Clouds from plane"></div>
+                <div class="photo-item"><img src="../photos/pics/36.jpeg" alt="Golden leaves"></div>
+            </div>
+            <a href="../photos/" class="see-more">see all photos →</a>
+        </div>
+
+        <footer>
+            <a href="../">← back to home</a>
+        </footer>
+    </div>
+</body>
+</html>

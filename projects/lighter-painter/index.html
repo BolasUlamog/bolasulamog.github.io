@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighter Painter — Damian Burgess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-pink: #ff6b9d;
+            --chalk-blue: #64b5f6;
+            --chalk-green: #81c784;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
+            min-height: 100vh;
+        }
+
+        a { color: var(--chalk-blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .back-link {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover { color: var(--chalk-pink); text-decoration: none; }
+
+        h1 {
+            font-family: var(--handwritten);
+            font-size: 2.5rem;
+            color: var(--chalk-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .content {
+            font-size: 1.05rem;
+        }
+
+        .content p {
+            margin-bottom: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .placeholder {
+            background: var(--bg-card);
+            border: 2px dashed rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .placeholder h2 {
+            font-family: var(--handwritten);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .placeholder p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .tech {
+            color: var(--text);
+        }
+
+        .tech strong {
+            color: var(--chalk-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../" class="back-link">← back to home</a>
+
+        <h1>Lighter Painter</h1>
+        <div class="meta">EE14N Project — Stanford, Spring 2026</div>
+
+        <div class="content">
+            <p>
+                Light painting project from EE14N (Intro to Electrical Engineering) at Stanford. 
+                Built an LED array system for creating long-exposure photography art.
+            </p>
+
+            <div class="placeholder">
+                <h2>~ project documentation coming soon ~</h2>
+                <p>Photos, schematics, and writeup to be added.</p>
+            </div>
+
+            <p class="tech">
+                <strong>Technologies:</strong> Arduino, LED strips, POV display principles
+            </p>
+        </div>
+    </div>
+</body>
+</html>

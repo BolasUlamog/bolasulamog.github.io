@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing — Damian Burgess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-pink: #ff6b9d;
+            --chalk-yellow: #ffd54f;
+            --chalk-green: #81c784;
+            --chalk-purple: #b39ddb;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .back-link {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--chalk-pink); }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-family: var(--handwritten);
+            font-size: 3rem;
+            color: var(--chalk-yellow);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+        }
+
+        .writing-list {
+            list-style: none;
+        }
+
+        .writing-item {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .writing-item:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(5px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .writing-item h2 {
+            font-family: var(--handwritten);
+            font-size: 1.6rem;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+
+        .writing-item .meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .writing-item .excerpt {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .tag {
+            display: inline-block;
+            font-family: var(--handwritten);
+            font-size: 0.95rem;
+            margin-left: 0.5rem;
+        }
+
+        .tag-poem { color: var(--chalk-purple); }
+        .tag-prose { color: var(--chalk-yellow); }
+        .tag-speech { color: var(--chalk-green); }
+
+        footer {
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-family: var(--handwritten);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../" class="back-link">← back to home</a>
+
+        <header>
+            <h1>Writing ✍️</h1>
+            <p>Poetry, prose, and other things</p>
+        </header>
+
+        <ul class="writing-list">
+            <li class="writing-item">
+                <a href="../notes/humanities/english/creative/index.html">
+                    <h2>High School Graduation Speech <span class="tag tag-speech">~ speech ~</span></h2>
+                    <div class="meta">June 2025</div>
+                    <p class="excerpt">"Not that I minded playing chess or doing math or whatever else I did during lunch..."</p>
+                </a>
+            </li>
+
+            <li class="writing-item">
+                <a href="../notes/humanities/english/creative/index.html">
+                    <h2>Pretty Luster <span class="tag tag-poem">~ poem ~</span></h2>
+                    <div class="meta">March 2025</div>
+                    <p class="excerpt">"Pretty luster / It was a / shiny doorknob a cool desmos graph..."</p>
+                </a>
+            </li>
+
+            <li class="writing-item">
+                <a href="../notes/humanities/english/creative/index.html">
+                    <h2>Pretty Girl <span class="tag tag-poem">~ poem ~</span></h2>
+                    <div class="meta">February 2025</div>
+                    <p class="excerpt">"Up on the moonlit branch / She was like a butterfly..."</p>
+                </a>
+            </li>
+
+            <li class="writing-item">
+                <a href="../notes/humanities/english/creative/index.html">
+                    <h2>A Short Story <span class="tag tag-prose">~ prose ~</span></h2>
+                    <div class="meta">February 2025</div>
+                    <p class="excerpt">"That rusty, iron taste of blood was addicting to him..."</p>
+                </a>
+            </li>
+
+            <li class="writing-item">
+                <a href="../notes/humanities/english/creative/writing2.html">
+                    <h2>More Writing →</h2>
+                    <div class="meta">Archive</div>
+                </a>
+            </li>
+        </ul>
+
+        <footer>~ words strung together ~</footer>
+    </div>
+</body>
+</html>

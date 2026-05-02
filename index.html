@@ -3,420 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Damian Burgess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Light Mode */
-            --bg: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --text: #1a1a1a;
-            --primary: #6c5ce7;
-            --secondary: #00b894;
-            --accent: #fd79a8;
-            --border: rgba(0, 0, 0, 0.08);
-            
-            /* Dark Mode */
-            --bg-dark: #121212;
-            --card-bg-dark: rgba(30, 30, 30, 0.85);
-            --text-dark: #f0f0f0;
-            --border-dark: rgba(255, 255, 255, 0.08);
+            --bg: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-pink: #ff6b9d;
+            --chalk-blue: #64b5f6;
+            --chalk-yellow: #ffd54f;
+            --chalk-green: #81c784;
+            --chalk-purple: #b39ddb;
+            --chalk-orange: #ffab76;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
         }
-        
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: all 0.4s ease;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 16px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        body.dark-mode {
-            --bg: var(--bg-dark);
-            --card-bg: var(--card-bg-dark);
-            --text: var(--text-dark);
-            --border: var(--border-dark);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
             position: relative;
-            z-index: 1;
-            flex: 1;
+            overflow-x: hidden;
         }
-        
-        /* Geometric Background Elements */
-        .bg-element {
+
+        /* Starfield background */
+        .stars {
             position: fixed;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.15;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
             z-index: 0;
         }
-        
-        .bg-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            top: -100px;
-            left: -100px;
-        }
-        
-        .bg-2 {
-            width: 500px;
-            height: 500px;
-            background: var(--secondary);
-            bottom: -200px;
-            right: -100px;
-        }
-        
-        /* Header Section */
-        .header {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
+
+        .star {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: var(--accent);
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
-            opacity: 0.1;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
         }
-        
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating doodles */
+        .doodle {
+            position: fixed;
+            font-family: var(--handwritten);
+            font-size: 2rem;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
             position: relative;
         }
-        
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 20px;
-            object-fit: cover;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transform: rotate(-5deg);
-            transition: transform 0.3s ease;
-        }
-        
-        .profile-pic:hover {
-            transform: rotate(0deg) scale(1.05);
-        }
-        
-        .profile-info h1 {
-            font-size: 2.5rem;
-            margin: 0 0 0.5rem 0;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+
+        header h1 {
+            font-family: var(--handwritten);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            background: linear-gradient(135deg, var(--chalk-pink), var(--chalk-blue), var(--chalk-purple));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
         }
-        
-        .profile-info .title {
-            font-size: 1.1rem;
-            color: var(--text);
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .bio {
-            margin-top: 2rem;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            position: relative;
-        }
-        
-        .bio p {
-            margin-bottom: 1.2rem;
-        }
-        
-        /* Columns */
-        .columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .column {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .column:hover {
-            transform: translateY(-5px);
-        }
-        
-        .column h2 {
+
+        .tagline {
+            font-family: var(--handwritten);
             font-size: 1.5rem;
-            margin-top: 0;
+            color: var(--chalk-yellow);
+            margin-bottom: 1rem;
+        }
+
+        .bio {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+            font-size: 1rem;
+        }
+
+        .intro-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .intro-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+            border: 1px dashed var(--text-muted);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .intro-links a:hover {
+            color: var(--chalk-blue);
+            border-color: var(--chalk-blue);
+        }
+
+        /* Section headers */
+        .section-header {
+            font-family: var(--handwritten);
+            font-size: 2.2rem;
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
         }
-        
-        .column h2 a {
-            text-decoration: none;
-            color: inherit;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .column h2::after {
+
+        .section-header::after {
             content: '';
             position: absolute;
+            bottom: -4px;
             left: 0;
-            bottom: -8px;
-            width: 40px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--chalk-pink), var(--chalk-blue), transparent);
             border-radius: 2px;
         }
-        
-        .links-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+
+        /* Sketchy underline decoration */
+        .squiggle {
+            display: block;
+            height: 8px;
+            margin-top: -8px;
+            margin-bottom: 1.5rem;
         }
-        
-        .links-list li {
-            margin-bottom: 1rem;
-            position: relative;
-            padding-left: 1.5rem;
+
+        /* Projects */
+        .projects {
+            margin-bottom: 4rem;
         }
-        
-        .links-list li::before {
-            content: '◆';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-size: 0.8rem;
-            top: 3px;
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
         }
-        
-        .links-list a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .links-list a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-        
-        /* Dark Mode Toggle */
-        .mode-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .mode-toggle i {
-            font-size: 1.2rem;
-        }
-        
-        /* Footer with Social Links */
-        .footer {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
             padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--chalk-pink), var(--chalk-blue));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px) rotate(-0.5deg);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-tag {
+            font-family: var(--handwritten);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .tag-math { color: var(--chalk-purple); }
+        .tag-code { color: var(--chalk-green); }
+        .tag-writing { color: var(--chalk-yellow); }
+        .tag-art { color: var(--chalk-pink); }
+        .tag-research { color: var(--chalk-blue); }
+        .tag-org { color: var(--chalk-orange); }
+
+        .project-card h3 {
+            font-family: var(--handwritten);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .project-link {
+            display: inline-block;
+            font-family: var(--handwritten);
+            font-size: 1.1rem;
+            color: var(--chalk-blue);
+            margin-top: 0.75rem;
+        }
+
+        /* Notes */
+        .notes {
+            margin-bottom: 4rem;
+        }
+
+        .notes-intro {
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .note-link {
+            display: block;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
             text-align: center;
         }
-        
-        .social-links {
+
+        .note-link:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--chalk-green);
+            transform: rotate(1deg);
+        }
+
+        .note-link .emoji {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-link .title {
+            font-family: var(--handwritten);
+            font-size: 1.3rem;
+            color: var(--text);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
-        
-        .social-links a {
-            color: var(--text);
-            font-size: 1.5rem;
-            transition: transform 0.3s ease, color 0.3s ease;
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.2s;
         }
-        
-        .social-links a:hover {
-            transform: translateY(-3px);
-            color: var(--primary);
+
+        .footer-links a:hover {
+            color: var(--chalk-pink);
         }
-        
-        @media (max-width: 768px) {
-            .profile {
-                flex-direction: column;
-                text-align: center;
+
+        .footer-doodle {
+            font-family: var(--handwritten);
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.5rem;
             }
-            
-            .profile-pic {
-                transform: rotate(0deg);
+
+            .tagline {
+                font-size: 1.2rem;
             }
-            
-            .columns {
+
+            .project-grid, .notes-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .header {
-                padding: 2rem;
-            }
-            
-            .social-links {
-                gap: 1rem;
+
+            .intro-links {
+                flex-wrap: wrap;
+                gap: 0.75rem;
             }
         }
     </style>
-    <script>
-        window.onload = function() {
-            const daysToExpire = 7;
-            const date = new Date();
-            date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            
-            document.cookie = 'snowball=fight; ${expires}; path=/';
-            
-            document.getElementById('cookieStatus').innerHTML = 
-                'Cookie set automatically!<br>Name: snowball<br>Value: fight<br>Expires: ${date.toLocaleString()}';
-        };
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="bg-element bg-1"></div>
-    <div class="bg-element bg-2"></div>
-    
-    <div class="mode-toggle" id="modeToggle">
-        <i class="fas fa-moon"></i>
-    </div>
-    
+    <!-- Starfield -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Floating math doodles -->
+    <div class="doodle" style="top: 15%; left: 5%; color: var(--chalk-pink);">∫</div>
+    <div class="doodle" style="top: 25%; right: 8%; color: var(--chalk-blue);">∞</div>
+    <div class="doodle" style="top: 45%; left: 3%; color: var(--chalk-yellow);">π</div>
+    <div class="doodle" style="top: 60%; right: 5%; color: var(--chalk-purple);">∑</div>
+    <div class="doodle" style="top: 75%; left: 7%; color: var(--chalk-green);">∂</div>
+    <div class="doodle" style="top: 85%; right: 10%; color: var(--chalk-orange);">λ</div>
+    <div class="doodle" style="top: 35%; left: 92%; color: var(--chalk-pink);">★</div>
+    <div class="doodle" style="top: 55%; left: 95%; color: var(--chalk-blue);">✦</div>
+
     <div class="container">
-        <div class="header">
-            <div class="profile">
-                <img src="profile.jpeg" alt="Damian" class="profile-pic">
-                <div class="profile-info">
-                    <h1>Damian Burgess - Home</h1>
-                    <div class="title">Freshman @ Stanford University | Math & Physics</div>
+        <header>
+            <h1>Damian Burgess</h1>
+            <div class="tagline">math, physics, & making cool things ✨</div>
+            <p class="bio">
+                Stanford freshman. I like hard problems, mathematical art, and building things that matter.
+            </p>
+            <div class="intro-links">
+                <a href="mailto:damianb@stanford.edu">email</a>
+                <a href="https://github.com/BolasUlamog">github</a>
+                <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/">linkedin</a>
+            </div>
+        </header>
+
+        <section class="projects">
+            <h2 class="section-header">Projects</h2>
+
+            <div class="project-grid">
+                <a href="https://maosc.net" class="project-card" target="_blank">
+                    <span class="project-tag tag-org">~ organization ~</span>
+                    <h3>MAOSC</h3>
+                    <p>Math competition org I co-founded. We run events and write problems for students.</p>
+                    <span class="project-link">maosc.net →</span>
+                </a>
+
+                <a href="desmos/" class="project-card">
+                    <span class="project-tag tag-art">~ math art ~</span>
+                    <h3>Desmos Viz</h3>
+                    <p>Julia sets, Brownian motion, fractals, and parametric art. Math that looks pretty.</p>
+                    <span class="project-link">see the gallery →</span>
+                </a>
+
+                <a href="projects/smt-power/" class="project-card">
+                    <span class="project-tag tag-math">~ competition ~</span>
+                    <h3>SMT Power Round</h3>
+                    <p>Wrote the power round for Stanford Math Tournament.</p>
+                    <span class="project-link">coming soon!</span>
+                </a>
+
+                <a href="projects/lighter-painter/" class="project-card">
+                    <span class="project-tag tag-code">~ hardware ~</span>
+                    <h3>Lighter Painter</h3>
+                    <p>LED light painting from EE14N. Long-exposure art meets electronics.</p>
+                    <span class="project-link">view project →</span>
+                </a>
+
+                <a href="writing/" class="project-card">
+                    <span class="project-tag tag-writing">~ writing ~</span>
+                    <h3>Creative Writing</h3>
+                    <p>Poetry, short stories, and other words I've strung together.</p>
+                    <span class="project-link">read →</span>
+                </a>
+
+                <div class="project-card" style="opacity: 0.6;">
+                    <span class="project-tag tag-research">~ research ~</span>
+                    <h3>AMO Physics</h3>
+                    <p>Upcoming summer research in atomic, molecular, and optical physics.</p>
+                    <span class="project-link" style="color: var(--text-muted);">summer 2026</span>
                 </div>
             </div>
-            
-            <div class="bio">
-                <p>Hello! I am an freshman at Stanford University passionate about mathematics and physics and I enjoy participating in competitions as well as hosting them! I also play the clarinet, enjoy tennis, soccer, hiking, refereeing football (soccer), and web development, and also can be found grinding psets and writing problems for smt in my spare time.</p>
+        </section>
+
+        <section class="notes">
+            <h2 class="section-header">Notes</h2>
+            <p class="notes-intro">Course notes & problem sets from classes and self-study.</p>
+
+            <div class="notes-grid">
+                <a href="notes/math/" class="note-link">
+                    <span class="emoji">∫</span>
+                    <span class="title">Math</span>
+                </a>
+                <a href="notes/physics/" class="note-link">
+                    <span class="emoji">⚛</span>
+                    <span class="title">Physics</span>
+                </a>
+                <a href="notes/cs/" class="note-link">
+                    <span class="emoji">💻</span>
+                    <span class="title">CS</span>
+                </a>
+                <a href="notes/chem/" class="note-link">
+                    <span class="emoji">🧪</span>
+                    <span class="title">Chem</span>
+                </a>
             </div>
-        </div>
-        
-        <div class="columns">
-            <div class="column">
-                <h2><a href="notes/">Damian's Notes</a></h2>
-                <ul class="links-list">
-                    <li><a href="notes/math/">Mathematics</a></li>
-                    <li><a href="notes/physics/">Physics</a></li>
-                    <li><a href="notes/cs/">CS</a></li>
-                    <li><a href="notes/humanities/">Humanities</a></li>
-                    <li><a href="notes/chem/">Chemistry</a></li>
-                    <li><a href="notes/ss/">Social Sciences</a></li>
-                </ul>
+        </section>
+
+        <footer>
+            <div class="footer-links">
+                <a href="mailto:damianb@stanford.edu">damianb@stanford.edu</a>
+                <a href="https://github.com/BolasUlamog">GitHub</a>
+                <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/">LinkedIn</a>
+                <a href="personal/">personal stuff</a>
             </div>
-            
-            <div class="column">
-                <h2>Life Stuff</h2>
-                <ul class="links-list">
-                    <li><a href="cosmo/">Cosmo the Rabbit (2018-2024)</a></li>
-                    <li><a href="https://maosc.net">Check out my nonprofit!</a></li>
-                    <li><a href="playlists/">Study playlists and music stuff!</a></li>
-                    <li><a href="clarinet/">Clarinet!</a></li>
-                    <li><a href="desmos/">Desmos art ~.~</a></li>
-                    <li><a href="6-months/">6 month CTF for lisa!</a></li>
-                </ul>
-            </div>
-        </div>
+            <div class="footer-doodle">~ made with math and caffeine ~</div>
+        </footer>
     </div>
-    
-    <footer class="footer">
-        <div>Connect with me</div>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/bolasulamog/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com/BolasUlamog" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="mailto:damianb@stanford.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
-        </div>
-    </footer>
-    
+
     <script>
-        // Dark Mode Toggle
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
-        
-        modeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            if(body.classList.contains('dark-mode')) {
-                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
-        
-        // Animate elements on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.header, .column').forEach(el => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
+        // Generate random stars
+        const starsContainer = document.getElementById('stars');
+        const starCount = 80;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            starsContainer.appendChild(star);
+        }
     </script>
 </body>
 </html>

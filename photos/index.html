@@ -1,219 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery | Damian Burgess</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Photos — Damian Burgess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Light Mode */
-            --bg: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --text: #1a1a1a;
-            --primary: #6c5ce7;
-            --secondary: #00b894;
-            --accent: #fd79a8;
-            --border: rgba(0, 0, 0, 0.08);
-
-            /* Dark Mode */
-            --bg-dark: #121212;
-            --card-bg-dark: rgba(30, 30, 30, 0.85);
-            --text-dark: #f0f0f0;
-            --border-dark: rgba(255, 255, 255, 0.08);
+            --bg: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-pink: #ff6b9d;
+            --chalk-blue: #64b5f6;
+            --chalk-yellow: #ffd54f;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--sans);
             background: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 0;
-            transition: all 0.4s ease;
+            line-height: 1.6;
+            font-size: 16px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
-        body.dark-mode {
-            --bg: var(--bg-dark);
-            --card-bg: var(--card-bg-dark);
-            --text: var(--text-dark);
-            --border: var(--border-dark);
-        }
+        a { color: inherit; text-decoration: none; }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-            flex: 1;
+            padding: 3rem 2rem;
         }
 
-        /* Floating background elements */
-        .bg-element {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.15;
-            z-index: 0;
+        .back-link {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
         }
 
-        .bg-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            top: -100px;
-            left: -100px;
-        }
+        .back-link:hover { color: var(--chalk-pink); }
 
-        .bg-2 {
-            width: 500px;
-            height: 500px;
-            background: var(--secondary);
-            bottom: -200px;
-            right: -100px;
-        }
-
-        /* Header Section */
-        .header {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
+        header {
             text-align: center;
+            margin-bottom: 3rem;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: var(--accent);
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
-            opacity: 0.1;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0 0 1rem 0;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        header h1 {
+            font-family: var(--handwritten);
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--chalk-yellow), var(--chalk-pink));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--text);
-            opacity: 0.8;
             margin-bottom: 0.5rem;
-            font-weight: 500;
         }
 
-        /* Gallery Navigation */
-        .gallery-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+        header p {
+            color: var(--text-muted);
         }
 
-        .gallery-btn {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.8rem 1.5rem;
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .gallery-btn.active,
-        .gallery-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Photo Grid */
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
         }
 
         .photo-card {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
             overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
+            transition: all 0.3s;
         }
 
         .photo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.2);
         }
 
-        .photo-img {
+        .photo-card img {
             width: 100%;
-            height: 250px;
+            height: 220px;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s;
         }
 
-        .photo-card:hover .photo-img {
-            transform: scale(1.05);
+        .photo-card:hover img {
+            transform: scale(1.03);
         }
 
         .photo-info {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
-        .photo-title {
-            font-size: 1.2rem;
-            margin: 0 0 0.5rem 0;
-            font-weight: 600;
+        .photo-info h3 {
+            font-family: var(--handwritten);
+            font-size: 1.4rem;
+            margin-bottom: 0.25rem;
+            color: var(--chalk-yellow);
         }
 
-        .photo-date {
-            font-size: 0.9rem;
-            color: var(--text);
-            opacity: 0.7;
-            margin-bottom: 1rem;
+        .photo-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
-        .photo-desc {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* Lightbox Modal */
-        .modal {
+        /* Lightbox */
+        .lightbox {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -221,1934 +124,274 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-content {
-            display: flex;
-            flex-direction: column;
+            background: rgba(0,0,0,0.95);
             justify-content: center;
             align-items: center;
-            height: 100%;
-            padding: 2rem;
+            cursor: zoom-out;
         }
 
-        .modal-img {
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
             max-width: 90%;
-            max-height: 80vh;
+            max-height: 90vh;
             object-fit: contain;
             border-radius: 8px;
         }
 
-        .modal-caption {
-            color: white;
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 1.2rem;
-            max-width: 800px;
-        }
-
-        .close-btn {
+        .lightbox-close {
             position: absolute;
             top: 2rem;
             right: 2rem;
             color: white;
             font-size: 2rem;
             cursor: pointer;
-            transition: all 0.3s;
+            font-family: var(--handwritten);
         }
 
-        .close-btn:hover {
-            transform: rotate(90deg);
-        }
-
-        /* Dark Mode Toggle */
-        .mode-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .mode-toggle i {
+        footer {
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-family: var(--handwritten);
             font-size: 1.2rem;
         }
 
-        /* Footer */
-        .footer {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            color: var(--text);
-            font-size: 1.5rem;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-            color: var(--primary);
-        }
-
-        @media (max-width: 768px) {
-            .photo-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header {
-                padding: 2rem;
-            }
-
-            .gallery-nav {
-                gap: 0.5rem;
-            }
-
-            .gallery-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Back to Home Button */
-        .back-home {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.8rem 1.5rem;
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .back-home:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-            color: var(--primary);
+        @media (max-width: 600px) {
+            .photo-grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
-
 <body>
-    <a href="../index.html" class="back-home">
-        <i class="fas fa-arrow-left"></i> Back to Home
-    </a>
-    <div class="bg-element bg-1"></div>
-    <div class="bg-element bg-2"></div>
-
-    <div class="mode-toggle" id="modeToggle">
-        <i class="fas fa-moon"></i>
-    </div>
-
     <div class="container">
-        <div class="header">
-            <h1>Photo Gallery</h1>
-            <p>I'm not the best photographer but I hope these photos showcase my life a bit</p>
-        </div>
+        <a href="../" class="back-link">← back to home</a>
 
-        <div class="gallery-nav">
-            <button class="gallery-btn active" data-filter="all">All Photos</button>
-            <button class="gallery-btn" data-filter="music">🎵🎶🎵</button>
-            <button class="gallery-btn" data-filter="nature">🌳🌋🐸</button>
-            <button class="gallery-btn" data-filter="urban">🕍🌇🕌</button>
-            <button class="gallery-btn" data-filter="people">🏂🧑‍🌾🕺</button>
-            <button class="gallery-btn" data-filter="love">💞💖💞</button>
-            <button class="gallery-btn" data-filter="random">Random</button>
-        </div>
+        <header>
+            <h1>Photos 📷</h1>
+            <p>Not a photographer, but I try. Click to enlarge.</p>
+        </header>
 
         <div class="photo-grid">
-
-            <!-- Photo 170 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/170.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 169 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/169.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 168 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/168.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 167 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/167.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 166 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/166.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 165 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/165.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 164 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/164.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 163 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/163.jpg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 162 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/162.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 161 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/161.jpg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 160 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/160.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 159 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/159.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 158 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/158.jpeg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Test</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Test</p>
-                </div>
-            </div>
-
-            <!-- Photo 157 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/157.jpeg" alt="Mendelssohn house" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Dressy</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Mendelssohn house</p>
-                </div>
-            </div>
-
-            <!-- Photo 156 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/156.jpeg" alt="It was like a salmon pumpernickle bagel" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Cheap fish sandwiches</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">It was like a salmon pumpernickle bagel</p>
-                </div>
-            </div>
-
-            <!-- Photo 155 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/155.jpeg" alt="First stop in Leipzig" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Thomaskirche</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">First stop in Leipzig</p>
-                </div>
-            </div>
-
-            <!-- Photo 154 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/154.jpeg" alt="Cool light effects on the berlin suburbs" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Lights</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Cool light effects on the berlin suburbs</p>
-                </div>
-            </div>
-
-            <!-- Photo 153 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/153.jpeg" alt="It wasn't hot somehow" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Metal Slide</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">It wasn't hot somehow</p>
-                </div>
-            </div>
-
-            <!-- Photo 152 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/152.jpeg" alt="Squished between modern buildings" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Church</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Squished between modern buildings</p>
-                </div>
-            </div>
-
-            <!-- Photo 151 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/151.JPG" alt="I'm with the first concert-master of the Berlin Phil" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Concertmaster</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">I'm with the first concert-master of the Berlin Phil</p>
-                </div>
-            </div>
-
-            <!-- Photo 150 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/150.jpeg" alt="First tour concert venue!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Venue</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">First tour concert venue!</p>
-                </div>
-            </div>
-
-            <!-- Photo 149 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/149.jpg" alt="Test" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Majestic</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Majestic, old architecture</p>
-                </div>
-            </div>
-
-            <!-- Photo 148 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/148.jpeg" alt="Clock-tower with the flags of various nations" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Clock</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Clock-tower with the flags of various nations</p>
-                </div>
-            </div>
-
-            <!-- Photo 147 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/147.jpeg" alt="Spree[ve] me be!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">River Spree</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Spree[ve] me be!</p>
-                </div>
-            </div>
-
-            <!-- Photo 146 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/146.jpg" alt="See me falling asleep!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">First Europe Rehearsal</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">See me falling asleep!</p>
-                </div>
-            </div>
-
-            <!-- Photo 145 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/145.jpeg" alt="Clouds and my first time in a plane" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Clouds</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">And my first time in a plane</p>
-                </div>
-            </div>
-
-            <!-- Photo 144 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/144.jpeg" alt="Art-class kidnapping" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Grass itches</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Art-class kidnapping</p>
-                </div>
-            </div>
-
-            <!-- Photo 143 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/143.jpeg" alt="The bear and the lion" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">The bear and the lion</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">at Alex S's grad party</p>
-                </div>
-            </div>
-
-            <!-- Photo 142 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/142.jpeg" alt="Me and my mom" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and my mom</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 141 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/141.jpeg" alt="More graduation pictures #2" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">More graduation pictuers #2</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 140 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/140.JPG" alt="More graduation pictures" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">More graduation pictures</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 139 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/139.jpeg" alt="Me and Eggering" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and Eggering</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 138 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/138.jpeg" alt="Me and Pranav" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and Pranav</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 137 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/137.jpeg" alt="Me and Zwinge" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and Zwinge</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 136 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/136.jpeg" alt="Me and Torre" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and Torre</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 135 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/135.jpeg" alt="Croissant and Nathan" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Croissant and Nathan</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 134 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/134.jpeg" alt="Me and Leon" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and Leon</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 133 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/133.jpeg" alt="Me, Kareena, and Chiara" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me, Kareena, and Chiara</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 132 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/132.jpeg" alt="Me and Jiaxuan" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Me and Jiaxuan</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">-----</p>
-                </div>
-            </div>
-
-            <!-- Photo 131 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/131.jpeg" alt="Tech High Math Majors" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">MATH</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Tech High Math Majors</p>
-                </div>
-            </div>
-
-            <!-- Photo 130 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/130.jpeg" alt="+ Aura" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Speech</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">+ Aura</p>
-                </div>
-            </div>
-
-            <!-- Photo 126 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/126.jpeg" alt="Cold ocean and setting sun" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Sunset</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Cold ocean and setting sun</p>
-                </div>
-            </div>
-
-            <!-- Photo 125 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/125.jpeg" alt="The sun floats above the ocean" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Dot</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">The sun floats above the ocean</p>
-                </div>
-            </div>
-
-            <!-- Photo 123 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/123.jpeg" alt="Whats prettier that or the sunset?" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Fireworks</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Whats prettier that or the sunset?</p>
-                </div>
-            </div>
-
-            <!-- Photo 122 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/122.jpeg" alt="Pizza and snuggles!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">One happy birthday :)</h3>
-                    <p class="photo-date">June 2025</p>
-                    <p class="photo-desc">Pizza and snuggles!</p>
-                </div>
-            </div>
-
-            <!-- Photo 121 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/121.jpeg" alt="With Nathan cus he came back for his phone" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Night before my birthday</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">With Nathan cus he came back for his phone</p>
-                </div>
-            </div>
-
-            <!-- Photo 120 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/120.jpeg" alt="Without Nathan cus he dipped early" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Night before my birthday</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Without Nathan cus he dipped early</p>
-                </div>
-            </div>
-
-            <!-- Photo 119 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/119.jpeg" alt="Blehhhh to the camera" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Freaky</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Blehhhh to the camera</p>
-                </div>
-            </div>
-
-            <!-- Photo 118 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/118.jpeg" alt="Why does my face look like that?" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Mint Chip</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Why does my face look like that?</p>
-                </div>
-            </div>
-                        
-            <!-- Photo 117 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/117.jpeg" alt="Look at those sunglasses" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Lookin' suave</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Look at those sunglasses</p>
-                </div>
-            </div>
-
-            <!-- Photo 116 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/116.jpeg" alt="😘😘😘😘" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Kissy kissy</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">😘😘😘😘</p>
-                </div>
-            </div>
-
-            <!-- Photo 115 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/115.jpeg" alt="Laying in the sand!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Sand everywhere</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Laying in the sand!</p>
-                </div>
-            </div>
-                        
-            <!-- Photo 114 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/114.jpeg" alt="Alex's birthday!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Alex's birthday!</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">After spending way too much money in Japantown</p>
-                </div>
-            </div>
-
-            <!-- Photo 113 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/113.jpeg" alt="Happy happy happy" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Happy happy happy</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Cutie smiling while on call</p>
-                </div>
-            </div>
-
-            <!-- Photo 112 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/112.jpeg" alt="UB Graduation THS Gang" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">UB Graduation #3</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">THS Gang</p>
-                </div>
-            </div>
-
-            <!-- Photo 111 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/111.jpeg" alt="UB Graduation #2" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">UB Graduation #2</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Post-ceremony</p>
-                </div>
-            </div>
-
-            <!-- Photo 110 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/110.jpeg" alt="Lookin' devious" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">UB Graduation</h3>
-                    <p class="photo-date">May 2025</p>
-                    <p class="photo-desc">Lookin' devious</p>
-                </div>
-            </div>            
-
-            <!-- Photo 109 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/109.jpeg" alt="Yummy!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Yummy!</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">:)</p>
-                </div>
-            </div>
-
-            <!-- Photo 108 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/108.jpg" alt="Admission officer group!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Admission officer group!</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">As it says (I'm really getting lazy with writing these)</p>
-                </div>
-            </div>
-                        
-            <!-- Photo 107 -->
-            <div class="photo-card" data-category="urban">
-                <img src="pics/107.jpeg" alt="All-Northern Clarinet section" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Stanford</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">Cool building pic</p>
-                </div>
-            </div>
-
-            <!-- Photo 106 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/106.jpeg" alt="In front of the arch thingee" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Stanford Admit Weekend</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">In front of the arch thingee</p>
-                </div>
-            </div>
-
-            <!-- Photo 105 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/105.jpeg" alt="In front of Cantor Arts Center" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Lisa's birthday!!!</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">In front of Cantor Arts Center</p>
-                </div>
-            </div>
-                        
-            <!-- Photo 104 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/104.jpeg" alt="Lisa's birthday present :)" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Birthday Present</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">Lisa's birthday present :)</p>
-                </div>
-            </div>
-
-            <!-- Photo 103 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/103.jpeg" alt="I was mewing, lisa was asleep" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Mewing</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">I was mewing, lisa was asleep</p>
-                </div>
-            </div>
-
-            <!-- Photo 102 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/102.jpeg" alt="Best dance of my life" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Prom photo!</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">Best dance of my life</p>
-                </div>
-            </div>
-
-            <!-- Photo 101 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/101.JPG" alt="All the boys before prom" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">THS Prom Gang</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">All the boys before prom</p>
-                </div>
-            </div>
-
-            <!-- Photo 100 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/100.jpeg" alt="Scary tie" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Prom fit</h3>
-                    <p class="photo-date">April 2025</p>
-                    <p class="photo-desc">Scary tie</p>
-                </div>
-            </div>
-
-            <!-- Photo 99 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/99.jpeg" alt="Pi-day competition!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Pi-day competition!</h3>
-                    <p class="photo-date">March 2025</p>
-                    <p class="photo-desc">YAY it worked out (so much fun :))</p>
-                </div>
-            </div>
-
-            <!-- Photo 98 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/98.jpeg" alt="Awesome design lisa made for pi-day comp" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Pi Day T-Shirt Design</h3>
-                    <p class="photo-date">March 2025</p>
-                    <p class="photo-desc">Awesome design lisa made for pi-day comp</p>
-                </div>
-            </div>
-                        
-            <!-- Photo 97 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/97.jpeg" alt="It stands...not alone" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Egret</h3>
-                    <p class="photo-date">March 2025</p>
-                    <p class="photo-desc">It stands...not alone</p>
-                </div>
-            </div>
-
-            <!-- Photo 96 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/96.jpeg" alt="Next time ride closer to the sidewalk 🥺" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Bike Rideeee</h3>
-                    <p class="photo-date">March 2025</p>
-                    <p class="photo-desc">Next time ride closer to the sidewalk 🥺</p>
-                </div>
-            </div>
-
-            <!-- Photo 95 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/95.JPG" alt="Burning up a gallon of gasoline" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Jiaxuan's birthday!</h3>
-                    <p class="photo-date">March 2025</p>
-                    <p class="photo-desc">Burning up a gallon of gasoline</p>
-                </div>
-            </div>
-
-            <!-- Photo 94 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/94.JPG" alt="Lisa being a nonchalant sigma" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Nonchalant</h3>
-                    <p class="photo-date">March 2025</p>
-                    <p class="photo-desc">Lisa being a nonchalant sigma</p>
-                </div>
-            </div>
-
-            <!-- Photo 93 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/93.jpeg" alt="Cutie Patootie getting bunny eared :)" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Bunny Ears!</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">Cutie Patootie getting bunny eared :)</p>
-                </div>
-            </div>
-
-            <!-- Photo 92 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/92.jpeg" alt="Or was it the second?" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">First Date!</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">Or was it the second?</p>
-                </div>
-            </div>
-
-            <!-- Photo 91 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/91.jpeg" alt="All-Northern Clarinet section" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">All-Northern Clarinets</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">All-Northern Clarinet section</p>
-                </div>
-            </div>
-
-            <!-- Photo 90 -->
-            <div class="photo-card" data-category="love">
-                <img src="pics/90.jpeg" alt="First picture with baby!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Pookie</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">First picture with baby!</p>
-                </div>
-            </div>
-
-            <!-- Photo 89 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/89.jpeg" alt="Norcal Clarinet section with one imposter" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Norcal Clarinets</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">Norcal Clarinet section with one imposter</p>
-                </div>
-            </div>
-
-            <!-- Photo 88 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/88.jpeg" alt="Napping at norcal" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Naptime</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">Napping at norcal</p>
-                </div>
-            </div>
-
-            <!-- Photo 87 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/87.jpeg" alt="Gang reunited after seating got messed up at YO" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Norcal SRSYO clarinet gang</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">Gang reunited after seating got messed up at YO</p>
-                </div>
-            </div>
-
-            <!-- Photo 86 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/86.JPG" alt="Before senior spring formal!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Formal</h3>
-                    <p class="photo-date">February 2025</p>
-                    <p class="photo-desc">Before senior spring formal!</p>
-                </div>
-            </div>
-
-            <!-- Photo 85 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/85.jpeg" alt="Fluffy and rough clouds contrast over the sunset" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Fluffy and Rough</h3>
-                    <p class="photo-date">January 2025</p>
-                    <p class="photo-desc">Fluffy and rough clouds contrast over the sunset</p>
-                </div>
-            </div>
-
-            <!-- Photo 84 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/84.jpeg" alt="The sun reflects on the water" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Beach Sunset</h3>
-                    <p class="photo-date">January 2025</p>
-                    <p class="photo-desc">The sun reflects on the water</p>
-                </div>
-            </div>
-
-            <!-- Photo 83 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/83.jpeg" alt="The air was soo nice" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Clear Water Clear Skies</h3>
-                    <p class="photo-date">December 2024</p>
-                    <p class="photo-desc">The air was soo nice</p>
-                </div>
-            </div>
-
-            <!-- Photo 82 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/82.jpeg" alt="Just another one" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Purple Gold</h3>
-                    <p class="photo-date">December 2024</p>
-                    <p class="photo-desc">Just another one</p>
-                </div>
-            </div>
-
-            <!-- Photo 81 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/81.jpeg" alt="Wish it didn't have the watermark :(" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">SRSYO pic</h3>
-                    <p class="photo-date">November 2024</p>
-                    <p class="photo-desc">Wish it didn't have the watermark :(</p>
-                </div>
-            </div>
-
-            <!-- Photo 80 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/80.jpeg" alt="Me with Roy in a Spaghetti Costume after a concert" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Spaghetti</h3>
-                    <p class="photo-date">October 2024</p>
-                    <p class="photo-desc">Me with Roy in a Spaghetti Costume after a concert</p>
-                </div>
-            </div>
-
-            <!-- Photo 79 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/79.jpeg" alt="Senior year homecoming" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Hoco</h3>
-                    <p class="photo-date">October 2024</p>
-                    <p class="photo-desc">Senior year homecoming</p>
-                </div>
-            </div>
-
-            <!-- Photo 78 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/78.jpeg" alt="Where's my head ahh facepaint" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Where's my head</h3>
-                    <p class="photo-date">October 2024</p>
-                    <p class="photo-desc">Where's my head ahh facepaint</p>
-                </div>
-            </div>
-
-            <!-- Photo 77 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/77.PNG" alt="First time at legendary" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Brawl Stars</h3>
-                    <p class="photo-date">October 2024</p>
-                    <p class="photo-desc">First time at legendary</p>
-                </div>
-            </div>
-
-            <!-- Photo 76 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/76.jpeg" alt="They just spawned in kinda (not really)" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">My House</h3>
-                    <p class="photo-date">September 2024</p>
-                    <p class="photo-desc">They just spawned in kinda (not really)</p>
-                </div>
-            </div>
-
-            <!-- Photo 75 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/75.JPG" alt="A sunset under gray clouds" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Egg Yolk</h3>
-                    <p class="photo-date">September 2024</p>
-                    <p class="photo-desc">A sunset under gray clouds</p>
-                </div>
-            </div>
-            <!-- Photo 74 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/74.JPG" alt="A lil bit of everything" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Fireworks</h3>
-                    <p class="photo-date">July 2024</p>
-                    <p class="photo-desc">A lil bit of everything</p>
-                </div>
-            </div>
-
-            <!-- Photo 73 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/73.JPG" alt="Alex trying to look cool" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Bozo</h3>
-                    <p class="photo-date">June 2024</p>
-                    <p class="photo-desc">Alex trying to look cool</p>
-                </div>
-            </div>
-
-            <!-- Photo 72 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/72.JPG" alt="Junior Campfire at the beach." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Campfire</h3>
-                    <p class="photo-date">June 2024</p>
-                    <p class="photo-desc">Junior Campfire at the beach</p>
-                </div>
-            </div>
-
-            <!-- Photo 71 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/71.JPG" alt="Leon's Graduation" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Leon's Graduation</h3>
-                    <p class="photo-date">June 2024</p>
-                    <p class="photo-desc">As the title says...</p>
-                </div>
-            </div>
-
-            <!-- Photo 70 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/70.jpeg" alt="Alex's Birthday!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Birthday</h3>
-                    <p class="photo-date">May 2024</p>
-                    <p class="photo-desc">Alex's Birthday!</p>
-                </div>
-            </div>
-
-            <!-- Photo 69 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/69.jpeg" alt="I'm grabbing supplies for an engineering project" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Supplies</h3>
-                    <p class="photo-date">May 2024</p>
-                    <p class="photo-desc">I'm grabbing supplies for an engineering project</p>
-                </div>
-            </div>
-
-            <!-- Photo 68 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/68.JPG" alt="Rhapsody in Blue Concert!" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">SRSYO #2</h3>
-                    <p class="photo-date">May 2024</p>
-                    <p class="photo-desc">Rhapsody in Blue Concert!</p>
-                </div>
-            </div>
-
-            <!-- Photo 67 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/67.JPG" alt="Woohoo." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">SRSYO</h3>
-                    <p class="photo-date">May 2024</p>
-                    <p class="photo-desc">Woohoo.</p>
-                </div>
-            </div>
-
-            <!-- Photo 66 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/66.jpeg" alt="Do we look cool?" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Gang</h3>
-                    <p class="photo-date">April 2024</p>
-                    <p class="photo-desc">Do we look cool?</p>
-                </div>
-            </div>
-
-            <!-- Photo 65 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/65.JPG" alt="Posing with Alex" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Posing</h3>
-                    <p class="photo-date">April 2024</p>
-                    <p class="photo-desc">Posing with Alex</p>
-                </div>
-            </div>
-
-            <!-- Photo 64 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/64.JPG" alt="Tennis CMCs were right before junior year prom" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">CMCs</h3>
-                    <p class="photo-date">April 2024</p>
-                    <p class="photo-desc">Tennis CMCs were right before junior year prom</p>
-                </div>
-            </div>
-
-            <!-- Photo 63 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/63.JPG" alt="Nathan thinks hes nonchalant" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Chalant</h3>
-                    <p class="photo-date">April 2024</p>
-                    <p class="photo-desc">Nathan thinks hes nonchalant</p>
-                </div>
-            </div>
-
-            <!-- Photo 62 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/62.jpeg" alt="My hair looks very light in this photo. " class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Sunglasses</h3>
-                    <p class="photo-date">April 2024</p>
-                    <p class="photo-desc">My hair looks very light in this photo. </p>
-                </div>
-            </div>
-
-            <!-- Photo 61 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/61.jpeg" alt="It's trapped. " class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Black</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">It's trapped. </p>
-                </div>
-            </div>
-
-            <!-- Photo 60 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/60.jpeg" alt="Bundles of pretty white flowers." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">White and Black</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">Bundles of pretty white flowers.</p>
-                </div>
-            </div>
-
-            <!-- Photo 59 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/59.jpeg" alt="It's like it's watching you" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Eyes</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">It's like it's watching you</p>
-                </div>
-            </div>
-
-            <!-- Photo 58 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/58.jpeg" alt="Mmmm nectar" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Long Butterfly</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">Mmmm nectar</p>
-                </div>
-            </div>
-
-            <!-- Photo 57 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/57.jpeg" alt="Sitting on two different flowers..." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Two Butterflies</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">Sitting on two different flowers...</p>
-                </div>
-            </div>
-
-            <!-- Photo 56 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/56.jpeg" alt="We're all red on the inside aren't we?" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Flower</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">We're all red on the inside aren't we?</p>
-                </div>
-            </div>
-
-            <!-- Photo 55 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/55.jpeg" alt="A heart I made in the sand" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Heart</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">A heart I made in the sand</p>
-                </div>
-            </div>
-
-            <!-- Photo 54 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/54.jpeg" alt="The quality makes this feel like a video game wallpaper" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Wallpaper Sunset</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">The quality makes this feel like a video game wallpaper</p>
-                </div>
-            </div>
-
-            <!-- Photo 53 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/53.jpeg" alt="Colorful sunset over white sands" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Sunset</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">Colorful sunset over white sands</p>
-                </div>
-            </div>
-
-            <!-- Photo 52 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/52.jpeg" alt="Cheesy rocks" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Cheese</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">Cheesy rocks</p>
-                </div>
-            </div>
-
-            <!-- Photo 51 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/51.jpeg" alt="✨ Carlsbad caverns ✨" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Caverns</h3>
-                    <p class="photo-date">March 2024</p>
-                    <p class="photo-desc">✨ Carlsbad caverns ✨</p>
-                </div>
-            </div>
-
-            <!-- Photo 50 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/50.JPG" alt="Just at a random hotel..." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Shotgun</h3>
-                    <p class="photo-date">February 2024</p>
-                    <p class="photo-desc">Just at a random hotel...</p>
-                </div>
-            </div>
-
-            <!-- Photo 49 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/49.JPG" alt="Bunny Nathan." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Nathan</h3>
-                    <p class="photo-date">February 2024</p>
-                    <p class="photo-desc">Bunny Nathan.</p>
-                </div>
-            </div>
-
-            <!-- Photo 48 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/48.jpeg" alt="yes pineapple is good on pizza" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Pizza</h3>
-                    <p class="photo-date">February 2024</p>
-                    <p class="photo-desc">yes pineapple is good on pizza</p>
-                </div>
-            </div>
-
-            <!-- Photo 47 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/47.jpeg" alt="My mom fed her beer" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Cosmo drinking</h3>
-                    <p class="photo-date">February 2024</p>
-                    <p class="photo-desc">My mom fed her beer</p>
-                </div>
-            </div>
-
-            <!-- Photo 46 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/46.jpeg" alt="Engineering Group" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">PLTW</h3>
-                    <p class="photo-date">February 2024</p>
-                    <p class="photo-desc">Engineering Group</p>
-                </div>
-            </div>
-
-            <!-- Photo 45 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/45.jpg" alt="Sonoma County kids at All State (23-24 season)" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">All State</h3>
-                    <p class="photo-date">February 2024</p>
-                    <p class="photo-desc">Sonoma County kids at All State (23-24 season)</p>
-                </div>
-            </div>
-
-            <!-- Photo 44 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/44.jpeg" alt="All-Northern Clarinet Section 23-24 season" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">All-Northern</h3>
-                    <p class="photo-date">October 2023</p>
-                    <p class="photo-desc">All-Northern Clarinet Section 23-24 season</p>
-                </div>
-            </div>
-
-            <!-- Photo 43 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/43.jpg" alt="Tech High Participants at soco honor band" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">THS @ soco</h3>
-                    <p class="photo-date">January 2024</p>
-                    <p class="photo-desc">Tech High Participants at soco honor band</p>
-                </div>
-            </div>
-
-            <!-- Photo 42 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/42.jpg" alt="Sonoma County Honor Band 23-24 Season" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">SoCo Honor Band</h3>
-                    <p class="photo-date">January 2024</p>
-                    <p class="photo-desc">Sonoma County Honor Band 23-24 Season</p>
-                </div>
-            </div>
-
-            <!-- Photo 41 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/41.jpeg" alt="The sky is sometimes very beautiful" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Sky</h3>
-                    <p class="photo-date">December 2023</p>
-                    <p class="photo-desc">The sky is sometimes very beautiful</p>
-                </div>
-            </div>
-
-            <!-- Photo 40 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/40.jpeg" alt="Another pretty sunset" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Golden Clouds</h3>
-                    <p class="photo-date">December 2023</p>
-                    <p class="photo-desc">Another pretty sunset</p>
-                </div>
-            </div>
-
-            <!-- Photo 39 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/39.jpeg" alt="a" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Wall</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">A wall of red stone barricades dying trees</p>
-                </div>
-            </div>
-
-            <!-- Photo 38 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/38.jpeg" alt="Zion National Park." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Zion</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">Zion National Park.</p>
-                </div>
-            </div>
-
-            <!-- Photo 37 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/37.jpeg" alt="I am in a cave. " class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Cave</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">I am in a cave. </p>
-                </div>
-            </div>
-
-            <!-- Photo 36 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/36.jpeg" alt="The light of the sun pokes through godlen leaves." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Gilden Leaves</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">The light of the sun pokes through godlen leaves.</p>
-                </div>
-            </div>
-
-            <!-- Photo 35 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/35.jpeg" alt="A clear river going off into the distance" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Clear and luscious</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">A clear river going off into the distance</p>
-                </div>
-            </div>
-
-            <!-- Photo 34 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/34.jpeg" alt="A cactus at Zion National Park" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Orange and cactus scenery</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">A cactus at Zion National Park</p>
-                </div>
-            </div>
-
-            <!-- Photo 33 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/33.JPG" alt="Matching Burt Codespoti Lock-Screens lmfao" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Lockscreens</h3>
-                    <p class="photo-date">November 2023</p>
-                    <p class="photo-desc">Matching Burt Codespoti Lock-Screens lmfao</p>
-                </div>
-            </div>
-
-            <!-- Photo 32 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/32.jpeg" alt="J squishing me against a wall" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Squished</h3>
-                    <p class="photo-date">October 2023</p>
-                    <p class="photo-desc">J squishing me against a wall</p>
-                </div>
-            </div>
-
-            <!-- Photo 31 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/31.jpeg" alt="Very blurry homecoming picture." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Junior year hoco</h3>
-                    <p class="photo-date">October 2023</p>
-                    <p class="photo-desc">Very blurry homecoming picture.</p>
-                </div>
-            </div>
-
-            <!-- Photo 30 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/30.jpeg" alt="For some reason this photo seems really clear" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Random selfie with mat</h3>
-                    <p class="photo-date">August 2023</p>
-                    <p class="photo-desc">For some reason this photo seems really clear</p>
-                </div>
-            </div>
-
-            <!-- Photo 29 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/29.jpeg" alt="Playing this while working at caz" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Smash</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">Playing this while working at caz</p>
-                </div>
-            </div>
-
-            <!-- Photo 28 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/28.jpeg" alt="The trees look small." class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Half Dome</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">The trees look small.</p>
-                </div>
-            </div>
-
-            <!-- Photo 27 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/27.jpeg" alt="I look hella young lol" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Half Dome</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">I look hella young lol</p>
-                </div>
-            </div>
-
-            <!-- Photo 26 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/26.jpeg" alt="The surface of water looks like mis-colored chicken skin"
-                    class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">Chicken-skin lake</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">The surface of water looks like mis-colored chicken skin</p>
-                </div>
-            </div>
-
-            <!-- Photo 25 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/25.jpeg" alt="Beautiful rainbow on the Mist trail" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/85.jpeg" alt="Fluffy and Rough">
                 <div class="photo-info">
-                    <h3 class="photo-title">Hazy Rainbow</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">Beautiful rainbow on the Mist trail</p>
+                    <h3>Fluffy and Rough</h3>
+                    <p>Clouds contrasting over sunset — Jan 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 24 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/24.jpeg" alt="Meh photo of snow and rocks" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/38.jpeg" alt="Zion">
                 <div class="photo-info">
-                    <h3 class="photo-title">Snow at Yosemite</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">Meh photo of snow and rocks</p>
+                    <h3>Zion</h3>
+                    <p>Zion National Park — Nov 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 23 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/23.jpeg" alt="A crimson sunset." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/25.jpeg" alt="Hazy Rainbow">
                 <div class="photo-info">
-                    <h3 class="photo-title">Blood Orange</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">A crimson sunset.</p>
+                    <h3>Hazy Rainbow</h3>
+                    <p>Mist trail at Yosemite — July 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 22 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/22.jpeg" alt="A picture of the rocks at Yosemite." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/51.jpeg" alt="Caverns">
                 <div class="photo-info">
-                    <h3 class="photo-title">Yosemite Rocks</h3>
-                    <p class="photo-date">July 2023</p>
-                    <p class="photo-desc">A picture of the rocks at Yosemite.</p>
+                    <h3>Carlsbad Caverns</h3>
+                    <p>Underground — March 2024</p>
                 </div>
             </div>
 
-            <!-- Photo 21 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/21.jpg" alt="Us sitting in his grandma's car" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/54.jpeg" alt="Wallpaper Sunset">
                 <div class="photo-info">
-                    <h3 class="photo-title">Kevin's Birthday</h3>
-                    <p class="photo-date">May 2023</p>
-                    <p class="photo-desc">Us sitting in his grandma's car</p>
+                    <h3>Wallpaper Sunset</h3>
+                    <p>Looks like a video game — March 2024</p>
                 </div>
             </div>
 
-            <!-- Photo 19 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/19.jpeg" alt="The clouds look nice with the snow" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/28.jpeg" alt="Half Dome">
                 <div class="photo-info">
-                    <h3 class="photo-title">Snow and Clouds</h3>
-                    <p class="photo-date">December 2022</p>
-                    <p class="photo-desc">The clouds look nice with the snow</p>
+                    <h3>Half Dome</h3>
+                    <p>Trees look small — July 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 18 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/18.PNG" alt="I thought I was tuff for this smh" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/145.jpeg" alt="Clouds">
                 <div class="photo-info">
-                    <h3 class="photo-title">fifa mobile</h3>
-                    <p class="photo-date">December 2022</p>
-                    <p class="photo-desc">I thought I was tuff for this smh</p>
+                    <h3>Above the Clouds</h3>
+                    <p>First time on a plane — June 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 17 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/17.jpeg" alt="Snow-covered rocks in Tahoe." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/36.jpeg" alt="Golden Leaves">
                 <div class="photo-info">
-                    <h3 class="photo-title">Snow and Rock</h3>
-                    <p class="photo-date">December 2022</p>
-                    <p class="photo-desc">Snow-covered rocks in Tahoe.</p>
+                    <h3>Golden Leaves</h3>
+                    <p>Sun through autumn — Nov 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 16 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/16.jpeg" alt="Pretty pink flowers." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/83.jpeg" alt="Clear Water">
                 <div class="photo-info">
-                    <h3 class="photo-title">Flowers</h3>
-                    <p class="photo-date">August 2022</p>
-                    <p class="photo-desc">Pretty pink flowers.</p>
+                    <h3>Clear Water Clear Skies</h3>
+                    <p>The air was so nice — Dec 2024</p>
                 </div>
             </div>
 
-            <!-- Photo 15 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/15.jpeg" alt="Fluffy clouds that look like cotton candy." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/84.jpeg" alt="Beach Sunset">
                 <div class="photo-info">
-                    <h3 class="photo-title">Cotton Candy Clouds</h3>
-                    <p class="photo-date">November 2022</p>
-                    <p class="photo-desc">Fluffy clouds that look like cotton candy.</p>
+                    <h3>Beach Sunset</h3>
+                    <p>Sun reflects on water — Jan 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 14 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/14.jpeg" alt="A sunset in a parking lot." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/35.jpeg" alt="Clear River">
                 <div class="photo-info">
-                    <h3 class="photo-title">Sunset</h3>
-                    <p class="photo-date">November 2022</p>
-                    <p class="photo-desc">A sunset in a parking lot.</p>
+                    <h3>Clear and Luscious</h3>
+                    <p>River into distance — Nov 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 13 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/13.jpeg" alt="I took a blurry picture of these chickens while I was walking to school."
-                    class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/53.jpeg" alt="Sunset">
                 <div class="photo-info">
-                    <h3 class="photo-title">Chickens</h3>
-                    <p class="photo-date">August 2022</p>
-                    <p class="photo-desc">I took a blurry picture of these chickens while I was walking to school.</p>
+                    <h3>White Sands Sunset</h3>
+                    <p>Colorful sunset over white sands — March 2024</p>
                 </div>
             </div>
 
-            <!-- Photo 12 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/12.jpeg" alt="A cliff at Yosemite." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/22.jpeg" alt="Yosemite Rocks">
                 <div class="photo-info">
-                    <h3 class="photo-title">Yosemite</h3>
-                    <p class="photo-date">June 2022</p>
-                    <p class="photo-desc">A cliff at Yosemite. </p>
+                    <h3>Yosemite Rocks</h3>
+                    <p>Granite cliffs — July 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 11 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/11.jpeg" alt="Part of the compensation for watching someone's dog." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/23.jpeg" alt="Blood Orange">
                 <div class="photo-info">
-                    <h3 class="photo-title">Drinks</h3>
-                    <p class="photo-date">June 2022</p>
-                    <p class="photo-desc">Part of the compensation for watching someone's dog.</p>
+                    <h3>Blood Orange</h3>
+                    <p>Crimson sunset — July 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 10 -->
-            <div class="photo-card" data-category="people">
-                <img src="pics/10.jpeg" alt="Me and my mom hiking while I was prepping for a backpacking trip."
-                    class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/17.jpeg" alt="Snow and Rock">
                 <div class="photo-info">
-                    <h3 class="photo-title">Prepping for backpacking</h3>
-                    <p class="photo-date">May 2022</p>
-                    <p class="photo-desc">Me and my mom hiking while I was prepping for a backpacking trip.</p>
+                    <h3>Snow and Rock</h3>
+                    <p>Tahoe — Dec 2022</p>
                 </div>
             </div>
 
-            <!-- Photo 9 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/9.jpeg" alt="More flowers at Helen Putnam park in Petaluma" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/15.jpeg" alt="Cotton Candy Clouds">
                 <div class="photo-info">
-                    <h3 class="photo-title">More flowers</h3>
-                    <p class="photo-date">April 2021</p>
-                    <p class="photo-desc">More flowers at Helen Putnam park in Petaluma</p>
+                    <h3>Cotton Candy</h3>
+                    <p>Fluffy clouds — Nov 2022</p>
                 </div>
             </div>
 
-            <!-- Photo 8 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/8.jpeg" alt="Flowers at Helen Putnam park in Petaluma" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/125.jpeg" alt="Dot">
                 <div class="photo-info">
-                    <h3 class="photo-title">Flowers</h3>
-                    <p class="photo-date">April 2021</p>
-                    <p class="photo-desc">Flowers at Helen Putnam park in Petaluma</p>
+                    <h3>Dot</h3>
+                    <p>Sun floating above ocean — June 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 7 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/7.jpeg" alt="Just a pretty sunset" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/126.jpeg" alt="Ocean Sunset">
                 <div class="photo-info">
-                    <h3 class="photo-title">Sunset</h3>
-                    <p class="photo-date">January 2021</p>
-                    <p class="photo-desc">Just a pretty sunset</p>
+                    <h3>Cold Ocean</h3>
+                    <p>Cold ocean and setting sun — June 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 6 -->
-            <div class="photo-card" data-category="nature">
-                <img src="pics/6.jpeg" alt="Some birds in front of the ocean" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/41.jpeg" alt="Sky">
                 <div class="photo-info">
-                    <h3 class="photo-title">Birds</h3>
-                    <p class="photo-date">December 2020</p>
-                    <p class="photo-desc">Some birds in front of the ocean</p>
+                    <h3>Sky</h3>
+                    <p>Sometimes very beautiful — Dec 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 5 -->
-            <div class="photo-card" data-category="music">
-                <img src="pics/5.png" alt="Somehow this was my first audition (and it was a video D:)"
-                    class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/40.jpeg" alt="Golden Clouds">
                 <div class="photo-info">
-                    <h3 class="photo-title">First Audition</h3>
-                    <p class="photo-date">December 2020</p>
-                    <p class="photo-desc">Somehow this was my first audition (and it was a video D:)</p>
+                    <h3>Golden Clouds</h3>
+                    <p>Another pretty sunset — Dec 2023</p>
                 </div>
             </div>
 
-            <!-- Photo 4 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/4.png" alt="A really bad profile pic I designed." class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/151.JPG" alt="Concertmaster">
                 <div class="photo-info">
-                    <h3 class="photo-title">YouTube Profile Pic</h3>
-                    <p class="photo-date">November 2020</p>
-                    <p class="photo-desc">A really bad profile pic I designed.</p>
+                    <h3>Berlin Phil</h3>
+                    <p>With the first concertmaster — June 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 3 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/3.jpeg" alt="Cosmo wearing a shirt that I sowed (she did not like it :()"
-                    class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/91.jpeg" alt="All-Northern">
                 <div class="photo-info">
-                    <h3 class="photo-title">Cosmo (again haha)</h3>
-                    <p class="photo-date">June 2020</p>
-                    <p class="photo-desc">Cosmo wearing a shirt that I sowed (she did not like it :()</p>
+                    <h3>All-Northern Clarinets</h3>
+                    <p>Clarinet section — Feb 2025</p>
                 </div>
             </div>
 
-            <!-- Photo 2 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/2.jpeg" alt="Cosmo flopped over" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/7.jpeg" alt="Sunset">
                 <div class="photo-info">
-                    <h3 class="photo-title">Cosmo (again)</h3>
-                    <p class="photo-date">May 2020</p>
-                    <p class="photo-desc">Cosmo flopped over</p>
+                    <h3>Pretty Sunset</h3>
+                    <p>Just a pretty sunset — Jan 2021</p>
                 </div>
             </div>
 
-            <!-- Photo 1 -->
-            <div class="photo-card" data-category="random">
-                <img src="pics/1.jpeg" alt="Cosmo laying under a nightstand" class="photo-img">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="pics/34.jpeg" alt="Cactus">
                 <div class="photo-info">
-                    <h3 class="photo-title">Cosmo</h3>
-                    <p class="photo-date">February 2019</p>
-                    <p class="photo-desc">Cosmo laying under a nightstand</p>
+                    <h3>Orange and Cactus</h3>
+                    <p>Zion National Park — Nov 2023</p>
                 </div>
             </div>
         </div>
-    </div>
+
+        <footer>~ captured moments ~</footer>
     </div>
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="modal">
-        <span class="close-btn">&times;</span>
-        <div class="modal-content">
-            <img id="modal-image" class="modal-img" src="" alt="">
-            <div id="modal-caption" class="modal-caption"></div>
-        </div>
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">×</span>
+        <img id="lightbox-img" src="" alt="">
     </div>
-
-    <footer class="footer">
-        <div>Connect with me</div>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/" aria-label="LinkedIn"><i
-                    class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/bolasulamog/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com/BolasUlamog" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="mailto:damianb@stanford.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
-        </div>
-    </footer>
 
     <script>
-        // Dark Mode Toggle
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
+        function openLightbox(card) {
+            const img = card.querySelector('img');
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox').classList.add('active');
+        }
 
-        modeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
 
-            if (body.classList.contains('dark-mode')) {
-                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
-
-        // Gallery Filter
-        const filterButtons = document.querySelectorAll('.gallery-btn');
-        const photoCards = document.querySelectorAll('.photo-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                // Filter photos
-                const filter = button.dataset.filter;
-                photoCards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // Lightbox functionality
-        const modal = document.getElementById('lightbox');
-        const modalImg = document.getElementById('modal-image');
-        const modalCaption = document.getElementById('modal-caption');
-        const closeBtn = document.querySelector('.close-btn');
-
-        // Add click event to all photos
-        document.querySelectorAll('.photo-img').forEach(img => {
-            img.addEventListener('click', function () {
-                modal.style.display = 'flex';
-                modalImg.src = this.src;
-                modalCaption.textContent = this.alt;
-            });
-        });
-
-        // Close lightbox
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        // Close when clicking outside image
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Animate elements on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.header, .photo-card').forEach(el => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
         });
     </script>
 </body>
-
 </html>
