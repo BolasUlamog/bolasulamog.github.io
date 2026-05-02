@@ -9,13 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1a2e;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --text: #e8e6e3;
-            --text-muted: #a0a0a0;
-            --chalk-pink: #ff6b9d;
-            --chalk-blue: #64b5f6;
-            --chalk-yellow: #ffd54f;
+            --bg: #fffef8;
+            --bg-card: #fff;
+            --text: #2d3a2d;
+            --text-muted: #6b7c6b;
+            --citrus-orange: #ff8c42;
+            --citrus-pink: #ff6b8a;
+            --citrus-green: #7cb342;
+            --citrus-yellow: #ffd54f;
+            --border: rgba(0,0,0,0.08);
             --handwritten: 'Caveat', cursive;
             --sans: 'Inter', -apple-system, sans-serif;
         }
@@ -25,6 +27,10 @@
         body {
             font-family: var(--sans);
             background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 5% 90%, rgba(255,140,66,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 95% 10%, rgba(124,179,66,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255,107,138,0.05) 0%, transparent 50%);
             color: var(--text);
             line-height: 1.6;
             font-size: 16px;
@@ -47,7 +53,7 @@
             transition: color 0.2s;
         }
 
-        .back-link:hover { color: var(--chalk-pink); }
+        .back-link:hover { color: var(--citrus-orange); }
 
         header {
             text-align: center;
@@ -56,8 +62,8 @@
 
         header h1 {
             font-family: var(--handwritten);
-            font-size: 3rem;
-            background: linear-gradient(135deg, var(--chalk-yellow), var(--chalk-pink));
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--citrus-orange), var(--citrus-pink), var(--citrus-green));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -76,15 +82,18 @@
 
         .photo-card {
             background: var(--bg-card);
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 12px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .photo-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-4px) rotate(1deg);
+            border-color: var(--citrus-orange);
+            box-shadow: 0 8px 24px rgba(255,140,66,0.15);
         }
 
         .photo-card img {
@@ -92,11 +101,6 @@
             height: 220px;
             object-fit: cover;
             display: block;
-            transition: transform 0.4s;
-        }
-
-        .photo-card:hover img {
-            transform: scale(1.03);
         }
 
         .photo-info {
@@ -105,9 +109,9 @@
 
         .photo-info h3 {
             font-family: var(--handwritten);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 0.25rem;
-            color: var(--chalk-yellow);
+            color: var(--citrus-orange);
         }
 
         .photo-info p {
@@ -124,7 +128,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
             cursor: zoom-out;
@@ -138,7 +142,7 @@
             max-width: 90%;
             max-height: 90vh;
             object-fit: contain;
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .lightbox-close {
@@ -146,19 +150,24 @@
             top: 2rem;
             right: 2rem;
             color: white;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
             font-family: var(--handwritten);
         }
 
         footer {
-            border-top: 1px dashed rgba(255,255,255,0.1);
+            border-top: 2px dashed var(--border);
             padding-top: 2rem;
             margin-top: 3rem;
             text-align: center;
             color: var(--text-muted);
             font-family: var(--handwritten);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-fruit {
+            margin-top: 0.5rem;
+            font-size: 1.5rem;
         }
 
         @media (max-width: 600px) {
@@ -169,11 +178,11 @@
 </head>
 <body>
     <div class="container">
-        <a href="../" class="back-link">← back to home</a>
+        <a href="../personal/" class="back-link">← back to personal</a>
 
         <header>
-            <h1>Photos 📷</h1>
-            <p>Not a photographer, but I try. Click to enlarge.</p>
+            <h1>📸 Photos 📸</h1>
+            <p>Not a photographer, but I try. Click to enlarge!</p>
         </header>
 
         <div class="photo-grid">
@@ -188,7 +197,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/38.jpeg" alt="Zion">
                 <div class="photo-info">
-                    <h3>Zion</h3>
+                    <h3>Zion 🍊</h3>
                     <p>Zion National Park — Nov 2023</p>
                 </div>
             </div>
@@ -204,7 +213,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/51.jpeg" alt="Caverns">
                 <div class="photo-info">
-                    <h3>Carlsbad Caverns</h3>
+                    <h3>Carlsbad Caverns 🍇</h3>
                     <p>Underground — March 2024</p>
                 </div>
             </div>
@@ -220,7 +229,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/28.jpeg" alt="Half Dome">
                 <div class="photo-info">
-                    <h3>Half Dome</h3>
+                    <h3>Half Dome 🍋</h3>
                     <p>Trees look small — July 2023</p>
                 </div>
             </div>
@@ -236,7 +245,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/36.jpeg" alt="Golden Leaves">
                 <div class="photo-info">
-                    <h3>Golden Leaves</h3>
+                    <h3>Golden Leaves 🍊</h3>
                     <p>Sun through autumn — Nov 2023</p>
                 </div>
             </div>
@@ -252,7 +261,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/84.jpeg" alt="Beach Sunset">
                 <div class="photo-info">
-                    <h3>Beach Sunset</h3>
+                    <h3>Beach Sunset 🍑</h3>
                     <p>Sun reflects on water — Jan 2025</p>
                 </div>
             </div>
@@ -276,7 +285,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/22.jpeg" alt="Yosemite Rocks">
                 <div class="photo-info">
-                    <h3>Yosemite Rocks</h3>
+                    <h3>Yosemite Rocks 🍋</h3>
                     <p>Granite cliffs — July 2023</p>
                 </div>
             </div>
@@ -284,7 +293,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/23.jpeg" alt="Blood Orange">
                 <div class="photo-info">
-                    <h3>Blood Orange</h3>
+                    <h3>Blood Orange 🍊</h3>
                     <p>Crimson sunset — July 2023</p>
                 </div>
             </div>
@@ -300,7 +309,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/15.jpeg" alt="Cotton Candy Clouds">
                 <div class="photo-info">
-                    <h3>Cotton Candy</h3>
+                    <h3>Cotton Candy 🍬</h3>
                     <p>Fluffy clouds — Nov 2022</p>
                 </div>
             </div>
@@ -316,7 +325,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/126.jpeg" alt="Ocean Sunset">
                 <div class="photo-info">
-                    <h3>Cold Ocean</h3>
+                    <h3>Cold Ocean 🍇</h3>
                     <p>Cold ocean and setting sun — June 2025</p>
                 </div>
             </div>
@@ -332,7 +341,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/40.jpeg" alt="Golden Clouds">
                 <div class="photo-info">
-                    <h3>Golden Clouds</h3>
+                    <h3>Golden Clouds 🍊</h3>
                     <p>Another pretty sunset — Dec 2023</p>
                 </div>
             </div>
@@ -348,7 +357,7 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/91.jpeg" alt="All-Northern">
                 <div class="photo-info">
-                    <h3>All-Northern Clarinets</h3>
+                    <h3>All-Northern Clarinets 🎵</h3>
                     <p>Clarinet section — Feb 2025</p>
                 </div>
             </div>
@@ -364,13 +373,16 @@
             <div class="photo-card" onclick="openLightbox(this)">
                 <img src="pics/34.jpeg" alt="Cactus">
                 <div class="photo-info">
-                    <h3>Orange and Cactus</h3>
+                    <h3>Orange and Cactus 🌵</h3>
                     <p>Zion National Park — Nov 2023</p>
                 </div>
             </div>
         </div>
 
-        <footer>~ captured moments ~</footer>
+        <footer>
+            captured moments
+            <div class="footer-fruit">🍊🍋🍑🍓🍇</div>
+        </footer>
     </div>
 
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">

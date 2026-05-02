@@ -9,14 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1a2e;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --bg-card-hover: rgba(255, 255, 255, 0.08);
-            --text: #e8e6e3;
-            --text-muted: #a0a0a0;
-            --chalk-pink: #ff6b9d;
-            --chalk-blue: #64b5f6;
-            --chalk-green: #81c784;
+            --bg: #fffef8;
+            --bg-card: #fff;
+            --text: #2d3a2d;
+            --text-muted: #6b7c6b;
+            --citrus-orange: #ff8c42;
+            --citrus-pink: #ff6b8a;
+            --citrus-green: #7cb342;
+            --citrus-yellow: #ffd54f;
+            --border: rgba(0,0,0,0.08);
             --handwritten: 'Caveat', cursive;
             --sans: 'Inter', -apple-system, sans-serif;
         }
@@ -26,6 +27,9 @@
         body {
             font-family: var(--sans);
             background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 10% 80%, rgba(255,107,138,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(255,213,79,0.1) 0%, transparent 40%);
             color: var(--text);
             line-height: 1.6;
             font-size: 16px;
@@ -48,7 +52,7 @@
             transition: color 0.2s;
         }
 
-        .back-link:hover { color: var(--chalk-pink); }
+        .back-link:hover { color: var(--citrus-orange); }
 
         header {
             text-align: center;
@@ -57,8 +61,8 @@
 
         header h1 {
             font-family: var(--handwritten);
-            font-size: 3rem;
-            background: linear-gradient(135deg, var(--chalk-green), var(--chalk-blue));
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--citrus-pink), var(--citrus-orange), var(--citrus-yellow));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -78,16 +82,17 @@
 
         .playlist-card {
             background: var(--bg-card);
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 12px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .playlist-card:hover {
-            background: var(--bg-card-hover);
-            transform: translateY(-3px);
-            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-4px) rotate(1deg);
+            border-color: var(--citrus-pink);
+            box-shadow: 0 8px 24px rgba(255,107,138,0.15);
         }
 
         .playlist-card iframe {
@@ -102,9 +107,9 @@
 
         .playlist-info h3 {
             font-family: var(--handwritten);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
-            color: var(--chalk-green);
+            color: var(--citrus-orange);
         }
 
         .playlist-info p {
@@ -113,13 +118,13 @@
         }
 
         footer {
-            border-top: 1px dashed rgba(255,255,255,0.1);
+            border-top: 2px dashed var(--border);
             padding-top: 2rem;
             margin-top: 3rem;
             text-align: center;
             color: var(--text-muted);
             font-family: var(--handwritten);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         @media (max-width: 600px) {
@@ -130,10 +135,10 @@
 </head>
 <body>
     <div class="container">
-        <a href="../" class="back-link">← back to home</a>
+        <a href="../personal/" class="back-link">← back to personal</a>
 
         <header>
-            <h1>Study Playlists 🎧</h1>
+            <h1>🎧 Study Playlists 🎧</h1>
             <p>What I listen to while grinding psets. Preview only shows first 100 songs.</p>
         </header>
 
@@ -141,7 +146,7 @@
             <div class="playlist-card">
                 <iframe src="https://open.spotify.com/embed/playlist/3XVJEfMj8Z93XeaNA75N0a?utm_source=generator" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <div class="playlist-info">
-                    <h3>Classical 1</h3>
+                    <h3>Classical 1 🍊</h3>
                     <p>My first classical playlist! Created in chronological order as I discovered repertoire.</p>
                 </div>
             </div>
@@ -149,7 +154,7 @@
             <div class="playlist-card">
                 <iframe src="https://open.spotify.com/embed/playlist/0WEn0x9QwKGMBtiMmBZoWD?utm_source=generator" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <div class="playlist-info">
-                    <h3>Classical 2</h3>
+                    <h3>Classical 2 🍋</h3>
                     <p>More diverse than the first. Lots of dark/light, somber/sweet pieces.</p>
                 </div>
             </div>
@@ -157,7 +162,7 @@
             <div class="playlist-card">
                 <iframe src="https://open.spotify.com/embed/playlist/3HseHqN71tQ9mQEoEqlJMr?utm_source=generator" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <div class="playlist-info">
-                    <h3>Classical 3</h3>
+                    <h3>Classical 3 🍇</h3>
                     <p>More classical :)</p>
                 </div>
             </div>
@@ -165,7 +170,7 @@
             <div class="playlist-card">
                 <iframe src="https://open.spotify.com/embed/playlist/2RCHugu7H7zgbDnPQy5fXo?utm_source=generator" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <div class="playlist-info">
-                    <h3>Pop & Romantic</h3>
+                    <h3>Pop & Romantic 🍓</h3>
                     <p>Made with my girlfriend but she added about 90% of the songs lmao</p>
                 </div>
             </div>
@@ -173,13 +178,13 @@
             <div class="playlist-card">
                 <iframe src="https://open.spotify.com/embed/playlist/4AHxRPtS4VHzxqwAbR2XQP?utm_source=generator" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <div class="playlist-info">
-                    <h3>Classical 4</h3>
+                    <h3>Classical 4 🍑</h3>
                     <p>Chamber and multicultural music. Martin Fröst is simply the most goated clarinetist.</p>
                 </div>
             </div>
         </div>
 
-        <footer>~ press play and lock in ~</footer>
+        <footer>🍊 press play and lock in 🍋</footer>
     </div>
 </body>
 </html>

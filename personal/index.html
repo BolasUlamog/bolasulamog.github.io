@@ -9,15 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1a2e;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --bg-card-hover: rgba(255, 255, 255, 0.08);
-            --text: #e8e6e3;
-            --text-muted: #a0a0a0;
-            --chalk-pink: #ff6b9d;
-            --chalk-blue: #64b5f6;
-            --chalk-yellow: #ffd54f;
-            --chalk-green: #81c784;
+            --bg: #fffef8;
+            --bg-card: #fff;
+            --text: #2d3a2d;
+            --text-muted: #6b7c6b;
+            --citrus-orange: #ff8c42;
+            --citrus-pink: #ff6b8a;
+            --citrus-green: #7cb342;
+            --citrus-yellow: #ffd54f;
+            --citrus-lime: #c6ff00;
+            --border: rgba(0,0,0,0.08);
             --handwritten: 'Caveat', cursive;
             --sans: 'Inter', -apple-system, sans-serif;
         }
@@ -27,6 +28,10 @@
         body {
             font-family: var(--sans);
             background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,140,66,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255,107,138,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(124,179,66,0.05) 0%, transparent 50%);
             color: var(--text);
             line-height: 1.6;
             font-size: 16px;
@@ -49,7 +54,7 @@
             transition: color 0.2s;
         }
 
-        .back-link:hover { color: var(--chalk-pink); }
+        .back-link:hover { color: var(--citrus-orange); }
 
         header {
             text-align: center;
@@ -58,13 +63,22 @@
 
         header h1 {
             font-family: var(--handwritten);
-            font-size: 3rem;
-            color: var(--chalk-pink);
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--citrus-orange), var(--citrus-pink), var(--citrus-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 0.5rem;
         }
 
         header p {
             color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .fruit-decoration {
+            font-size: 1.5rem;
+            margin: 0 0.25rem;
         }
 
         .section {
@@ -73,9 +87,12 @@
 
         .section h2 {
             font-family: var(--handwritten);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--chalk-yellow);
+            font-size: 2.2rem;
+            margin-bottom: 1.25rem;
+            color: var(--citrus-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .link-grid {
@@ -85,28 +102,30 @@
         }
 
         .link-card {
-            padding: 1.25rem;
+            padding: 1.5rem;
             background: var(--bg-card);
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 10px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
             transition: all 0.3s;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .link-card:hover {
-            background: var(--bg-card-hover);
-            transform: translateY(-3px) rotate(1deg);
-            border-color: var(--chalk-blue);
+            transform: translateY(-4px) rotate(2deg);
+            border-color: var(--citrus-orange);
+            box-shadow: 0 8px 24px rgba(255,140,66,0.15);
         }
 
         .link-card .emoji {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .link-card h3 {
             font-family: var(--handwritten);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            color: var(--text);
             margin-bottom: 0.25rem;
         }
 
@@ -114,6 +133,11 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
+
+        .link-card:nth-child(1):hover { border-color: var(--citrus-pink); }
+        .link-card:nth-child(2):hover { border-color: var(--citrus-green); }
+        .link-card:nth-child(3):hover { border-color: var(--citrus-yellow); }
+        .link-card:nth-child(4):hover { border-color: var(--citrus-orange); }
 
         .photo-grid {
             display: grid;
@@ -124,36 +148,38 @@
         .photo-item {
             aspect-ratio: 1;
             overflow: hidden;
-            border-radius: 8px;
-            border: 2px solid transparent;
+            border-radius: 12px;
+            border: 3px solid transparent;
             transition: all 0.3s;
         }
 
         .photo-item:hover {
-            border-color: var(--chalk-pink);
+            border-color: var(--citrus-pink);
+            transform: scale(1.03) rotate(1deg);
         }
 
         .photo-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .photo-item:hover img {
-            transform: scale(1.05);
         }
 
         .see-more {
             display: inline-block;
-            margin-top: 1rem;
-            color: var(--chalk-blue);
+            margin-top: 1.25rem;
+            padding: 0.6rem 1.25rem;
+            background: linear-gradient(135deg, var(--citrus-orange), var(--citrus-pink));
+            color: white;
+            border-radius: 25px;
             font-family: var(--handwritten);
-            font-size: 1.2rem;
-            transition: color 0.2s;
+            font-size: 1.3rem;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .see-more:hover { color: var(--chalk-pink); }
+        .see-more:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255,107,138,0.3);
+        }
 
         .section-intro {
             color: var(--text-muted);
@@ -162,7 +188,7 @@
         }
 
         footer {
-            border-top: 1px dashed rgba(255,255,255,0.1);
+            border-top: 2px dashed var(--border);
             padding-top: 2rem;
             margin-top: 2rem;
             text-align: center;
@@ -173,7 +199,12 @@
             transition: color 0.2s;
         }
 
-        footer a:hover { color: var(--chalk-pink); }
+        footer a:hover { color: var(--citrus-orange); }
+
+        .footer-fruit {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
 
         @media (max-width: 600px) {
             header h1 { font-size: 2.5rem; }
@@ -186,12 +217,16 @@
         <a href="../" class="back-link">← back to home</a>
 
         <header>
-            <h1>Personal Stuff 🌙</h1>
-            <p>The less professional side</p>
+            <h1>
+                <span class="fruit-decoration">🍊</span>
+                Personal Stuff
+                <span class="fruit-decoration">🍋</span>
+            </h1>
+            <p>The fun side — life, music, and vibes</p>
         </header>
 
         <div class="section">
-            <h2>Life Things</h2>
+            <h2>🌿 Life Things</h2>
             <div class="link-grid">
                 <a href="../cosmo/" class="link-card">
                     <div class="emoji">🐇</div>
@@ -201,12 +236,12 @@
                 <a href="../clarinet/" class="link-card">
                     <div class="emoji">🎵</div>
                     <h3>Clarinet</h3>
-                    <p>Performances</p>
+                    <p>Performances & music</p>
                 </a>
                 <a href="../playlists/" class="link-card">
                     <div class="emoji">🎧</div>
                     <h3>Playlists</h3>
-                    <p>Study music</p>
+                    <p>Study jams</p>
                 </a>
                 <a href="../6-months/" class="link-card">
                     <div class="emoji">💝</div>
@@ -217,8 +252,8 @@
         </div>
 
         <div class="section">
-            <h2>Photos</h2>
-            <p class="section-intro">A few favorites. Not a photographer, but I try.</p>
+            <h2>📸 Photos</h2>
+            <p class="section-intro">A few favorites from adventures</p>
             <div class="photo-grid">
                 <div class="photo-item"><img src="../photos/pics/85.jpeg" alt="Fluffy clouds sunset"></div>
                 <div class="photo-item"><img src="../photos/pics/38.jpeg" alt="Zion National Park"></div>
@@ -229,11 +264,12 @@
                 <div class="photo-item"><img src="../photos/pics/145.jpeg" alt="Clouds from plane"></div>
                 <div class="photo-item"><img src="../photos/pics/36.jpeg" alt="Golden leaves"></div>
             </div>
-            <a href="../photos/" class="see-more">see all photos →</a>
+            <a href="../photos/" class="see-more">see all photos 🍑</a>
         </div>
 
         <footer>
             <a href="../">← back to home</a>
+            <div class="footer-fruit">🍊🍋🍇🍑🍓</div>
         </footer>
     </div>
 </body>

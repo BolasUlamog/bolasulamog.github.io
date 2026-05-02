@@ -9,12 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1a2e;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --text: #e8e6e3;
-            --text-muted: #a0a0a0;
-            --chalk-pink: #ff6b9d;
-            --chalk-purple: #b39ddb;
+            --bg: #fffef8;
+            --bg-card: #fff;
+            --text: #2d3a2d;
+            --text-muted: #6b7c6b;
+            --citrus-orange: #ff8c42;
+            --citrus-pink: #ff6b8a;
+            --citrus-green: #7cb342;
+            --soft-pink: #ffb4c2;
+            --border: rgba(0,0,0,0.08);
             --handwritten: 'Caveat', cursive;
             --sans: 'Inter', -apple-system, sans-serif;
         }
@@ -24,6 +27,9 @@
         body {
             font-family: var(--sans);
             background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(255,180,194,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(255,140,66,0.1) 0%, transparent 40%);
             color: var(--text);
             line-height: 1.8;
             font-size: 16px;
@@ -46,7 +52,7 @@
             transition: color 0.2s;
         }
 
-        .back-link:hover { color: var(--chalk-pink); }
+        .back-link:hover { color: var(--citrus-pink); }
 
         header {
             text-align: center;
@@ -54,29 +60,30 @@
         }
 
         .bunny-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 0.5rem;
         }
 
         header h1 {
             font-family: var(--handwritten);
-            font-size: 3rem;
-            color: var(--chalk-pink);
+            font-size: 3.5rem;
+            color: var(--citrus-pink);
             margin-bottom: 0.25rem;
         }
 
         .dates {
             color: var(--text-muted);
             font-family: var(--handwritten);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
         }
 
         .tribute {
             background: var(--bg-card);
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 12px;
+            border: 2px solid var(--soft-pink);
+            border-radius: 16px;
             padding: 2rem;
             margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(255,180,194,0.2);
         }
 
         .tribute p {
@@ -87,7 +94,9 @@
         .tribute p:last-child {
             margin-bottom: 0;
             font-style: italic;
-            color: var(--chalk-purple);
+            color: var(--citrus-pink);
+            font-family: var(--handwritten);
+            font-size: 1.2rem;
         }
 
         .gallery {
@@ -101,21 +110,21 @@
             width: 100%;
             aspect-ratio: 1;
             object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid transparent;
+            border-radius: 12px;
+            border: 3px solid transparent;
             transition: all 0.3s;
         }
 
         .gallery img:hover {
-            border-color: var(--chalk-pink);
-            transform: scale(1.02);
+            border-color: var(--citrus-pink);
+            transform: scale(1.03) rotate(2deg);
         }
 
         footer {
             text-align: center;
             margin-top: 3rem;
             padding-top: 2rem;
-            border-top: 1px dashed rgba(255,255,255,0.1);
+            border-top: 2px dashed var(--border);
         }
 
         footer a {
@@ -123,12 +132,17 @@
             transition: color 0.2s;
         }
 
-        footer a:hover { color: var(--chalk-pink); }
+        footer a:hover { color: var(--citrus-pink); }
+
+        .footer-hearts {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="../" class="back-link">← back to home</a>
+        <a href="../personal/" class="back-link">← back to personal</a>
 
         <header>
             <div class="bunny-icon">🐇</div>
@@ -152,7 +166,8 @@
         </div>
 
         <footer>
-            <a href="../">← back to home</a>
+            <a href="../personal/">← back to personal</a>
+            <div class="footer-hearts">🧡💛💚</div>
         </footer>
     </div>
 </body>
