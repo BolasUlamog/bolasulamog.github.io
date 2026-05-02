@@ -1,0 +1,3324 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  "Magic Rabbit" Lecture Notes / Book Template
+%  Updated for MATH 61 Structure (Weeks 1-6 + Solutions)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, letterpaper, openany]{book} 
+% 'openany' prevents blank pages between chapters
+
+%% === PACKAGES ===
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in, top=1.2in, bottom=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage{tocloft} 
+\usepackage{titlesec} 
+
+%% === TYPOGRAPHY ===
+\usepackage[osf,sc]{mathpazo} % Palatino (Serif)
+\linespread{1.05}
+\usepackage[scale=0.95]{cabin} % Cabin (Sans-Serif)
+\usepackage[varqu,varl]{inconsolata} % Monospace
+
+%% === COLOR PALETTE ===
+\usepackage[dvipsnames, svgnames, table]{xcolor}
+\definecolor{MagicTeal}{HTML}{1F3A4D}
+\definecolor{MagicPink}{HTML}{FCAEAC}
+\definecolor{MagicPeach}{HTML}{FDD0B1}
+\definecolor{MagicMint}{HTML}{B5EAD7}
+\definecolor{MagicBlue}{HTML}{A2D2FF}
+\definecolor{MagicCream}{HTML}{FAFAF7}
+
+\pagecolor{MagicCream} % Off-white background
+
+%% === HYPERLINKS ===
+\usepackage[colorlinks=true, linkcolor=MagicTeal, urlcolor=MagicBlue, citecolor=MagicPink]{hyperref}
+
+%% === HEADER & FOOTER DESIGN ===
+\pagestyle{fancy}
+\fancyhf{}
+% Left Header: Current Chapter/Week
+\lhead{\sffamily\color{MagicTeal}\small \leftmark}
+% Right Header: Page Number
+\rhead{\sffamily\color{MagicTeal}\bfseries\thepage}
+\renewcommand{\headrulewidth}{0pt} 
+
+% Custom colorful header underline
+\newcommand{\colorrule}{%
+\hbox to\headwidth{%
+  \color{MagicPink}\leaders\hrule height 1.5pt\hskip .25\headwidth\hfill%
+  \color{MagicMint}\leaders\hrule height 1.5pt\hskip .25\headwidth\hfill%
+  \color{MagicPeach}\leaders\hrule height 1.5pt\hskip .25\headwidth\hfill%
+  \color{MagicBlue}\leaders\hrule height 1.5pt\hskip .25\headwidth\hfill%
+}}
+\renewcommand{\headrule}{\colorrule}
+
+%% === TITLE & SECTION STYLING ===
+
+% -- PART FORMAT --
+\titleformat{\part}[display]
+{\centering\sffamily\bfseries\color{MagicTeal}}
+{\Huge\color{MagicPink} \partname\ \thepart}
+{0pt}
+{\Huge}
+
+% -- CHAPTER FORMAT (Used for Weeks) --
+\titleformat{\chapter}[display]
+  {\sffamily\bfseries\color{MagicTeal}}
+  {\flushright\fontsize{40}{40}\selectfont\color{MagicPink!50}Week \thechapter} 
+  {-10pt}
+  {\Huge}
+  [\vspace{1ex}{\color{MagicMint}\titlerule[3pt]}] 
+
+% -- SECTION FORMAT --
+\titleformat{\section}
+  {\Large\sffamily\bfseries\color{MagicTeal}}
+  {\thesection}{1em}{}
+
+%% === BOXES (Theorems, etc.) ===
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, theorems}
+
+% 1. MAIN THEOREM (Pink)
+\newtcbtheorem[number within=chapter]{thm}{Theorem}{%
+    enhanced, breakable,
+    colframe=MagicPink, colback=MagicPink!10!MagicCream,
+    coltitle=MagicTeal!90!black, fonttitle=\bfseries\sffamily,
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={colback=MagicPink, frame hidden, arc=1mm},
+    separator sign={\ $\cdot$\ }, fontupper=\itshape
+}{thm}
+
+% 1b. LEMMA (Same Pink style as Theorem)
+\newtcbtheorem[use counter from=thm]{lem}{Lemma}{%
+    enhanced, breakable,
+    colframe=MagicPink, colback=MagicPink!10!MagicCream,
+    coltitle=MagicTeal!90!black, fonttitle=\bfseries\sffamily,
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={colback=MagicPink, frame hidden, arc=1mm},
+    separator sign={\ $\cdot$\ }, fontupper=\itshape
+}{lem}
+
+% 2. DEFINITION (Mint)
+\newtcbtheorem[number within=chapter]{defn}{Definition}{%
+    enhanced, breakable,
+    colframe=MagicMint!80!MagicTeal, colback=MagicMint!15!MagicCream,
+    coltitle=MagicTeal!90!black, fonttitle=\bfseries\sffamily,
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={colback=MagicMint, frame hidden, arc=1mm},
+    separator sign={\ $\cdot$\ },
+}{def}
+
+% 3. EXAMPLE/REMARK (Blue side bar)
+\newtcolorbox{example}[1][]{
+    blanker, breakable, left=1em,
+    borderline west={3pt}{0pt}{MagicBlue},
+    before upper={\textcolor{MagicBlue!80!black}{\sffamily\bfseries Example:}\space},
+    #1
+}
+
+% 4. PROOF (Clean Left-bar)
+\renewenvironment{proof}[1][\proofname]{%
+  \tcolorbox[blanker, breakable, left=1em,
+    before skip=1em, after skip=1em,
+    borderline west={2pt}{0pt}{MagicTeal!50},
+    colback=MagicCream,
+    before upper={\textcolor{MagicTeal}{\sffamily\bfseries #1.}\space}
+  ]%
+}{%
+  \hfill\textcolor{MagicTeal}{\ensuremath{\blacksquare}}\endtcolorbox%
+}
+
+% 5. REMARK (Peach, Light Background, Run-in Title)
+\newtcolorbox{remark}[1][]{
+    enhanced, 
+    breakable,
+    frame hidden,
+    colback=MagicPeach!15!MagicCream,
+    borderline west={3pt}{0pt}{MagicPeach},
+    coltitle=MagicTeal,
+    fonttitle=\bfseries\sffamily,
+    attach title to upper={\ },
+    title={Remark.},
+    after title={\ifstrempty{#1}{}{ \textbf{(#1)}}}, 
+    sharp corners,
+    left=1em, right=1em, top=1ex, bottom=1ex
+}
+
+
+% 5b. COROLLARY (Same Pink style)
+\newtcbtheorem[use counter from=thm]{cor}{Corollary}{%
+    enhanced, breakable,
+    colframe=MagicPink, colback=MagicPink!10!MagicCream,
+    coltitle=MagicTeal!90!black, fonttitle=\bfseries\sffamily,
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={colback=MagicPink, frame hidden, arc=1mm},
+    separator sign={\ $\cdot$\ }, fontupper=\itshape
+}{cor}
+
+% 6. EXERCISES (Final Polished Version)
+\newtcolorbox{exercises}{enhanced,breakable,colback=MagicTeal!5!MagicCream,colframe=MagicTeal!5!MagicCream,coltitle=MagicTeal,fonttitle=\bfseries\Large\sffamily,title={Exercises},sharp corners,boxrule=0pt,toptitle=1ex,bottomtitle=0.5ex,left=1.5em,right=1.5em,top=0.5em,bottom=1.5em,before skip=2em,after skip=2em}
+
+% 6b. NUMBERED EXERCISE ENVIRONMENT (for individual exercises)
+\newcounter{exercise}[chapter]
+\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
+\newenvironment{exercise}{%
+    \refstepcounter{exercise}%
+    \par\noindent\textbf{\sffamily\textcolor{MagicTeal}{Exercise \theexercise.}}\space
+}{\par\medskip}
+
+% 7. SOLUTION (Blue Left-bar, hollow square at end)
+\newenvironment{solution}[1][Solution]{%
+  \tcolorbox[blanker, breakable, left=1em,
+    before skip=1em, after skip=1em,
+    borderline west={2pt}{0pt}{MagicBlue},
+    colback=MagicCream,
+    before upper={\textcolor{MagicBlue}{\sffamily\bfseries #1.}\space}
+  ]%
+}{%
+  \hfill\textcolor{MagicBlue}{\ensuremath{\square}}\endtcolorbox%
+}
+
+%% === COVER PAGE MACRO ===
+\newcommand{\makeMagicCover}[2]{
+    \begin{titlepage}
+        \pagecolor{MagicTeal} 
+        \color{MagicCream}
+        \vspace*{2in}
+        \begin{center}
+            {\fontsize{50}{60}\selectfont \sffamily\bfseries #1} \\[1em]
+            {\fontsize{20}{25}\selectfont \sffamily #2} \\[3in]
+            {\color{MagicPink}\Huge $\bullet$} \quad 
+            {\color{MagicMint}\Huge $\bullet$} \quad 
+            {\color{MagicPeach}\Huge $\bullet$} \quad 
+            {\color{MagicBlue}\Huge $\bullet$}
+        \end{center}
+    \end{titlepage}
+    \pagecolor{MagicCream} 
+}
+
+
+% Limit TOC depth to Sections only (hides 1.1.1)
+\setcounter{tocdepth}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT CONTENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% --- COVER PAGE ---
+\makeMagicCover{Lecture Notes}{Damian Burgess}
+
+% --- TABLE OF CONTENTS ---
+{
+  \hypersetup{linkcolor=MagicTeal}
+  \tableofcontents
+}
+
+% =======================================================
+% PART I: MATH 61 - WEEKS 1-6
+% =======================================================
+\part{MATH 61CM: Course Notes}
+
+% ==================== WEEK 1 ====================
+\chapter{The Real Numbers}
+
+\section{Analysis: Mon/}
+
+\subsection{Introduction to $\mathbb{R}$}
+Real analysis is built on the structure of fields — specifically the real numbers $\mathbb{R}$.
+
+\begin{defn}{The Three Axioms for $\mathbb{R}$}{axioms_R}
+The real numbers are the \textbf{unique} field that satisfy all three of the following axioms:
+\begin{enumerate}
+    \item \textbf{Arithmetic:} Field axioms.
+    \item \textbf{Order:} Order axioms.
+    \item \textbf{No Holes:} Completeness axiom.
+\end{enumerate}
+\end{defn}
+
+\subsection{Field Axioms}
+\begin{defn}{Field}{field_def}
+A set combined with two binary operations $(\mathbb{F}, +, \cdot)$ is a \textbf{field} if it satisfies the following properties: 
+\begin{enumerate}
+    \item F1 (Commutativity): For all $a,b\in\mathbb{F}$, $$a+b=b+a\text{ and }ab=ba$$
+    \item F2 (Associativity): For all $a,b,c\in\mathbb{F}$, $$(a+b)+c=a+(b+c)\text{ and } (ab)c=a(bc)$$
+    \item F3 (Distributivity): For all $a,b,c\in\mathbb{F}$, $$a(b+c)=ab+ac$$
+    \item F4 (Identities Exist): There are special elements, $0,1\in\mathbb{F}$ s.t. $$a+0=0+a=a\text{ and }a\cdot1=a\text{ for all }a\in\mathbb{F}$$
+    \item F5 (Additive Inverse): For every $a\in\mathbb{F}$ there exists $-a$ s.t. $a+(-a)=0$
+    \item F6 (Multiplicative Inverse): For every $a\neq{0}$, there exists $a^{-1}$ s.t. $a\cdot{a^{-1}}=1$
+\end{enumerate}
+\end{defn}
+\begin{remark}
+    In F4, it is assumed that $1\neq{0}$. 
+\end{remark}
+\begin{remark}
+    A set combined with one binary operation that fulfills F1-F5 is called a commutative group, $(G,\circ)$. 
+\end{remark}
+
+\begin{lem}{Inverses are Unique}{inverses_unique}
+For all $a,b,c\in\mathbb{F}$, if $a+b=0$ and $a+c=0$, then $b=c$. 
+\end{lem}
+\begin{proof}
+    We start with $b=0+b$ (F4). This is equal to $b+0$ (F2) which is equal to $b+a+c$. Now we can use Associativity which states that $b+a+c=(b+a)+c\,(=a+b+c)$ (F1). $a+b=0$ so this is simply $0+c=c$ (F4). We have now proved our claim that $b=c$. 
+\end{proof}
+
+\begin{lem}{"Multiplying" by the zero element}{multiplicationbyzero}
+    For all $a\in{\mathbb{F}}, 0\cdot{a}=0$
+\end{lem}
+\begin{proof}
+    The idea behind this proof is quite simple. Note that $0\cdot{a}=(0+0)\cdot{a}=a\cdot(0+0)=a\cdot0+a\cdot0=0\cdot{a}+0\cdot{a}$. If we add $-(0\cdot{a})$ to both sides, we get that $0\cdot{a}-0\cdot{a}=0\cdot{a}+0\cdot{a}-0\cdot{a}$. This implies that $0=0\cdot{a}$
+\end{proof}
+\begin{lem}{The relationship between $-1$ and the additive inverse. }{-1andinverse}
+    For all $a\in{\mathbb{F}}, (-1)\cdot{a}=-a$
+\end{lem}
+\begin{proof}
+    Note that $a+(-1)\cdot{a}=1\cdot{a}+(-1)\cdot{a}=(1+(-1))\cdot{a}=0\cdot{a}$. Using lemma 1.2, we know that $0\cdot{a}=0$ which means that $a+(-1)\cdot{a}=0$. Since inverses are unique (lemma 1.1), we know that $(-1)\cdot{a}=-a$. 
+\end{proof}
+
+\subsection{Order Axioms}
+\begin{defn}{Order Axioms}{order_axioms}
+An ordered field has a positive set $\mathbb{P}$ satisfying:
+\begin{enumerate}
+    \item \textbf{Trichotomy:} For $a \in \mathbb{F}$, exactly one is true: $a=0$, $a \in \mathbb{P}$, $-a \in \mathbb{P}$.
+    \item \textbf{Closure:} $\mathbb{P}$ is closed under addition and multiplication.
+\end{enumerate}
+\end{defn}
+\begin{remark}
+    Here is some more common notation: 
+    \begin{enumerate}
+        \item Write $a>0$ for $a\in\mathbb{P}$
+        \item Write $a>b$ or $b<a$ if $a-b=a+(-b)>0$
+        \item Write $a\geq{b}$ or $b\leq{a}$ if $(a>b\text{ or }a=b)$
+    \end{enumerate}
+\end{remark}
+\begin{lem}{1>0}{1greaterthan0}
+    $1$ is greater than $0$
+\end{lem}
+\begin{proof}
+    Assume for the sake of contradiction that $1<0$ (We know that $1\neq0$ by definition). This implies that $(-1)>0$ by F4 and Trichotomy. By O2, $(-1)(-1)>0$. By Lemma 1.3, $(-1)(-1)=1$ and thus $1>0$ which contradicts our initial claim. Therefore $1>0$. 
+\end{proof}
+
+\subsection{Completeness}
+\begin{defn}{Completeness}{completeness}
+An ordered field $(F,+,\cdot)$is \textbf{complete} if any non-empty subset $S\subseteq\mathbb{F}$ bounded above has a \textbf{least upper bound} (supremum).
+\end{defn}
+\begin{remark}
+    For now, take $\mathbb{R}$ to be the ONLY complete ordered field.
+\end{remark}
+\begin{defn}{Bounds}{lowerandupperbound}
+    $S\subseteq\mathbb{F}$ is $\left\{\begin{array}{c}
+        \text{bdd above} \\
+        \text{bdd below}
+    \end{array}\right\}$ if $\exists\alpha\in\mathbb{F}$ s.t. $\left\{\begin{array}{c}
+        x\leq{\alpha} \\
+        x \geq \alpha 
+    \end{array}\right\}$, $\forall{x}\in\mathbb{F}$. \\ 
+    Such $\alpha$ is called a $\left\{\begin{array}{c}
+        \text{an upper bound} \\
+        \text{a lower bound}
+    \end{array}\right\}$
+\end{defn}
+\begin{remark}
+    $S\subseteq\mathbb{F}$ is bounded if it is bounded above and below. 
+\end{remark}
+\begin{defn}{Supremum}{Sup}
+    Let $S\subseteq{\mathbb{F}}$. $\beta\in\mathbb{F}$ is a least upper bound if the following both hold: \begin{enumerate}
+        \item $\beta$ is an upper bound of $S$
+        \item If $\alpha$ is an upper bound of $S$ then $\beta\leq\alpha$. Similarly for the greatest lower bound. 
+    \end{enumerate}
+    We denote the least upper bound as $\sup{S}$ and the greatest lower bound as $\inf{S}$. 
+\end{defn}
+\begin{remark}
+    $\sup{S}$ need not be in $S$. 
+\end{remark}
+\begin{defn}{$\mathbb{N,Q,Z}$}{natural,rational,integer}
+    \begin{enumerate}
+        \item The \textbf{natural numbers} are defined as $\mathbb{N}=\{1,1+1,1+1+1,...\}$
+        \item The \textbf{integers} are defined as $\mathbb{Z}=\mathbb{N}\cup\{0\}\cup\{-n:n\in\mathbb{N}\}\subseteq{\mathbb{R}}$ 
+        \item The \textbf{rational numbers} are defined as $\mathbb{Q}=\left\{\frac{a}{b}:a,b\in\mathbb{Z},b\neq{0}\right\}$
+    \end{enumerate}
+\end{defn}
+\begin{thm}{Archimedean Principle}{arch_principle}
+$\mathbb{N}$ is not bounded above. Equivalently, for any two positive real numbers $a,b\in\mathbb{R}$, there exists a natural number $n$ s.t. $a<n\cdot{b}$. 
+\end{thm}
+\begin{proof}
+    Assume for the sake of contradiction that $\mathbb{N}$ was bounded above. If it were, since $\mathbb{N}$ is a subset of $\mathbb{R}$, we know that there exists $\alpha=\sup{\mathbb{N}}$ because of completeness. $\alpha=\sup{\mathbb{N}}\implies{n\leq{\alpha}}\,\forall{n}\in\mathbb{N}\implies{n+1}\leq\alpha\implies{n\leq{\alpha-1}}$ which contradicts our assumption that $\alpha$ was the $\sup$. 
+\end{proof}
+
+\subsection{Sequences}
+\begin{defn}{Sequence}{sequence_def}
+    A \textbf{sequence} of real numbers is a map $\mathbb{N}\to\mathbb{R}$. We denote this by $\{a_n\}^\infty_{n=1}$, where $a_n=a(n)$
+\end{defn}
+\begin{defn}{Limit of a Sequence}{limit_def}
+Let $\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}$. We say $\{a_n\}_{n=1}^\infty$ has a limit $L\in\mathbb{R}$, written $\lim_{n\to\infty}a_n=L$ if for all $\varepsilon>0$, there exists $N\in\mathbb{N}$ s.t. $|a_n-L|<\varepsilon$ for all $n\geq{N}$. 
+\end{defn}
+\begin{remark}
+    We say $\{a_n\}^\infty_{n=1}\subseteq\mathbb{R}$ is $\left\{\begin{array}{c}\text{convergent if it has a limit}\\\text{divergent otherwise}\end{array}\right\}$
+\end{remark}
+
+\begin{thm}{Monotone Convergence}{monotone_conv}
+If $\{a_n\}$ is bounded above and increasing ($a_n\leq{a_{n+1}}$), it converges to $\sup \{a_n\}$.
+\end{thm}
+\begin{proof}
+    Let $\alpha=\sup{a_n}$, which we know exists because of the completeness property of the reals. Now we will prove there exists $a_j$ s.t. $\alpha>a_j>\alpha-\frac{1}{j}$. If such $a_j$ didn't exist, then $\alpha-\frac{1}{j}$ would be the supremum, which is a contradiction. Therefore such $a_j$ exists. Since $\alpha-\frac{1}{j}<a_j<\alpha$, we know that $|\alpha-a_j|<|\alpha-\frac{1}{j}|$. For all $\varepsilon>0$, we know there exists $\frac{1}{J}$ s.t. $\frac{1}{J}<\varepsilon$ due to the Archimedean property of the real numbers. This means that for all $j\geq{J}$ (or $\frac{1}{j}<\frac{1}{J}$), $|a_j-\alpha|\leq\frac{1}{j}\leq\frac{1}{J}<\varepsilon$
+\end{proof}
+
+\section{Linear Algebra: Thu/Fri}
+
+\subsection{Vector Spaces}
+
+\begin{defn}{Vector Space}{vector_space}
+A \textbf{vector space} $V$ over a field $\mathbb{F}$ is a non-empty set of vectors with two operations:
+\begin{align*}
++&: V \times V \to V \\
+\cdot&: \mathbb{F} \times V \to V
+\end{align*}
+such that:
+\begin{enumerate}
+    \item $(V, +)$ forms a commutative group:
+    \begin{itemize}
+        \item[(A1)] $\forall v_1, v_2, v_3$: $(v_1 + v_2) + v_3 = v_1 + (v_2 + v_3)$
+        \item[(A2)] $\exists$ zero vector $\vec{0}$: $v + \vec{0} = v$
+        \item[(A3)] $\forall v$, $\exists (-v)$ s.t. $v + (-v) = \vec{0}$
+        \item[(A4)] $v + w = w + v$
+    \end{itemize}
+    \item $\forall v \in V$: $1 \cdot v = v$
+    \item $(\alpha \beta) \cdot v = \alpha \cdot (\beta \cdot v)$
+    \item Distributive laws: $(\alpha + \beta) \cdot v = \alpha \cdot v + \beta \cdot v$ and $\alpha \cdot (v + w) = \alpha \cdot v + \alpha \cdot w$
+\end{enumerate}
+\end{defn}
+
+\begin{lem}{Zero Times Anything}{zero_times}
+$0 \cdot v = \vec{0}$ for all $v \in V$. (Same proof as in $\mathbb{F}$!)
+\end{lem}
+
+\begin{example}
+\begin{enumerate}
+    \item $\mathbb{F}^n = \{(x_1, \ldots, x_n) : x_i \in \mathbb{F}\}$ with componentwise operations.
+    \item $\mathbb{F}^S$ = space of functions from $S \to \mathbb{F}$, with $(f+g)(x) = f(x) + g(x)$ and $(\alpha \cdot f)(x) = \alpha \cdot f(x)$.
+    \item $P(\mathbb{R})$ = vector space of polynomials over $\mathbb{R}$.
+\end{enumerate}
+\end{example}
+
+\subsection{Subspaces}
+
+\begin{defn}{Subspace}{subspace}
+$W$ is a \textbf{subspace} of $V$ if $W \subseteq V$ with the same operations and field, which forms a vector space on its own. I.e., $W$ is closed under the operations.
+\end{defn}
+
+\begin{lem}{Subspace Test}{subspace_test}
+A subset $W$ of a vector space $V$ forms a subspace iff $\forall \alpha, \beta \in \mathbb{F}$, $\forall v, w \in W$: $\alpha v + \beta w \in W$.
+\end{lem}
+
+\begin{example}
+Is $W = \{(x,y) : 2x - y + 3 = 0\}$ a subspace? \textbf{No}, because $W$ doesn't contain $\vec{0}$.
+
+Is $W = \{(x,y,z) : 5x - 2y + 5z = 0\}$ a subspace? \textbf{Yes}, because for any two solutions, their linear combination is also a solution.
+\end{example}
+
+\subsection{Span and Linear Independence}
+
+\begin{defn}{Span}{span_def}
+The \textbf{span} of vectors $v_1, \ldots, v_n \in V$ is
+\[\text{span}(v_1, \ldots, v_n) = \left\{\sum_{i=1}^n \alpha_i v_i : \alpha_1, \ldots, \alpha_n \in \mathbb{F}\right\}\]
+This is the set of all linear combinations.
+\end{defn}
+
+\begin{lem}{Span is a Subspace}{span_subspace}
+Any set of vectors $v_1, \ldots, v_n$: $\text{span}(v_1, \ldots, v_n)$ is a subspace of $V$.
+\end{lem}
+
+\begin{defn}{Linear Independence}{lin_indep}
+Vectors $v_1, \ldots, v_n \in V$ are \textbf{linearly independent} if the only linear combination $c_1 v_1 + c_2 v_2 + \cdots + c_n v_n = \vec{0}$ is the ``trivial'' one where $c_1 = \cdots = c_n = 0$.
+
+Conversely, we call $v_1, \ldots, v_n$ \textbf{linearly dependent} if $\exists c_1, \ldots, c_n \in \mathbb{F}$, at least one nonzero, s.t. $c_1 v_1 + \cdots + c_n v_n = \vec{0}$.
+\end{defn}
+
+\begin{lem}{Dependence Means Redundancy}{dep_redundancy}
+$v_1, \ldots, v_n \in V$ are linearly dependent iff $\exists k \in \{1, \ldots, n\}$ such that $v_k = c_1 v_1 + \cdots + c_{k-1} v_{k-1}$ for some $c_1, \ldots, c_{k-1} \in \mathbb{F}$.
+\end{lem}
+
+\begin{proof}
+$(\Leftarrow)$: Rearrange $v_k = c_1 v_1 + \cdots + c_{k-1} v_{k-1}$ to get $c_1 v_1 + \cdots + c_{k-1} v_{k-1} + (-1) v_k + 0 \cdot v_{k+1} + \cdots + 0 \cdot v_n = \vec{0}$.
+
+$(\Rightarrow)$: $c_1 v_1 + \cdots + c_n v_n = \vec{0}$ with not all zero. Consider the maximum $k$ s.t. $c_k \neq 0$. Then $c_k v_k = -c_1 v_1 - \cdots - c_{k-1} v_{k-1}$, so $v_k = -\frac{c_1}{c_k} v_1 - \cdots - \frac{c_{k-1}}{c_k} v_{k-1}$.
+\end{proof}
+
+\begin{exercises}
+\begin{enumerate}
+    \item \textbf{(1.1)} Using only the field axioms (F1--F6), prove: (i) $a > 0 \Rightarrow -a < 0$, (ii) $a > 0 \Rightarrow \frac{1}{a} > 0$, (iii) $a > b > 0 \Rightarrow \frac{1}{a} < \frac{1}{b}$.
+    
+    \item \textbf{(1.2)} If $S \subset \mathbb{R}$ is nonempty and bounded above, prove there exists a sequence $\{a_n\} \subset S$ with $\lim a_n = \sup S$.
+    
+    \item \textbf{(1.3)} Prove that every positive real number has a positive square root. \textit{Hint: Consider $S = \{x : x^2 < a, x > 0\}$.}
+    
+    \item \textbf{(1.4)} Let $\mathbb{Z}_2 = \{0, 1\}$ with $1 + 1 = 0$. Show that $\mathbb{Z}_2$ is a field but cannot be ordered.
+    
+    \item \textbf{(1.5)} Use the Archimedean property to prove that $\lim \frac{1}{n} = 0$.
+    
+    \item \textbf{(1.6)} Decide whether each is a subspace of $\mathbb{R}^3$: (a) $\{(x_1,x_2,x_3) : x_1 + x_2 + x_3 = 0\}$, (b) $\{(x_1,x_2,x_3) : x_1 + x_2 + x_3 = 1\}$.
+    
+    \item \textbf{(1.7)} If $v_1, v_2, v_3, v_4$ are linearly independent, are $v_1 - v_2, v_2 - v_3, v_3 - v_4, v_4 - v_1$ linearly independent?
+    
+    \item \textbf{(1.8)} Prove that for subspaces $U_1, U_2 \subset V$, $U_1 \cup U_2$ is a subspace iff $U_1 \subseteq U_2$ or $U_2 \subseteq U_1$.
+\end{enumerate}
+\end{exercises}
+
+% ==================== WEEK 2 ====================
+\chapter{Subsequences and Continuity}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Subsequences and Bolzano-Weierstrass}
+
+\begin{thm}{Convergent $\implies$ bounded}{convergent->bounded}
+    If $\{a_n\}_{n=1}^\infty\subseteq\mathbb{R}$ is a convergent sequence then $\{a_n\}_{n=1}^\infty$ is bounded. 
+\end{thm}
+\begin{proof}
+    We WTS there exists $c>0$ s.t. $|a_n|<c$ for all $n\geq{N}$. Using the definition of convergence with $\varepsilon=1$, we know that there exists $L\in\mathbb{R}$ and $N\in{\mathbb{N}}$ s.t. $|a_n-L|<1$ for all $n>N$. Hence, $a_n\leq\max\{|L|+1,|a_1|,...,|a_N|\}=c$. 
+\end{proof}
+\begin{remark}
+    The concept of the subsequence is very important in real analysis. Before we get to them, consider the sequence $-1,1,-1,1,-1,...$ that is bounded but not convergent. Observe that if we remove a lot of terms, the resulting sequence is convergent. (It becomes $1,1,1,...$ or $-1,-1,-1,...$)
+\end{remark}
+
+
+\begin{defn}{Subsequence}{subseq}
+If $\{a_n\}^\infty_{n=1}$ is a subsequence, $\{a_{f(k)}\}^\infty_{k=1}$ if a subsequence of $a_n$ if $f:\mathbb{N}\to\mathbb{N}$ is strictly increasing ($f(k)<f(k+1))$. 
+\end{defn}
+\begin{remark}
+    Common notation for a subsequence is $\{a_{n(k)}\}^\infty_{n=1}$ or $\{a_{n_k}\}_{k=1}^\infty$
+\end{remark}
+
+\begin{thm}{Bolzano-Weierstrass}{bw_thm}
+Any bounded sequence in $\mathbb{R}$ has a convergent subsequence.
+\end{thm}
+
+\begin{proof}[Sketch]
+Divide the bounding interval $[c,d]$ in half repeatedly. Choose the half containing infinitely many terms. This creates nested intervals converging to a point $L$. For an in-depth proof of Bolzano-Weierstrass, visit \url{https://personal.math.ubc.ca/~feldman/m320/bolzano.pdf}
+\end{proof}
+
+\subsection{Continuity}
+\begin{defn}{Continuity}{continuous_func}
+$f: [a,b] \to \mathbb{R}$ is \textbf{continuous} at $c$ if:
+\[ \lim_{x \to c} f(x) = f(c) \]
+Equivalently (Sequential Criterion), for any sequence $x_n \to c$, $f(x_n) \to f(c)$.
+\end{defn}
+
+\begin{thm}{Extreme Value Theorem (EVT)}{evt}
+If $f$ is continuous on a closed interval $[a,b]$, then $f$ is bounded and achieves its maximum and minimum.
+\end{thm}
+
+\begin{thm}{Intermediate Value Theorem (IVT)}{ivt}
+If $f$ is continuous on $[a,b]$ and $A$ lies between $f(a)$ and $f(b)$, then there exists $c \in [a,b]$ such that $f(c) = A$.
+\end{thm}
+
+\section{Linear Algebra: Thu/Fri}
+
+\subsection{Basis and Dimension}
+
+\begin{lem}{Replacement Lemma}{replacement}
+If $W = \text{span}(v_1, \ldots, v_n)$ and $w_1, \ldots, w_k \in W$ are linearly independent, then we can replace $k$ of the $v_i$'s with the $w_i$'s while preserving $\text{span}(\cdots) = W$.
+\end{lem}
+
+\begin{proof}[Sketch]
+We start with $(v_1, \ldots, v_n)$ and replace them one by one with $w_1, \ldots, w_k$, preserving that $\text{span}(\cdots) = W$.
+
+Since $w_1 \in W$, we have $w_1 = c_1 v_1 + \cdots + c_n v_n$. There is some $v_j$ which is a linear combination of the others (including $w_1$), so we can replace $v_j$ with $w_1$ and keep the same span. Repeat.
+\end{proof}
+
+\begin{lem}{Bound on Independent Vectors}{bound_indep}
+If $V = \text{span}(v_1, \ldots, v_n)$ and $w_1, \ldots, w_k \in V$ are linearly independent, then $k \leq n$.
+\end{lem}
+
+\begin{proof}
+Assume not. By the replacement lemma, $V = \text{span}(w_1, \ldots, w_n)$. Then $w_{n+1} \in V = \text{span}(w_1, \ldots, w_n)$, so $\{w_1, \ldots, w_n, w_{n+1}\}$ is linearly dependent, contradicting independence of $w_1, \ldots, w_k$.
+\end{proof}
+
+\begin{defn}{Basis}{basis_def}
+$\{v_1, \ldots, v_n\} \subseteq V$ is called a \textbf{basis} of $V$ if:
+\begin{enumerate}
+    \item[(B1)] $\text{span}(v_1, \ldots, v_n) = V$
+    \item[(B2)] $\{v_1, \ldots, v_n\}$ is linearly independent
+\end{enumerate}
+\end{defn}
+
+\begin{example}
+$\{e_1, e_2, e_3\}$ is a basis for $\mathbb{R}^3$, where $e_1 = (1,0,0)$, $e_2 = (0,1,0)$, $e_3 = (0,0,1)$.
+\end{example}
+
+\begin{lem}{Unique Coordinates}{unique_coords}
+If $\{v_1, \ldots, v_n\}$ is a basis, then any $v \in V$ can be written \textbf{uniquely} as $v = \sum_{i=1}^n \alpha_i v_i$.
+\end{lem}
+
+\begin{proof}
+That any $v$ can be written this way follows from (B1). For uniqueness, suppose $v = \sum \alpha_i v_i = \sum \beta_i v_i$. Then $\sum(\alpha_i - \beta_i) v_i = \vec{0}$. By (B2), $\alpha_i - \beta_i = 0$ for all $i$, so $\alpha_i = \beta_i$.
+\end{proof}
+
+\begin{defn}{Dimension}{dimension_def}
+Any two bases of a vector space $V$ have the same number of elements. We call this number the \textbf{dimension} of $V$, written $\dim V$.
+\end{defn}
+
+\begin{proof}[Proof that dimension is well-defined]
+Suppose $\{v_1, \ldots, v_n\}$ and $\{w_1, \ldots, w_m\}$ are both bases. Whichever is larger would give linearly independent vectors in the span of the smaller, contradicting the bound lemma.
+\end{proof}
+
+\subsection{Inner Products}
+
+\begin{defn}{Dot Product}{dot_product}
+For $v, w \in \mathbb{R}^n$ with $v = (v_1, \ldots, v_n)$ and $w = (w_1, \ldots, w_n)$, define
+\[v \cdot w = \sum_{i=1}^n v_i w_i\]
+We say $v$ is \textbf{orthogonal} to $w$ (write $v \perp w$) if $v \cdot w = 0$.
+\end{defn}
+
+\begin{thm}{Properties of Dot Product}{dot_props}
+\begin{enumerate}
+    \item $v \cdot w = w \cdot v$
+    \item $(\alpha v + \beta w) \cdot u = \alpha(v \cdot u) + \beta(w \cdot u)$
+    \item $v \cdot v \geq 0$, with equality iff $v = \vec{0}$
+\end{enumerate}
+\end{thm}
+
+\begin{defn}{Norm}{norm_def}
+Given $v \in \mathbb{R}^n$, define $\|v\| = \sqrt{v \cdot v}$.
+\end{defn}
+
+\begin{thm}{Pythagorean Theorem}{pythag}
+If $v \cdot w = 0$, then $\|v\|^2 + \|w\|^2 = \|v + w\|^2$.
+\end{thm}
+
+\begin{proof}
+$\|v + w\|^2 = (v + w) \cdot (v + w) = v \cdot v + 2(v \cdot w) + w \cdot w = \|v\|^2 + \|w\|^2$.
+\end{proof}
+
+\begin{thm}{Cauchy-Schwarz Inequality}{cauchy_schwarz}
+$|v \cdot w| \leq \|v\| \|w\|$ for all $v, w \in \mathbb{R}^n$.
+\end{thm}
+
+\begin{proof}
+If $w = 0$, both sides are 0. Assume $w \neq 0$.
+
+Decompose $v = v_\parallel + v_\perp$ where $v_\parallel = \alpha w$ for some $\alpha$ and $v_\perp \cdot w = 0$.
+
+From $v \cdot w = (v_\parallel + v_\perp) \cdot w = \alpha w \cdot w = \alpha \|w\|^2$, we get $\alpha = \frac{v \cdot w}{\|w\|^2}$.
+
+By Pythagorean theorem: $\|v\|^2 = \|v_\parallel\|^2 + \|v_\perp\|^2 \geq \|v_\parallel\|^2 = \frac{(v \cdot w)^2}{\|w\|^2}$.
+
+Hence $(v \cdot w)^2 \leq \|v\|^2 \|w\|^2$.
+\end{proof}
+
+\begin{thm}{Triangle Inequality}{triangle_ineq}
+$\|v + w\| \leq \|v\| + \|w\|$.
+\end{thm}
+
+\begin{exercises}
+\begin{enumerate}
+    \item \textbf{(2.1)} (\textit{Sandwich Theorem}) If $\lim a_n = \lim b_n = L$ and $a_n \leq c_n \leq b_n$ for all $n$, prove $\lim c_n = L$.
+    
+    \item \textbf{(2.2)} (\textit{Heine-Borel}) Let $\mathcal{F}$ be a collection of open intervals covering $[a,b]$. Prove there is a finite subcollection that still covers $[a,b]$.
+    
+    \item \textbf{(2.3)} If $\lim f(x_n) = f(c)$ for every sequence $\{x_n\} \to c$, prove $f$ is continuous at $c$.
+    
+    \item \textbf{(2.4)} Let $f(x) = 0$ if $x$ is irrational, and $f(p/q) = 1/q$ for $p/q$ in lowest terms. Prove $f$ is continuous at every irrational.
+    
+    \item \textbf{(2.5)} Let $V$ be finite-dimensional and $U \subseteq V$ a subspace. Prove $U = V$ iff $\dim U = \dim V$.
+    
+    \item \textbf{(2.6)} If $\dim U + \dim W > \dim V$ for subspaces $U, W \subseteq V$, prove $U \cap W \neq \{0\}$.
+    
+    \item \textbf{(2.7)} Find a basis for $V = \{p \in \mathcal{P}_4(\mathbb{R}) : p(1) = 0\}$ and extend it to a basis of $\mathcal{P}_4(\mathbb{R})$.
+    
+    \item \textbf{(2.8)} If $\{v_1, \ldots, v_m\}$ is linearly independent and $w \in V$, prove $\dim(\text{span}\{v_1+w, \ldots, v_m+w\}) \geq m-1$.
+\end{enumerate}
+\end{exercises}
+
+
+% ==================== WEEK 3 ====================
+\chapter{Differentiation and Topology}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Differentiable Functions in $\mathbb{R}$}
+
+\begin{defn}{Differentiability}{diff_R}
+Given $f:[a,b]\to\mathbb{R}$, $c\in[a,b]$, we say $f$ is \textbf{differentiable} at $c$ if 
+\[\lim_{h\to0}\frac{f(c+h)-f(c)}{h}\]
+exists. We denote the limit, if it exists, by $f'(c)$ or $\frac{df}{dx}(c)$.
+\end{defn}
+
+\begin{remark}
+Some basic derivative laws:
+\begin{enumerate}
+    \item If $f,g$ are differentiable at $c$, then $\alpha f + \beta g$ is differentiable at $c$ with $(\alpha f + \beta g)'(c) = \alpha f'(c) + \beta g'(c)$.
+    \item If $f:[a,b]\to\mathbb{R}$ is constant, then $f'(c) = 0$ for all $c \in (a,b)$.
+    \item If $f(x) = x$, then $f'(c) = 1$ for all $c \in (a,b)$.
+\end{enumerate}
+\end{remark}
+
+\begin{thm}{Mean Value Theorem}{mvt}
+Let $f:[a,b]\to\mathbb{R}$ be continuous on $[a,b]$ and differentiable on $(a,b)$. Then there exists $c \in (a,b)$ such that
+\[f'(c) = \frac{f(b) - f(a)}{b - a}\]
+\end{thm}
+
+\begin{thm}{Rolle's Theorem}{rolle}
+Let $f:[a,b]\to\mathbb{R}$ be continuous on $[a,b]$ and differentiable on $(a,b)$. Suppose $f(a) = 0 = f(b)$. Then there exists $c \in (a,b)$ such that $f'(c) = 0$.
+\end{thm}
+
+\begin{proof}
+We first prove Rolle's theorem and use it to prove MVT.
+
+If $f$ is constant, then $f'(c) = 0$ and we are done. Otherwise, either $\exists x_0 \in (a,b)$ with $f(x_0) > 0$ or $\exists x_0 \in (a,b)$ with $f(x_0) < 0$.
+
+In the former case, there exists $c \in [a,b]$ such that $f(x) \leq f(c)$ for all $x \in [a,b]$. Since $f(c) \geq f(x_0) > 0$, we know $c \in (a,b)$.
+
+\textbf{Claim:} $f'(c) = 0$.
+
+We know $f'(c) = \lim_{x \to c} \frac{f(x) - f(c)}{x - c}$.
+
+Take $\{x_n\}$ with $\lim x_n = c$ and $c < x_n < b$. Then 
+\[f'(c) = \lim_{n\to\infty} \frac{f(x_n) - f(c)}{x_n - c} \leq 0\]
+since the numerator is $\leq 0$ and denominator is $> 0$.
+
+On the other hand, take $\{x_n\}$ with $\lim x_n = c$ and $a < x_n < c$. Then
+\[f'(c) = \lim_{n\to\infty} \frac{f(x_n) - f(c)}{x_n - c} \geq 0\]
+since both numerator and denominator are $\leq 0$.
+
+Hence $f'(c) = 0$.
+
+\textbf{MVT from Rolle's:} Given $f$, define $g:[a,b]\to\mathbb{R}$ by
+\[g(x) = f(x) - f(a) - \frac{f(b) - f(a)}{b - a}(x - a)\]
+
+Note that $g(a) = 0$ and $g(b) = 0$. By Rolle's theorem, there exists $c \in (a,b)$ such that
+\[0 = g'(c) = f'(c) - \frac{f(b) - f(a)}{b - a}\]
+which gives $f'(c) = \frac{f(b) - f(a)}{b - a}$.
+\end{proof}
+
+\subsection{Sequences in $\mathbb{R}^n$}
+
+\begin{defn}{Sequence in $\mathbb{R}^n$}{seq_Rn}
+A sequence in $\mathbb{R}^n$ is a map $\mathbb{N} \to \mathbb{R}^n$. We denote by $\{a^{(k)}\}_{k=1}^\infty$, where $a^{(k)} = (a_1^{(k)}, \ldots, a_n^{(k)})$.
+\end{defn}
+
+\begin{defn}{Limit in $\mathbb{R}^n$}{limit_Rn}
+Given $\{a^{(k)}\}_{k=1}^\infty \subseteq \mathbb{R}^n$ and $a \in \mathbb{R}^n$, we say $\lim_{k\to\infty} a^{(k)} = a$ if for all $\varepsilon > 0$, there exists $\mathcal{K} \in \mathbb{N}$ such that $\|a^{(k)} - a\| < \varepsilon$ whenever $k \geq \mathcal{K}$.
+
+Here $\|b\| = \sqrt{b \cdot b} = \sqrt{\sum_{i=1}^n b_i^2}$.
+\end{defn}
+
+\begin{lem}{Component-wise Convergence}{componentwise}
+$\{a^{(k)}\}_{k=1}^\infty \subseteq \mathbb{R}^n$, $a \in \mathbb{R}^n$. Then $\lim a^{(k)} = a$ if and only if $\lim a_i^{(k)} = a_i$ for all $i = 1, \ldots, n$.
+\end{lem}
+
+\begin{proof}
+$(\Leftarrow)$: Let $\varepsilon > 0$. Since $\lim a_i^{(k)} = a_i$ for every $i$, there exists $\mathcal{K}_i \in \mathbb{N}$ such that $|a_i^{(k)} - a_i| < \frac{\varepsilon}{\sqrt{n}}$ whenever $k \geq \mathcal{K}_i$.
+
+Let $\mathcal{K} = \max\{\mathcal{K}_1, \ldots, \mathcal{K}_n\}$. Then
+\[\|a^{(k)} - a\| = \left(\sum_{i=1}^n |a_i^{(k)} - a_i|^2\right)^{1/2} < \left(\sum_{i=1}^n \frac{\varepsilon^2}{n}\right)^{1/2} = \varepsilon\]
+
+$(\Rightarrow)$: Exercise.
+\end{proof}
+
+\begin{defn}{Bounded Set}{bounded_Rn}
+$S \subseteq \mathbb{R}^n$ is \textbf{bounded} if there exists $c > 0$ such that $\|x\| < c$ for all $x \in S$.
+\end{defn}
+
+\begin{thm}{Bolzano-Weierstrass in $\mathbb{R}^n$}{bw_Rn}
+Any bounded sequence in $\mathbb{R}^n$ has a convergent subsequence.
+\end{thm}
+
+\begin{proof}[Sketch]
+Prove by induction on $n$. The base case was proven in Week 1. Assume the result up to dimension $n-1$.
+
+Let $\{a^{(k)}\}_{k=1}^\infty \subseteq \mathbb{R}^n$. Write $a^{(k)} = (a^{1(k)}, a_n^{(k)})$ where $a^{1(k)} = (a_1^{(k)}, \ldots, a_{n-1}^{(k)})$.
+
+By induction, there exists a subsequence $\{a^{(k_j)}\}$ such that $\lim_{j\to\infty} a^{1(k_j)}$ exists.
+
+By BW in $\mathbb{R}$, there exists a further subsequence $\{a_n^{(k_{j_\ell})}\}$ such that $\lim_{\ell\to\infty} a_n^{(k_{j_\ell})}$ exists.
+
+Then $\{a^{(k_{j_\ell})}\}_{\ell=1}^\infty \subseteq \mathbb{R}^n$ is convergent.
+\end{proof}
+
+\subsection{Open and Closed Sets}
+
+\begin{defn}{Ball}{ball_def}
+For $x \in \mathbb{R}^n$ and $\rho > 0$, define $B_\rho(x) = \{y \in \mathbb{R}^n : \|x - y\| < \rho\}$.
+\end{defn}
+
+\begin{defn}{Open Set}{open_def}
+$U \subseteq \mathbb{R}^n$ is \textbf{open} if for all $x \in U$, there exists $\rho > 0$ such that $B_\rho(x) \subseteq U$.
+\end{defn}
+
+\begin{defn}{Limit Point}{limit_point}
+$A \subseteq \mathbb{R}^n$. We say $b \in \mathbb{R}^n$ is a \textbf{limit point} of $A$ if there exists $\{a^{(k)}\}_{k=1}^\infty$ with $a^{(k)} \in A$ such that $b = \lim_{k\to\infty} a^{(k)}$.
+\end{defn}
+
+\begin{defn}{Closed Set}{closed_def}
+$K \subseteq \mathbb{R}^n$ is \textbf{closed} if it contains all its limit points.
+\end{defn}
+
+\begin{remark}
+A set can be both open and closed (e.g., $\mathbb{R}^n$ and $\varnothing$), or neither (e.g., $(a,b]$).
+\end{remark}
+
+\begin{thm}{Union of Open Sets}{union_open}
+If $\{U_\alpha\}_{\alpha \in \Gamma}$ is a collection of open sets in $\mathbb{R}^n$, then $\bigcup_{\alpha \in \Gamma} U_\alpha$ is open.
+
+If $\{K_\alpha\}_{\alpha \in \Gamma}$ is a collection of closed sets, then $\bigcap_{\alpha \in \Gamma} K_\alpha$ is closed.
+\end{thm}
+
+\begin{proof}
+Let $x \in \bigcup_{\alpha \in \Gamma} U_\alpha$. Then there exists $\alpha_0 \in \Gamma$ such that $x \in U_{\alpha_0}$.
+
+Since $U_{\alpha_0}$ is open, there exists $\rho > 0$ such that $B_\rho(x) \subseteq U_{\alpha_0} \subseteq \bigcup_{\alpha \in \Gamma} U_\alpha$.
+\end{proof}
+
+\begin{thm}{Open-Closed Duality}{open_closed_dual}
+$U \subseteq \mathbb{R}^n$ is open if and only if $\mathbb{R}^n \setminus U$ is closed.
+\end{thm}
+
+\begin{proof}
+$(\Rightarrow)$: Let $U$ be open and let $z \in \mathbb{R}^n$ be a limit point of $\mathbb{R}^n \setminus U$. We want to show $z \notin U$.
+
+If $z \in U$, there exists $\rho > 0$ such that $B_\rho(z) \subseteq U$. But since $z$ is a limit point of $\mathbb{R}^n \setminus U$, there exists $y \in \mathbb{R}^n \setminus U$ with $\|y - z\| < \rho$. Hence $y \in B_\rho(z) \subseteq U$ and $y \in \mathbb{R}^n \setminus U$, contradiction.
+
+$(\Leftarrow)$: Prove the contrapositive. If $U$ is not open, then $\exists x \in U$ such that for all $\rho > 0$, there exists $y_\rho \in B_\rho(x)$ with $y_\rho \in \mathbb{R}^n \setminus U$. Taking $\rho = 1/j$, we get a sequence converging to $x$, so $x$ is a limit point of $\mathbb{R}^n \setminus U$ but $x \in U$, hence $\mathbb{R}^n \setminus U$ is not closed.
+\end{proof}
+
+\begin{defn}{Compact Set}{compact_def}
+$K \subseteq \mathbb{R}^n$ is \textbf{compact} if for all sequences $\{a^{(k)}\}_{k=1}^\infty \subseteq K$, there exists a subsequence $\{a^{(k_j)}\}$ and $a \in K$ such that $\lim_{j\to\infty} a^{(k_j)} = a$.
+\end{defn}
+
+\begin{remark}
+In $\mathbb{R}^n$: closed + bounded $\Leftrightarrow$ compact.
+\end{remark}
+
+\section{Linear Algebra: Thu/Fri}
+
+\subsection{Linear Maps}
+
+\begin{defn}{Linear Map}{linear_map}
+A function $T: V \to W$ (over field $\mathbb{F}$) is a \textbf{linear map} if
+\[T(\alpha x + \beta y) = \alpha T(x) + \beta T(y)\]
+for all $\alpha, \beta \in \mathbb{F}$ and $x, y \in V$.
+\end{defn}
+
+\begin{remark}
+$T(0) = 0$ always!
+\end{remark}
+
+\begin{example}
+\begin{enumerate}
+    \item $T: \mathbb{R}^2 \to \mathbb{R}^2$ given by $T(x_1, x_2) = (x_1, x_1 x_2)$ is NOT linear.
+    \item $T(x_1, x_2) = (x_1, \lambda x_2)$ for fixed $\lambda \in \mathbb{R}$ IS linear.
+    \item Rotation: $(x_1, x_2) \mapsto (x_1 \cos\theta - x_2 \sin\theta, x_1 \sin\theta + x_2 \cos\theta)$ is linear.
+\end{enumerate}
+\end{example}
+
+\subsection{Matrix Representation}
+
+Fix a basis $\{v_1, \ldots, v_n\}$ of $V$ and $\{w_1, \ldots, w_m\}$ of $W$.
+
+How does $T$ act on the basis vectors? Write
+\[T(v_j) = a_{1j} w_1 + a_{2j} w_2 + \cdots + a_{mj} w_m\]
+
+For any vector $x \in V$ with $x = \xi_1 v_1 + \cdots + \xi_n v_n$:
+\begin{align*}
+T(x) &= \xi_1 T(v_1) + \cdots + \xi_n T(v_n) \\
+&= (a_{11}\xi_1 + \cdots + a_{1n}\xi_n) w_1 + \cdots + (a_{m1}\xi_1 + \cdots + a_{mn}\xi_n) w_m
+\end{align*}
+
+\begin{defn}{Matrix of a Linear Map}{matrix_of_map}
+Given a linear map $T: V \to W$ with $T(v_j) = \sum_i a_{ij} w_i$, the \textbf{matrix of $T$} under these bases is
+\[A = (a_{ij}) \in \mathbb{F}^{m \times n}\]
+with $n$ columns ($= \dim V$) and $m$ rows ($= \dim W$).
+\end{defn}
+
+\begin{defn}{Linear Operator}{linear_operator}
+A linear map from $V$ to $V$ is called a \textbf{linear operator} on $V$. Its matrix is square ($n \times n$).
+\end{defn}
+
+\subsection{Composition and Matrix Multiplication}
+
+Given $T_1: V_1 \to V_2$ and $T_2: V_2 \to V_3$, define $T_2 \circ T_1: V_1 \to V_3$ by $(T_2 \circ T_1)(x) = T_2(T_1(x))$.
+
+If $A$ is the matrix for $T_1$ and $B$ is the matrix for $T_2$, then the matrix for $T_2 \circ T_1$ is $C = B \cdot A$ where
+\[c_{ik} = \sum_j b_{ij} a_{jk} = (\text{$i$th row of $B$}) \cdot (\text{$k$th column of $A$})\]
+
+\begin{remark}
+Matrix multiplication is associative: $A(BC) = (AB)C$, but NOT commutative: $AB \neq BA$ in general.
+\end{remark}
+
+\begin{exercises}
+\begin{enumerate}
+    \item \textbf{(3.1)} Prove that a continuous function $f: [a,b] \to \mathbb{R}$ is uniformly continuous.
+    
+    \item \textbf{(3.2)} Show that $f(x) = 1/x$ on $(0,1)$ is \textit{not} uniformly continuous.
+    
+    \item \textbf{(3.3)} (\textit{Cauchy criterion}) Prove that $\{a_n\}$ converges iff $\forall \varepsilon > 0$, $\exists N$ s.t. $|a_m - a_n| < \varepsilon$ for $m, n \geq N$.
+    
+    \item \textbf{(3.4)} Prove: $E \subseteq A$ is relatively open in $A$ iff $\exists$ open $U \subseteq \mathbb{R}^n$ with $E = A \cap U$.
+    
+    \item \textbf{(3.5)} Prove the identity $\frac{1}{2}\sum_{i,j}(a_i b_j - a_j b_i)^2 = \|a\|^2\|b\|^2 - (a \cdot b)^2$ and use it to prove Cauchy-Schwarz.
+    
+    \item \textbf{(3.6)} Prove that equality holds in the triangle inequality iff $y = \lambda x$ for some $\lambda \geq 0$ (or one is zero).
+    
+    \item \textbf{(3.7)} Prove $(AB)^T = B^T A^T$ directly from the definition of matrix multiplication.
+    
+    \item \textbf{(3.8)} Find the matrix of rotation by angle $\theta$ in $\mathbb{R}^2$. What is the matrix for reflection across $y = x$?
+\end{enumerate}
+\end{exercises}
+
+% ==================== WEEK 4 ====================
+\chapter{Continuity and Metric Spaces}
+
+\section{Linear Algebra: Thu/Fri (continued from Week 3)}
+
+\subsection{Kernel and Range}
+
+\begin{defn}{Kernel and Range}{ker_range}
+For a linear map $T: V \to W$:
+\begin{enumerate}
+    \item $\ker(T) = \{v \in V : T(v) = 0\}$
+    \item $\text{Range}(T) = \{y \in W : \exists v \in V, T(v) = y\}$
+\end{enumerate}
+\end{defn}
+
+\begin{lem}{Kernel and Range are Subspaces}{ker_range_subspace}
+$\ker(T)$ and $\text{Range}(T)$ are subspaces of $V$ and $W$, respectively.
+\end{lem}
+
+\begin{proof}
+Take $u, v \in \ker(T)$ and $\alpha, \beta \in \mathbb{F}$:
+\[T(\alpha u + \beta v) = \alpha T(u) + \beta T(v) = 0 + 0 = 0\]
+
+Take $x, y \in \text{Range}(T)$ with $x = T(u)$, $y = T(v)$:
+\[\alpha x + \beta y = \alpha T(u) + \beta T(v) = T(\alpha u + \beta v) \in \text{Range}(T)\]
+\end{proof}
+
+\begin{remark}
+For a matrix $A \in \mathbb{F}^{m \times n}$:
+\begin{itemize}
+    \item $\text{Range}(A) = \text{span}(\text{columns of } A) = $ column space of $A$
+    \item $\ker(A) = \{x \in \mathbb{F}^n : Ax = 0\}$
+    \item Row space: $R(A) = \text{span}(\text{rows of } A)$
+\end{itemize}
+\end{remark}
+
+\begin{defn}{Injective, Surjective, Bijective}{inj_surj_bij}
+\begin{itemize}
+    \item $f$ is \textbf{injective}: if $u \neq v$, then $f(u) \neq f(v)$
+    \item $f$ is \textbf{surjective}: $\forall y \in W$, $\exists u \in V$ s.t. $f(u) = y$
+    \item $f$ is \textbf{bijective}: both injective and surjective
+\end{itemize}
+\end{defn}
+
+\begin{remark}
+For linear maps:
+\begin{itemize}
+    \item $T$ is surjective $\Leftrightarrow$ $\text{Range}(T) = W$
+    \item $T$ is injective $\Leftrightarrow$ $\ker(T) = \{0\}$
+\end{itemize}
+\end{remark}
+
+\subsection{Rank-Nullity Theorem}
+
+\begin{thm}{Rank-Nullity Theorem}{rank_nullity}
+If $T: V \to W$ is linear and $V$ is finite dimensional, then
+\[\dim(\ker(T)) + \dim(\text{Range}(T)) = \dim V\]
+\end{thm}
+
+\begin{proof}
+Construct a basis $\{u_1, \ldots, u_k\}$ of $\ker(T)$ (assuming $\dim(\ker(T)) = k$; if $k = 0$, this is empty).
+
+Extend to a basis of $V$: $\{u_1, \ldots, u_k, v_{k+1}, \ldots, v_n\}$.
+
+\textbf{Claim:} $\text{Range}(T) = \text{span}(T(v_{k+1}), \ldots, T(v_n))$.
+
+If $y \in \text{Range}(T)$, then $y = T(x)$ for some $x = \alpha_1 u_1 + \cdots + \alpha_k u_k + \alpha_{k+1} v_{k+1} + \cdots + \alpha_n v_n$, so $y = \alpha_{k+1} T(v_{k+1}) + \cdots + \alpha_n T(v_n)$.
+
+\textbf{Claim:} $T(v_{k+1}), \ldots, T(v_n)$ are linearly independent.
+
+Assume $\beta_{k+1} T(v_{k+1}) + \cdots + \beta_n T(v_n) = 0$. Then $T(\beta_{k+1} v_{k+1} + \cdots + \beta_n v_n) = 0$, so $\beta_{k+1} v_{k+1} + \cdots + \beta_n v_n \in \ker(T) = \text{span}(u_1, \ldots, u_k)$.
+
+By linear independence of the full basis, $\beta_{k+1} = \cdots = \beta_n = 0$.
+
+Hence $\dim(\text{Range}(T)) = n - k$.
+\end{proof}
+
+\begin{defn}{Rank}{rank_def}
+Define the \textbf{rank} of $A$ as $\text{rank}(A) = \dim(\text{Range}(A)) = \dim(\text{column space})$.
+\end{defn}
+
+\begin{lem}{Rank from RREF}{rank_rref}
+$\dim(\ker(A)) = n - \#\text{pivots}$ and $\text{rank}(A) = \#\text{pivots}$.
+\end{lem}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Continuity in Multiple Dimensions}
+
+\begin{defn}{Continuity in $\mathbb{R}^n$}{cont_Rn}
+Given $A \subseteq \mathbb{R}^n$, $f: A \to \mathbb{R}^m$, $a \in A$, we say $f$ is \textbf{continuous at $a$} if for all $\varepsilon > 0$, there exists $\delta > 0$ such that $\|f(x) - f(a)\| < \varepsilon$ whenever $\|x - a\| < \delta$ and $x \in A$.
+
+$f$ is \textbf{continuous} if it is continuous at all $a \in A$.
+\end{defn}
+
+\begin{remark}
+Some useful facts:
+\begin{enumerate}
+    \item $a \in A$ is an \textbf{isolated point} if there exists $\rho > 0$ such that $B_\rho(a) \cap A = \{a\}$.
+    \item $f$ is continuous at a non-isolated point $a$ iff $\lim_{x \to a} f(x) = f(a)$.
+    \item Equivalently: $f$ is continuous at $a$ iff for any sequence $\{a^{(k)}\} \subseteq A$ with $\lim a^{(k)} = a$, we have $\lim f(a^{(k)}) = f(a)$.
+\end{enumerate}
+\end{remark}
+
+\begin{thm}{Extreme Value Theorem (Compact Version)}{evt_compact}
+If $A \subseteq \mathbb{R}^n$ is compact and $f: A \to \mathbb{R}$ is continuous, then $f$ is bounded and achieves its maximum and minimum.
+\end{thm}
+
+\begin{proof}
+Suppose not. Then for all $k \in \mathbb{N}$, there exists $x^{(k)} \in A$ such that $|f(x^{(k)})| \geq k$.
+
+Since $A$ is compact, there exists a subsequence $\{x^{(k_j)}\}$ and $a \in A$ such that $\lim_{j\to\infty} x^{(k_j)} = a$.
+
+By continuity, $\lim_{j\to\infty} f(x^{(k_j)}) = f(a)$, which is convergent and thus bounded. But $|f(x^{(k_j)})| \geq k_j \to \infty$, contradiction.
+\end{proof}
+
+\subsection{Metric Spaces}
+
+\begin{defn}{Metric Space}{metric_space}
+$(X, d)$ is a \textbf{metric space} if $X$ is a set and $d: X \times X \to \mathbb{R}$ satisfies:
+\begin{enumerate}
+    \item[(M1)] $d(x, y) \geq 0$ for all $x, y \in X$, with equality iff $x = y$.
+    \item[(M2)] $d(x, y) = d(y, x)$ for all $x, y \in X$.
+    \item[(M3)] $d(x, z) \leq d(x, y) + d(y, z)$ for all $x, y, z \in X$ (triangle inequality).
+\end{enumerate}
+\end{defn}
+
+\begin{example}
+\begin{enumerate}
+    \item $X = \mathbb{R}^n$, $d(x, y) = \|x - y\| = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}$
+    \item $X \subseteq \mathbb{R}^n$, $d(x, y) = \|x - y\|$
+    \item Discrete metric: $d(x, y) = \begin{cases} 1 & x \neq y \\ 0 & x = y \end{cases}$
+    \item Any normed vector space $(V, \|\cdot\|)$ with $d(x, y) = \|x - y\|$
+\end{enumerate}
+\end{example}
+
+\begin{remark}
+In a metric space $(X, d)$:
+\begin{enumerate}
+    \item $\{x_n\} \subseteq X$ converges to $x \in X$ if $\forall \varepsilon > 0$, $\exists N$ such that $d(x_n, x) < \varepsilon$ for $n \geq N$.
+    \item Ball: $B_\rho(y) = \{x \in X : d(x, y) < \rho\}$
+    \item $x$ is a limit point of $A$ if $\exists \{a_n\} \subseteq A$ with $\lim a_n = x$.
+    \item $A$ is open if $\forall x \in A$, $\exists \rho > 0$ with $B_\rho(x) \subseteq A$.
+    \item $A$ is closed if it contains all its limit points.
+    \item $A$ is bounded if $\exists y \in X$, $\rho > 0$ with $A \subseteq B_\rho(y)$.
+    \item $A$ is compact if every sequence in $A$ has a convergent subsequence with limit in $A$.
+\end{enumerate}
+\end{remark}
+
+\begin{thm}{Compact implies Closed and Bounded}{compact_closed_bdd}
+Let $(X, d)$ be a metric space and $A \subseteq X$. If $A$ is compact, then $A$ is closed and bounded.
+\end{thm}
+
+\begin{proof}
+\textbf{Boundedness:} Suppose not. Then for all $y \in X$ and $\rho > 0$, $A \not\subseteq B_\rho(y)$. So there exists $a_n \in A$ with $d(a_n, y) \geq n$. By compactness, some subsequence $\{a_{n_k}\}$ converges to $a \in A$, so $\{a_{n_k}\}$ is bounded. But $d(a_{n_k}, y) \geq n_k \geq k \to \infty$, contradiction.
+
+\textbf{Closedness:} Suppose $x \in X$ is a limit point of $A$. We WTS $x \in A$. By definition, there exists $\{a_n\} \subseteq A$ with $\lim a_n = x$. By compactness, there exists $\{a_{n_k}\}$ with $\lim a_{n_k} = a \in A$. Since limits are unique, $x = a \in A$.
+\end{proof}
+
+\begin{defn}{Continuity in Metric Spaces}{cont_metric}
+Given metric spaces $(X, d_X)$, $(Y, d_Y)$ and $f: X \to Y$:
+\begin{enumerate}
+    \item $f$ is \textbf{continuous at $c \in X$} if $\forall \varepsilon > 0$, $\exists \delta > 0$ such that $d_Y(f(x), f(c)) < \varepsilon$ whenever $d_X(x, c) < \delta$.
+    \item $f$ is \textbf{continuous} if it is continuous at all points.
+\end{enumerate}
+\end{defn}
+
+\begin{thm}{Image of Compact is Compact}{compact_image}
+Let $(X, d_X)$, $(Y, d_Y)$ be metric spaces with $X$ compact and $f: X \to Y$ continuous. Then $f(X) = \{f(x) : x \in X\}$ is compact.
+\end{thm}
+
+\begin{proof}
+Let $\{y_n\} \subseteq f(X)$. Then there exists $x_n \in X$ with $y_n = f(x_n)$.
+
+By compactness of $X$, there exists $\{x_{n_k}\}$ and $x \in X$ with $\lim x_{n_k} = x$.
+
+By continuity of $f$, $\lim y_{n_k} = \lim f(x_{n_k}) = f(x) \in f(X)$.
+\end{proof}
+
+\section{Linear Algebra: Thu/Fri (continued)}
+
+See Week 3 for kernel, range, and rank-nullity theorem content.
+
+\begin{exercises}
+\begin{enumerate}
+    \item \textbf{(4.1)} Let $f: [a,b] \to \mathbb{R}^n$ be differentiable. Prove $\exists c \in (a,b)$ with $\|f(b) - f(a)\| \leq (b-a)\|f'(c)\|$.
+    
+    \item \textbf{(4.2)} Prove that $\bar{A}$ (closure of $A$) is closed in any metric space.
+    
+    \item \textbf{(4.3)} Prove that $f: X \to Y$ continuous and $U \subseteq Y$ open implies $f^{-1}(U)$ is open in $X$.
+    
+    \item \textbf{(4.4)} If $A$ is dense in $X$ and $f, g: X \to Y$ are continuous with $f|_A = g|_A$, prove $f = g$.
+    
+    \item \textbf{(4.5)} Prove that $\text{rank}(AB) \leq \min(\text{rank}(A), \text{rank}(B))$.
+    
+    \item \textbf{(4.6)} Prove that $\dim \ker(T \circ S) \leq \dim \ker T + \dim \ker S$.
+    
+    \item \textbf{(4.7)} Find the matrix of orthogonal projection onto $W = \text{span}\{v\}$ where $v$ is a unit vector in $\mathbb{R}^n$.
+    
+    \item \textbf{(4.8)} Solve the system with augmented matrix $\begin{pmatrix} 1 & 0 & 1 & 1 & 1 & | & 1 \\ 2 & 1 & 1 & 3 & 1 & | & 1 \\ 1 & 1 & 2 & 0 & 2 & | & 2 \\ 0 & 0 & 1 & -1 & 1 & | & 1 \end{pmatrix}$.
+\end{enumerate}
+\end{exercises}
+
+% ==================== WEEK 5 ====================
+\chapter{Series and Differentiation in Higher Dimensions}
+
+\section{Linear Algebra: Thu/Fri (Gaussian Elimination)}
+
+\subsection{Solving Linear Systems}
+
+\begin{lem}{Solutions to $Ax = 0$}{ax_zero_solutions}
+\begin{enumerate}
+    \item Solutions to $Ax = 0$ = $\ker(A)$
+    \item $Ax = b$ has a solution $\Leftrightarrow$ $b \in \text{Range}(A)$
+\end{enumerate}
+Moreover, if $\bar{x}$ is a particular solution, then the set of all solutions is $\{\bar{x} + w : w \in \ker(A)\} = \bar{x} + \ker(A)$.
+\end{lem}
+
+\begin{proof}
+Suppose $x = \bar{x} + w$ with $w \in \ker(A)$. Then $Ax = A(\bar{x} + w) = A\bar{x} + Aw = b + 0 = b$.
+
+Conversely, if $x$ is a solution, then $A(x - \bar{x}) = b - b = 0$, so $x - \bar{x} \in \ker(A)$.
+\end{proof}
+
+\subsection{Row Operations}
+
+\begin{defn}{Row Operations}{row_ops}
+\begin{enumerate}
+    \item[(R1)] Switch two rows
+    \item[(R2)] Multiply row $i$ by nonzero constant $\lambda \in \mathbb{F}$
+    \item[(R3)] Replace row $i$ by (row $i$ + $\lambda \cdot$ row $j$)
+\end{enumerate}
+\end{defn}
+
+\begin{lem}{Row Operations Preserve Kernel}{row_ops_kernel}
+\begin{enumerate}
+    \item Performing row operations on $A$ doesn't change $\ker(A)$ (it may change $\text{Range}(A)$ though!)
+    \item Performing row operations on the augmented matrix $(A \mid b)$ does not change the solution set.
+\end{enumerate}
+\end{lem}
+
+\begin{lem}{RREF Existence}{rref_exists}
+Every (augmented) matrix can be reduced to RREF by finitely many row operations.
+\end{lem}
+
+\begin{example}
+To find $\ker(A)$: reduce to RREF. Non-pivot variables are ``free.'' E.g., if RREF gives
+\[\begin{pmatrix} 1 & 0 & 3 \\ 0 & 1 & -3 \end{pmatrix}\]
+then $\ker(A) = \{(-3\beta, 3\beta, \beta) : \beta \in \mathbb{F}\}$.
+\end{example}
+
+\subsection{Orthogonal Complements}
+
+\begin{defn}{Orthogonal Complement}{orth_comp}
+For $V \subseteq \mathbb{F}^n$ a subspace,
+\[V^\perp = \{x \in \mathbb{F}^n : x \cdot v = 0 \text{ for all } v \in V\}\]
+\end{defn}
+
+\begin{thm}{Dimension of Orthogonal Complement}{dim_orth_comp}
+\begin{enumerate}
+    \item $\dim V + \dim V^\perp = n$
+    \item $(V^\perp)^\perp = V$
+    \item If $\mathbb{F} = \mathbb{R}$, then $V \cap V^\perp = \{0\}$
+    \item If $\mathbb{F} = \mathbb{R}$, then $\forall x \in \mathbb{R}^n$, $\exists!$ decomposition $x = v + v^\perp$ with $v \in V$, $v^\perp \in V^\perp$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}[Proof of (1)]
+Let $\{v_1, \ldots, v_k\}$ be a basis of $V$. Form matrix $A$ with rows $v_i$. Note $\ker(A) = V^\perp$ since $Ax = 0$ iff $v_i \cdot x = 0$ for all $i$.
+
+Hence $\dim(\text{Range}(A)) + \dim(V^\perp) = n$, and $\dim(\text{Range}(A)) = k = \dim V$.
+\end{proof}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Series}
+
+\begin{defn}{Series}{series_def}
+Let $\{a_k\}_{k=1}^\infty \subseteq \mathbb{R}^n$. We say $\sum_{k=1}^\infty a_k = s \in \mathbb{R}^n$ if the sequence of partial sums $S_j = \sum_{k=1}^j a_k$ satisfies $\lim_{j\to\infty} S_j = s$.
+
+We say $\sum a_k$ \textbf{converges} if such $s$ exists, and \textbf{diverges} otherwise.
+\end{defn}
+
+\begin{thm}{Terms Must Vanish}{terms_vanish}
+Suppose $\{a_k\}_{k=1}^\infty \subseteq \mathbb{R}^n$ and $\sum a_k$ converges. Then $\lim_{k\to\infty} a_k = 0$.
+\end{thm}
+
+\begin{proof}
+Let $\varepsilon > 0$. We WTS $\|a_k\| < \varepsilon$ for $k \geq \mathcal{K}$.
+
+By assumption, there exists $S \in \mathbb{R}^n$ with $\sum a_k = S$. So $\|S_j - S\| < \frac{\varepsilon}{2}$ whenever $j \geq \mathcal{J}$.
+
+Let $\mathcal{K} = \mathcal{J} + 1$. Then for $k \geq \mathcal{K}$:
+\[\|a_k\| = \|S_k - S_{k-1}\| \leq \|S - S_k\| + \|S - S_{k-1}\| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon\]
+\end{proof}
+
+\begin{thm}{Non-negative Series}{nonneg_series}
+Suppose $\{a_k\}_{k=1}^\infty \subseteq \mathbb{R}$ with $a_k \geq 0$ for all $k$. Then $\sum_{k=1}^\infty a_k$ converges iff $\{S_j\}$ is bounded above.
+\end{thm}
+
+\begin{proof}
+Observe that $\{S_j\}$ is increasing since $a_k \geq 0$. Recall that an increasing sequence converges iff it is bounded above.
+\end{proof}
+
+\begin{example}
+\textbf{Geometric Series:} $\sum_{k=0}^\infty r^k$ converges if $r \in (0,1)$ and diverges if $r \geq 1$.
+
+\begin{proof}
+For $r \neq 1$: $S_j = 1 + r + \cdots + r^j$ and $rS_j = r + \cdots + r^{j+1}$.
+
+So $(r-1)S_j = r^{j+1} - 1$, giving $S_j = \frac{r^{j+1} - 1}{r - 1}$.
+
+This is bounded (converges to $\frac{1}{1-r}$) if $r \in (0,1)$ and unbounded if $r > 1$.
+\end{proof}
+\end{example}
+
+\begin{example}
+\textbf{Harmonic Series:} $\sum_{k=1}^\infty \frac{1}{k}$ diverges.
+
+\begin{proof}
+\[S_{2^j} = 1 + \frac{1}{2} + \left(\frac{1}{3} + \frac{1}{4}\right) + \left(\frac{1}{5} + \cdots + \frac{1}{8}\right) + \cdots\]
+\[\geq 1 + \frac{1}{2} + \frac{2}{4} + \frac{4}{8} + \cdots = 1 + \frac{j}{2} \to \infty\]
+\end{proof}
+\end{example}
+
+\begin{example}
+\textbf{$p$-series:} $\sum_{k=1}^\infty \frac{1}{k^p}$ converges if $p \geq 2$ (in fact, if $p > 1$).
+
+\begin{proof}
+\[\sum_{k=1}^{2^{j-1}} \frac{1}{k^p} \leq 1 + \left(\frac{1}{2^p} + \frac{1}{2^p}\right) + \left(\frac{4}{4^p}\right) + \cdots \leq 1 + \left(\frac{1}{2}\right)^{p-1} + \left(\frac{1}{2}\right)^{2(p-1)} + \cdots\]
+Since $p > 1$, this is a convergent geometric series.
+\end{proof}
+\end{example}
+
+\begin{defn}{Absolute Convergence}{abs_conv}
+$\sum_{k=1}^\infty a_k$ is \textbf{absolutely convergent} if $\sum_{k=1}^\infty |a_k|$ converges.
+\end{defn}
+
+\begin{thm}{Absolute Convergence Implies Convergence}{abs_implies_conv}
+If $\sum a_k$ is absolutely convergent, then it is convergent.
+\end{thm}
+
+\begin{proof}
+Let $p_k = \max\{a_k, 0\}$ and $q_k = \max\{-a_k, 0\}$. Then $|a_k| = p_k + q_k$ and $a_k = p_k - q_k$.
+
+Since $\sum |a_k|$ converges, $\sum_{k=1}^j |a_k|$ is bounded. Then $\sum_{k=1}^j p_k \leq \sum_{k=1}^j |a_k|$ is bounded, so $\sum p_k$ converges. Similarly $\sum q_k$ converges.
+
+Hence $\sum a_k = \sum(p_k - q_k)$ converges.
+\end{proof}
+
+\begin{defn}{Rearrangement}{rearrangement}
+Given $\{a_k\}_{k=1}^\infty \subseteq \mathbb{R}$, we say $\sum_{k=1}^\infty a_{j(k)}$ is a \textbf{rearrangement} if $j: \mathbb{N} \to \mathbb{N}$ is a bijection.
+\end{defn}
+
+\begin{thm}{Rearrangements of Absolutely Convergent Series}{rearrange_abs}
+If $\sum a_k$ converges absolutely, then any rearrangement $\sum a_{j(k)}$ also converges to the same sum.
+\end{thm}
+
+\begin{proof}
+First consider the case $a_k \geq 0$. Suppose $\sum a_k = S$.
+
+For every $\ell \in \mathbb{N}$, define $p(\ell) = \max\{j(1), \ldots, j(\ell)\}$.
+
+Then $\sum_{k=1}^\ell a_{j(k)} \leq \sum_{k=1}^{p(\ell)} a_k \leq S$.
+
+So $\sum a_{j(k)}$ converges. Since the partial sums are increasing,
+\[\sum_{k=1}^\infty a_{j(k)} = \sup_\ell \sum_{k=1}^\ell a_{j(k)} \leq S\]
+
+By symmetry (the original is a rearrangement of the rearrangement), we get equality.
+
+For the general case, use $a_k = p_k - q_k$ where both $\sum p_k$ and $\sum q_k$ converge by the previous theorem.
+\end{proof}
+
+\subsection{Differentiation in Higher Dimensions}
+
+\begin{defn}{Derivative Matrix}{deriv_matrix}
+Given $f: U \to \mathbb{R}^m$ where $U \subseteq \mathbb{R}^n$ is open, and $c \in U$. We say $f$ is \textbf{differentiable at $c$} if there exists $A \in \mathbb{R}^{m \times n}$ such that
+\[\lim_{h \to 0} \frac{\|f(c+h) - f(c) - Ah\|}{\|h\|} = 0\]
+
+If such $A$ exists, it is called the \textbf{derivative matrix} of $f$ at $c$, denoted $Df(c)$.
+\end{defn}
+
+\begin{lem}{Matrix Norm Inequality}{matrix_norm}
+If $\|A\| = \left(\sum_{i,j} a_{ij}^2\right)^{1/2}$, then $\|Ax\| \leq \|A\| \|x\|$.
+\end{lem}
+
+\begin{proof}
+Write $A = (a_{ij})$. Then
+\[\|Ax\|^2 = \sum_{i=1}^m (a_i \cdot x)^2 \leq \sum_{i=1}^m \|a_i\|^2 \|x\|^2 = \|A\|^2 \|x\|^2\]
+by Cauchy-Schwarz. Take square roots.
+\end{proof}
+
+\begin{thm}{Differentiable Implies Continuous}{diff_implies_cont}
+If $f: U \to \mathbb{R}^m$ is differentiable at $c$, then $f$ is continuous at $c$.
+\end{thm}
+
+\begin{proof}
+Since $U$ is open, there exists $\rho > 0$ with $B_\rho(c) \subseteq U$.
+
+Using the definition with $\varepsilon = 1$, there exists $\delta_0 \in (0, \rho)$ such that
+\[\frac{\|f(c+h) - f(c) - Ah\|}{\|h\|} < 1 \text{ whenever } 0 < \|h\| < \delta_0\]
+
+Let $\varepsilon > 0$. We WTS there exists $\delta$ such that $\|f(c+h) - f(c)\| < \varepsilon$ whenever $\|h\| < \delta$.
+
+Let $\delta = \min\{\delta_0, \frac{\varepsilon}{2}, \frac{\varepsilon}{2\|A\|}\}$ (assuming $A \neq 0$).
+
+Then:
+\[\|f(c+h) - f(c)\| \leq \|f(c+h) - f(c) - Ah\| + \|Ah\| < \|h\| + \|A\|\|h\| \leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon\]
+\end{proof}
+
+\section{Linear Algebra: Thu/Fri}
+\begin{center}
+    \textit{Content from Linear Algebra PDF needed}
+\end{center}
+
+
+% ==================== WEEK 6 ====================
+\chapter{Directional Derivatives and the Chain Rule}
+
+\section{Linear Algebra: Thu/Fri (Determinants)}
+
+\subsection{Permutations and Signs}
+
+\begin{defn}{Permutation}{permutation}
+A \textbf{permutation} $\sigma: \{1, \ldots, n\} \to \{1, \ldots, n\}$ is a bijection. The set of all permutations on $n$ elements is denoted $S_n$.
+\end{defn}
+
+\begin{defn}{Transposition}{transposition}
+A \textbf{transposition} $\tau_{kl}$ is a permutation that swaps $k$ and $l$ and fixes everything else.
+\end{defn}
+
+\begin{lem}{Permutations as Transpositions}{perm_as_trans}
+Every permutation can be written as a composition of adjacent transpositions $\tau_{k,k+1}$.
+\end{lem}
+
+\begin{defn}{Inversions and Sign}{inversions_sign}
+For $\sigma \in S_n$, the \textbf{number of inversions} is
+\[N(\sigma) = |\{(i,j) : i < j \text{ but } \sigma(i) > \sigma(j)\}|\]
+Define $\text{sgn}(\sigma) = (-1)^{N(\sigma)}$.
+\end{defn}
+
+\begin{remark}
+$\text{sgn}(\tau_{kl}) = -1$ for any transposition. Each adjacent swap changes the sign.
+\end{remark}
+
+\subsection{The Determinant}
+
+\begin{defn}{Determinant}{determinant}
+For $A = (a_{ij}) \in \mathbb{F}^{n \times n}$:
+\[\det(A) = \sum_{\sigma \in S_n} \text{sgn}(\sigma) \cdot a_{1,\sigma(1)} a_{2,\sigma(2)} \cdots a_{n,\sigma(n)}\]
+\end{defn}
+
+\begin{remark}
+The meaning of the determinant is a ``signed volume'' --- the sign captures the orientation of the vectors.
+\end{remark}
+
+\begin{thm}{Properties of Determinant}{det_properties}
+\begin{enumerate}
+    \item $\det(A^T) = \det(A)$
+    \item Switching two rows/columns multiplies $\det$ by $-1$
+    \item $\det$ is linear in each row/column
+    \item If two rows/columns are equal, $\det = 0$
+    \item $\det(AB) = \det(A) \cdot \det(B)$
+\end{enumerate}
+\end{thm}
+
+\subsection{Inverses}
+
+\begin{defn}{Inverse Matrix}{inverse_def}
+$B \in \mathbb{F}^{n \times n}$ is an \textbf{inverse} of $A$ if $AB = I = BA$.
+\end{defn}
+
+\begin{lem}{Uniqueness of Inverse}{inverse_unique}
+An inverse, if it exists, is unique.
+\end{lem}
+
+\begin{proof}
+Suppose $B, C = A^{-1}$. Then $B = BI = B(AC) = (BA)C = IC = C$.
+\end{proof}
+
+\begin{lem}{One-Sided Implies Two-Sided}{one_sided_inverse}
+If $A, B \in \mathbb{F}^{n \times n}$ and $AB = I$, then $BA = I$.
+\end{lem}
+
+\begin{proof}
+$AB = I$ implies $\text{Range}(AB) = \mathbb{F}^n$, so $B$ is surjective. By rank-nullity, $\ker(B) = \{0\}$.
+
+Now $AB = I$ implies $ABy = y$ for all $y$. Hence $BABy = By$ for all $y$. Since $B$ is surjective, $BAx = x$ for all $x$, so $BA = I$.
+\end{proof}
+
+\begin{thm}{Invertibility Criterion}{invert_criterion}
+$A$ is invertible iff $\det(A) \neq 0$.
+\end{thm}
+
+\begin{proof}
+$(\Rightarrow)$: $AA^{-1} = I$ implies $\det(A)\det(A^{-1}) = 1$, so $\det(A) \neq 0$.
+
+$(\Leftarrow)$: See adjugate formula: $A \cdot \text{adj}(A) = \det(A) \cdot I$.
+\end{proof}
+
+\begin{thm}{Equivalent Statements for Invertibility}{equiv_invert}
+The following are equivalent:
+\begin{enumerate}
+    \item $A$ is invertible
+    \item $\exists B$ s.t. $AB = I$
+    \item $\exists B$ s.t. $BA = I$
+    \item $\det(A) \neq 0$
+    \item $\text{rref}(A) = I$
+    \item $\ker(A) = \{0\}$
+    \item $\text{Range}(A) = \mathbb{F}^n$
+    \item $\text{rank}(A) = n$
+\end{enumerate}
+\end{thm}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Directional and Partial Derivatives}
+
+\begin{defn}{Directional Derivative}{dir_deriv}
+Let $f: U \to \mathbb{R}^m$ where $U \subseteq \mathbb{R}^n$ is open, $a \in U$, $v \in \mathbb{R}^n$. The \textbf{directional derivative} of $f$ at $a$ in direction $v$ is
+\[(D_v f)(a) = \lim_{t \to 0} \frac{f(a + tv) - f(a)}{t}\]
+if this limit exists.
+\end{defn}
+
+\begin{remark}
+This is the derivative of the single-variable function $g(t) = f(a + tv)$ at $t = 0$.
+
+When $v = e_j = (0, \ldots, 1, \ldots, 0)$, the directional derivative is called a \textbf{partial derivative}, denoted $(D_j f)(a)$ or $\frac{\partial f}{\partial x_j}(a)$.
+\end{remark}
+
+\begin{thm}{Directional Derivative via Derivative Matrix}{dir_deriv_matrix}
+Suppose $f$ is differentiable at $a \in U$. Then for any $v \in \mathbb{R}^n$, the directional derivative $(D_v f)(a)$ exists and
+\[(D_v f)(a) = [Df(a)] v\]
+\end{thm}
+
+\begin{proof}
+Let $\varepsilon > 0$. We WTS $\left\|\frac{f(a+tv) - f(a)}{t} - Df(a) \cdot v\right\| < \varepsilon$ if $0 < |t| < \delta$.
+
+If $v = 0$, this is obvious. Assume $v \neq 0$.
+
+By definition of $Df(a)$, there exists $\delta' > 0$ such that
+\[\frac{\|f(a+h) - f(a) - Df(a) \cdot h\|}{\|h\|} < \frac{\varepsilon}{\|v\|} \text{ whenever } \|h\| < \delta'\]
+
+Let $\delta = \frac{\delta'}{\|v\|}$. If $0 < |t| < \delta$, then $h = tv$ satisfies $0 < \|h\| = |t|\|v\| < \delta'$.
+
+Hence:
+\[\frac{\|f(a+tv) - f(a) - Df(a) \cdot tv\|}{|t| \|v\|} < \frac{\varepsilon}{\|v\|}\]
+which gives
+\[\left\|\frac{f(a+tv) - f(a)}{t} - Df(a) \cdot v\right\| < \varepsilon\]
+\end{proof}
+
+\begin{thm}{Corollary: Partial Derivatives}{partial_deriv_cor}
+If $f$ is differentiable at $a$:
+\begin{enumerate}
+    \item $(D_j f)(a) = Df(a) \cdot e_j =$ the $j$-th column of $Df(a)$.
+    \item For $v = \sum_{j=1}^n v_j e_j$: $(D_v f)(a) = \sum_{j=1}^n v_j (D_j f)(a)$.
+\end{enumerate}
+\end{thm}
+
+\begin{thm}{Continuous Partials Imply Differentiability}{cont_partials}
+Given $U \subseteq \mathbb{R}^n$ open, $f: U \to \mathbb{R}^m$. Suppose there exists $a \in U$ and $\rho > 0$ such that $D_j f$ exists everywhere in $B_\rho(a)$ for all $j$, and $D_j f$ is continuous at $a$. Then $f$ is differentiable at $a$.
+\end{thm}
+
+\begin{proof}
+Let $\varepsilon > 0$. We WTS 
+\[\frac{\left\|f(a+h) - f(a) - \sum_{j=1}^n (D_j f)(a) h_j\right\|}{\|h\|} < \varepsilon\]
+whenever $0 < \|h\| < \delta$, where $h = \sum_{j=1}^n h_j e_j$.
+
+Define $h^{(k)} = \sum_{j=1}^k h_j e_j$ for $k = 1, \ldots, n$.
+
+Then:
+\[f(a+h) - f(a) = \sum_{k=1}^n \left[f(a + h^{(k)}) - f(a + h^{(k-1)})\right]\]
+
+By MVT applied to each term:
+\[f(a + h^{(k)}) - f(a + h^{(k-1)}) = h_k (D_k f)(a + h^{(k-1)} + \theta_k h_k e_k)\]
+for some $\theta_k \in (0, 1)$.
+
+Hence:
+\[\frac{\left\|f(a+h) - f(a) - \sum_{j=1}^n (D_j f)(a) h_j\right\|}{\|h\|}\]
+\[= \frac{\left\|\sum_{j=1}^n h_j \left[(D_j f)(a + h^{(j-1)} + \theta_j h_j e_j) - (D_j f)(a)\right]\right\|}{\|h\|}\]
+\[\leq \sum_{j=1}^n \left\|(D_j f)(a + h^{(j-1)} + \theta_j h_j e_j) - (D_j f)(a)\right\|\]
+
+Since $D_j f$ is continuous at $a$, there exists $\delta_j$ such that each term is $< \frac{\varepsilon}{n}$ when $\|h\| < \delta_j$.
+
+Take $\delta = \min\{\delta_1, \ldots, \delta_n\}$.
+\end{proof}
+
+\subsection{The Chain Rule}
+
+\begin{thm}{Chain Rule}{chain_rule}
+Let $U \subseteq \mathbb{R}^n$, $V \subseteq \mathbb{R}^m$ be open. Let $f: U \to V$ and $g: V \to \mathbb{R}^\ell$.
+
+Suppose $f$ is differentiable at $a \in U$ and $g$ is differentiable at $f(a) \in V$. Then $g \circ f: U \to \mathbb{R}^\ell$ is differentiable at $a$, and
+\[\underbrace{D(g \circ f)(a)}_{\mathbb{R}^{\ell \times n}} = \underbrace{Dg(f(a))}_{\mathbb{R}^{\ell \times m}} \cdot \underbrace{Df(a)}_{\mathbb{R}^{m \times n}}\]
+\end{thm}
+
+\begin{proof}
+Let $\varepsilon > 0$. We WTS there exists $\delta > 0$ such that $B_\delta(a) \subseteq U$ and
+\[\|(g \circ f)(a+h) - (g \circ f)(a) - Dg(f(a)) Df(a) h\| < \varepsilon \|h\|\]
+whenever $\|h\| < \delta$.
+
+Let $\varepsilon_1, \varepsilon_2 > 0$ to be chosen. By differentiability of $f$ at $a$, there exists $\delta_1 > 0$ such that
+\[\|f(a+h) - f(a) - Df(a) h\| < \varepsilon_1 \|h\| \text{ for } \|h\| < \delta_1\]
+
+By differentiability of $g$ at $f(a)$, there exists $\delta_2 > 0$ such that
+\[\|g(y) - g(f(a)) - Dg(f(a))(y - f(a))\| < \varepsilon_2 \|y - f(a)\| \text{ for } \|y - f(a)\| < \delta_2\]
+
+Since $f$ is continuous at $a$, there exists $\delta_3 > 0$ such that $\|f(a+h) - f(a)\| < \delta_2$ for $\|h\| < \delta_3$.
+
+For $\|h\| < \min\{\delta_1, \delta_3\}$:
+\begin{align*}
+&\|(g \circ f)(a+h) - (g \circ f)(a) - Dg(f(a)) Df(a) h\| \\
+&\leq \|g(f(a+h)) - g(f(a)) - Dg(f(a))(f(a+h) - f(a))\| \\
+&\quad + \|Dg(f(a))\| \|f(a+h) - f(a) - Df(a) h\| \\
+&< \varepsilon_2 \|f(a+h) - f(a)\| + \|Dg(f(a))\| \varepsilon_1 \|h\| \\
+&\leq (\varepsilon_1 \varepsilon_2 + \varepsilon_2 \|Df(a)\| + \varepsilon_1 \|Dg(f(a))\|) \|h\|
+\end{align*}
+
+Choose $\varepsilon_1, \varepsilon_2$ small enough that this is $< \varepsilon \|h\|$.
+\end{proof}
+
+\begin{thm}{Chain Rule: Component Form}{chain_component}
+With $f, g$ as above:
+\[D_i(g \circ f)(a) = \sum_{k=1}^m (D_k g_i)(f(a)) \cdot (D_i f_k)(a)\]
+\end{thm}
+
+\begin{thm}{One-dimensional Chain Rule}{chain_1d}
+If $n = m = 1$: $(g \circ f)'(a) = g'(f(a)) \cdot f'(a)$.
+\end{thm}
+
+\section{Linear Algebra: Thu/Fri}
+\begin{center}
+    \textit{Content from Linear Algebra PDF needed}
+\end{center}
+
+
+% ==================== WEEK 7 ====================
+\chapter{Higher Derivatives and Taylor's Theorem}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Higher Derivatives}
+
+Given $f: U \to \mathbb{R}^m$ where $U \subseteq \mathbb{R}^n$ is open, we can take partial derivatives $D_i f$.
+
+\begin{defn}{Higher Partial Derivatives}{higher_partials}
+Suppose $D_i f$ is defined everywhere on $U$. Then we can think of $D_i f: U \to \mathbb{R}^m$. Define
+\[D_j D_i f(a) = D_j(D_i f)(a)\]
+if it exists. Define higher derivatives inductively by
+\[D_{i_1} D_{i_2} \cdots D_{i_k} f = D_{i_1}(D_{i_2} \cdots D_{i_k} f)\]
+if $D_{i_2} \cdots D_{i_k} f: U \to \mathbb{R}^m$ is a well-defined function and this exists.
+\end{defn}
+
+\begin{defn}{$C^k$ Functions}{ck_functions}
+We say $f: U \to \mathbb{R}^m$ is $C^k$ if $f$ and all higher derivatives up to $k$-th order are well-defined and continuous.
+\end{defn}
+
+\begin{thm}{Symmetry of Mixed Partials}{mixed_partials}
+Let $f: U \to \mathbb{R}^m$, $U \subseteq \mathbb{R}^n$ open. Suppose $a \in U$, $\rho > 0$ s.t. $B_\rho(a) \subseteq U$ and $D_i f$, $D_j f$, $D_i D_j f$, $D_j D_i f$ are defined in $B_\rho(a)$.
+
+Assume, moreover, that $D_i D_j f$ and $D_j D_i f$ are continuous at $a$. Then
+\[D_i D_j f(a) = D_j D_i f(a)\]
+\end{thm}
+
+\begin{proof}[Sketch]
+Consider $\Delta = f(a + he_i + ke_j) - f(a + he_i) - f(a + ke_j) + f(a)$.
+
+Define $\psi_k(x) = f(x + ke_j) - f(x)$. Then $\Delta = \psi_k(a + he_i) - \psi_k(a)$.
+
+By MVT: $\Delta = D_i \psi_k(a + \theta h e_i) \cdot h = [D_i f(a + he_i + \theta' k e_j) - D_i f(a + \theta' k e_j)] \cdot h$
+
+$= D_j D_i f(a + \theta'' h e_i + \theta' k e_j) \cdot hk$ for some $\theta, \theta', \theta'' \in (0,1)$.
+
+Similarly, defining $\phi_h(x) = f(x + he_i) - f(x)$, we get $\Delta = D_i D_j f(a + \theta''' h e_i + \theta'''' k e_j) \cdot hk$.
+
+Taking $h, k \to 0$ and using continuity gives the result.
+\end{proof}
+
+\begin{cor}{Order Independence for $C^k$}{order_indep}
+Suppose $f: U \to \mathbb{R}^m$ is $C^k$, $k \geq 2$. Then
+\[D_{i_1} \cdots D_{i_k} f(x) = D_{j_1} \cdots D_{j_k} f(x)\]
+whenever $(j_1, \ldots, j_k)$ is a permutation of $(i_1, \ldots, i_k)$.
+\end{cor}
+
+\subsection{Taylor's Theorem}
+
+\begin{defn}{Gradient and Hessian}{grad_hessian}
+\begin{enumerate}
+    \item For $f: U \to \mathbb{R}$ differentiable, the \textbf{gradient} is $\nabla f = (D_1 f, \ldots, D_n f)$.
+    \item A function $Q: \mathbb{R}^n \to \mathbb{R}$ is called a \textbf{quadratic form} if $Q(x) = \sum_{i,j} h_{ij} x_i x_j$ for some symmetric matrix $(h_{ij})$.
+    \item The quadratic form $\sum_{i,j} D_i D_j f(a) \cdot x_i x_j$ is called the \textbf{Hessian} of $f$ at $a$.
+    \item $Q$ is \textbf{positive definite} if $Q(x) > 0$ for all $x \neq 0$.
+\end{enumerate}
+\end{defn}
+
+\begin{thm}{Second-Order Taylor Expansion}{taylor_2nd}
+Let $U \subseteq \mathbb{R}^n$ open, $f: U \to \mathbb{R}$ be $C^2$. Then for any $a \in U$:
+\[f(x) = f(a) + \nabla f(a) \cdot (x-a) + \frac{1}{2} \sum_{i,j} D_i D_j f(a)(x-a)_i(x-a)_j + o(\|x-a\|^2)\]
+where $\lim_{x \to a} \frac{o(\|x-a\|^2)}{\|x-a\|^2} = 0$.
+\end{thm}
+
+\subsection{Second Derivative Test}
+
+\begin{lem}{Critical Points}{critical_pts}
+Let $U$ open, $f: U \to \mathbb{R}$ differentiable. Suppose $f$ has a local min/max at $a$. Then $\nabla f(a) = 0$.
+\end{lem}
+
+\begin{thm}{Second Derivative Test}{2nd_deriv_test}
+Let $U$ open, $f: U \to \mathbb{R}$ be $C^2$. Suppose $\nabla f(a) = 0$ and the Hessian of $f$ at $a$ is positive definite. Then $f$ has a strict local minimum at $a$.
+\end{thm}
+
+\begin{proof}[Sketch]
+\textbf{Lemma:} If $Q$ is a positive definite quadratic form, then $\exists M > 0$ s.t. $Q(x) \geq M\|x\|^2$ for all $x \in \mathbb{R}^n$.
+
+Assuming the lemma, then $\exists \rho$ s.t. for $x \in B_\rho(a)$:
+\[f(x) \approx f(a) + \frac{1}{2} \text{Hess}_f(x-a) + o(\|x-a\|^2) \geq f(a) + \frac{M}{2}\|x-a\|^2 - o(\|x-a\|^2)\]
+
+For small enough $\|x-a\|$, this is $> f(a)$.
+\end{proof}
+
+\section{Linear Algebra: Thu/Fri (Orthonormal Bases)}
+
+\subsection{Orthonormal Bases}
+
+\begin{defn}{Orthonormal Set}{orthonormal}
+Vectors $\{u_1, \ldots, u_k\} \subseteq V$ are \textbf{orthonormal} if
+\[\langle u_i, u_j \rangle = \begin{cases} 0 & \text{if } i \neq j \\ 1 & \text{if } i = j \end{cases}\]
+An \textbf{orthonormal basis} is a basis that is orthonormal.
+\end{defn}
+
+\begin{lem}{Orthonormal Implies Independent}{orth_indep}
+If $\{u_1, \ldots, u_k\}$ is orthonormal, then it is linearly independent.
+\end{lem}
+
+\begin{proof}
+Suppose $\sum_{j=1}^k \alpha_j u_j = 0$. Take dot product with $u_i$:
+\[0 = \sum_{j=1}^k \alpha_j \langle u_i, u_j \rangle = \alpha_i\]
+Hence $\alpha_i = 0$ for all $i$.
+\end{proof}
+
+\subsection{Orthogonal Projection}
+
+\begin{defn}{Orthogonal Projection}{orth_proj}
+For $W \subseteq \mathbb{F}^n$ a subspace and $x \in \mathbb{F}^n$, there exists a unique decomposition $x = w + w^\perp$ where $w \in W$ and $w^\perp \in W^\perp$.
+
+Define $P_W: \mathbb{F}^n \to W$ by $P_W(x) = w$. This is the \textbf{orthogonal projection} onto $W$.
+\end{defn}
+
+\begin{thm}{Projection Formula}{proj_formula}
+Suppose $\{u_1, \ldots, u_k\}$ is an orthonormal basis of $W$. Then
+\[P_W(x) = \sum_{j=1}^k \langle x, u_j \rangle u_j\]
+\end{thm}
+
+\begin{proof}
+By definition, it suffices to show $v = x - \sum_j \langle x, u_j \rangle u_j \in W^\perp$.
+
+Let $\langle v, u_i \rangle$ for any $i$. Since $\{u_1, \ldots, u_k\}$ is a basis, we need $\langle v, u_i \rangle = 0$ for all $i$.
+
+$\langle v, u_i \rangle = \langle x, u_i \rangle - \sum_j \langle x, u_j \rangle \langle u_j, u_i \rangle = \langle x, u_i \rangle - \langle x, u_i \rangle = 0$.
+\end{proof}
+
+\subsection{Gram-Schmidt Process}
+
+\begin{thm}{Gram-Schmidt}{gram_schmidt}
+Suppose $\{v_1, \ldots, v_k\} \subseteq V$ is linearly independent. Then there exists an orthonormal set $\{u_1, \ldots, u_k\}$ s.t.
+\[\text{span}(u_1, \ldots, u_j) = \text{span}(v_1, \ldots, v_j)\]
+for any $j = 1, \ldots, k$.
+\end{thm}
+
+\begin{proof}
+Define $u_1 = \frac{v_1}{\|v_1\|}$ (note $v_1 \neq 0$ since linearly independent). Moreover, $\{u_1\}$ is orthonormal and $\text{span}(u_1) = \text{span}(v_1)$.
+
+Inductively, suppose we have $\{u_1, \ldots, u_j\}$ orthonormal with the right span.
+
+Define $\tilde{u}_{j+1} = v_{j+1} - P_{\text{span}(u_1,\ldots,u_j)}(v_{j+1}) = v_{j+1} - \sum_{i=1}^j \langle v_{j+1}, u_i \rangle u_i$.
+
+Then $\tilde{u}_{j+1} \neq 0$ (otherwise $v_{j+1} \in \text{span}(v_1, \ldots, v_j)$, contradicting independence).
+
+Set $u_{j+1} = \frac{\tilde{u}_{j+1}}{\|\tilde{u}_{j+1}\|}$.
+\end{proof}
+
+
+% ==================== WEEK 8 ====================
+\chapter{Integration and the Fundamental Theorem}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{The Riemann Integral}
+
+\begin{defn}{Riemann Integral}{riemann_integral}
+For $f: [a,b] \to \mathbb{R}$:
+\begin{enumerate}
+    \item A \textbf{partition} $P$ is a choice $a = t_0 < t_1 < \cdots < t_n = b$.
+    \item Define
+    \[L(f, P) = \sum_{i=1}^n \inf_{t \in [t_{i-1}, t_i]} f(t) \cdot (t_i - t_{i-1})\]
+    \[U(f, P) = \sum_{i=1}^n \sup_{t \in [t_{i-1}, t_i]} f(t) \cdot (t_i - t_{i-1})\]
+    \item Define $\underline{\int} f = \sup_P L(f,P)$ and $\overline{\int} f = \inf_P U(f,P)$.
+    \item $f$ is \textbf{integrable} if $\underline{\int} f = \overline{\int} f$, and we write this value as $\int_a^b f(t) \, dt$.
+\end{enumerate}
+\end{defn}
+
+\begin{thm}{Properties of the Integral}{int_properties}
+Let $f, g: [a,b] \to \mathbb{R}$ be integrable and $c_1, c_2 \in \mathbb{R}$. Then:
+\begin{enumerate}
+    \item $c_1 f + c_2 g$ is integrable and $\int (c_1 f + c_2 g) = c_1 \int f + c_2 \int g$
+    \item (\textbf{Positivity}) If $f \geq 0$, then $\int f \geq 0$
+    \item (\textbf{Boundedness}) $|\int f| \leq \sup|f| \cdot (b-a)$
+    \item (\textbf{Additivity}) If $a < c < b$, then $\int_a^b f = \int_a^c f + \int_c^b f$
+\end{enumerate}
+\end{thm}
+
+\subsection{Fundamental Theorem of Calculus}
+
+\begin{thm}{FTC Version 1}{ftc1}
+Suppose $f: [a,b] \to \mathbb{R}$ is continuous. Define $F: [a,b] \to \mathbb{R}$ by
+\[F(t) = \int_a^t f(s) \, ds\]
+Then $F$ is $C^1$ and $F'(t) = f(t)$ for all $t \in (a,b)$.
+\end{thm}
+
+\begin{proof}
+Suffices to show $F'(t) = f(t)$ (then $f$ cts implies $F'$ cts).
+
+Let $\varepsilon > 0$. Consider $|h| > 0$.
+
+$\left|\frac{F(t+h) - F(t)}{h} - f(t)\right| = \left|\frac{1}{h}\int_t^{t+h} f(s) \, ds - f(t)\right| = \left|\frac{1}{h}\int_t^{t+h} (f(s) - f(t)) \, ds\right|$
+
+By continuity of $f$, $\exists \delta > 0$ s.t. $|f(s) - f(t)| < \varepsilon$ whenever $|s - t| < \delta$.
+
+If $|h| < \delta$:
+\[\left|\frac{1}{h}\int_t^{t+h} (f(s) - f(t)) \, ds\right| \leq \frac{1}{|h|} \cdot \varepsilon \cdot |h| = \varepsilon\]
+\end{proof}
+
+\begin{thm}{FTC Version 2}{ftc2}
+Suppose $f: [a,b] \to \mathbb{R}$ is $C^1$. Then
+\[\int_a^b f'(t) \, dt = f(b) - f(a)\]
+\end{thm}
+
+\begin{proof}
+Define $F(t) = \int_a^t f'(s) \, ds$. By FTC v1, $F$ is $C^1$ and $F'(t) = f'(t)$.
+
+Let $g(t) = F(t) - f(t)$. Then $g$ is $C^1$ and $g'(t) = F'(t) - f'(t) = 0$ for all $t$.
+
+\textbf{Lemma:} If $f$ is continuous on $[a,b]$, differentiable on $(a,b)$, and $f'(t) = 0$ for all $t$, then $f$ is constant.
+
+Hence $g$ is constant, so $F(a) - f(a) = g(a) = g(b) = F(b) - f(b)$.
+
+Rearranging: $f(b) - f(a) = F(b) - F(a) = F(b) = \int_a^b f'(s) \, ds$.
+\end{proof}
+
+\subsection{Integration by Parts}
+
+\begin{thm}{Integration by Parts}{int_by_parts}
+Let $f, g: [a,b] \to \mathbb{R}$ be $C^1$. Then
+\[\int_a^b f'(t) g(t) \, dt = f(b)g(b) - f(a)g(a) - \int_a^b f(t) g'(t) \, dt\]
+\end{thm}
+
+\begin{proof}
+Apply FTC v2 to $fg: [a,b] \to \mathbb{R}$:
+\[f(b)g(b) - f(a)g(a) = \int_a^b (fg)'(t) \, dt = \int_a^b f'g \, dt + \int_a^b fg' \, dt\]
+Rearranging gives the result.
+\end{proof}
+
+\section{Linear Algebra: Thu/Fri (Computing Inverses)}
+
+\subsection{Finding Inverses via Row Reduction}
+
+\begin{thm}{Inverse via Augmented Matrix}{inverse_augmented}
+Augment $(A \mid I)$ and row reduce. If $\text{rref}(A) = I$, then $\text{rref}(A \mid I) = (I \mid A^{-1})$.
+\end{thm}
+
+\begin{proof}
+Recall that row operations correspond to multiplying by matrices on the left.
+
+Hence if $R_1, \ldots, R_k$ are the row operations:
+\[\text{rref}(A \mid I) = R_k \cdots R_1 (A \mid I) = (R_k \cdots R_1 A \mid R_k \cdots R_1 I)\]
+
+Here $B = R_k \cdots R_1 = A^{-1}$.
+\end{proof}
+
+\begin{remark}
+The row operations correspond to matrices:
+\begin{itemize}
+    \item Switching rows $i$ and $j$: permutation matrix
+    \item Multiply row $i$ by $\lambda \neq 0$: diagonal matrix with $\lambda$ in position $(i,i)$
+    \item Add $\lambda \times$ row $j$ to row $i$: elementary matrix with $\lambda$ in position $(i,j)$
+\end{itemize}
+All of these are invertible!
+\end{remark}
+
+
+% ==================== WEEK 9 ====================
+\chapter{Curves and Submanifolds}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Curves}
+
+\begin{defn}{Curve}{curve_def}
+A \textbf{curve} in $\mathbb{R}^m$ is a map $\gamma: [a,b] \to \mathbb{R}^m$.
+
+We say $\gamma$ is a $C^k$ curve for $k \in \mathbb{N} \cup \{\infty\}$ if each component function is $C^k$.
+\end{defn}
+
+\begin{defn}{Velocity and Unit Tangent}{velocity_tangent}
+\begin{enumerate}
+    \item If $\gamma: [a,b] \to \mathbb{R}^m$ is $C^1$, define the \textbf{velocity vector} to be $\gamma'(t) \in \mathbb{R}^m$.
+    \item If $\gamma'(t) \neq 0$, define the \textbf{unit tangent vector} to be $T(t) = \frac{\gamma'(t)}{\|\gamma'(t)\|}$.
+\end{enumerate}
+\end{defn}
+
+\subsection{Arc Length}
+
+\begin{defn}{Length of a Curve}{arc_length_def}
+For a partition $P: a = t_0 < t_1 < \cdots < t_n = b$, define
+\[L(\gamma, P) = \sum_{i=1}^n \|\gamma(t_i) - \gamma(t_{i-1})\|\]
+We say $\gamma$ has \textbf{finite length} if $\{L(\gamma, P) : P \text{ a partition}\}$ is bounded above.
+
+If $\gamma$ has finite length, define $L(\gamma) = \sup_P L(\gamma, P)$.
+\end{defn}
+
+\begin{thm}{Arc Length Formula}{arc_length_formula}
+Suppose $\gamma: [a,b] \to \mathbb{R}^m$ is $C^1$. Then $\gamma$ has finite length and
+\[L(\gamma) = \int_a^b \|\gamma'(t)\| \, dt\]
+\end{thm}
+
+\begin{proof}[Sketch]
+\textbf{Step 1:} $\gamma$ is of finite length.
+
+For any partition $P$:
+\[L(\gamma, P) = \sum \|\gamma(t_i) - \gamma(t_{i-1})\| = \sum \left\|\int_{t_{i-1}}^{t_i} \gamma'(s) \, ds\right\| \leq \sum \int_{t_{i-1}}^{t_i} \|\gamma'(s)\| \, ds = \int_a^b \|\gamma'(s)\| \, ds\]
+
+Hence $\{L(\gamma, P)\}$ is bounded above by $\int_a^b \|\gamma'\| \, dt$.
+
+\textbf{Step 2:} Define $S(t) = L(\gamma|_{[a,t]})$.
+
+\textbf{Claim:} $S'(t)$ exists and $S'(t) = \|\gamma'(t)\|$.
+
+Using FTC: $S(b) = S(a) + \int_a^b S'(t) \, dt = 0 + \int_a^b \|\gamma'(t)\| \, dt$.
+\end{proof}
+
+\begin{lem}{Additivity of Length}{length_additive}
+$\gamma: [a,b] \to \mathbb{R}^m$ has finite length. Suppose $c \in (a,b)$. Then $\gamma|_{[a,c]}$ and $\gamma|_{[c,b]}$ have finite lengths and
+\[L(\gamma) = L(\gamma|_{[a,c]}) + L(\gamma|_{[c,b]})\]
+\end{lem}
+
+\subsection{Submanifolds}
+
+\begin{defn}{Graph Map}{graph_map}
+Let $U \subseteq \mathbb{R}^k$ be open, $g: U \to \mathbb{R}^{n-k}$ be $C^1$.
+
+Define the \textbf{graph map} $\Gamma: U \to \mathbb{R}^n$ by
+\[\Gamma(x) = (x, g(x)) = (x_1, \ldots, x_k, g_1(x_1, \ldots, x_k), \ldots, g_{n-k}(x_1, \ldots, x_k))\]
+\end{defn}
+
+\begin{defn}{$k$-Dimensional Submanifold}{submanifold}
+We say $M \subseteq \mathbb{R}^n$ is a \textbf{$k$-dimensional $C^1$ submanifold} if for all $a \in M$, $\exists \rho > 0$ s.t.
+\[M \cap B_\rho(a) = P_{j_1, \ldots, j_k}^{-1}(\Gamma(U))\]
+where:
+\begin{itemize}
+    \item $\Gamma$ is the graph map for some $C^1$ function $g: U \to \mathbb{R}^{n-k}$, $U \subseteq \mathbb{R}^k$ open
+    \item $P_{j_1, \ldots, j_k}$ is a permutation of coordinates
+\end{itemize}
+I.e., $M \cap B_\rho(a)$ can be represented as a graph after permuting coordinates.
+\end{defn}
+
+\begin{thm}{Level Set Theorem}{level_set}
+Suppose $\phi_1, \ldots, \phi_{n-k}: \mathbb{R}^n \to \mathbb{R}$ are $C^1$.
+
+Let $M = \{x \in \mathbb{R}^n : \phi_1(x) = \cdots = \phi_{n-k}(x) = 0\}$.
+
+If $\nabla\phi_1(x), \ldots, \nabla\phi_{n-k}(x)$ are linearly independent for all $x \in M$, then (if $M \neq \emptyset$) $M$ is a $k$-dimensional $C^1$ submanifold.
+\end{thm}
+
+\begin{example}
+$S^{n-1} = \{x \in \mathbb{R}^n : \|x\| = 1\}$.
+
+Here $\phi(x) = \|x\|^2 - 1$. We have $\nabla\phi(x) = 2x$, which is linearly independent when $\phi(x) = 0$ (i.e., $x \neq 0$).
+
+So $S^{n-1}$ is an $(n-1)$-dimensional submanifold.
+\end{example}
+
+\subsection{Tangent Spaces}
+
+\begin{defn}{Tangent Space}{tangent_space}
+Let $M \subseteq \mathbb{R}^n$ be a $k$-dimensional submanifold, $a \in M$.
+
+Define the \textbf{tangent space} of $M$ at $a$ by
+\[T_a M = \{\gamma'(t_0) : \gamma: (-\varepsilon, \varepsilon) \to M \text{ is a $C^1$ curve s.t. } \gamma(t_0) = a\}\]
+\end{defn}
+
+\begin{thm}{Tangent Space is a Subspace}{tangent_subspace}
+$T_a M$ is a $k$-dimensional linear subspace of $\mathbb{R}^n$.
+\end{thm}
+
+\begin{proof}[Sketch]
+Suffices to consider the case of a graph. If $M \cap B_\rho(a) = \Gamma(U)$ where $\Gamma(x) = (x, g(x))$, then:
+
+\textbf{Claim:} $T_a M = \text{span}(D_1 \Gamma(a), \ldots, D_k \Gamma(a))$.
+
+Here $D_i \Gamma(a) = (e_i, D_i g(a))$.
+
+These are linearly independent (first $k$ components are $e_1, \ldots, e_k$), so $\dim T_a M = k$.
+\end{proof}
+
+\section{Linear Algebra: Thu/Fri (Abstract Vector Spaces)}
+
+\begin{remark}
+Many results from $\mathbb{R}^n$ extend to abstract vector spaces over any field $\mathbb{F}$. The key tools:
+\begin{itemize}
+    \item Bases and dimension
+    \item Linear maps and their matrices
+    \item Kernel, range, rank-nullity theorem
+    \item Change of basis
+\end{itemize}
+For inner product spaces specifically (over $\mathbb{R}$ or $\mathbb{C}$):
+\begin{itemize}
+    \item Orthogonality and orthonormal bases
+    \item Gram-Schmidt process
+    \item Orthogonal projections
+\end{itemize}
+\end{remark}
+
+
+% ==================== WEEK 10 ====================
+\chapter{Power Series and Integration in Higher Dimensions}
+
+\section{Analysis: Mon/Tue}
+
+\subsection{Power Series}
+
+Consider a power series $f(x) = \sum_{n=0}^\infty a_n x^n$ where the coefficients $a_n \in \mathbb{R}$.
+
+\begin{lem}{Convergence Propagates}{conv_propagates}
+Suppose $\exists x_0 \neq 0$ s.t. $\sum a_n x_0^n$ converges. Then:
+\begin{enumerate}
+    \item For all $x$ with $|x| < |x_0|$, the power series converges absolutely.
+    \item For all $R' < |x_0|$ and any polynomial $p(n)$, $\sum p(n) a_n x^n$ converges absolutely and uniformly on $[-R', R']$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}[Sketch]
+Let $r = |x|/|x_0| < 1$.
+
+Since $\sum a_n x_0^n$ converges, $\lim_{n \to \infty} a_n x_0^n = 0$. So $\exists B > 0$ s.t. $|a_n x_0^n| \leq B$ for all $n$.
+
+Hence $|a_n x^n| = |a_n x_0^n| \cdot r^n \leq B r^n$.
+
+Since $\sum B r^n$ converges (geometric series with $r < 1$), we get absolute convergence.
+
+For uniform convergence, note that $|p(n)| \cdot |a_n| \cdot |x|^n \leq |p(n)| B r^n$ on $[-R', R']$, and $\sum |p(n)| r^n$ converges.
+\end{proof}
+
+\begin{thm}{Radius of Convergence}{radius_conv}
+For any power series $\sum a_n x^n$, exactly one of the following holds:
+\begin{enumerate}
+    \item $\forall x \in \mathbb{R}$, $f(x)$ is convergent (radius $R = \infty$)
+    \item $f(x)$ is divergent $\forall x \neq 0$ (radius $R = 0$)
+    \item $\exists R > 0$ s.t. $f(x)$ is convergent if $|x| < R$ and divergent if $|x| > R$
+\end{enumerate}
+In case (3), nothing is claimed for $x = \pm R$.
+\end{thm}
+
+\begin{defn}{Radius of Convergence}{radius_def}
+The \textbf{radius of convergence} is $\infty$ in case (1), $0$ in case (2), and $R$ in case (3).
+\end{defn}
+
+\subsection{Uniform Convergence}
+
+\begin{defn}{Uniform Convergence}{unif_conv}
+Let $f_j: S \to \mathbb{R}$. We say $f_j$ \textbf{converges to $f$ uniformly} if
+\[\lim_{j \to \infty} \sup_{x \in S} |f_j(x) - f(x)| = 0\]
+I.e., $\forall \varepsilon > 0$, $\exists N$ s.t. $|f_j(x) - f(x)| < \varepsilon$ for all $j \geq N$ and all $x \in S$.
+\end{defn}
+
+\begin{thm}{Uniform Limit of Continuous Functions}{unif_cts}
+Suppose $f_j: S \to \mathbb{R}$ are continuous and $f_j \to f$ uniformly. Then $f$ is continuous.
+\end{thm}
+
+\begin{thm}{Weierstrass M-Test}{m_test}
+Suppose $\sum g_j: S \to \mathbb{R}$ satisfies $|g_j(x)| \leq M_j$ for some $M_j$ with $\sum M_j$ convergent.
+
+Then $\sum g_j$ converges uniformly to some $g$.
+
+In particular, if each $g_j$ is continuous, then $g$ is also continuous.
+\end{thm}
+
+\begin{thm}{Continuity of Power Series}{power_cts}
+Let $f(x) = \sum a_n x^n$ have radius of convergence $R > 0$. Then $f$ is continuous on $(-R, R)$.
+\end{thm}
+
+\begin{thm}{Differentiability of Power Series}{power_diff}
+Let $f(x) = \sum a_n x^n$ have radius of convergence $R > 0$. Then:
+\begin{enumerate}
+    \item $f$ is $C^k$ on $(-R, R)$ for all $k$
+    \item $f^{(k)}(x) = \sum_{n \geq k} n(n-1)\cdots(n-k+1) a_n x^{n-k}$
+\end{enumerate}
+This means we can differentiate term by term!
+\end{thm}
+
+\subsection{Taylor Series}
+
+\begin{thm}{Taylor's Theorem (General)}{taylor_general}
+Let $f: [x-r, x+r] \to \mathbb{R}$ be $C^{k+1}$ for some $L \in \mathbb{R}$, $r > 0$. Then
+\[f(x) = \sum_{j=0}^k \frac{f^{(j)}(L)}{j!}(x-L)^j + R_k(x)\]
+where the remainder satisfies $R_k(x) = \frac{f^{(k+1)}(\xi)}{(k+1)!}(x-L)^{k+1}$ for some $\xi$ between $L$ and $x$.
+\end{thm}
+
+\begin{cor}{Power Series Representation}{power_rep}
+If $f: (L-r, L+r) \to \mathbb{R}$ is $C^\infty$ and $|f^{(k)}(x)| \to 0$ sufficiently fast, then
+\[f(x) = \sum_{n=0}^\infty \frac{f^{(n)}(L)}{n!}(x-L)^n\]
+In particular, $a_n = \frac{f^{(n)}(L)}{n!}$.
+\end{cor}
+
+\subsection{Integration in $\mathbb{R}^n$}
+
+\begin{defn}{Rectangle and Partition}{rectangle}
+\begin{enumerate}
+    \item A \textbf{rectangle} $R = R[a_1, b_1; \ldots; a_n, b_n] = \{(x_1, \ldots, x_n) : a_i \leq x_i \leq b_i\}$
+    \item $\text{Vol}(R) = (b_1 - a_1) \cdots (b_n - a_n)$
+    \item A \textbf{partition} $P$ of $R$ is a choice of partitions $P_i$ of $[a_i, b_i]$ for each $i$
+\end{enumerate}
+\end{defn}
+
+\begin{defn}{Riemann Integral in $\mathbb{R}^n$}{riemann_rn}
+For $f: R \to \mathbb{R}$ bounded:
+\[L(f, P) = \sum_{R' \text{ subrectangle}} \inf_{x \in R'} f(x) \cdot \text{Vol}(R')\]
+\[U(f, P) = \sum_{R' \text{ subrectangle}} \sup_{x \in R'} f(x) \cdot \text{Vol}(R')\]
+
+Define $\underline{\int} f = \sup_P L(f,P)$, $\overline{\int} f = \inf_P U(f,P)$.
+
+$f$ is \textbf{integrable} if $\underline{\int} f = \overline{\int} f$, written $\int_R f$.
+\end{defn}
+
+\begin{thm}{Fubini's Theorem}{fubini}
+Given $f: R \to \mathbb{R}$ integrable, $R \subseteq \mathbb{R}^n$ a rectangle, $R = R[a_1, b_1; \ldots; a_n, b_n]$.
+
+For $x \in \mathbb{R}^n$, write $x = (y, z)$ where $y \in \mathbb{R}^k$ and $z \in \mathbb{R}^{n-k}$.
+
+Then
+\[\int_R f \, dx_1 \cdots dx_n = \int_{R'} \left(\int_{R''} f(y, z) \, dz\right) dy\]
+where $R'$ and $R''$ are the projections of $R$ onto the $y$ and $z$ coordinates.
+
+I.e., we can compute higher-dimensional integrals as iterated 1-D integrals in any order!
+\end{thm}
+
+\section{Linear Algebra: Thu/Fri (Review and Connections)}
+
+\begin{remark}
+The main theorems connecting linear algebra and analysis in this course:
+\begin{enumerate}
+    \item \textbf{Derivative as a linear map:} $(Df)(a): \mathbb{R}^n \to \mathbb{R}^m$ is a linear transformation, represented by the Jacobian matrix.
+    \item \textbf{Chain rule as matrix multiplication:} $D(g \circ f)(a) = Dg(f(a)) \cdot Df(a)$.
+    \item \textbf{Tangent spaces as subspaces:} $T_a M$ is a linear subspace of $\mathbb{R}^n$.
+    \item \textbf{Hessian as a quadratic form:} The second derivative test uses positive definiteness of the Hessian matrix.
+    \item \textbf{Inverse Function Theorem:} $f$ is locally invertible near $a$ iff $Df(a)$ is invertible (i.e., $\det Df(a) \neq 0$).
+\end{enumerate}
+\end{remark}
+
+
+% =======================================================
+% BACK MATTER: SOLUTIONS
+% =======================================================
+\backmatter 
+
+\chapter{Solutions to Selected Exercises}
+\markboth{Solutions}{Solutions} 
+
+% --- Solutions for Part I (Math 61) ---
+\section*{Part I: Math 61}
+
+\subsection*{Week 1: The Real Numbers}
+
+\begin{solution}[1.1]
+(i) Assume for contradiction that $-a > 0$. Then $a + (-a) > 0$ (O2), so $0 > 0$ (F5), contradiction. Also $-a \neq 0$ since $a \neq 0$. Hence $-a < 0$.
+
+(ii) Assume $\frac{1}{a} < 0$. Then $a \cdot (-\frac{1}{a}) > 0$ (O2). But $a \cdot (-\frac{1}{a}) = -1$, so $(-1)(-1) = 1 > 0$ implies $1 + (-1) > 0$, contradicting F5. Also $\frac{1}{a} \neq 0$ since $a \cdot \frac{1}{a} = 1 \neq 0$. Hence $\frac{1}{a} > 0$.
+
+(iii) Assume $\frac{1}{b} < \frac{1}{a}$. Multiplying by $ab > 0$ (using O2 and part (ii)): $a < b$, contradiction. Hence $\frac{1}{a} < \frac{1}{b}$.
+\end{solution}
+
+\begin{solution}[1.3]
+Let $S = \{x : x^2 < a, x > 0\}$. First, $S$ is nonempty (take $x = \min(1, a/2)$) and bounded above (by $\max(1, a)$). Let $\alpha = \sup S$.
+
+\textbf{Claim:} $\alpha^2 = a$.
+
+If $\alpha^2 > a$: Choose $n$ large enough that $\frac{1}{n} < \frac{\alpha^2 - a}{2\alpha}$. Then $(\alpha - \frac{1}{n})^2 > a$, so $\alpha - \frac{1}{n}$ is an upper bound for $S$, contradicting $\alpha = \sup S$.
+
+If $\alpha^2 < a$: Choose $n$ large enough that $(\alpha + \frac{1}{n})^2 < a$. Then $\alpha + \frac{1}{n} \in S$, contradicting $\alpha = \sup S$.
+
+Hence $\alpha^2 = a$, and $\alpha = \sqrt{a}$.
+\end{solution}
+
+\begin{solution}[1.5]
+Let $\varepsilon > 0$. By Archimedean property, $\exists N \in \mathbb{N}$ with $N > 1/\varepsilon$, i.e., $\frac{1}{N} < \varepsilon$. For $n \geq N$: $\frac{1}{n} \leq \frac{1}{N} < \varepsilon$, so $|\frac{1}{n} - 0| < \varepsilon$. Hence $\lim \frac{1}{n} = 0$.
+\end{solution}
+
+\begin{solution}[1.7]
+No! Note that $(v_1 - v_2) + (v_2 - v_3) + (v_3 - v_4) + (v_4 - v_1) = 0$. This is a nontrivial linear combination equaling zero, so they are linearly dependent.
+\end{solution}
+
+\subsection*{Week 2: Subsequences and Continuity}
+
+\begin{solution}[2.1]
+Let $L = \lim a_n = \lim b_n$. Given $\varepsilon > 0$, choose $N$ such that $|a_n - L| < \varepsilon$ and $|b_n - L| < \varepsilon$ for $n \geq N$.
+
+Since $a_n \leq c_n \leq b_n$, we have $a_n - L \leq c_n - L \leq b_n - L$.
+
+If $c_n - L \geq 0$: $|c_n - L| = c_n - L \leq b_n - L \leq |b_n - L| < \varepsilon$.
+
+If $c_n - L < 0$: $|c_n - L| = L - c_n \leq L - a_n = |a_n - L| < \varepsilon$.
+
+Either way, $|c_n - L| < \varepsilon$ for $n \geq N$. Hence $\lim c_n = L$.
+\end{solution}
+
+\begin{solution}[2.3]
+Suppose $f$ is not continuous at $c$. Then $\exists \varepsilon_0 > 0$ such that $\forall \delta > 0$, $\exists x$ with $|x - c| < \delta$ but $|f(x) - f(c)| \geq \varepsilon_0$.
+
+Choose $\delta = \frac{1}{n}$. Then $\exists x_n$ with $|x_n - c| < \frac{1}{n}$ but $|f(x_n) - f(c)| \geq \varepsilon_0$.
+
+This sequence $\{x_n\}$ satisfies $x_n \to c$, but $f(x_n) \not\to f(c)$, contradicting the hypothesis. Hence $f$ is continuous at $c$.
+\end{solution}
+
+\begin{solution}[2.5]
+($\Rightarrow$) If $U = V$, they have the same basis, so $\dim U = \dim V$.
+
+($\Leftarrow$) Let $\{u_1, \ldots, u_n\}$ be a basis for $U$. Since $U \subseteq V$ and these are linearly independent vectors in $V$ with $|$set$| = \dim V$, they form a basis for $V$. Hence $V = \text{span}\{u_1, \ldots, u_n\} = U$.
+\end{solution}
+
+\begin{solution}[2.7]
+$V = \{p \in \mathcal{P}_4 : p(1) = 0\}$ consists of polynomials with root at $x = 1$, so $p(x) = (x-1)q(x)$ where $\deg q \leq 3$.
+
+\textbf{Basis for $V$:} $\{(x-1), x(x-1), x^2(x-1), x^3(x-1)\}$.
+
+These span $V$ since any $(x-1)(a + bx + cx^2 + dx^3)$ is a linear combination. They're independent since $(x-1)(c_1 + c_2 x + c_3 x^2 + c_4 x^3) = 0$ implies all $c_i = 0$.
+
+\textbf{Extend to $\mathcal{P}_4$:} Add $\{1\}$. Check: $1 \notin V$ (since $1(1) = 1 \neq 0$). So basis for $\mathcal{P}_4$ is $\{1, (x-1), x(x-1), x^2(x-1), x^3(x-1)\}$.
+\end{solution}
+
+\subsection*{Week 3: Differentiation and Topology}
+
+\begin{solution}[3.1]
+Suppose $f: [a,b] \to \mathbb{R}$ is continuous but not uniformly continuous. Then $\exists \varepsilon_0 > 0$ such that $\forall \delta > 0$, $\exists x, y$ with $|x - y| < \delta$ but $|f(x) - f(y)| \geq \varepsilon_0$.
+
+Take $\delta = 1/n$. Get sequences $\{x_n\}, \{y_n\}$ with $|x_n - y_n| < 1/n$ and $|f(x_n) - f(y_n)| \geq \varepsilon_0$.
+
+By Bolzano-Weierstrass, $\{x_n\}$ has a convergent subsequence $x_{n_k} \to c \in [a,b]$. Since $|x_{n_k} - y_{n_k}| < 1/n_k \to 0$, we have $y_{n_k} \to c$ also.
+
+By continuity: $f(x_{n_k}) \to f(c)$ and $f(y_{n_k}) \to f(c)$, so $|f(x_{n_k}) - f(y_{n_k})| \to 0$. But this contradicts $|f(x_{n_k}) - f(y_{n_k})| \geq \varepsilon_0$. Hence $f$ is uniformly continuous.
+\end{solution}
+
+\begin{solution}[3.3]
+($\Rightarrow$) If $a_n \to L$, then $\forall \varepsilon > 0$, $\exists N$ with $|a_n - L| < \varepsilon/2$ for $n \geq N$. For $m, n \geq N$:
+\[|a_m - a_n| \leq |a_m - L| + |a_n - L| < \varepsilon/2 + \varepsilon/2 = \varepsilon\]
+
+($\Leftarrow$) First show $\{a_n\}$ is bounded: Take $\varepsilon = 1$. Then $\exists N$ with $|a_m - a_n| < 1$ for $m, n \geq N$. So $|a_m| \leq |a_N| + 1$ for $m \geq N$. Hence $\{a_n\}$ is bounded.
+
+By BW, $\exists$ subsequence $a_{n_k} \to A$. Given $\varepsilon > 0$, choose $K$ so $|a_{n_k} - A| < \varepsilon/2$ for $k \geq K$, and choose $N$ so $|a_m - a_n| < \varepsilon/2$ for $m, n \geq N$. For $n \geq \max(N, n_K)$:
+\[|a_n - A| \leq |a_n - a_{n_K}| + |a_{n_K} - A| < \varepsilon\]
+Hence $a_n \to A$.
+\end{solution}
+
+\begin{solution}[3.5]
+Expanding:
+\begin{align*}
+\sum_{i,j}(a_i b_j - a_j b_i)^2 &= \sum_{i,j}(a_i^2 b_j^2 - 2a_i b_j a_j b_i + a_j^2 b_i^2) \\
+&= \sum_i a_i^2 \sum_j b_j^2 + \sum_j a_j^2 \sum_i b_i^2 - 2\sum_i a_i b_i \sum_j a_j b_j \\
+&= 2\|a\|^2\|b\|^2 - 2(a \cdot b)^2
+\end{align*}
+Hence $\frac{1}{2}\sum_{i,j}(a_i b_j - a_j b_i)^2 = \|a\|^2\|b\|^2 - (a \cdot b)^2 \geq 0$.
+
+This gives $(a \cdot b)^2 \leq \|a\|^2\|b\|^2$, so $|a \cdot b| \leq \|a\|\|b\|$ (Cauchy-Schwarz).
+\end{solution}
+
+\begin{solution}[3.7]
+$(AB)^T_{ij} = (AB)_{ji} = \sum_k a_{jk} b_{ki}$.
+
+$(B^T A^T)_{ij} = \sum_k (B^T)_{ik}(A^T)_{kj} = \sum_k b_{ki} a_{jk} = \sum_k a_{jk} b_{ki}$.
+
+These are equal, so $(AB)^T = B^T A^T$.
+\end{solution}
+
+\subsection*{Week 4: Continuity and Metric Spaces}
+
+\begin{solution}[4.1]
+Define $h: [a,b] \to \mathbb{R}$ by $h(t) = (f(b) - f(a)) \cdot f(t)$. Then $h$ is continuous on $[a,b]$ and differentiable on $(a,b)$.
+
+By MVT, $\exists c \in (a,b)$ with $h'(c) = \frac{h(b) - h(a)}{b-a}$.
+
+Computing: $h(b) - h(a) = (f(b) - f(a)) \cdot f(b) - (f(b) - f(a)) \cdot f(a) = \|f(b) - f(a)\|^2$.
+
+And $h'(c) = (f(b) - f(a)) \cdot f'(c)$.
+
+So $\frac{\|f(b) - f(a)\|^2}{b-a} = (f(b) - f(a)) \cdot f'(c) \leq \|f(b) - f(a)\| \|f'(c)\|$ (Cauchy-Schwarz).
+
+Hence $\|f(b) - f(a)\| \leq (b-a)\|f'(c)\|$.
+\end{solution}
+
+\begin{solution}[4.3]
+Let $c \in f^{-1}(U)$, so $f(c) \in U$. Since $U$ is open, $\exists \varepsilon > 0$ with $B_\varepsilon(f(c)) \subseteq U$.
+
+By continuity of $f$, $\exists \delta > 0$ with $d_X(x, c) < \delta \Rightarrow d_Y(f(x), f(c)) < \varepsilon$.
+
+So $x \in B_\delta(c) \Rightarrow f(x) \in B_\varepsilon(f(c)) \subseteq U \Rightarrow x \in f^{-1}(U)$.
+
+Hence $B_\delta(c) \subseteq f^{-1}(U)$, so $f^{-1}(U)$ is open.
+\end{solution}
+
+\begin{solution}[4.5]
+For $\text{rank}(AB) \leq \text{rank}(A)$: Each column of $AB$ is a linear combination of columns of $A$ (with coefficients from $B$). So $\text{col}(AB) \subseteq \text{col}(A)$, hence $\text{rank}(AB) \leq \text{rank}(A)$.
+
+For $\text{rank}(AB) \leq \text{rank}(B)$: Each row of $AB$ is a linear combination of rows of $B$. So $\text{row}(AB) \subseteq \text{row}(B)$, hence $\text{rank}(AB) \leq \text{rank}(B)$.
+
+Therefore $\text{rank}(AB) \leq \min(\text{rank}(A), \text{rank}(B))$.
+\end{solution}
+
+\begin{solution}[4.7]
+The projection of $x$ onto $W = \text{span}\{v\}$ (where $\|v\| = 1$) is $(v \cdot x)v$.
+
+In matrix form: $P_W(x) = v(v^T x) = (vv^T)x$.
+
+So the matrix is $P_W = vv^T$ (an $n \times n$ matrix).
+
+The projection onto $W^\perp$ is $P_{W^\perp} = I - P_W = I - vv^T$.
+\end{solution}
+
+\subsection*{Week 5: Series and Higher-Dimensional Differentiation}
+
+\begin{solution}[5.1]
+By the ratio test hypothesis: $|a_n| \leq |a_N| \lambda^{n-N}$ for $n \geq N$.
+
+So $\sum_{n=N}^\infty |a_n| \leq |a_N| \sum_{n=N}^\infty \lambda^{n-N} = |a_N| \cdot \frac{1}{1-\lambda}$ (geometric series with $\lambda < 1$).
+
+Since $\sum_{n=1}^{N-1} |a_n|$ is finite, $\sum_{n=1}^\infty |a_n|$ converges. Hence $\sum a_n$ converges absolutely.
+\end{solution}
+
+\begin{solution}[5.3]
+Let $S_{2n} = \sum_{k=1}^{2n} (-1)^{k+1} a_k = (a_1 - a_2) + (a_3 - a_4) + \cdots + (a_{2n-1} - a_{2n})$.
+
+Each parenthesis is $\geq 0$ (since $\{a_n\}$ is decreasing), so $S_{2n}$ is increasing.
+
+Also $S_{2n} = a_1 - (a_2 - a_3) - (a_4 - a_5) - \cdots \leq a_1$, so $S_{2n}$ is bounded.
+
+Hence $S_{2n} \to L$ for some $L$.
+
+Now $S_{2n+1} = S_{2n} + a_{2n+1} \to L + 0 = L$ (since $a_n \to 0$).
+
+So $S_n \to L$.
+\end{solution}
+
+\begin{solution}[5.5]
+Since $\sum \|a_k\|$ converges, each component $\sum |a_{k,i}|$ converges (as $|a_{k,i}| \leq \|a_k\|$).
+
+For real series: if $\sum |b_k|$ converges, then $\sum b_k$ converges (define $b_k^+ = \max(b_k, 0)$, $b_k^- = \max(-b_k, 0)$; both are bounded by $|b_k|$).
+
+So each component $\sum a_{k,i}$ converges. Hence $\sum a_k$ converges in $\mathbb{R}^n$.
+\end{solution}
+
+\begin{solution}[5.7]
+We compute $\det$ using row/column operations, tracking sign changes.
+
+After reducing to upper triangular form (work omitted), we find $\det = 15$.
+
+Alternatively: The determinant equals $\prod_{1 \leq i < j \leq n}(x_j - x_i)$ for the Vandermonde matrix.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PART II: MATH 62CM - DIFFERENTIAL FORMS AND MANIFOLDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter % Restore normal chapter numbering after backmatter
+
+% Change chapter format for Part II (from "Week X" to "Chapter X")
+\titleformat{\chapter}[display]
+  {\sffamily\bfseries\color{MagicTeal}}
+  {\flushright\fontsize{40}{40}\selectfont\color{MagicPink!50}Chapter \thechapter} 
+  {-10pt}
+  {\Huge}
+  [\vspace{1ex}{\color{MagicMint}\titlerule[3pt]}]
+
+\part{Math 62CM: Differential Forms and Manifolds}
+
+% Reset chapter counter for Part II
+\setcounter{chapter}{0}
+
+\chapter{Dual Spaces and Topology}
+
+\section{Dual Spaces}
+
+The highlight of this course is \textbf{Stokes' theorem}, which unifies Green's theorem, the divergence theorem, and the classical Stokes theorem into a single elegant statement. To develop this, we need multilinear algebra and the theory of differential forms.
+
+\begin{defn}{Dual Space}{dual_space}
+Let $V$ be a real vector space. A function $f: V \to \mathbb{R}$ is called \textbf{linear} if $f(\lambda v) = \lambda f(v)$ and $f(v_1 + v_2) = f(v_1) + f(v_2)$ for all $\lambda \in \mathbb{R}$ and $v, v_1, v_2 \in V$.
+
+The set of all linear functions on $V$ forms a vector space called the \textbf{dual space}, denoted $V^*$.
+\end{defn}
+
+\begin{thm}{Dimension of Dual Space}{dim_dual}
+If $\dim(V) = n$ is finite, then $\dim(V^*) = n$.
+\end{thm}
+
+\begin{proof}
+Let $\{v_1, \ldots, v_n\}$ be a basis for $V$. Define $v_i^*: V \to \mathbb{R}$ by $v_i^*(v_j) = \delta_{ij}$ (the Kronecker delta). We claim $\{v_1^*, \ldots, v_n^*\}$ is a basis for $V^*$.
+
+\textbf{Linear independence:} If $\sum a_i v_i^* = 0$, then applying to $v_j$ gives $a_j = 0$ for all $j$.
+
+\textbf{Spanning:} Given $f \in V^*$, let $a_i = f(v_i)$. Then $(f - \sum a_i v_i^*)(v_j) = f(v_j) - a_j = 0$, so $f = \sum a_i v_i^*$.
+\end{proof}
+
+\begin{defn}{Dual Basis}{dual_basis}
+The basis $\{v_1^*, \ldots, v_n^*\}$ constructed above is called the \textbf{dual basis} to $\{v_1, \ldots, v_n\}$.
+\end{defn}
+
+\begin{remark}
+While $V$ and $V^*$ are isomorphic (they have the same dimension), there is no \emph{canonical} isomorphism---it depends on a choice of basis. However, if $V$ has an inner product, we get a canonical isomorphism $D: V \to V^*$ via $D(v) = \ell_v$ where $\ell_v(w) = \langle v, w \rangle$.
+\end{remark}
+
+\begin{thm}{Double Dual}{double_dual}
+$(V^*)^*$ is canonically isomorphic to $V$ (assuming $\dim V$ is finite).
+\end{thm}
+
+\begin{proof}
+Define $\iota: V \to (V^*)^*$ by $\iota(v)(f) = f(v)$ for $f \in V^*$. This is linear and injective (if $f(v) = 0$ for all $f$, then $v = 0$). Since $\dim V = \dim V^* = \dim (V^*)^*$, it's an isomorphism.
+\end{proof}
+
+\begin{defn}{Dual Map}{dual_map}
+If $A: V \to W$ is linear, the \textbf{dual map} $A^*: W^* \to V^*$ is defined by $(A^*f)(v) = f(Av)$.
+\end{defn}
+
+In matrix form, if $A$ is represented by matrix $M$, then $A^*$ is represented by $M^T$.
+
+\section{Topology in Vector Spaces}
+
+Let $V$ be a finite-dimensional Euclidean space (vector space with inner product).
+
+\begin{defn}{Open and Closed Sets}{open_closed}
+\begin{itemize}
+    \item The \textbf{open ball} of radius $r$ centered at $p$ is $B_r(p) = \{x \in V : \|x - p\| < r\}$.
+    \item The \textbf{closed ball} is $\overline{B}_r(p) = \{x \in V : \|x - p\| \leq r\}$.
+    \item The \textbf{sphere} is $S_r(p) = \{x \in V : \|x - p\| = r\}$.
+    \item A set $U \subseteq V$ is \textbf{open} if for every $x \in U$, there exists $\delta > 0$ such that $B_\delta(x) \subseteq U$.
+    \item A set $A \subseteq V$ is \textbf{closed} if $V \setminus A$ is open.
+\end{itemize}
+\end{defn}
+
+\begin{thm}{Properties of Open and Closed Sets}{open_closed_props}
+\begin{enumerate}
+    \item Arbitrary unions of open sets are open.
+    \item Finite intersections of open sets are open.
+    \item Arbitrary intersections of closed sets are closed.
+    \item Finite unions of closed sets are closed.
+\end{enumerate}
+\end{thm}
+
+\begin{defn}{Interior, Closure, Boundary}{int_clos_bdy}
+For $X \subseteq V$:
+\begin{itemize}
+    \item The \textbf{interior} $\text{Int}(X)$ is the union of all open sets contained in $X$.
+    \item The \textbf{closure} $\overline{X}$ is the intersection of all closed sets containing $X$.
+    \item The \textbf{boundary} $\partial X = \overline{X} \setminus \text{Int}(X)$.
+\end{itemize}
+\end{defn}
+
+\begin{defn}{Compact Sets}{compact}
+A set $A \subseteq V$ is \textbf{compact} if:
+\begin{enumerate}
+    \item (Definition 1) $A$ is closed and bounded.
+    \item (Definition 2) Every sequence $\{x_n\} \subseteq A$ has a subsequence converging to a point in $A$.
+    \item (Definition 3) Every open cover of $A$ has a finite subcover.
+\end{enumerate}
+These definitions are equivalent in $\mathbb{R}^n$ (Heine-Borel theorem).
+\end{defn}
+
+\section{Connected and Path-Connected Sets}
+
+\begin{defn}{Connected}{connected}
+A set $A \subseteq V$ is \textbf{connected} if we cannot write $A = A_0 \cup A_1$ where $A_0, A_1$ are both non-empty, disjoint, and relatively open in $A$.
+\end{defn}
+
+\begin{defn}{Path-Connected}{path_connected}
+A set $A$ is \textbf{path-connected} if for any $a, b \in A$, there exists a continuous path $\gamma: [0,1] \to A$ with $\gamma(0) = a$ and $\gamma(1) = b$.
+\end{defn}
+
+\begin{thm}{Path-Connected Implies Connected}{path_conn_implies}
+\end{thm}
+
+\begin{proof}
+Suppose $A$ is path-connected but not connected. Write $A = A_0 \cup A_1$ with $A_0, A_1$ open, disjoint, non-empty. Pick $a_0 \in A_0, a_1 \in A_1$ and a path $\gamma: [0,1] \to A$ connecting them. Then $f = \mathbf{1}_{A_1} \circ \gamma: [0,1] \to \{0,1\}$ is continuous with $f(0) = 0, f(1) = 1$. But this contradicts the Intermediate Value Theorem.
+\end{proof}
+
+\begin{remark}
+The converse is false. The ``topologist's sine curve'' $\{(x, \sin(1/x)) : x > 0\} \cup \{(0,0)\}$ is connected but not path-connected.
+\end{remark}
+
+\begin{thm}{$\mathbb{R}^n$ is Connected}{rn_connected}
+$\mathbb{R}^n$ is connected (in fact, path-connected via linear paths $\gamma(t) = (1-t)x + ty$).
+\end{thm}
+
+\begin{defn}{Homeomorphism}{homeomorphism}
+$f: A \to B$ is a \textbf{homeomorphism} if $f$ is continuous, bijective, and $f^{-1}$ is continuous. We say $A$ and $B$ are \textbf{homeomorphic} (``topologically the same'').
+\end{defn}
+
+\begin{thm}{Continuous Image of Connected}{cont_connected}
+Continuous images of connected sets are connected.
+\end{thm}
+
+\begin{exercises}
+
+\begin{exercise}
+Prove the converse: given any basis $\ell_1, \ldots, \ell_n$ of $V^*$, construct a dual basis $w_1, \ldots, w_n$ of $V$ so that $\ell_i(w_j) = \delta_{ij}$.
+\end{exercise}
+
+\begin{exercise}
+Let $V$ be a vector space with inner product $\langle \cdot, \cdot \rangle$. Prove that $\mathcal{D}: V \to V^*$, $\mathcal{D}(v) = \ell_v$ where $\ell_v(x) = \langle v, x \rangle$, is an isomorphism. Show that $\mathcal{D} = i_S$ for any orthonormal basis $S$.
+\end{exercise}
+
+\begin{exercise}
+Show that both maps $i_S$ and $\mathcal{D}$ are injective in the infinite-dimensional case as well.
+\end{exercise}
+
+\begin{exercise}
+Prove that the definition of open and closed sets is independent of the choice of inner product on a finite-dimensional vector space.
+\end{exercise}
+
+\begin{exercise}
+Show that the closure of a connected set is connected.
+\end{exercise}
+
+\begin{exercise}
+Prove that the closure of the graph of $\sin(1/x)$, $x > 0$, is connected but not path-connected.
+\end{exercise}
+
+\begin{exercise}
+\begin{enumerate}
+    \item Prove that $[0,1]$, $[0,1)$, and $(0,1)$ are pairwise not homeomorphic.
+    \item Prove that $\mathbb{R}^n$ is not homeomorphic to $\mathbb{R}$ if $n > 1$.
+\end{enumerate}
+\end{exercise}
+
+\end{exercises}
+
+\chapter{Differential Forms}
+
+\section{Vector Fields and 1-Forms}
+
+\begin{defn}{Vector Field}{vector_field}
+A \textbf{vector field} on an open set $U \subseteq V$ is an assignment $x \mapsto v_x \in V_x$ (where $V_x$ is a copy of $V$ at $x$).
+\end{defn}
+
+\begin{defn}{Differential 1-Form}{diff_1form}
+A \textbf{differential 1-form} $\alpha$ on $U$ is an assignment $x \mapsto \alpha_x \in V_x^*$ varying smoothly.
+\end{defn}
+
+In coordinates $(x_1, \ldots, x_n)$, a 1-form is $\alpha = \sum a_i(x) dx_i$ where $dx_i$ are the coordinate differentials (dual to the standard basis).
+
+\begin{defn}{Differential of a Function}{diff_func}
+For $f: U \to \mathbb{R}$ differentiable, the \textbf{differential} $df$ is a 1-form defined by:
+\[
+df_x(v) = \lim_{t \to 0} \frac{f(x + tv) - f(x)}{t} = D_v f(x)
+\]
+In coordinates: $df = \sum \frac{\partial f}{\partial x_i} dx_i$.
+\end{defn}
+
+\begin{defn}{Exact and Closed Forms}{exact_closed}
+A 1-form $\alpha$ is:
+\begin{itemize}
+    \item \textbf{Exact} if $\alpha = df$ for some function $f$ (called a \textbf{primitive}).
+    \item \textbf{Closed} if $\frac{\partial a_i}{\partial x_j} = \frac{\partial a_j}{\partial x_i}$ for all $i, j$.
+\end{itemize}
+\end{defn}
+
+\begin{thm}{Exact Implies Closed}{exact_implies_closed}
+Exact $\Rightarrow$ Closed.
+\end{thm}
+
+\section{Pullback}
+
+\begin{defn}{Pullback}{pullback}
+Let $f: U \to U'$ be differentiable and $\alpha$ a 1-form on $U'$. The \textbf{pullback} $f^*\alpha$ is a 1-form on $U$ defined by:
+\[
+(f^*\alpha)_x(v) = \alpha_{f(x)}((d_x f)(v))
+\]
+\end{defn}
+
+\begin{thm}{Properties of Pullback}{pullback_props}
+\begin{enumerate}
+    \item $f^*(\alpha + \beta) = f^*\alpha + f^*\beta$
+    \item $f^*(\phi \alpha) = (\phi \circ f) f^*\alpha$ for functions $\phi$
+    \item $f^*(dg) = d(g \circ f)$
+    \item $(g \circ f)^* = f^* \circ g^*$
+\end{enumerate}
+\end{thm}
+
+\begin{example}
+Let $f(r, \theta) = (r\cos\theta, r\sin\theta)$ (polar coordinates) and $\alpha = x dy - y dx$ on $\mathbb{R}^2$. Then:
+\[
+f^*\alpha = r\cos\theta \cdot d(r\sin\theta) - r\sin\theta \cdot d(r\cos\theta) = r^2 d\theta
+\]
+\end{example}
+
+\section{Integration on Curves}
+
+\begin{defn}{Line Integral}{line_integral}
+Let $\gamma: [a,b] \to U$ be a smooth path and $\alpha$ a 1-form on $U$. The \textbf{line integral} is:
+\[
+\int_\gamma \alpha = \int_a^b \gamma^*\alpha = \int_a^b \alpha_{\gamma(t)}(\gamma'(t)) dt
+\]
+\end{defn}
+
+\begin{thm}{Independence of Parametrization}{param_indep}
+The line integral is independent of parametrization (up to sign for orientation reversal).
+\end{thm}
+
+\begin{thm}{Fundamental Theorem for Exact Forms}{ftc_exact}
+If $\alpha = df$ is exact and $\gamma$ is a path from $A$ to $B$:
+\[
+\int_\gamma df = f(B) - f(A)
+\]
+In particular, $\oint_\gamma df = 0$ for any closed loop.
+\end{thm}
+
+\section{Poincaré Lemma}
+
+\begin{defn}{Star-Shaped}{star_shaped}
+A set $U$ is \textbf{star-shaped} with respect to $a \in U$ if for every $x \in U$ and $t \in [0,1]$, $(1-t)a + tx \in U$.
+\end{defn}
+
+\begin{thm}{Poincaré Lemma}{poincare_1form}
+On a star-shaped open set $U$, every closed 1-form is exact.
+\end{thm}
+
+\begin{proof}
+Let $\alpha = \sum a_i(x) dx_i$ be closed. Define:
+\[
+f(x) = \int_0^1 \sum a_i(tx) x_i \, dt
+\]
+Then $df = \alpha$.
+\end{proof}
+
+\begin{defn}{Simply Connected}{simply_connected}
+$U$ is \textbf{simply connected} if it is path-connected and every two paths connecting the same endpoints are homotopic.
+\end{defn}
+
+\begin{thm}{Simply Connected Poincaré}{poincare_sc}
+On a simply connected open set, every closed form is exact.
+\end{thm}
+
+\begin{example}
+The form $\alpha = \frac{-y dx + x dy}{x^2 + y^2}$ on $\mathbb{R}^2 \setminus \{0\}$ is closed but not exact (since $\oint_{S^1} \alpha = 2\pi \neq 0$). This shows $\mathbb{R}^2 \setminus \{0\}$ is not simply connected.
+\end{example}
+
+\begin{exercises}
+
+\begin{exercise}
+Let $f: \mathbb{R}^2 \to \mathbb{R}^3$, $f(x,y) = (e^x - 2y, x + y^2, \sin(y) + 1)$ and $\alpha = z\,dx - 3\,dy + e^y\,dz$. Compute $f^*\alpha$.
+\end{exercise}
+
+\begin{exercise}
+In $\mathbb{R}^4$ with coordinates $(x,y,z,u)$, consider the plane field defined by $dz - y\,dx = 0$ and $dy - u\,dx = 0$. For a curve $\Gamma$ given by $y = f(x)$, $z = g(x)$, $u = h(x)$, find necessary and sufficient conditions for $\Gamma$ to be tangent to this plane field.
+\end{exercise}
+
+\begin{exercise}
+In $\mathbb{R}^3$, find a curve $\Gamma$ whose projection to the $(x,y)$-plane is $x = y^2$, tangent to $dz - y\,dx = 0$, and containing the origin.
+\end{exercise}
+
+\begin{exercise}
+Find a primitive in $\mathbb{R}^2$ of the exact 1-form:
+\[
+\alpha = e^x(e^y(x-y+2) + y)dx + e^x(e^y(x-y) + 1)dy
+\]
+\end{exercise}
+
+\begin{exercise}
+Prove that $\mathbb{R}^3 \setminus \{y = x^2, z = 0\}$ is not simply connected.
+\end{exercise}
+
+\begin{exercise}
+Show that any star-shaped open set is simply connected.
+\end{exercise}
+
+\end{exercises}
+
+\chapter{Multilinear Algebra}
+
+\section{Bilinear and Multilinear Forms}
+
+\begin{defn}{Multilinear Form}{multilinear}
+A function $f: V \times \cdots \times V \to \mathbb{R}$ ($k$ copies) is \textbf{$k$-linear} (or multilinear) if it is linear in each argument when the others are fixed.
+\end{defn}
+
+\begin{defn}{Bilinear Form}{bilinear}
+A \textbf{bilinear form} $f: V \times V \to \mathbb{R}$ is \textbf{symmetric} if $f(x,y) = f(y,x)$ and \textbf{skew-symmetric} if $f(x,y) = -f(y,x)$.
+\end{defn}
+
+\begin{defn}{Quadratic Form}{quadratic}
+A \textbf{quadratic form} is $Q(x) = f(x,x)$ for some symmetric bilinear $f$.
+\end{defn}
+
+\begin{thm}{Polarization}{polarization}
+Given a quadratic form $Q$, there is a unique symmetric bilinear form $f$ with $Q(x) = f(x,x)$:
+\[
+f(x,y) = \frac{1}{2}(Q(x+y) - Q(x) - Q(y))
+\]
+\end{thm}
+
+\begin{defn}{Index and Rank}{index_rank}
+For a quadratic form $Q$ written as $Q = \sum \lambda_j x_j^2$:
+\begin{itemize}
+    \item The number of positive $\lambda_j$ is the \textbf{positive index}.
+    \item The number of negative $\lambda_j$ is the \textbf{negative index}.
+    \item The rank is the total number of nonzero $\lambda_j$.
+\end{itemize}
+\end{defn}
+
+\begin{thm}{Sylvester's Law of Inertia}{sylvester}
+The positive index, negative index, and nullity of a quadratic form are independent of the choice of basis (i.e., the presentation as a sum of squares).
+\end{thm}
+
+\section{Exterior (Wedge) Product}
+
+\begin{defn}{Skew-Symmetric $k$-Linear Form}{skew_sym}
+$f: V^k \to \mathbb{R}$ is \textbf{skew-symmetric} if swapping any two arguments negates the value:
+\[
+f(v_1, \ldots, v_i, \ldots, v_j, \ldots, v_k) = -f(v_1, \ldots, v_j, \ldots, v_i, \ldots, v_k)
+\]
+\end{defn}
+
+The space of skew-symmetric $k$-linear forms on $V$ is denoted $\Lambda^k(V^*)$ and has dimension $\binom{n}{k}$ where $n = \dim V$.
+
+\begin{defn}{Wedge Product}{wedge}
+For $\varphi \in \Lambda^k(V^*)$ and $\psi \in \Lambda^\ell(V^*)$, the \textbf{wedge product} $\varphi \wedge \psi \in \Lambda^{k+\ell}(V^*)$ is:
+\[
+(\varphi \wedge \psi)(v_1, \ldots, v_{k+\ell}) = \frac{1}{k!\ell!} \sum_{\sigma \in S_{k+\ell}} \text{sign}(\sigma) \varphi(v_{\sigma(1)}, \ldots, v_{\sigma(k)}) \psi(v_{\sigma(k+1)}, \ldots, v_{\sigma(k+\ell)})
+\]
+\end{defn}
+
+\begin{thm}{Properties of Wedge Product}{wedge_props}
+\begin{enumerate}
+    \item $\varphi \wedge \psi = (-1)^{k\ell} \psi \wedge \varphi$
+    \item $(\varphi \wedge \psi) \wedge \chi = \varphi \wedge (\psi \wedge \chi)$
+    \item $\ell_1 \wedge \cdots \wedge \ell_k = 0$ if and only if $\ell_1, \ldots, \ell_k$ are linearly dependent
+\end{enumerate}
+\end{thm}
+
+\begin{thm}{Basis for $\Lambda^k(V^*)$}{lambda_basis}
+If $x_1, \ldots, x_n$ is a basis for $V^*$, then $\{x_{i_1} \wedge \cdots \wedge x_{i_k} : i_1 < \cdots < i_k\}$ is a basis for $\Lambda^k(V^*)$.
+\end{thm}
+
+\section{Determinant as a Volume Form}
+
+\begin{thm}{Determinant via Exterior Power}{det_ext}
+For a linear map $A: V \to V$, the induced map $A^*: \Lambda^n(V^*) \to \Lambda^n(V^*)$ is multiplication by $\det(A)$.
+\end{thm}
+
+This gives an intrinsic definition of the determinant: it is the scalar by which $A$ scales the ``top'' exterior power.
+
+\begin{defn}{Orientation}{orientation_vs}
+An \textbf{orientation} on $V$ is an equivalence class of ordered bases, where two bases are equivalent if the change-of-basis matrix has positive determinant.
+\end{defn}
+
+\begin{defn}{Volume}{volume}
+For linearly independent $v_1, \ldots, v_k \in V$ with inner product:
+\[
+\text{Vol}(P(v_1, \ldots, v_k)) = |\det(U)|
+\]
+where $U$ is the matrix with columns $v_i$ in an orthonormal basis. Equivalently, $\text{Vol} = \sqrt{\det(v_i \cdot v_j)}$ (the Gram determinant).
+\end{defn}
+
+\section{Tensor Products}
+
+\begin{defn}{Tensor Product}{tensor}
+The \textbf{tensor product} $V \otimes W$ is defined by the universal property: there is a bilinear map $V \times W \to V \otimes W$, $(v, w) \mapsto v \otimes w$, and any bilinear map $V \times W \to Z$ factors uniquely through $V \otimes W$.
+\end{defn}
+
+\begin{thm}{Dimension of Tensor Product}{dim_tensor}
+$\dim(V \otimes W) = \dim(V) \cdot \dim(W)$. If $\{v_i\}$ is a basis for $V$ and $\{w_j\}$ is a basis for $W$, then $\{v_i \otimes w_j\}$ is a basis for $V \otimes W$.
+\end{thm}
+
+\begin{thm}{Tensor-Hom Adjunction}{tensor_hom}
+$V \otimes W \cong \text{Hom}(V^*, W)$ via $F(v \otimes w)(g) = g(v)w$.
+\end{thm}
+
+\begin{exercises}
+
+\begin{exercise}
+Let $M$ be the space of $n \times n$ real matrices. For the bilinear form $B(X, Y) = \text{Tr}(XY)$, show $B$ is symmetric and compute the rank and index of its associated quadratic form.
+\end{exercise}
+
+\begin{exercise}
+\begin{enumerate}
+    \item Prove that any exterior 2-form on an odd-dimensional space is degenerate.
+    \item Show that the rank of any skew-symmetric bilinear form is even.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Let $\omega$ be an exterior 2-form on a $2n$-dimensional space $V$.
+\begin{enumerate}
+    \item Prove $\omega$ is non-degenerate iff $\omega^{\wedge n} \neq 0$.
+    \item Prove there exists a basis where $\omega$ has the standard symplectic matrix form.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Show that $S^2(V)$ (the symmetric square) is generated by tensors of the form $v \otimes v$.
+\end{exercise}
+
+\begin{exercise}
+Compute the 3-dimensional volume of each face of the parallelepiped $P(v_1, v_2, v_3, v_4) \subset \mathbb{R}^4$ where $v_1 = (1,1,1,1)$, $v_2 = (1,-1,1,1)$, $v_3 = (1,1,-1,1)$, $v_4 = (1,1,1,-1)$.
+\end{exercise}
+
+\end{exercises}
+
+\chapter{Differential Forms on Open Sets}
+
+\section{$k$-Forms and the Exterior Derivative}
+
+\begin{defn}{Differential $k$-Form}{diff_kform}
+A \textbf{differential $k$-form} on an open set $U \subseteq \mathbb{R}^n$ is:
+\[
+\omega = \sum_{i_1 < \cdots < i_k} f_{i_1 \ldots i_k}(x) \, dx_{i_1} \wedge \cdots \wedge dx_{i_k}
+\]
+where the $f_{i_1 \ldots i_k}$ are smooth functions on $U$.
+\end{defn}
+
+The space of $k$-forms on $U$ is denoted $\Omega^k(U)$.
+
+\begin{defn}{Exterior Derivative}{ext_deriv}
+The \textbf{exterior derivative} $d: \Omega^k(U) \to \Omega^{k+1}(U)$ is defined by:
+\[
+d\omega = \sum_{i_1 < \cdots < i_k} df_{i_1 \ldots i_k} \wedge dx_{i_1} \wedge \cdots \wedge dx_{i_k}
+\]
+\end{defn}
+
+\begin{thm}{Properties of $d$}{d_props}
+\begin{enumerate}
+    \item $d(d\omega) = 0$ for all $\omega$
+    \item $d(\omega \wedge \eta) = d\omega \wedge \eta + (-1)^k \omega \wedge d\eta$ (graded Leibniz rule)
+    \item $d$ commutes with pullback: $d(f^*\omega) = f^*(d\omega)$
+\end{enumerate}
+\end{thm}
+
+\begin{defn}{Closed and Exact Forms}{closed_exact_k}
+A $k$-form $\omega$ is:
+\begin{itemize}
+    \item \textbf{Closed} if $d\omega = 0$
+    \item \textbf{Exact} if $\omega = d\eta$ for some $(k-1)$-form $\eta$
+\end{itemize}
+Since $d^2 = 0$: Exact $\Rightarrow$ Closed.
+\end{defn}
+
+\section{Vector Calculus Operations}
+
+In $\mathbb{R}^3$, the exterior derivative captures all classical operations:
+
+\begin{itemize}
+    \item \textbf{Gradient}: $df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy + \frac{\partial f}{\partial z}dz \leftrightarrow \nabla f$
+    \item \textbf{Curl}: $d(P\,dx + Q\,dy + R\,dz) = \text{(curl components)} \leftrightarrow \nabla \times \mathbf{F}$
+    \item \textbf{Divergence}: $d(P\,dy \wedge dz + Q\,dz \wedge dx + R\,dx \wedge dy) = (\nabla \cdot \mathbf{F}) dx \wedge dy \wedge dz$
+\end{itemize}
+
+The identities $\nabla \times (\nabla f) = 0$ and $\nabla \cdot (\nabla \times \mathbf{F}) = 0$ follow from $d^2 = 0$.
+
+\section{The Hodge Star Operator}
+
+\begin{defn}{Hodge Star}{hodge}
+On an oriented Euclidean space $V$ of dimension $n$, the \textbf{Hodge star} $*: \Lambda^k(V^*) \to \Lambda^{n-k}(V^*)$ satisfies:
+\[
+\alpha \wedge (*\beta) = \langle \alpha, \beta \rangle \, \text{vol}
+\]
+where $\text{vol}$ is the volume form.
+\end{defn}
+
+\begin{example}
+In $\mathbb{R}^3$: $*dx = dy \wedge dz$, $*dy = dz \wedge dx$, $*dz = dx \wedge dy$, $*(dx \wedge dy) = dz$, etc.
+\end{example}
+
+\section{Change of Variables}
+
+\begin{thm}{Change of Variables Formula}{cov}
+Let $\varphi: A \to B$ be a $C^1$ diffeomorphism between measurable sets. Then for integrable $f$:
+\[
+\int_B f(y) \, dy = \int_A (f \circ \varphi)(x) |\det(d\varphi_x)| \, dx
+\]
+\end{thm}
+
+\begin{thm}{Fubini's Theorem}{fubini}
+For $f: \mathbb{R}^{n+m} \to \mathbb{R}$ integrable:
+\[
+\int_{\mathbb{R}^{n+m}} f = \int_{\mathbb{R}^n} \left( \int_{\mathbb{R}^m} f(x, y) \, dy \right) dx
+\]
+\end{thm}
+
+\begin{exercises}
+
+\begin{exercise}
+Let $h: \mathbb{R} \to \mathbb{R}$ be smooth with $\lim_{x \to \pm\infty} h(x) = \pm\infty$ and $h' > 0$. Prove $h$ is a diffeomorphism.
+\end{exercise}
+
+\begin{exercise}
+Is $x \mapsto x^3$ a diffeomorphism from $\mathbb{R}$ to $\mathbb{R}$?
+\end{exercise}
+
+\begin{exercise}
+Prove that $\phi(x) = \begin{cases} e^{-1/x^2} & x > 0 \\ 0 & x \leq 0 \end{cases}$ is $C^\infty(\mathbb{R})$.
+\end{exercise}
+
+\begin{exercise}
+Compute $\int_\gamma f(x^2 + y^2 + z^2)(x\,dx + y\,dy + z\,dz)$ where $\gamma(t) = (5\sin^2(20t), 2-2\cos(t/3), \sin(t)/2)$ for $t \in [0, \pi]$ and $\int_0^1 f(t)\,dt = 1$.
+\end{exercise}
+
+\end{exercises}
+
+\chapter{Manifolds}
+
+\section{Submanifolds}
+
+\begin{defn}{Submanifold}{submanifold}
+A subset $M \subseteq V$ is a \textbf{$k$-dimensional submanifold} if for every $p \in M$, there exists a neighborhood $U_p$ of $p$ in $V$ and a diffeomorphism $\varphi: U_p \to \mathbb{R}^n$ such that:
+\[
+\varphi(M \cap U_p) = \{(y_1, \ldots, y_n) : y_{k+1} = \cdots = y_n = 0\}
+\]
+\end{defn}
+
+Equivalently:
+\begin{itemize}
+    \item \textbf{As a graph}: Locally $M = \{(x, f(x)) : x \in U \subseteq \mathbb{R}^k\}$ for some smooth $f$.
+    \item \textbf{As a level set}: Locally $M = \{F_1 = \cdots = F_{n-k} = 0\}$ where $dF_1, \ldots, dF_{n-k}$ are linearly independent.
+    \item \textbf{As an image}: $M = \text{Im}(\varphi)$ for an embedding $\varphi: U \to V$.
+\end{itemize}
+
+\begin{example}
+$S^{n-1} = \{x \in \mathbb{R}^n : \|x\|^2 = 1\}$ is a manifold (level set of $F(x) = \|x\|^2 - 1$).
+\end{example}
+
+\section{Tangent Space}
+
+\begin{defn}{Tangent Space}{tangent_space}
+For $M$ a manifold and $p \in M$:
+\begin{itemize}
+    \item If $M = \text{Im}(\varphi)$, then $T_p M = \text{Im}(d_{\varphi^{-1}(p)} \varphi)$.
+    \item If $M = \{F = 0\}$, then $T_p M = \ker(d_p F)$.
+\end{itemize}
+\end{defn}
+
+The tangent space is independent of the parametrization/presentation.
+
+\begin{defn}{Tangent Bundle}{tangent_bundle}
+The \textbf{tangent bundle} is $TM = \{(p, v) : p \in M, v \in T_p M\} \subseteq V \times V$.
+\end{defn}
+
+$TM$ is a $2k$-dimensional manifold.
+
+\section{Manifolds with Boundary}
+
+\begin{defn}{Manifold with Boundary}{mfld_bdy}
+A $k$-dimensional \textbf{manifold with boundary} $M$ is locally diffeomorphic to either $\mathbb{R}^k$ or $\mathbb{R}^k_+ = \{x_k \geq 0\}$.
+
+The \textbf{boundary} $\partial M$ consists of points mapping to $\{x_k = 0\}$; it is a $(k-1)$-dimensional manifold.
+\end{defn}
+
+\begin{example}
+$D^n = \{x \in \mathbb{R}^n : \|x\| \leq 1\}$ is a manifold with boundary $\partial D^n = S^{n-1}$.
+\end{example}
+
+\section{Orientation and Integration}
+
+\begin{defn}{Orientation}{orientation_mfld}
+An \textbf{orientation} on a manifold $M$ is a continuous choice of orientation on each tangent space $T_p M$.
+\end{defn}
+
+\begin{defn}{Integration of $k$-Forms}{int_kform}
+For $M$ an oriented $k$-dimensional manifold and $\omega$ a $k$-form with compact support:
+\[
+\int_M \omega
+\]
+is defined using partitions of unity and local parametrizations.
+\end{defn}
+
+\begin{exercises}
+
+\begin{exercise}
+Let $SO(3) \subset \mathcal{M}_{3,3}$ be the group of orthogonal matrices with determinant $+1$. Let $UT(S^2) = \{(x,y) \in \mathbb{R}^3 \times \mathbb{R}^3 : \|x\| = \|y\| = 1, x \cdot y = 0\}$.
+\begin{enumerate}
+    \item Show that $SO(3)$ and $UT(S^2)$ are submanifolds of $\mathbb{R}^9$ and $\mathbb{R}^6$ respectively.
+    \item Prove they are diffeomorphic.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Consider the torus $T = \{z^2 + (r-2)^2 = 1\}$ in cylindrical coordinates and $T' = S^1 \times S^1 \subset \mathbb{R}^4$.
+\begin{enumerate}
+    \item Prove $T$ is a submanifold of $\mathbb{R}^3$.
+    \item Prove $T$ and $T'$ are diffeomorphic.
+    \item Compute the surface areas of $T$ and $T'$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Let $f: \mathbb{R}^n \to \mathbb{R}^{n(n+1)/2}$ map $x$ to all products $x_i x_j$. Let $M = f(S^{n-1})$ (the real projective space).
+\begin{enumerate}
+    \item Describe $f^{-1}(y) \cap S^{n-1}$ for $y \in M$.
+    \item Prove $M$ is an $(n-1)$-dimensional manifold.
+\end{enumerate}
+\end{exercise}
+
+\end{exercises}
+
+\chapter{Stokes' Theorem and Cohomology}
+
+\section{Stokes' Theorem}
+
+\begin{thm}{Stokes' Theorem}{stokes}
+Let $M$ be an oriented $k$-dimensional manifold with boundary, and let $\omega$ be a $(k-1)$-form with compact support. Then:
+\[
+\int_M d\omega = \int_{\partial M} \omega
+\]
+where $\partial M$ has the induced orientation.
+\end{thm}
+
+\textbf{Special cases:}
+\begin{itemize}
+    \item $k = 1$ (curves): $\int_a^b df = f(b) - f(a)$ (Fundamental Theorem of Calculus)
+    \item $k = 2$ in $\mathbb{R}^2$ (Green's Theorem): $\int_D (Q_x - P_y) \, dA = \oint_{\partial D} P\,dx + Q\,dy$
+    \item $k = 2$ surfaces in $\mathbb{R}^3$ (Classical Stokes): $\int_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S} = \oint_{\partial S} \mathbf{F} \cdot d\mathbf{r}$
+    \item $k = 3$ in $\mathbb{R}^3$ (Divergence Theorem): $\int_V \nabla \cdot \mathbf{F} \, dV = \int_{\partial V} \mathbf{F} \cdot d\mathbf{S}$
+\end{itemize}
+
+\section{De Rham Cohomology}
+
+\begin{defn}{De Rham Cohomology}{derham}
+The \textbf{$k$th de Rham cohomology} of a manifold $M$ is:
+\[
+H^k(M; \mathbb{R}) = \frac{\{\text{closed } k\text{-forms}\}}{\{\text{exact } k\text{-forms}\}} = \frac{\ker(d: \Omega^k \to \Omega^{k+1})}{\text{Im}(d: \Omega^{k-1} \to \Omega^k)}
+\]
+\end{defn}
+
+\begin{thm}{Poincaré Lemma}{poincare_cohom}
+If $U$ is contractible, then $H^k(U; \mathbb{R}) = 0$ for $k \geq 1$.
+\end{thm}
+
+\begin{thm}{Homotopy Invariance}{homotopy_inv_cohom}
+If $f, g: M \to N$ are homotopic, then $f^* = g^*: H^k(N) \to H^k(M)$.
+\end{thm}
+
+\begin{corollary}
+Homotopy equivalent spaces have isomorphic cohomology.
+\end{corollary}
+
+\begin{example}
+$H^1(S^1; \mathbb{R}) = \mathbb{R}$, generated by $d\theta$. This shows $S^1$ is not contractible.
+\end{example}
+
+\section{Applications}
+
+\begin{thm}{No Retraction}{no_retract}
+There is no continuous retraction from $D^n$ onto $S^{n-1}$.
+\end{thm}
+
+\begin{proof}
+If $r: D^n \to S^{n-1}$ is a retraction with $r|_{S^{n-1}} = \text{id}$, let $\omega$ be a closed non-exact form on $S^{n-1}$. Then $r^*\omega$ is closed on $D^n$, hence exact: $r^*\omega = d\beta$. But $\int_{S^{n-1}} \omega = \int_{S^{n-1}} r^*\omega = \int_{D^n} d(r^*\omega) = 0$ by Stokes, contradicting $\omega$ being non-exact.
+\end{proof}
+
+\begin{thm}{Brouwer Fixed Point Theorem}{brouwer}
+Every continuous map $f: D^n \to D^n$ has a fixed point.
+\end{thm}
+
+\begin{proof}
+If $f(x) \neq x$ for all $x$, define $r(x)$ as the intersection of the ray from $f(x)$ through $x$ with $S^{n-1}$. This gives a retraction, contradicting the previous theorem.
+\end{proof}
+
+\begin{exercises}
+
+\begin{exercise}
+Compute $\int_C (x^2 - y)dx + (x - y^2)dy$ where $C$ is the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ oriented counter-clockwise.
+\end{exercise}
+
+\begin{exercise}
+Let $f: U \to \mathbb{R}$ be harmonic ($\Delta f = 0$) on an open set $U \subseteq \mathbb{R}^2$. Prove that $f(x,y)$ equals the average of $f$ on any circle around $(x,y)$ contained in $U$.
+\end{exercise}
+
+\begin{exercise}
+For $\mathbf{v} = (x^2 + y^2 + z^2)(x\partial_x + y\partial_y + z\partial_z)$, compute $\text{Work}_\Gamma(\mathbf{v})$ where $\Gamma$ connects $A = (a_1, a_2, a_3)$ to $B = (b_1, b_2, b_3)$.
+\end{exercise}
+
+\begin{exercise}
+Compute $\int_S \frac{dy \wedge dz}{x} + \frac{dz \wedge dx}{y} + \frac{dx \wedge dy}{z}$ where $S$ is the ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$.
+\end{exercise}
+
+\begin{exercise}
+Use Stokes' theorem to compute $\int_C (y+z)dx + (z+x)dy + (x+y)dz$ where $C$ is the curve $x = \sin^2 t$, $y = 2\sin t \cos t$, $z = \cos^2 t$ for $t \in [0, \pi]$.
+\end{exercise}
+
+\end{exercises}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ADVANCED TOPICS FROM MATH 62 (Covered in lecture, on exam)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Advanced Topics: Degree Theory and Linking Numbers}
+
+\section{Degree of a Map}
+
+The degree is a powerful topological invariant that counts (with signs) how many times a map ``wraps'' one manifold around another.
+
+\begin{defn}{Degree}{degree62}
+Let $f: M \to N$ be a smooth map between compact, connected, oriented $n$-manifolds without boundary. The \textbf{degree} of $f$ is:
+\[
+\deg(f) = \int_M f^*\omega \bigg/ \int_N \omega
+\]
+where $\omega$ is any $n$-form on $N$ with $\int_N \omega \neq 0$.
+\end{defn}
+
+\begin{thm}{Degree is an Integer}{deg_integer62}
+The degree is always an integer.
+\end{thm}
+
+\begin{thm}{Local Formula for Degree}{deg_local62}
+If $b \in N$ is a regular value of $f$, then:
+\[
+\deg(f) = \sum_{a \in f^{-1}(b)} \text{sign}(\det(d_a f))
+\]
+This is the signed count of preimages.
+\end{thm}
+
+\begin{thm}{Homotopy Invariance}{homotopy_inv_deg62}
+If $f_0, f_1: M \to N$ are homotopic, then $\deg(f_0) = \deg(f_1)$.
+\end{thm}
+
+\begin{example}
+For $f: S^1 \to S^1$ given by $f(e^{i\theta}) = e^{in\theta}$, we have $\deg(f) = n$. This is the ``winding number.''
+\end{example}
+
+\begin{example}
+Let $A$ be a $3 \times 3$ matrix with $\det(A) \neq 0$. Define $F_A: S^2 \to S^2$ by $F_A(x) = \frac{Ax}{\|Ax\|}$.
+
+Since $A$ is invertible, $F_A$ is a diffeomorphism onto its image. The degree depends on orientation: $\deg(F_A) = \text{sign}(\det(A))$.
+\end{example}
+
+\section{Winding and Linking Numbers}
+
+\begin{defn}{Winding Number}{winding62}
+Let $\gamma: [0, 2\pi] \to \mathbb{R}^2 \setminus \{p\}$ be a closed loop. The \textbf{winding number} of $\gamma$ around $p$ is:
+\[
+w(\gamma, p) = \frac{1}{2\pi} \oint_\gamma \frac{-(y-p_2)dx + (x-p_1)dy}{(x-p_1)^2 + (y-p_2)^2}
+\]
+\end{defn}
+
+\begin{thm}{Winding as Degree}{winding_deg62}
+The winding number equals the degree of the map $\gamma/|\gamma - p|: S^1 \to S^1$.
+\end{thm}
+
+\begin{defn}{Linking Number}{linking62}
+Let $\phi, \psi: S^1 \to \mathbb{R}^3$ be two disjoint closed curves. The \textbf{linking number} $\text{lk}(\phi, \psi)$ measures how many times one curve winds around the other.
+
+If $D$ is a disk bounded by $\phi$, then:
+\[
+\text{lk}(\phi, \psi) = \sum_{\psi(t) \in D} \text{sign}(\psi'(t) \cdot n)
+\]
+where $n$ is the normal to $D$.
+\end{defn}
+
+\begin{thm}{Gauss Linking Integral}{gauss_linking62}
+\[
+\text{lk}(\phi, \psi) = \frac{1}{4\pi} \oint_\phi \oint_\psi \frac{(\phi - \psi) \cdot (d\phi \times d\psi)}{|\phi - \psi|^3}
+\]
+\end{thm}
+
+\begin{example}[Hopf Link]
+The Hopf link consists of two circles in $\mathbb{R}^3$ that are linked once. Their linking number is $\pm 1$ (depending on orientations).
+\end{example}
+
+\section{Higher Connectivity}
+
+\begin{defn}{$k$-Connected}{k_connected62}
+A space $A$ is \textbf{$k$-connected} if any continuous map $f: S^m \to A$ for $m \leq k$ is homotopic to a constant map.
+
+Equivalently, $H^i(A; \mathbb{R}) = 0$ for all $i \leq k$.
+\end{defn}
+
+\begin{thm}{Connectivity of Spheres}{sphere_conn62}
+$\mathbb{R}^{n+1} \setminus \{0\}$ (equivalently, $S^n$) is $(n-1)$-connected but not $n$-connected.
+\end{thm}
+
+\begin{proof}[Sketch]
+$\mathbb{R}^{n+1} \setminus \{0\}$ is homotopy equivalent to $S^n$ via $x \mapsto x/\|x\|$.
+
+For $m < n$: any map $S^m \to S^n$ can be deformed to miss a point, hence is homotopic to a constant (the target minus a point is contractible).
+
+For $m = n$: the identity map $S^n \to S^n$ has degree 1, so it's not homotopic to a constant (which has degree 0).
+\end{proof}
+
+\begin{thm}{Cohomology of $T^2$}{cohom_torus62}
+For the torus $T^2 = S^1 \times S^1$ with coordinates $\phi_1, \phi_2$:
+\begin{itemize}
+    \item $H^0(T^2) = \mathbb{R}$, generated by the constant 1
+    \item $H^1(T^2) = \mathbb{R}^2$, generated by $[d\phi_1]$ and $[d\phi_2]$
+    \item $H^2(T^2) = \mathbb{R}$, generated by $[d\phi_1 \wedge d\phi_2]$
+\end{itemize}
+\end{thm}
+
+\begin{exercises}
+
+\begin{exercise}
+Prove that $\mathbb{R}^2 \setminus \{(1,0), (-1,0)\}$ is not diffeomorphic to $\mathbb{R}^2 \setminus \{(0,0)\}$.
+\end{exercise}
+
+\begin{exercise}
+Show that there are no degree 1 maps $f: S^2 \to T^2$.
+\end{exercise}
+
+\begin{exercise}
+Let $A$ be a $3 \times 3$ matrix with $\det(A) \neq 0$. Compute $\deg(F_A)$ where $F_A(x) = Ax/\|Ax\|$ for $x \in S^2$.
+\end{exercise}
+
+\begin{exercise}
+Let $\gamma = (\gamma_1, \gamma_2): [0, 2\pi] \to \mathbb{R}^2 \setminus \{(-1,0), (1,0)\}$ be a loop with winding number 2 around $(-1, 0)$ and $-3$ around $(1, 0)$. Compute $\text{lk}(\phi, \psi)$ where $\phi(s) = (\cos s, \sin s, 0)$ and $\psi(t) = (\gamma_1(t), 0, \gamma_2(t))$.
+\end{exercise}
+
+\end{exercises}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SOLUTIONS TO MATH 62 EXERCISES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\backmatter % Solutions should be unnumbered
+
+\chapter{Solutions to Math 62 Exercises}
+
+\section*{Chapter 1: Dual Spaces and Topology}
+
+\begin{solution}[1.1]
+Given a basis $\{\ell_1, \ldots, \ell_n\}$ of $V^*$, we want to construct vectors $w_1, \ldots, w_n \in V$ with $\ell_i(w_j) = \delta_{ij}$.
+
+Define $\Phi: V \to \mathbb{R}^n$ by $\Phi(v) = (\ell_1(v), \ldots, \ell_n(v))$. We claim $\Phi$ is an isomorphism.
+
+\textbf{Injective:} If $\Phi(v) = 0$, then $\ell_i(v) = 0$ for all $i$. Since $\{\ell_i\}$ is a basis for $V^*$, this means $f(v) = 0$ for all $f \in V^*$, so $v = 0$.
+
+\textbf{Surjective:} $\dim V = \dim V^* = n = \dim \mathbb{R}^n$, and $\Phi$ is injective, so $\Phi$ is bijective.
+
+Now let $e_1, \ldots, e_n$ be the standard basis of $\mathbb{R}^n$. Define $w_j = \Phi^{-1}(e_j)$. Then:
+\[
+\ell_i(w_j) = (\Phi(w_j))_i = (e_j)_i = \delta_{ij}
+\]
+\end{solution}
+
+\begin{solution}[1.3]
+\textbf{For $\mathcal{D}$:} We need $\ker \mathcal{D} = \{0\}$. If $\mathcal{D}(v) = 0$, then $\langle v, x \rangle = 0$ for all $x \in V$. Taking $x = v$ gives $\|v\|^2 = 0$, so $v = 0$. Hence $\mathcal{D}$ is injective.
+
+\textbf{For $i_S$:} Suppose $i_S(v) = 0$, meaning $v^*(x) = 0$ for all $x$. Write $v = \sum a_k v_k$ in the basis. If $v \neq 0$, some $a_k \neq 0$, and $v^*(v_k) = a_k \neq 0$, contradiction. So $v = 0$.
+\end{solution}
+
+\begin{solution}[1.5]
+Let $A$ be connected and suppose $\overline{A}$ is disconnected: $\overline{A} = U \cup V$ with $U, V$ open in $\overline{A}$, disjoint, and non-empty.
+
+Since $A \subseteq \overline{A}$, we have $A = (A \cap U) \cup (A \cap V)$. These are relatively open in $A$ and disjoint. 
+
+If both $A \cap U$ and $A \cap V$ are non-empty, then $A$ is disconnected, contradiction.
+
+So WLOG, $A \subseteq U$. Then $\overline{A} \subseteq \overline{U}$. But $U$ is closed in $\overline{A}$ (complement of open $V$), so $\overline{U} \cap \overline{A} = U$. Hence $\overline{A} \subseteq U$, meaning $V = \emptyset$, contradiction.
+\end{solution}
+
+\begin{solution}[1.7]
+\textbf{(a)} $[0,1]$ vs $[0,1)$: Remove two points from $[0,1]$ to disconnect it (remove interior points). But removing any two points from $[0,1)$: if we remove $0$ and another point $a$, we get $(0, a) \cup (a, 1)$ which is disconnected. If we remove two interior points, we get three components. The key is that $[0,1]$ has exactly 2 ``special'' endpoints that don't disconnect when removed, while $[0,1)$ has only 1.
+
+$[0,1)$ vs $(0,1)$: Removing one point from $[0,1)$: if we remove $0$, it stays connected. If we remove an interior point, it disconnects. For $(0,1)$, removing \emph{any} point disconnects it. So they're not homeomorphic.
+
+\textbf{(b)} Remove a point from $\mathbb{R}^n$ ($n > 1$): the result $\mathbb{R}^n \setminus \{p\}$ is still path-connected (go around the point). But removing a point from $\mathbb{R}$ gives two disconnected half-lines. A homeomorphism would preserve connectedness of point-removals.
+\end{solution}
+
+\section*{Chapter 2: Differential Forms}
+
+\begin{solution}[2.1]
+$f(x,y) = (e^x - 2y, x + y^2, \sin y + 1)$, $\alpha = z\,dx - 3\,dy + e^y\,dz$.
+
+Using $f^*(dg) = d(g \circ f)$ and linearity:
+\begin{align*}
+f^*\alpha &= (\sin y + 1)d(e^x - 2y) - 3d(x + y^2) + e^{x+y^2}d(\sin y + 1) \\
+&= (\sin y + 1)(e^x dx - 2dy) - 3(dx + 2y\,dy) + e^{x+y^2}\cos y\,dy \\
+&= (e^x\sin y + e^x - 3)dx + (-2\sin y - 2 - 6y + e^{x+y^2}\cos y)dy
+\end{align*}
+\end{solution}
+
+\begin{solution}[2.3]
+The projection gives $x = y^2$, so parameterize as $(y^2, y, h(y))$. The plane field condition $dz - y\,dx = 0$ becomes:
+\[
+h'(y)\,dy - y \cdot 2y\,dy = 0 \implies h'(y) = 2y^2 \implies h(y) = \frac{2}{3}y^3 + C
+\]
+With $(0,0,0) \in \Gamma$: $h(0) = 0$, so $C = 0$.
+
+The curve is $\Gamma(t) = (t^2, t, \frac{2}{3}t^3)$.
+\end{solution}
+
+\begin{solution}[2.5]
+Consider $\alpha = \frac{-z\,dy + y\,dz}{y^2 + z^2}$ on $\mathbb{R}^3 \setminus P$.
+
+Let $\Gamma = \{x = 0, y^2 + z^2 = 1\}$ parameterized by $\gamma(t) = (0, \cos t, \sin t)$.
+\[
+\int_\Gamma \alpha = \int_0^{2\pi} \frac{-\sin t(-\sin t) + \cos t \cdot \cos t}{1}\,dt = \int_0^{2\pi} 1\,dt = 2\pi \neq 0
+\]
+Since $\alpha$ is closed (check: $d\alpha = 0$) but $\oint \alpha \neq 0$, $\alpha$ is not exact, so the domain is not simply connected.
+\end{solution}
+
+\section*{Chapter 3: Multilinear Algebra}
+
+\begin{solution}[3.1]
+$B(X, Y) = \text{Tr}(XY)$.
+
+\textbf{Symmetry:} $\text{Tr}(XY) = \sum_{i,j} X_{ij}Y_{ji} = \sum_{i,j} Y_{ji}X_{ij} = \text{Tr}(YX)$.
+
+\textbf{Rank and Index:} $Q(X) = \text{Tr}(X^2) = \sum_{i,j} X_{ij}X_{ji}$.
+
+For diagonal entries: $\sum_i X_{ii}^2$ (all positive contributions).
+
+For off-diagonal: $\sum_{i<j} 2X_{ij}X_{ji}$. Using the identity $(X_{ij} + X_{ji})^2 - (X_{ij} - X_{ji})^2 = 4X_{ij}X_{ji}$, we get equal numbers of positive and negative contributions.
+
+Result: $n_+ = n + \binom{n}{2} = \frac{n(n+1)}{2}$, $n_- = \binom{n}{2} = \frac{n(n-1)}{2}$, rank $= n^2$.
+\end{solution}
+
+\begin{solution}[3.3]
+\textbf{(a)} Let $\dim V = n$ (odd) and $\omega$ a 2-form with matrix $A$. Since $\omega$ is skew-symmetric, $A^T = -A$. Then:
+\[
+\det A = \det(A^T) = \det(-A) = (-1)^n \det A = -\det A
+\]
+So $\det A = 0$, meaning $\omega$ is degenerate.
+
+\textbf{(b)} The rank of a skew-symmetric bilinear form equals the dimension of the non-degenerate part. By (a), this must be even-dimensional (else it would be degenerate). Hence the rank is even.
+\end{solution}
+
+\section*{Chapter 5: Manifolds}
+
+\begin{solution}[5.1]
+\textbf{(a) $SO(3)$:} Define $F: \mathcal{M}_{3,3} \to \text{Sym}(3)$ by $F(A) = A^T A$. Then $O(3) = F^{-1}(I)$.
+
+The derivative: $dF_A(H) = A^T H + H^T A$.
+
+For $A \in O(3)$ and any symmetric $S$, take $H = \frac{1}{2}AS$. Then $A^T H + H^T A = \frac{1}{2}S + \frac{1}{2}S^T = S$.
+
+So $dF_A$ is surjective, making $O(3)$ (and thus $SO(3)$) a 3-dimensional submanifold.
+
+\textbf{$UT(S^2)$:} Define $G(x,y) = (x \cdot x, y \cdot y, x \cdot y)$. Then $UT(S^2) = G^{-1}(1,1,0)$.
+
+$dG_{(x,y)} = \begin{pmatrix} 2x^T & 0 \\ 0 & 2y^T \\ y^T & x^T \end{pmatrix}$ has full rank when $x, y$ are unit vectors with $x \perp y$.
+
+\textbf{(b)} Define $\phi: SO(3) \to UT(S^2)$ by $\phi([v_1 | v_2 | v_3]) = (v_1, v_2)$.
+
+This is well-defined since columns of an orthogonal matrix are orthonormal.
+
+Inverse: $\phi^{-1}(x, y) = [x | y | x \times y]$. The cross product gives a unit vector orthogonal to both, with the correct orientation (determinant = 1).
+
+Both maps are smooth (linear/polynomial), so this is a diffeomorphism.
+\end{solution}
+
+\section*{Chapter 6: Stokes' Theorem}
+
+\begin{solution}[6.1]
+The ellipse is parameterized by $\gamma(t) = (a\cos t, b\sin t)$ for $t \in [0, 2\pi]$.
+
+Using Green's theorem with $P = x^2 - y$, $Q = x - y^2$:
+\[
+\oint_C = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA = \iint_D (1 - (-1))\,dA = 2 \cdot \text{Area}(D) = 2\pi ab
+\]
+\end{solution}
+
+\begin{solution}[6.3]
+The work is $\int_\Gamma \omega$ where $\omega = (x^2 + y^2 + z^2)(x\,dx + y\,dy + z\,dz)$.
+
+Note that $x\,dx + y\,dy + z\,dz = \frac{1}{2}d(x^2 + y^2 + z^2)$.
+
+Let $u = x^2 + y^2 + z^2$. Then $\omega = u \cdot \frac{1}{2}du = \frac{1}{2}d(\frac{u^2}{2}) = d(\frac{u^2}{4})$.
+
+So $f = \frac{1}{4}(x^2 + y^2 + z^2)^2$ is a primitive, and:
+\[
+\text{Work} = f(B) - f(A) = \frac{1}{4}(b_1^2 + b_2^2 + b_3^2)^2 - \frac{1}{4}(a_1^2 + a_2^2 + a_3^2)^2
+\]
+\end{solution}
+
+\begin{solution}[6.5]
+Let $\omega = (y+z)dx + (z+x)dy + (x+y)dz$.
+
+Compute: $d\omega = (dy + dz) \wedge dx + (dz + dx) \wedge dy + (dx + dy) \wedge dz$.
+
+Expanding: $= dy \wedge dx + dz \wedge dx + dz \wedge dy + dx \wedge dy + dx \wedge dz + dy \wedge dz$
+
+$= -dx \wedge dy + dx \wedge dy - dx \wedge dz + dx \wedge dz - dy \wedge dz + dy \wedge dz = 0$.
+
+So $\omega$ is closed. The curve lies on the plane $x + z = 1$ (since $\sin^2 t + \cos^2 t = 1$), which is simply connected.
+
+By Poincaré lemma, $\omega = d\beta$ for some $\beta$. By Stokes: $\oint_C \omega = \int_S d\omega = 0$.
+\end{solution}
+
+\section*{Chapter 7: Advanced Topics}
+
+\begin{solution}[Degree of $F_A$]
+Since $A$ is invertible, $F_A: S^2 \to S^2$ is smooth and surjective.
+
+For a regular value $b \in S^2$, the preimage $F_A^{-1}(b)$ consists of the points $x \in S^2$ where $Ax$ is parallel to $b$. Since $A$ is invertible, there's exactly one such line direction, giving two points $\pm x_0$ on $S^2$.
+
+At each preimage point, the sign of $\det(d_{x_0} F_A)$ depends on whether $A$ preserves or reverses orientation. Since both points contribute the same sign:
+\[
+\deg(F_A) = \text{sign}(\det(A))
+\]
+\end{solution}
+
+\begin{solution}[$\mathbb{R}^2$ minus two points]
+We show $\dim H^1(U) > 1$ where $U = \mathbb{R}^2 \setminus \{(\pm 1, 0)\}$.
+
+Consider two 1-forms:
+\[
+\alpha_1 = \frac{-(y)dx + (x-1)dy}{(x-1)^2 + y^2}, \quad \alpha_2 = \frac{-(y)dx + (x+1)dy}{(x+1)^2 + y^2}
+\]
+Both are closed on $U$. Consider loops $\gamma_1$ around $(1, 0)$ only and $\gamma_2$ around $(-1, 0)$ only.
+
+Then $\oint_{\gamma_1} \alpha_1 = 2\pi$, $\oint_{\gamma_1} \alpha_2 = 0$ (and similarly for $\gamma_2$).
+
+So $[\alpha_1]$ and $[\alpha_2]$ are linearly independent in $H^1(U)$, giving $\dim H^1(U) \geq 2$.
+
+But $\mathbb{R}^2 \setminus \{0\}$ has $\dim H^1 = 1$. Since cohomology is a diffeomorphism invariant, these spaces are not diffeomorphic.
+\end{solution}
+
+\begin{solution}[No degree 1 maps $S^2 \to T^2$]
+Suppose $f: S^2 \to T^2$ has degree 1. Then $f^*: H^2(T^2) \to H^2(S^2)$ is an isomorphism.
+
+Now $H^1(T^2) = \mathbb{R}^2$ with generators $[d\phi_1], [d\phi_2]$, and $[d\phi_1] \wedge [d\phi_2] = [\eta]$ generates $H^2(T^2)$.
+
+For $f^*[\eta] \neq 0$, we need $f^*[d\phi_1] \wedge f^*[d\phi_2] \neq 0$ in $H^2(S^2)$.
+
+But $f^*[d\phi_i] \in H^1(S^2) = 0$ (since $S^2$ is simply connected).
+
+So $f^*[d\phi_i] = 0$, hence $f^*[\eta] = 0$, contradicting degree 1.
+\end{solution}
+
+\begin{solution}[Linking number]
+The linking number $\text{lk}(\phi, \psi)$ counts signed intersections of $\psi$ with any disk bounded by $\phi$.
+
+$\phi$ bounds the disk $D = \{(x, y, 0) : x^2 + y^2 \leq 1\}$.
+
+$\psi$ intersects $D$ when $\gamma_2(t) = 0$ (the $z$-coordinate is 0) and $|\gamma_1(t)| < 1$ (inside the unit disk).
+
+The sign at each intersection is $\text{sign}(\gamma_2'(t))$ (positive if crossing upward).
+
+The winding number around $(-1, 0)$ counts signed crossings of the negative $x$-axis by $\gamma$, which is the sum of signs for $\gamma_1 < -1$.
+
+The winding number around $(1, 0)$ counts signed crossings for $\gamma_1 > 1$.
+
+The linking number counts crossings for $-1 < \gamma_1 < 1$:
+\[
+\text{lk}(\phi, \psi) = w(\gamma, (-1,0)) - w(\gamma, (1,0)) = 2 - (-3) = 5
+\]
+\end{solution}
+
+\end{document}
