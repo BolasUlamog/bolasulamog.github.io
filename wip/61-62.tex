@@ -16,7 +16,10 @@
 \usepackage{fancyhdr}
 \usepackage{etoolbox}
 \usepackage{tocloft} 
-\usepackage{titlesec} 
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta, positioning, calc} 
 
 %% === TYPOGRAPHY ===
 \usepackage[osf,sc]{mathpazo} % Palatino (Serif)
@@ -357,6 +360,42 @@ $\mathbb{N}$ is not bounded above. Equivalently, for any two positive real numbe
 \begin{defn}{Limit of a Sequence}{limit_def}
 Let $\{a_n\}^\infty_{n=1}\subseteq{\mathbb{R}}$. We say $\{a_n\}_{n=1}^\infty$ has a limit $L\in\mathbb{R}$, written $\lim_{n\to\infty}a_n=L$ if for all $\varepsilon>0$, there exists $N\in\mathbb{N}$ s.t. $|a_n-L|<\varepsilon$ for all $n\geq{N}$. 
 \end{defn}
+
+% Epsilon-delta visualization for sequences
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Axes
+    \draw[->] (0,0) -- (7,0) node[right] {$n$};
+    \draw[->] (0,0) -- (0,3.5) node[above] {};
+    
+    % The limit L
+    \draw[dashed, MagicTeal] (0,2) -- (7,2) node[right] {$L$};
+    
+    % Epsilon band
+    \draw[dashed, MagicPink] (0,2.6) -- (7,2.6);
+    \draw[dashed, MagicPink] (0,1.4) -- (7,1.4);
+    \draw[<->] (6.5,1.4) -- (6.5,2) node[midway, right] {$\varepsilon$};
+    \draw[<->] (6.5,2) -- (6.5,2.6);
+    
+    % N marker
+    \draw[thick] (3,-0.1) -- (3,0.1);
+    \node at (3,-0.4) {$N$};
+    
+    % Sequence points
+    \foreach \x/\y in {0.5/0.5, 1/1.2, 1.5/2.8, 2/1.6, 2.5/2.4}{
+        \fill (\x,\y) circle (2pt);
+    }
+    % Points after N (inside epsilon band)
+    \foreach \x/\y in {3.5/2.3, 4/1.8, 4.5/2.2, 5/1.9, 5.5/2.1, 6/2.05}{
+        \fill[MagicTeal] (\x,\y) circle (2pt);
+    }
+    
+    % Label
+    \node at (1.5,3.2) {$n < N$};
+    \node[MagicTeal] at (5,3.2) {$n \geq N$: $|a_n - L| < \varepsilon$};
+\end{tikzpicture}
+\end{center}
+
 \begin{remark}
     We say $\{a_n\}^\infty_{n=1}\subseteq\mathbb{R}$ is $\left\{\begin{array}{c}\text{convergent if it has a limit}\\\text{divergent otherwise}\end{array}\right\}$
 \end{remark}
@@ -498,8 +537,90 @@ If $\{a_n\}^\infty_{n=1}$ is a subsequence, $\{a_{f(k)}\}^\infty_{k=1}$ if a sub
 Any bounded sequence in $\mathbb{R}$ has a convergent subsequence.
 \end{thm}
 
-\begin{proof}[Sketch]
-Divide the bounding interval $[c,d]$ in half repeatedly. Choose the half containing infinitely many terms. This creates nested intervals converging to a point $L$. For an in-depth proof of Bolzano-Weierstrass, visit \url{https://personal.math.ubc.ca/~feldman/m320/bolzano.pdf}
+\begin{proof}
+Let $\{a_n\}$ be bounded, say $a_n \in [c, d]$ for all $n$.
+
+\textbf{Step 1: Construct nested intervals.}
+
+Let $I_0 = [c, d]$. Divide $I_0$ into two halves. At least one half contains infinitely many terms of $\{a_n\}$. Call it $I_1 = [c_1, d_1]$.
+
+Continue: given $I_k = [c_k, d_k]$ containing infinitely many terms, divide in half and let $I_{k+1}$ be the half containing infinitely many terms. Note:
+\begin{itemize}
+    \item $I_0 \supseteq I_1 \supseteq I_2 \supseteq \cdots$ (nested)
+    \item $|I_k| = d_k - c_k = \frac{d - c}{2^k} \to 0$
+\end{itemize}
+
+\textbf{Step 2: Find the limit.}
+
+Since $\{c_k\}$ is increasing and bounded above (by $d$), it converges to some $L$. Similarly $\{d_k\}$ is decreasing and bounded below, converging to some $L'$.
+
+But $d_k - c_k \to 0$, so $L = L'$. Thus $\bigcap_{k=0}^\infty I_k = \{L\}$.
+
+\textbf{Step 3: Construct the convergent subsequence.}
+
+Choose $n_1$ such that $a_{n_1} \in I_1$.
+
+Given $n_k$ with $a_{n_k} \in I_k$, choose $n_{k+1} > n_k$ such that $a_{n_{k+1}} \in I_{k+1}$. (Possible since $I_{k+1}$ has infinitely many terms.)
+
+\textbf{Step 4: Verify convergence.}
+
+For any $\varepsilon > 0$, choose $K$ such that $|I_K| < \varepsilon$. Then for all $k \geq K$:
+\[|a_{n_k} - L| \leq |I_k| \leq |I_K| < \varepsilon\]
+since $a_{n_k} \in I_k$ and $L \in I_k$.
+
+Hence $\lim_{k \to \infty} a_{n_k} = L$.
+\end{proof}
+
+\begin{cor}{Sequential Compactness}{seq_compact}
+A subset $K \subseteq \mathbb{R}$ is compact (closed and bounded) iff every sequence in $K$ has a subsequence converging to a point in $K$.
+\end{cor}
+
+\subsection{Limit Theorems}
+
+\begin{thm}{Algebraic Limit Theorems}{limit_algebra}
+Let $\lim_{n \to \infty} a_n = A$ and $\lim_{n \to \infty} b_n = B$. Then:
+\begin{enumerate}
+    \item $\lim(a_n + b_n) = A + B$
+    \item $\lim(a_n \cdot b_n) = A \cdot B$
+    \item $\lim(a_n / b_n) = A/B$ (if $B \neq 0$ and $b_n \neq 0$ for all $n$)
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+We prove (1); (2) and (3) are similar but more technical.
+
+Let $\varepsilon > 0$. By definition of limits:
+\begin{itemize}
+    \item $\exists N_1$ s.t. $|a_n - A| < \varepsilon/2$ for $n \geq N_1$
+    \item $\exists N_2$ s.t. $|b_n - B| < \varepsilon/2$ for $n \geq N_2$
+\end{itemize}
+
+Let $N = \max(N_1, N_2)$. For $n \geq N$:
+\[|(a_n + b_n) - (A + B)| \leq |a_n - A| + |b_n - B| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon\]
+\end{proof}
+
+\begin{lem}{Limits Preserve Inequalities}{limit_ineq}
+If $a_n \leq b_n$ for all $n$ and both limits exist, then $\lim a_n \leq \lim b_n$.
+\end{lem}
+
+\begin{proof}
+Suppose $A = \lim a_n > B = \lim b_n$. Let $\varepsilon = (A - B)/2 > 0$.
+
+Then $\exists N$ s.t. $|a_n - A| < \varepsilon$ and $|b_n - B| < \varepsilon$ for $n \geq N$.
+
+This gives $a_n > A - \varepsilon = (A + B)/2$ and $b_n < B + \varepsilon = (A + B)/2$.
+
+So $a_n > b_n$, contradicting $a_n \leq b_n$.
+\end{proof}
+
+\begin{thm}{Squeeze Theorem}{squeeze}
+If $a_n \leq b_n \leq c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
+\end{thm}
+
+\begin{proof}
+Let $\varepsilon > 0$. $\exists N$ s.t. for $n \geq N$:
+\[L - \varepsilon < a_n \leq b_n \leq c_n < L + \varepsilon\]
+Hence $|b_n - L| < \varepsilon$ for $n \geq N$.
 \end{proof}
 
 \subsection{Continuity}
@@ -513,9 +634,71 @@ Equivalently (Sequential Criterion), for any sequence $x_n \to c$, $f(x_n) \to f
 If $f$ is continuous on a closed interval $[a,b]$, then $f$ is bounded and achieves its maximum and minimum.
 \end{thm}
 
+\begin{proof}
+\textbf{Part 1: $f$ is bounded above.}
+
+Suppose not. Then for each $n$, $\exists x_n \in [a,b]$ with $f(x_n) > n$.
+
+By Bolzano-Weierstrass, $\{x_n\}$ has a convergent subsequence $x_{n_k} \to c \in [a,b]$.
+
+By continuity, $f(x_{n_k}) \to f(c)$. But $f(x_{n_k}) > n_k \to \infty$. Contradiction.
+
+\textbf{Part 2: $f$ achieves its maximum.}
+
+Let $M = \sup\{f(x) : x \in [a,b]\}$. (Exists since $f$ is bounded.)
+
+By definition of sup, $\exists x_n \in [a,b]$ with $f(x_n) > M - 1/n$.
+
+By Bolzano-Weierstrass, $\{x_n\}$ has a convergent subsequence $x_{n_k} \to c \in [a,b]$.
+
+By continuity, $f(x_{n_k}) \to f(c)$.
+
+Since $f(x_{n_k}) > M - 1/n_k \to M$, we have $f(c) \geq M$.
+
+Since $f(c) \leq M$ by definition of $M$, we conclude $f(c) = M$.
+
+The minimum case is analogous.
+\end{proof}
+
 \begin{thm}{Intermediate Value Theorem (IVT)}{ivt}
 If $f$ is continuous on $[a,b]$ and $A$ lies between $f(a)$ and $f(b)$, then there exists $c \in [a,b]$ such that $f(c) = A$.
 \end{thm}
+
+\begin{proof}
+WLOG assume $f(a) < A < f(b)$. (Otherwise replace $f$ with $-f$.)
+
+Define $S = \{x \in [a,b] : f(x) < A\}$.
+
+\textbf{Claim:} $c = \sup S$ satisfies $f(c) = A$.
+
+$S$ is nonempty (contains $a$) and bounded above (by $b$), so $c = \sup S$ exists.
+
+\textbf{Step 1:} $f(c) \geq A$.
+
+By definition of sup, $\exists x_n \in S$ with $x_n \to c$.
+
+Since $f(x_n) < A$ and $f$ is continuous: $f(c) = \lim f(x_n) \leq A$.
+
+\textbf{Step 2:} $f(c) \leq A$.
+
+Suppose $f(c) > A$. By continuity, $\exists \delta > 0$ s.t. $f(x) > A$ for $x \in (c - \delta, c + \delta) \cap [a,b]$.
+
+But this means no $x \in (c - \delta, c]$ can be in $S$, contradicting $c = \sup S$.
+
+Combining: $f(c) = A$.
+\end{proof}
+
+\begin{cor}{Roots of Polynomials}{poly_roots}
+Any odd-degree polynomial has at least one real root.
+\end{cor}
+
+\begin{proof}
+Let $p(x) = x^{2n+1} + a_{2n}x^{2n} + \cdots + a_0$.
+
+As $x \to +\infty$, $p(x) \to +\infty$. As $x \to -\infty$, $p(x) \to -\infty$.
+
+So $\exists a < 0 < b$ with $p(a) < 0 < p(b)$. By IVT, $\exists c$ with $p(c) = 0$.
+\end{proof}
 
 \section{Linear Algebra: Thu/Fri}
 
@@ -2258,9 +2441,37 @@ By the Inverse Function Theorem, $\Phi$ has a local inverse $\Psi = (\Psi_1, \Ps
 For $(x, 0)$ near $(a, 0)$: $\Psi(x, 0) = (x, g(x))$ for some function $g$.
 
 Then $\Phi(x, g(x)) = (x, 0)$ implies $F(x, g(x)) = 0$.
+\end{proof}
+
+\begin{example}
+\textbf{(Inverse Function Theorem)}
+Consider $f: \mathbb{R}^2 \to \mathbb{R}^2$ given by $f(x, y) = (e^x \cos y, e^x \sin y)$ (polar to Cartesian in disguise).
+
+At $(0, 0)$: $Df(0,0) = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ is invertible.
+
+So $f$ is locally invertible near $(0,0)$. The local inverse is essentially $(r, \theta) \mapsto (\ln r, \theta)$ for $r > 0$ near 1.
+\end{example}
+
+\begin{example}
+\textbf{(Implicit Function Theorem)}
+Consider $F(x, y, z) = x^2 + y^2 + z^2 - 1$ (the unit sphere). At $(0, 0, 1)$:
+\[D_z F = 2z = 2 \neq 0\]
+
+So near $(0, 0)$, we can solve for $z = g(x, y) = \sqrt{1 - x^2 - y^2}$ (the upper hemisphere).
+
+The derivative is: $Dg = -\frac{1}{2z}(2x, 2y) = \left(-\frac{x}{\sqrt{1-x^2-y^2}}, -\frac{y}{\sqrt{1-x^2-y^2}}\right)$
+\end{example}
+
+\begin{example}
+\textbf{(Implicit Function Theorem: Level Curves)}
+$F(x, y) = x^3 + y^3 - 3xy$ (the folium of Descartes). At $(1, 1)$: $F(1,1) = 1 + 1 - 3 = -1 \neq 0$.
+
+But at $(3/2, 3/2)$: $F(3/2, 3/2) = 27/8 + 27/8 - 27/4 = 0$ and $F_y = 3y^2 - 3x = 3(9/4) - 9/2 = 27/4 - 9/2 = 9/4 \neq 0$.
+
+So locally near $(3/2, 3/2)$, we can write $y = g(x)$ for some smooth function $g$.
 
 The formula for $Dg$ follows from differentiating $F(x, g(x)) = 0$.
-\end{proof}
+\end{example}
 
 \begin{remark}
 The IFT and Implicit FT are fundamental tools in differential geometry --- they let us show that submanifolds defined by equations are ``nice'' smooth objects.
@@ -2538,6 +2749,211 @@ If $A: V \to W$ is linear, the \textbf{dual map} $A^*: W^* \to V^*$ is defined b
 
 In matrix form, if $A$ is represented by matrix $M$, then $A^*$ is represented by $M^T$.
 
+\begin{thm}{Properties of Dual Map}{dual_map_props}
+Let $A: V \to W$ and $B: W \to U$ be linear maps. Then:
+\begin{enumerate}
+    \item $(B \circ A)^* = A^* \circ B^*$
+    \item $(A^*)^* = A$ under the canonical identification $V \cong (V^*)^*$
+    \item If $V$ has an inner product and $A: V \to V$, the \textbf{adjoint} $\tilde{A}$ satisfies $\langle Av, w \rangle = \langle v, \tilde{A}w \rangle$. In an orthonormal basis, $\tilde{A} = A^T$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+(1) For $f \in U^*$ and $v \in V$:
+\[((B \circ A)^* f)(v) = f(BAv) = (B^* f)(Av) = (A^*(B^* f))(v)\]
+
+(2) The canonical map $\iota: V \to (V^*)^*$ satisfies $\iota(v)(f) = f(v)$. We need $(A^*)^* \circ \iota = \iota \circ A$:
+\[((A^*)^* \iota(v))(g) = \iota(v)(A^* g) = (A^* g)(v) = g(Av) = \iota(Av)(g)\]
+
+(3) Using the isomorphism $D: V \to V^*$ with $D(v)(w) = \langle v, w \rangle$:
+\[\langle Av, w \rangle = D(Av)(w) = (D \circ A)(v)(w)\]
+We want this to equal $\langle v, \tilde{A}w \rangle = D(v)(\tilde{A}w) = (A^* \circ D)(w)(v)$.
+\end{proof}
+
+\section{Algebraic Constructions: Quotient Spaces and Direct Sums}
+
+These constructions are fundamental to everything that follows. They give us canonical ways to build new vector spaces from old ones.
+
+\subsection{Quotient Spaces}
+
+\begin{defn}{Quotient Space}{quotient_space}
+Let $V$ be a vector space and $L \subseteq V$ a linear subspace. For any $a \in V$, define the \textbf{affine subspace} (or \textbf{coset}):
+\[L_a = a + L = \{a + x : x \in L\}\]
+
+Two cosets $L_a$ and $L_b$ are either identical (if $a - b \in L$) or disjoint (if $a - b \notin L$).
+
+The \textbf{quotient space} $V/L$ is the set of all cosets, with operations:
+\[L_a + L_b := L_{a+b}, \quad \lambda L_a := L_{\lambda a}\]
+\end{defn}
+
+% TikZ diagram for quotient space
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Draw the subspace L
+    \draw[thick, blue] (-2,-1) -- (2,1) node[right] {$L$};
+    % Draw parallel cosets
+    \draw[dashed, blue!60] (-2,0) -- (2,2) node[right] {$L_a$};
+    \draw[dashed, blue!60] (-2,1) -- (2,3) node[right] {$L_b$};
+    \draw[dashed, blue!60] (-2,-2) -- (2,0);
+    % Mark points
+    \fill (0,0) circle (2pt) node[below right] {$0$};
+    \fill (0,1) circle (2pt) node[below right] {$a$};
+    \fill (0,2) circle (2pt) node[below right] {$b$};
+    % Label
+    \node at (3.5,1) {$V/L = $ cosets};
+\end{tikzpicture}
+\end{center}
+
+\begin{thm}{Well-Definedness of Quotient Operations}{quotient_welldef}
+The operations on $V/L$ are well-defined, i.e., they don't depend on the choice of representative.
+\end{thm}
+
+\begin{proof}
+Suppose $L_a = L_{a'}$ and $L_b = L_{b'}$, meaning $a - a' \in L$ and $b - b' \in L$.
+
+For addition: $(a + b) - (a' + b') = (a - a') + (b - b') \in L$, so $L_{a+b} = L_{a'+b'}$.
+
+For scalar multiplication: $\lambda a - \lambda a' = \lambda(a - a') \in L$, so $L_{\lambda a} = L_{\lambda a'}$.
+\end{proof}
+
+\begin{thm}{Dimension of Quotient Space}{dim_quotient}
+$\dim(V/L) = \dim(V) - \dim(L) = \text{codim}_V(L)$.
+\end{thm}
+
+\begin{proof}
+Let $N \subseteq V$ be any subspace complementary to $L$, meaning $L \cap N = \{0\}$ and $\dim L + \dim N = \dim V$.
+
+Define $\phi: N \to V/L$ by $\phi(x) = L_x$.
+
+\textbf{Injective:} If $L_x = L_y$ for $x, y \in N$, then $x - y \in L \cap N = \{0\}$, so $x = y$.
+
+\textbf{Surjective:} Any coset $L_a$ contains a unique element of $N$. Write $a = \ell + n$ where $\ell \in L$ and $n \in N$. Then $L_a = L_n = \phi(n)$.
+
+So $\phi$ is an isomorphism, and $\dim(V/L) = \dim N = \dim V - \dim L$.
+\end{proof}
+
+\begin{defn}{Canonical Projection}{canonical_proj}
+The \textbf{canonical projection} $\pi_L: V \to V/L$ is defined by $\pi_L(v) = L_v$.
+
+This is a surjective linear map with $\ker(\pi_L) = L$.
+\end{defn}
+
+\begin{thm}{Universal Property of Quotient}{quotient_universal}
+Let $f: V \to W$ be a linear map with $L \subseteq \ker(f)$. Then there exists a unique linear map $\bar{f}: V/L \to W$ such that $f = \bar{f} \circ \pi_L$.
+
+% Commutative diagram
+\begin{center}
+\begin{tikzpicture}
+    \node (V) at (0,1.5) {$V$};
+    \node (VL) at (0,0) {$V/L$};
+    \node (W) at (2,0) {$W$};
+    \draw[->] (V) -- node[left] {$\pi_L$} (VL);
+    \draw[->] (V) -- node[above right] {$f$} (W);
+    \draw[->, dashed] (VL) -- node[below] {$\exists!\bar{f}$} (W);
+\end{tikzpicture}
+\end{center}
+\end{thm}
+
+\begin{proof}
+Define $\bar{f}(L_a) = f(a)$. This is well-defined: if $L_a = L_b$, then $a - b \in L \subseteq \ker(f)$, so $f(a) = f(b)$.
+
+Linearity: $\bar{f}(L_a + L_b) = \bar{f}(L_{a+b}) = f(a+b) = f(a) + f(b) = \bar{f}(L_a) + \bar{f}(L_b)$.
+
+Uniqueness: If $g: V/L \to W$ satisfies $f = g \circ \pi_L$, then $g(L_a) = g(\pi_L(a)) = f(a) = \bar{f}(L_a)$.
+\end{proof}
+
+\begin{cor}{First Isomorphism Theorem}{first_iso_thm}
+For any surjective linear map $f: V \to W$:
+\[V/\ker(f) \cong W\]
+The isomorphism is $\bar{f}: L_a \mapsto f(a)$.
+\end{cor}
+
+\subsection{Direct Sums}
+
+\begin{defn}{External Direct Sum}{direct_sum_ext}
+Given vector spaces $V$ and $W$, their \textbf{(external) direct sum} $V \oplus W$ is the set of pairs $(v, w)$ with $v \in V$, $w \in W$, with operations:
+\[(v_1, w_1) + (v_2, w_2) = (v_1 + v_2, w_1 + w_2), \quad \lambda(v, w) = (\lambda v, \lambda w)\]
+\end{defn}
+
+\begin{thm}{Dimension of Direct Sum}{dim_direct_sum}
+$\dim(V \oplus W) = \dim(V) + \dim(W)$.
+
+If $\{v_1, \ldots, v_n\}$ is a basis for $V$ and $\{w_1, \ldots, w_m\}$ is a basis for $W$, then
+\[\{(v_1, 0), \ldots, (v_n, 0), (0, w_1), \ldots, (0, w_m)\}\]
+is a basis for $V \oplus W$.
+\end{thm}
+
+\begin{defn}{Internal Direct Sum}{direct_sum_int}
+Subspaces $V, W \subseteq H$ form an \textbf{internal direct sum} $H = V \oplus W$ if:
+\begin{enumerate}
+    \item $V \cap W = \{0\}$
+    \item $V + W = H$ (i.e., every $h \in H$ can be written as $h = v + w$)
+\end{enumerate}
+Equivalently, every $h \in H$ can be written \emph{uniquely} as $h = v + w$ with $v \in V$, $w \in W$.
+\end{defn}
+
+\begin{thm}{Projection Maps}{projection_maps}
+If $H = V \oplus W$ (internal), there are canonical \textbf{projection maps}:
+\[\pi_V: H \to V, \quad \pi_W: H \to W\]
+defined by $\pi_V(v + w) = v$ and $\pi_W(v + w) = w$.
+
+These satisfy:
+\begin{enumerate}
+    \item $\pi_V + \pi_W = \text{id}_H$
+    \item $\pi_V^2 = \pi_V$, $\pi_W^2 = \pi_W$ (idempotent)
+    \item $\pi_V \circ \pi_W = \pi_W \circ \pi_V = 0$
+    \item $\ker(\pi_V) = W$, $\ker(\pi_W) = V$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+Well-definedness follows from uniqueness of the decomposition.
+
+(1) $(\pi_V + \pi_W)(v + w) = v + w$.
+
+(2) $\pi_V(v + w) = v = v + 0$, so $\pi_V(\pi_V(v+w)) = \pi_V(v) = v$.
+
+(3) $\pi_V(\pi_W(v+w)) = \pi_V(w) = \pi_V(0 + w) = 0$.
+
+(4) $\pi_V(v+w) = 0 \iff v = 0 \iff v + w \in W$.
+\end{proof}
+
+\begin{remark}
+The external and internal direct sums are related: if $H = V \oplus W$ internally, the map $(v, w) \mapsto v + w$ is an isomorphism from the external $V \oplus W$ to $H$.
+\end{remark}
+
+\subsection{Free Vector Spaces}
+
+\begin{defn}{Free Vector Space}{free_vs}
+Given any set $S$, the \textbf{free vector space} on $S$, denoted $\mathbb{R}[S]$ or $\text{Free}(S)$, is the vector space of all formal finite linear combinations:
+\[\sum_{s \in S} a_s \cdot s, \quad a_s \in \mathbb{R}, \text{ only finitely many } a_s \neq 0\]
+\end{defn}
+
+\begin{thm}{Universal Property of Free Space}{free_universal}
+For any vector space $V$ and any function $f: S \to V$, there exists a unique linear map $\tilde{f}: \mathbb{R}[S] \to V$ extending $f$.
+
+\begin{center}
+\begin{tikzpicture}
+    \node (S) at (0,1.5) {$S$};
+    \node (RS) at (0,0) {$\mathbb{R}[S]$};
+    \node (V) at (2,0) {$V$};
+    \draw[right hook->] (S) -- node[left] {$\iota$} (RS);
+    \draw[->] (S) -- node[above right] {$f$} (V);
+    \draw[->, dashed] (RS) -- node[below] {$\exists!\tilde{f}$} (V);
+\end{tikzpicture}
+\end{center}
+\end{thm}
+
+\begin{proof}
+Define $\tilde{f}(\sum a_s \cdot s) = \sum a_s f(s)$. This is clearly linear and extends $f$ (i.e., $\tilde{f}(s) = f(s)$).
+
+Uniqueness: Any linear extension must satisfy $\tilde{f}(\sum a_s \cdot s) = \sum a_s \tilde{f}(s) = \sum a_s f(s)$.
+\end{proof}
+
+\begin{remark}
+$\dim(\mathbb{R}[S]) = |S|$ when $S$ is finite. The elements of $S$ form a basis for $\mathbb{R}[S]$.
+\end{remark}
+
 \section{Topology in Vector Spaces}
 
 Let $V$ be a finite-dimensional Euclidean space (vector space with inner product).
@@ -2728,6 +3144,42 @@ If $\alpha = df$ is exact and $\gamma$ is a path from $A$ to $B$:
 In particular, $\oint_\gamma df = 0$ for any closed loop.
 \end{thm}
 
+\section{Change of Variables (Jacobian)}
+
+This is one of the most important applications of differential forms to multivariable calculus.
+
+\begin{thm}{Pullback of Volume Form}{pullback_vol}
+Let $\phi: U \to V$ be a smooth map between open sets in $\mathbb{R}^n$. For the volume form $\omega = dy_1 \wedge \cdots \wedge dy_n$ on $V$:
+\[\phi^* \omega = \det(D\phi(x)) \, dx_1 \wedge \cdots \wedge dx_n\]
+The factor $\det(D\phi)$ is the \textbf{Jacobian determinant}.
+\end{thm}
+
+\begin{proof}
+Write $\phi = (\phi_1, \ldots, \phi_n)$. Then:
+\[\phi^*(dy_j) = d(\phi_j) = \sum_i \frac{\partial \phi_j}{\partial x_i} dx_i\]
+So:
+\begin{align*}
+\phi^*(dy_1 \wedge \cdots \wedge dy_n) &= d\phi_1 \wedge \cdots \wedge d\phi_n \\
+&= \left(\sum_i \frac{\partial \phi_1}{\partial x_i} dx_i\right) \wedge \cdots \wedge \left(\sum_i \frac{\partial \phi_n}{\partial x_i} dx_i\right)
+\end{align*}
+The only surviving term is when all indices are distinct, giving $\det(D\phi) \, dx_1 \wedge \cdots \wedge dx_n$.
+\end{proof}
+
+\begin{thm}{Change of Variables Formula}{change_var}
+Let $\phi: U \to V$ be a diffeomorphism. For any integrable function $f$ on $V$:
+\[\int_V f(y)\, dy = \int_U f(\phi(x)) \, |\det D\phi(x)| \, dx\]
+\end{thm}
+
+\begin{remark}
+The absolute value is needed because orientation-reversing maps give negative Jacobians, but volumes are always positive. If we work with \emph{signed} integrals (oriented integration), we can drop the absolute value.
+\end{remark}
+
+\begin{example}
+\textbf{Polar coordinates:} $\phi(r, \theta) = (r\cos\theta, r\sin\theta)$. The Jacobian is:
+\[\det \begin{pmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{pmatrix} = r\]
+So $dx\,dy = r\,dr\,d\theta$.
+\end{example}
+
 \section{Poincaré Lemma}
 
 \begin{defn}{Star-Shaped}{star_shaped}
@@ -2735,16 +3187,57 @@ A set $U$ is \textbf{star-shaped} with respect to $a \in U$ if for every $x \in 
 \end{defn}
 
 \begin{thm}{Poincaré Lemma}{poincare_1form}
-On a star-shaped open set $U$, every closed 1-form is exact.
+On a star-shaped open set $U$ (star-shaped with respect to origin), every closed 1-form is exact.
 \end{thm}
 
 \begin{proof}
-Let $\alpha = \sum a_i(x) dx_i$ be closed. Define:
-\[
-f(x) = \int_0^1 \sum a_i(tx) x_i \, dt
-\]
-Then $df = \alpha$.
+Let $\alpha = \sum_{i=1}^n a_i(x) dx_i$ be closed, meaning $\frac{\partial a_i}{\partial x_j} = \frac{\partial a_j}{\partial x_i}$ for all $i, j$.
+
+Define $f: U \to \mathbb{R}$ by:
+\[f(x) = \int_0^1 \sum_{i=1}^n a_i(tx) x_i \, dt\]
+
+\textbf{Claim:} $df = \alpha$, i.e., $\frac{\partial f}{\partial x_j} = a_j(x)$ for all $j$.
+
+Differentiating under the integral:
+\begin{align*}
+\frac{\partial f}{\partial x_j} &= \int_0^1 \left( \sum_{i=1}^n t \frac{\partial a_i}{\partial x_j}(tx) x_i + a_j(tx) \right) dt
+\end{align*}
+
+Using the closedness condition $\frac{\partial a_i}{\partial x_j} = \frac{\partial a_j}{\partial x_i}$:
+\begin{align*}
+\frac{\partial f}{\partial x_j} &= \int_0^1 \left( \sum_{i=1}^n t \frac{\partial a_j}{\partial x_i}(tx) x_i + a_j(tx) \right) dt \\
+&= \int_0^1 \frac{d}{dt}\left( t \cdot a_j(tx) \right) dt \\
+&= [t \cdot a_j(tx)]_0^1 = a_j(x)
+\end{align*}
+where we used the chain rule: $\frac{d}{dt}(a_j(tx)) = \sum_i \frac{\partial a_j}{\partial x_i}(tx) \cdot x_i$.
 \end{proof}
+
+\begin{thm}{Poincaré Lemma (General)}{poincare_general}
+On a star-shaped open set $U$ (star-shaped with respect to the origin), every closed $k$-form ($k \geq 1$) is exact.
+\end{thm}
+
+\begin{proof}
+We define the \textbf{homotopy operator} $H: \Omega^k(U) \to \Omega^{k-1}(U)$ as follows.
+
+For a $k$-form $\omega = \sum_{I} a_I(x) dx_{i_1} \wedge \cdots \wedge dx_{i_k}$ (sum over multi-indices $I = (i_1, \ldots, i_k)$ with $i_1 < \cdots < i_k$), define:
+\[H\omega = \sum_I \sum_{j=1}^k (-1)^{j-1} \left( \int_0^1 t^{k-1} a_I(tx) \, dt \right) x_{i_j} \, dx_{i_1} \wedge \cdots \wedge \widehat{dx_{i_j}} \wedge \cdots \wedge dx_{i_k}\]
+where $\widehat{dx_{i_j}}$ means that term is omitted.
+
+\textbf{Key identity:} For any $k$-form $\omega$:
+\[dH\omega + Hd\omega = \omega\]
+
+To verify this, let's check on a monomial $\omega = a(x) dx_{i_1} \wedge \cdots \wedge dx_{i_k}$. A computation shows that when we expand $dH\omega + Hd\omega$ and collect terms, everything cancels except $\omega$ itself. The key step uses:
+\[\frac{d}{dt}[t^k a(tx)] = k t^{k-1} a(tx) + t^k \sum_i \frac{\partial a}{\partial x_i}(tx) x_i\]
+and integrating from 0 to 1 gives $a(x)$.
+
+\textbf{Application:} If $d\omega = 0$, then:
+\[\omega = dH\omega + Hd\omega = dH\omega + H(0) = d(H\omega)\]
+So $\omega$ is exact with primitive $H\omega$.
+\end{proof}
+
+\begin{remark}
+The operator $H$ is sometimes called the \textbf{cone operator} because it ``pulls back'' forms along the rays from the origin. The identity $dH + Hd = \text{id}$ is a \textbf{chain homotopy} showing that $d$ is ``invertible up to exact forms'' on star-shaped domains.
+\end{remark}
 
 \begin{defn}{Simply Connected}{simply_connected}
 $U$ is \textbf{simply connected} if it is path-connected and every two paths connecting the same endpoints are homotopic.
@@ -2756,6 +3249,40 @@ On a simply connected open set, every closed form is exact.
 
 \begin{example}
 The form $\alpha = \frac{-y dx + x dy}{x^2 + y^2}$ on $\mathbb{R}^2 \setminus \{0\}$ is closed but not exact (since $\oint_{S^1} \alpha = 2\pi \neq 0$). This shows $\mathbb{R}^2 \setminus \{0\}$ is not simply connected.
+\end{example}
+
+\begin{example}
+\textbf{(Pullback Computation)}
+Let $f: \mathbb{R}^2 \to \mathbb{R}^3$, $f(u,v) = (u^2, uv, v^2)$ and $\omega = x\,dy \wedge dz + y\,dz \wedge dx$. Then:
+\begin{align*}
+f^*\omega &= u^2 \cdot d(uv) \wedge d(v^2) + uv \cdot d(v^2) \wedge d(u^2) \\
+&= u^2 (v\,du + u\,dv) \wedge (2v\,dv) + uv(2v\,dv) \wedge (2u\,du) \\
+&= u^2 \cdot 2v^2\,du \wedge dv + uv \cdot (-4uv)\,du \wedge dv \\
+&= (2u^2v^2 - 4u^2v^2)\,du \wedge dv = -2u^2v^2\,du \wedge dv
+\end{align*}
+\end{example}
+
+\begin{example}
+\textbf{(Finding a Primitive)}
+Is $\omega = (2xy + z^2)\,dx + x^2\,dy + 2xz\,dz$ exact on $\mathbb{R}^3$?
+
+Check: $\frac{\partial}{\partial y}(2xy + z^2) = 2x = \frac{\partial}{\partial x}(x^2)$ \checkmark
+
+$\frac{\partial}{\partial z}(2xy + z^2) = 2z = \frac{\partial}{\partial x}(2xz)$ \checkmark
+
+$\frac{\partial}{\partial z}(x^2) = 0 = \frac{\partial}{\partial y}(2xz)$ \checkmark
+
+So $d\omega = 0$. Since $\mathbb{R}^3$ is star-shaped, $\omega = df$ for some $f$.
+
+Finding $f$: We need $\frac{\partial f}{\partial x} = 2xy + z^2$, $\frac{\partial f}{\partial y} = x^2$, $\frac{\partial f}{\partial z} = 2xz$.
+
+From the second: $f = x^2 y + g(x,z)$.
+
+Substituting into the first: $2xy + \frac{\partial g}{\partial x} = 2xy + z^2 \Rightarrow g = xz^2 + h(z)$.
+
+Check with the third: $\frac{\partial}{\partial z}(x^2 y + xz^2 + h(z)) = 2xz + h'(z) = 2xz \Rightarrow h = C$.
+
+So $f(x,y,z) = x^2 y + xz^2 + C$.
 \end{example}
 
 \begin{exercises}
@@ -2812,6 +3339,23 @@ f(x,y) = \frac{1}{2}(Q(x+y) - Q(x) - Q(y))
 \]
 \end{thm}
 
+\begin{example}
+\textbf{(Quadratic Forms on $\mathbb{R}^2$)}
+$Q(x,y) = x^2 + 4xy + 3y^2$ has matrix $\begin{pmatrix} 1 & 2 \\ 2 & 3 \end{pmatrix}$.
+
+By polarization: $f((x_1, y_1), (x_2, y_2)) = x_1 x_2 + 2(x_1 y_2 + x_2 y_1) + 3y_1 y_2$.
+
+The eigenvalues of the matrix determine the signature: $\lambda = 2 \pm \sqrt{5}$, both positive, so this is positive definite.
+\end{example}
+
+\begin{example}
+\textbf{(Skew-Symmetric Bilinear Forms)}
+On $\mathbb{R}^3$, the cross product defines a skew-symmetric ``bilinear form'' to $\mathbb{R}^3$:
+\[f(u, v) = u \times v\]
+
+A truly scalar-valued example: $\omega(u, v) = \det \begin{pmatrix} u_1 & v_1 \\ u_2 & v_2 \end{pmatrix}$ on $\mathbb{R}^2$ is skew-symmetric.
+\end{example}
+
 \begin{defn}{Index and Rank}{index_rank}
 For a quadratic form $Q$ written as $Q = \sum \lambda_j x_j^2$:
 \begin{itemize}
@@ -2824,6 +3368,32 @@ For a quadratic form $Q$ written as $Q = \sum \lambda_j x_j^2$:
 \begin{thm}{Sylvester's Law of Inertia}{sylvester}
 The positive index, negative index, and nullity of a quadratic form are independent of the choice of basis (i.e., the presentation as a sum of squares).
 \end{thm}
+
+\begin{proof}
+Let $Q$ be a quadratic form on $V$ with associated symmetric bilinear form $f$. Suppose we have two presentations:
+\[Q = \sum_{i=1}^{p} x_i^2 - \sum_{i=p+1}^{p+q} x_i^2 \quad \text{and} \quad Q = \sum_{j=1}^{p'} y_j^2 - \sum_{j=p'+1}^{p'+q'} y_j^2\]
+in bases $\{e_1, \ldots, e_n\}$ and $\{f_1, \ldots, f_n\}$ respectively.
+
+Define $V^+ = \text{span}(e_1, \ldots, e_p)$ and $V'^- = \text{span}(f_{p'+1}, \ldots, f_{p'+q'})$.
+
+\textbf{Claim:} $p \leq p'$.
+
+Suppose $p > p'$. Then $\dim V^+ + \dim V'^- = p + q' > p' + q' = \dim V - \text{nullity}$.
+
+So $V^+ \cap V'^- \neq \{0\}$. Pick $v \neq 0$ in the intersection.
+
+Since $v \in V^+$, write $v = \sum_{i=1}^p a_i e_i$, so $Q(v) = \sum_{i=1}^p a_i^2 > 0$ (since $v \neq 0$).
+
+Since $v \in V'^-$, write $v = \sum_{j=p'+1}^{p'+q'} b_j f_j$, so $Q(v) = -\sum_{j=p'+1}^{p'+q'} b_j^2 \leq 0$.
+
+Contradiction. Hence $p \leq p'$. By symmetry, $p' \leq p$, so $p = p'$.
+
+Similarly, $q = q'$.
+\end{proof}
+
+\begin{remark}
+The proof uses a dimension-counting argument: if we could find more positive directions in one basis than another, we'd get a vector that is both positive and non-positive, which is impossible.
+\end{remark}
 
 \section{Exterior (Wedge) Product}
 
@@ -2845,11 +3415,36 @@ For $\varphi \in \Lambda^k(V^*)$ and $\psi \in \Lambda^\ell(V^*)$, the \textbf{w
 
 \begin{thm}{Properties of Wedge Product}{wedge_props}
 \begin{enumerate}
-    \item $\varphi \wedge \psi = (-1)^{k\ell} \psi \wedge \varphi$
-    \item $(\varphi \wedge \psi) \wedge \chi = \varphi \wedge (\psi \wedge \chi)$
-    \item $\ell_1 \wedge \cdots \wedge \ell_k = 0$ if and only if $\ell_1, \ldots, \ell_k$ are linearly dependent
+    \item \textbf{Anticommutativity:} $\varphi \wedge \psi = (-1)^{k\ell} \psi \wedge \varphi$
+    \item \textbf{Associativity:} $(\varphi \wedge \psi) \wedge \chi = \varphi \wedge (\psi \wedge \chi)$
+    \item \textbf{Dependence criterion:} $\ell_1 \wedge \cdots \wedge \ell_k = 0 \iff \ell_1, \ldots, \ell_k$ are linearly dependent
 \end{enumerate}
 \end{thm}
+
+\begin{proof}
+(1) The transposition that swaps the first $k$ and last $\ell$ indices has sign $(-1)^{k\ell}$ (it's the product of $k\ell$ transpositions).
+
+(2) Both sides equal $\frac{1}{k!\ell!m!}(\varphi \otimes \psi \otimes \chi)^{\text{asym}}$.
+
+(3) $(\Rightarrow)$: Suppose $\ell_1 \wedge \cdots \wedge \ell_k = 0$ but the $\ell_i$ are independent. Extend to a basis $\ell_1, \ldots, \ell_n$ of $V^*$ and let $w_1, \ldots, w_n$ be the dual basis. Then:
+\[(\ell_1 \wedge \cdots \wedge \ell_k)(w_1, \ldots, w_k) = \det(\ell_i(w_j))_{i,j \leq k} = \det(I_k) = 1 \neq 0\]
+Contradiction.
+
+$(\Leftarrow)$: If the $\ell_i$ are dependent, say $\ell_k = \sum_{i<k} c_i \ell_i$, then:
+\[\ell_1 \wedge \cdots \wedge \ell_k = \sum_{i<k} c_i (\ell_1 \wedge \cdots \wedge \ell_{k-1} \wedge \ell_i) = 0\]
+since each term has $\ell_i$ appearing twice.
+\end{proof}
+
+\begin{thm}{Wedge of 1-Forms as Determinant}{wedge_det}
+For 1-forms $\ell_1, \ldots, \ell_k$ and vectors $v_1, \ldots, v_k$:
+\[(\ell_1 \wedge \cdots \wedge \ell_k)(v_1, \ldots, v_k) = \det(\ell_i(v_j))\]
+\end{thm}
+
+\begin{proof}
+By definition, $\ell_1 \wedge \cdots \wedge \ell_k = (\ell_1 \otimes \cdots \otimes \ell_k)^{\text{asym}}$. Evaluating:
+\[(\ell_1 \wedge \cdots \wedge \ell_k)(v_1, \ldots, v_k) = \sum_{\sigma} \text{sign}(\sigma) \ell_1(v_{\sigma(1)}) \cdots \ell_k(v_{\sigma(k)})\]
+which is exactly the Leibniz formula for $\det(\ell_i(v_j))$.
+\end{proof}
 
 \begin{thm}{Basis for $\Lambda^k(V^*)$}{lambda_basis}
 If $x_1, \ldots, x_n$ is a basis for $V^*$, then $\{x_{i_1} \wedge \cdots \wedge x_{i_k} : i_1 < \cdots < i_k\}$ is a basis for $\Lambda^k(V^*)$.
@@ -2861,33 +3456,286 @@ If $x_1, \ldots, x_n$ is a basis for $V^*$, then $\{x_{i_1} \wedge \cdots \wedge
 For a linear map $A: V \to V$, the induced map $A^*: \Lambda^n(V^*) \to \Lambda^n(V^*)$ is multiplication by $\det(A)$.
 \end{thm}
 
-This gives an intrinsic definition of the determinant: it is the scalar by which $A$ scales the ``top'' exterior power.
+This gives an intrinsic definition of the determinant: it's the scalar by which $A$ scales the ``top'' exterior power.
+
+\textbf{Key idea:} $\det(A)$ is a \emph{signed volume}. The sign captures orientation!
+
+\section{Orientation of Vector Spaces}
 
 \begin{defn}{Orientation}{orientation_vs}
-An \textbf{orientation} on $V$ is an equivalence class of ordered bases, where two bases are equivalent if the change-of-basis matrix has positive determinant.
+Two ordered bases $(v_1, \ldots, v_n)$ and $(w_1, \ldots, w_n)$ of $V$ are \textbf{equivalent} if the change-of-basis matrix $C$ (where $w_j = \sum_i c_{ij} v_i$) has $\det(C) > 0$.
+
+This is an equivalence relation on ordered bases, and it partitions them into exactly \textbf{two} equivalence classes. Each class is called an \textbf{orientation} of $V$.
 \end{defn}
 
-\begin{defn}{Volume}{volume}
-For linearly independent $v_1, \ldots, v_k \in V$ with inner product:
-\[
-\text{Vol}(P(v_1, \ldots, v_k)) = |\det(U)|
-\]
-where $U$ is the matrix with columns $v_i$ in an orthonormal basis. Equivalently, $\text{Vol} = \sqrt{\det(v_i \cdot v_j)}$ (the Gram determinant).
+\begin{example}
+In $\mathbb{R}^2$:
+\begin{itemize}
+    \item $(e_1, e_2)$ and $(e_1, e_1 + e_2)$ have the same orientation (counterclockwise)
+    \item $(e_1, e_2)$ and $(e_2, e_1)$ have opposite orientations ($\det = -1$)
+\end{itemize}
+
+% Diagram for orientation in R^2
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Left: counterclockwise
+    \draw[->] (-0.3,0) -- (1.5,0);
+    \draw[->] (0,-0.3) -- (0,1.5);
+    \draw[->, thick, MagicBlue] (0,0) -- (1,0) node[below] {$e_1$};
+    \draw[->, thick, MagicPink] (0,0) -- (0,1) node[left] {$e_2$};
+    \draw[->, thick, gray] (0.6,0.15) arc (15:75:0.5);
+    \node at (0.5,-0.7) {counterclockwise};
+    \node at (0.5,-1.1) {$\det > 0$};
+    
+    % Right: clockwise
+    \begin{scope}[xshift=4cm]
+    \draw[->] (-0.3,0) -- (1.5,0);
+    \draw[->] (0,-0.3) -- (0,1.5);
+    \draw[->, thick, MagicPink] (0,0) -- (1,0) node[below] {$e_2$};
+    \draw[->, thick, MagicBlue] (0,0) -- (0,1) node[left] {$e_1$};
+    \draw[->, thick, gray] (0.15,0.6) arc (105:15:0.5);
+    \node at (0.5,-0.7) {clockwise};
+    \node at (0.5,-1.1) {$\det < 0$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+In $\mathbb{R}^3$: the ``standard'' orientation is the right-hand rule---thumb along $e_1$, fingers curl from $e_2$ toward $e_3$.
+\end{example}
+
+\begin{defn}{Oriented Vector Space}{oriented_vs}
+An \textbf{oriented vector space} is a pair $(V, \mathcal{O})$ where $\mathcal{O}$ is a choice of orientation on $V$. Bases in the chosen class are called \textbf{positively oriented} or \textbf{preferred}.
 \end{defn}
+
+\begin{remark}
+For $\dim V = n$, we have $\dim \Lambda^n(V^*) = 1$. An orientation on $V$ is the same as a choice of ``positive'' direction in $\Lambda^n(V^*)$.
+\end{remark}
+
+\subsection{Orthogonal and Special Orthogonal Groups}
+
+\begin{defn}{Orthogonal Transformation}{orthogonal_def}
+Let $V$ have an inner product $\langle \cdot, \cdot \rangle$. A linear map $U: V \to V$ is \textbf{orthogonal} if it preserves the inner product:
+\[\langle U(x), U(y) \rangle = \langle x, y \rangle \quad \forall x, y \in V\]
+
+Equivalently, in an orthonormal basis: $U^T U = I$.
+\end{defn}
+
+\begin{thm}{Properties of Orthogonal Maps}{orth_props}
+If $U$ is orthogonal:
+\begin{enumerate}
+    \item $U$ takes orthonormal bases to orthonormal bases
+    \item $\det(U^T U) = (\det U)^2 = 1$, so $\det U = \pm 1$
+    \item $U$ preserves lengths and angles
+\end{enumerate}
+\end{thm}
+
+\begin{defn}{O(n) and SO(n)}{on_son}
+\begin{itemize}
+    \item $O(n) = \{A \in \mathcal{M}_{n \times n} : A^T A = I\}$ is the \textbf{orthogonal group}
+    \item $SO(n) = \{A \in O(n) : \det A = +1\}$ is the \textbf{special orthogonal group}
+\end{itemize}
+These are groups under matrix multiplication.
+\end{defn}
+
+\begin{thm}{Orientation and Orthogonal Maps}{orth_orientation}
+\begin{itemize}
+    \item $A \in O(n)$ with $\det A = +1$: \textbf{orientation-preserving} (rotation)
+    \item $A \in O(n)$ with $\det A = -1$: \textbf{orientation-reversing} (reflection)
+\end{itemize}
+So $SO(n)$ consists exactly of rotations.
+\end{thm}
+
+\begin{example}
+\begin{itemize}
+    \item $SO(2)$: rotations in the plane. Every element looks like $\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}$.
+    \item $O(2) \setminus SO(2)$: reflections, like $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$.
+    \item $SO(3)$: rotations in 3D (3-dimensional manifold!)
+\end{itemize}
+\end{example}
+
+\begin{thm}{Dimension of O(n) and SO(n)}{dim_on}
+$O(n)$ and $SO(n)$ are both $\frac{n(n-1)}{2}$-dimensional manifolds.
+\end{thm}
+
+\begin{proof}
+Define $F: \mathcal{M}_{n \times n} \to \text{Sym}(n)$ by $F(A) = A^T A$. Then $O(n) = F^{-1}(I)$.
+
+We check that $I$ is a regular value. The derivative is $dF_A(H) = H^T A + A^T H$. At $A \in O(n)$: $dF_A(H) = H^T A + A^T H$.
+
+For any symmetric $S$, we need to solve $H^T A + A^T H = S$. Taking $H = \frac{1}{2}AS$ works since:
+\[H^T A + A^T H = \frac{1}{2}S^T A^T A + \frac{1}{2}A^T A S = \frac{1}{2}S + \frac{1}{2}S = S\]
+
+So $dF_A$ is surjective onto $\text{Sym}(n)$, which has dimension $\frac{n(n+1)}{2}$. Thus:
+\[\dim O(n) = n^2 - \frac{n(n+1)}{2} = \frac{n(n-1)}{2}\]
+
+$SO(n) = O(n) \cap \{\det = 1\}$ is an open subset of $O(n)$ (same dimension).
+\end{proof}
+
+\section{Volume of Parallelepipeds}
+
+\begin{defn}{Parallelepiped}{parallelepiped}
+The $k$-dimensional \textbf{parallelepiped} spanned by $v_1, \ldots, v_k \in V$ is:
+\[P(v_1, \ldots, v_k) = \left\{\sum_{i=1}^k t_i v_i : 0 \leq t_i \leq 1\right\}\]
+\end{defn}
+
+\begin{thm}{Volume Formula}{vol_formula}
+If $V$ has an inner product and $v_1, \ldots, v_k$ are linearly independent:
+\[\text{Vol}(P(v_1, \ldots, v_k)) = \sqrt{\det G}\]
+where $G = (g_{ij})$ with $g_{ij} = \langle v_i, v_j \rangle$ is the \textbf{Gram matrix}.
+\end{thm}
+
+\begin{proof}
+Write $v_i$ in an orthonormal basis $(e_1, \ldots, e_n)$: let $U$ be the $n \times k$ matrix with columns $v_i$.
+
+Then $G = U^T U$, and by Gram-Schmidt induction:
+\[\text{Vol}(P(v_1, \ldots, v_k)) = \text{Vol}(P(v_1, \ldots, v_{k-1})) \cdot \text{dist}(v_k, \text{span}(v_1, \ldots, v_{k-1}))\]
+
+For orthonormal vectors, volume is 1. The general formula follows by induction.
+\end{proof}
+
+\begin{cor}{Special Case: Full Dimension}{vol_full_dim}
+For $v_1, \ldots, v_n \in \mathbb{R}^n$:
+\[\text{Vol}(P(v_1, \ldots, v_n)) = |\det(v_1 | \cdots | v_n)|\]
+\end{cor}
+
+\begin{remark}
+If we keep track of orientation (signed volume), we get $\det$ without the absolute value. This is why determinant = signed volume!
+\end{remark}
 
 \section{Tensor Products}
 
-\begin{defn}{Tensor Product}{tensor}
-The \textbf{tensor product} $V \otimes W$ is defined by the universal property: there is a bilinear map $V \times W \to V \otimes W$, $(v, w) \mapsto v \otimes w$, and any bilinear map $V \times W \to Z$ factors uniquely through $V \otimes W$.
+The tensor product is one of the most important constructions in algebra. We give both the abstract definition via universal properties and the concrete construction.
+
+\subsection{Construction of the Tensor Product}
+
+\begin{defn}{Tensor Product (Construction)}{tensor_construct}
+Given vector spaces $V$ and $W$, we construct $V \otimes W$ as follows:
+
+\textbf{Step 1:} Form the free vector space $\mathbb{R}[V \times W]$ generated by all pairs $(v, w)$.
+
+\textbf{Step 2:} Let $L$ be the subspace spanned by all vectors of the form:
+\begin{align*}
+&\lambda(v, w) - (\lambda v, w), \quad \lambda(v, w) - (v, \lambda w) \\
+&(v_1 + v_2, w) - (v_1, w) - (v_2, w) \\
+&(v, w_1 + w_2) - (v, w_1) - (v, w_2)
+\end{align*}
+
+\textbf{Step 3:} Define $V \otimes W = \mathbb{R}[V \times W] / L$.
+
+For $v \in V$ and $w \in W$, we write $v \otimes w := \pi_L((v, w)) \in V \otimes W$.
 \end{defn}
 
-\begin{thm}{Dimension of Tensor Product}{dim_tensor}
-$\dim(V \otimes W) = \dim(V) \cdot \dim(W)$. If $\{v_i\}$ is a basis for $V$ and $\{w_j\}$ is a basis for $W$, then $\{v_i \otimes w_j\}$ is a basis for $V \otimes W$.
+The relations in $L$ ensure that the map $(v, w) \mapsto v \otimes w$ is bilinear:
+\begin{align*}
+\lambda(v \otimes w) &= (\lambda v) \otimes w = v \otimes (\lambda w) \\
+(v_1 + v_2) \otimes w &= v_1 \otimes w + v_2 \otimes w \\
+v \otimes (w_1 + w_2) &= v \otimes w_1 + v \otimes w_2
+\end{align*}
+
+\begin{thm}{Universal Property of Tensor Product}{tensor_universal}
+For any bilinear map $f: V \times W \to Z$, there exists a unique linear map $\tilde{f}: V \otimes W \to Z$ such that $f(v, w) = \tilde{f}(v \otimes w)$.
+
+\begin{center}
+\begin{tikzpicture}
+    \node (VW) at (0,1.5) {$V \times W$};
+    \node (T) at (0,0) {$V \otimes W$};
+    \node (Z) at (2.5,0) {$Z$};
+    \draw[->] (VW) -- node[left] {$\otimes$} (T);
+    \draw[->] (VW) -- node[above right] {$f$ (bilinear)} (Z);
+    \draw[->, dashed] (T) -- node[below] {$\exists!\tilde{f}$ (linear)} (Z);
+\end{tikzpicture}
+\end{center}
 \end{thm}
 
-\begin{thm}{Tensor-Hom Adjunction}{tensor_hom}
-$V \otimes W \cong \text{Hom}(V^*, W)$ via $F(v \otimes w)(g) = g(v)w$.
+\begin{proof}
+By the universal property of free vector spaces, the function $f: V \times W \to Z$ extends to a linear map $\hat{f}: \mathbb{R}[V \times W] \to Z$.
+
+Since $f$ is bilinear, we have $\hat{f}(L) = 0$. For example:
+\[\hat{f}((v_1 + v_2, w) - (v_1, w) - (v_2, w)) = f(v_1 + v_2, w) - f(v_1, w) - f(v_2, w) = 0\]
+
+By the universal property of quotients, $\hat{f}$ descends to $\tilde{f}: V \otimes W \to Z$.
+
+Uniqueness: Any such $\tilde{f}$ must satisfy $\tilde{f}(v \otimes w) = f(v, w)$, and since pure tensors $v \otimes w$ span $V \otimes W$, $\tilde{f}$ is determined.
+\end{proof}
+
+\begin{thm}{Dimension of Tensor Product}{dim_tensor}
+$\dim(V \otimes W) = \dim(V) \cdot \dim(W)$.
+
+If $\{v_1, \ldots, v_n\}$ is a basis for $V$ and $\{w_1, \ldots, w_m\}$ is a basis for $W$, then $\{v_i \otimes w_j : 1 \leq i \leq n, 1 \leq j \leq m\}$ is a basis for $V \otimes W$.
 \end{thm}
+
+\begin{proof}
+\textbf{Spanning:} Any $v \otimes w$ can be written as:
+\[v \otimes w = \left(\sum_i a_i v_i\right) \otimes \left(\sum_j b_j w_j\right) = \sum_{i,j} a_i b_j (v_i \otimes w_j)\]
+Since pure tensors span $V \otimes W$, so do the $v_i \otimes w_j$.
+
+\textbf{Linear independence:} Define $f_{ij}: V \times W \to \mathbb{R}$ by $f_{ij}(v, w) = v_i^*(v) \cdot w_j^*(w)$ where $\{v_i^*\}$ and $\{w_j^*\}$ are dual bases. This is bilinear, so it induces $\tilde{f}_{ij}: V \otimes W \to \mathbb{R}$.
+
+Note that $\tilde{f}_{ij}(v_k \otimes w_\ell) = \delta_{ik} \delta_{j\ell}$.
+
+If $\sum_{i,j} c_{ij}(v_i \otimes w_j) = 0$, applying $\tilde{f}_{ij}$ gives $c_{ij} = 0$.
+\end{proof}
+
+\begin{remark}
+Not every element of $V \otimes W$ is a pure tensor $v \otimes w$! A general element is a sum $\sum_k v_k \otimes w_k$. The \textbf{rank} of a tensor is the minimum number of pure tensors needed to express it.
+\end{remark}
+
+\begin{thm}{Properties of Tensor Product}{tensor_props}
+\begin{enumerate}
+    \item \textbf{Associativity:} $(U \otimes V) \otimes W \cong U \otimes (V \otimes W)$
+    \item \textbf{Commutativity:} $V \otimes W \cong W \otimes V$ via $v \otimes w \mapsto w \otimes v$
+    \item \textbf{Unit:} $V \otimes \mathbb{R} \cong V$ via $v \otimes \lambda \mapsto \lambda v$
+    \item \textbf{Distribution over direct sum:} $U \otimes (V \oplus W) \cong (U \otimes V) \oplus (U \otimes W)$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+Each follows from the universal property. For (1): Both $(U \otimes V) \otimes W$ and $U \otimes (V \otimes W)$ have the same universal property with respect to trilinear maps $U \times V \times W \to Z$.
+\end{proof}
+
+\subsection{Tensors and Multilinear Maps}
+
+\begin{thm}{Tensor-Hom Adjunction}{tensor_hom}
+There is a canonical isomorphism:
+\[V^* \otimes W \cong \text{Hom}(V, W)\]
+sending $f \otimes w$ to the linear map $v \mapsto f(v) \cdot w$.
+\end{thm}
+
+\begin{proof}
+Define $\Phi: V^* \times W \to \text{Hom}(V, W)$ by $\Phi(f, w)(v) = f(v) \cdot w$. This is bilinear, so it induces $\tilde{\Phi}: V^* \otimes W \to \text{Hom}(V, W)$.
+
+\textbf{Surjective:} If $\{v_i\}$ is a basis for $V$ with dual basis $\{v_i^*\}$, any $T \in \text{Hom}(V, W)$ satisfies:
+\[T(v) = T\left(\sum_i v_i^*(v) v_i\right) = \sum_i v_i^*(v) T(v_i)\]
+so $T = \tilde{\Phi}(\sum_i v_i^* \otimes T(v_i))$.
+
+\textbf{Injective:} Both spaces have dimension $(\dim V)(\dim W)$.
+\end{proof}
+
+\begin{cor}{Tensors as Multilinear Forms}{tensor_multilinear}
+$(V^*)^{\otimes k} \cong \{\text{$k$-linear forms on } V\}$.
+
+In particular, $V^* \otimes V^* \cong \text{Bil}(V \times V, \mathbb{R})$.
+\end{cor}
+
+\begin{defn}{Symmetric and Exterior Powers}{sym_ext_powers}
+The \textbf{$k$-th symmetric power} $S^k(V)$ is the quotient of $V^{\otimes k}$ by the relations $v_1 \otimes \cdots \otimes v_k = v_{\sigma(1)} \otimes \cdots \otimes v_{\sigma(k)}$ for all permutations $\sigma$.
+
+The \textbf{$k$-th exterior power} $\Lambda^k(V)$ is the quotient of $V^{\otimes k}$ by the relations $v_1 \otimes \cdots \otimes v_k = \text{sign}(\sigma) \cdot v_{\sigma(1)} \otimes \cdots \otimes v_{\sigma(k)}$.
+
+We write $v_1 \cdots v_k$ for elements of $S^k(V)$ and $v_1 \wedge \cdots \wedge v_k$ for elements of $\Lambda^k(V)$.
+\end{defn}
+
+\begin{thm}{Dimensions of Symmetric and Exterior Powers}{dim_sym_ext}
+\begin{enumerate}
+    \item $\dim S^k(V) = \binom{n + k - 1}{k}$ where $n = \dim V$
+    \item $\dim \Lambda^k(V) = \binom{n}{k}$
+\end{enumerate}
+In particular, $\Lambda^k(V) = 0$ for $k > n$.
+\end{thm}
+
+\begin{remark}
+We have $(V^*)^{\otimes k} \cong (V^{\otimes k})^*$. The symmetric and skew-symmetric $k$-tensors correspond to $S^k(V^*)$ and $\Lambda^k(V^*)$ respectively.
+\end{remark}
 
 \begin{exercises}
 
@@ -2941,6 +3789,20 @@ d\omega = \sum_{i_1 < \cdots < i_k} df_{i_1 \ldots i_k} \wedge dx_{i_1} \wedge \
 \]
 \end{defn}
 
+\begin{example}
+\textbf{(Computing $d$)}
+Let $\omega = xy\,dx + z^2\,dy + e^z\,dz$ on $\mathbb{R}^3$. Then:
+\begin{align*}
+d\omega &= d(xy) \wedge dx + d(z^2) \wedge dy + d(e^z) \wedge dz \\
+&= (y\,dx + x\,dy) \wedge dx + 2z\,dz \wedge dy + e^z\,dz \wedge dz \\
+&= x\,dy \wedge dx + 2z\,dz \wedge dy \\
+&= -x\,dx \wedge dy - 2z\,dy \wedge dz
+\end{align*}
+
+Now let $\eta = xyz\,dx \wedge dy$ on $\mathbb{R}^3$. Then:
+\[d\eta = d(xyz) \wedge dx \wedge dy = (yz\,dx + xz\,dy + xy\,dz) \wedge dx \wedge dy = xy\,dz \wedge dx \wedge dy = xy\,dx \wedge dy \wedge dz\]
+\end{example}
+
 \begin{thm}{Properties of $d$}{d_props}
 \begin{enumerate}
     \item $d(d\omega) = 0$ for all $\omega$
@@ -2948,6 +3810,24 @@ d\omega = \sum_{i_1 < \cdots < i_k} df_{i_1 \ldots i_k} \wedge dx_{i_1} \wedge \
     \item $d$ commutes with pullback: $d(f^*\omega) = f^*(d\omega)$
 \end{enumerate}
 \end{thm}
+
+\begin{proof}
+(1) It suffices to check on generators. For a 0-form (function) $f$:
+\[d(df) = d\left(\sum_i \frac{\partial f}{\partial x_i} dx_i\right) = \sum_{i,j} \frac{\partial^2 f}{\partial x_j \partial x_i} dx_j \wedge dx_i\]
+This vanishes because $\frac{\partial^2 f}{\partial x_j \partial x_i} = \frac{\partial^2 f}{\partial x_i \partial x_j}$ (symmetry) while $dx_j \wedge dx_i = -dx_i \wedge dx_j$ (antisymmetry).
+
+(2) Write $\omega = f \, dx_I$ (multi-index notation). Then:
+\begin{align*}
+d(\omega \wedge \eta) &= d(f \, dx_I \wedge \eta) \\
+&= df \wedge dx_I \wedge \eta + f \, d(dx_I \wedge \eta) \\
+&= d\omega \wedge \eta + (-1)^{|I|} \omega \wedge d\eta
+\end{align*}
+using that $d(dx_I) = 0$ and $df \wedge dx_I = (-1)^{|I|} dx_I \wedge df$.
+
+(3) For functions: $d(f^*g) = d(g \circ f) = \sum \frac{\partial(g \circ f)}{\partial x_i} dx_i = f^*(dg)$ by chain rule.
+
+For higher forms, use that $f^*$ preserves wedge products and linearity.
+\end{proof}
 
 \begin{defn}{Closed and Exact Forms}{closed_exact_k}
 A $k$-form $\omega$ is:
@@ -2973,16 +3853,246 @@ The identities $\nabla \times (\nabla f) = 0$ and $\nabla \cdot (\nabla \times \
 \section{The Hodge Star Operator}
 
 \begin{defn}{Hodge Star}{hodge}
-On an oriented Euclidean space $V$ of dimension $n$, the \textbf{Hodge star} $*: \Lambda^k(V^*) \to \Lambda^{n-k}(V^*)$ satisfies:
+On an oriented Euclidean space $V$ of dimension $n$, the \textbf{Hodge star} $\star: \Lambda^k(V^*) \to \Lambda^{n-k}(V^*)$ satisfies:
 \[
-\alpha \wedge (*\beta) = \langle \alpha, \beta \rangle \, \text{vol}
+\alpha \wedge (\star\beta) = \langle \alpha, \beta \rangle \, \text{vol}
 \]
 where $\text{vol}$ is the volume form.
 \end{defn}
 
 \begin{example}
-In $\mathbb{R}^3$: $*dx = dy \wedge dz$, $*dy = dz \wedge dx$, $*dz = dx \wedge dy$, $*(dx \wedge dy) = dz$, etc.
+In $\mathbb{R}^3$: $\star dx = dy \wedge dz$, $\star dy = dz \wedge dx$, $\star dz = dx \wedge dy$, $\star(dx \wedge dy) = dz$, etc.
 \end{example}
+
+\begin{example}
+\textbf{(Hodge Star in $\mathbb{R}^4$)}
+With coordinates $(x, y, z, w)$ and volume form $dx \wedge dy \wedge dz \wedge dw$:
+\begin{align*}
+\star dx &= dy \wedge dz \wedge dw & \star(dx \wedge dy) &= dz \wedge dw \\
+\star dy &= -dx \wedge dz \wedge dw & \star(dx \wedge dz) &= -dy \wedge dw \\
+\star dz &= dx \wedge dy \wedge dw & \star(dx \wedge dy \wedge dz) &= dw
+\end{align*}
+Note: In $\mathbb{R}^4$, $\star\star = +1$ on 2-forms (since $2(4-2) = 4$ is even).
+\end{example}
+
+\begin{example}
+\textbf{(Computing $\star\star$ in $\mathbb{R}^3$)}
+Let $\omega = dx \wedge dy$ (a 2-form). Then:
+\[\star\omega = dz, \quad \star\star\omega = \star(dz) = dx \wedge dy\]
+But wait---check the sign: $k = 2$, $n = 3$, so $(-1)^{k(n-k)} = (-1)^{2 \cdot 1} = 1$ \checkmark.
+
+For a 1-form $\alpha = dx$: $\star\alpha = dy \wedge dz$, $\star\star\alpha = \star(dy \wedge dz) = dx$.
+Here $k = 1$, so $(-1)^{1 \cdot 2} = 1$ \checkmark.
+\end{example}
+
+\begin{thm}{Properties of Hodge Star}{hodge_props}
+\begin{enumerate}
+    \item $\star\star\omega = (-1)^{k(n-k)} \omega$ for $\omega \in \Lambda^k$
+    \item $\star 1 = \text{vol}$, $\star\text{vol} = 1$
+    \item If $\{e_1, \ldots, e_n\}$ is an oriented orthonormal basis with dual $\{x_1, \ldots, x_n\}$:
+    \[\star(x_{i_1} \wedge \cdots \wedge x_{i_k}) = \text{sign}(\sigma) \, x_{j_1} \wedge \cdots \wedge x_{j_{n-k}}\]
+    where $\{j_1, \ldots, j_{n-k}\} = \{1, \ldots, n\} \setminus \{i_1, \ldots, i_k\}$ and $\sigma$ is the permutation $(i_1, \ldots, i_k, j_1, \ldots, j_{n-k})$.
+\end{enumerate}
+\end{thm}
+
+\subsection{Inner Product on Forms}
+
+An inner product on $V$ induces an inner product on $\Lambda^k(V^*)$.
+
+\begin{defn}{Inner Product on $k$-Forms}{inner_prod_forms}
+For $\alpha, \beta \in \Lambda^k(V^*)$, define:
+\[\langle \alpha, \beta \rangle = \star(\alpha \wedge \star\beta)\]
+This is a scalar since $\alpha \wedge \star\beta \in \Lambda^n(V^*)$ and $\star$ takes $n$-forms to $0$-forms.
+\end{defn}
+
+\begin{thm}{Properties of Inner Product on Forms}{inner_prod_forms_props}
+\begin{enumerate}
+    \item The basis $\{x_{i_1} \wedge \cdots \wedge x_{i_k} : 1 \leq i_1 < \cdots < i_k \leq n\}$ is orthonormal.
+    \item If $A: V \to V$ is a special orthogonal transformation, then $A^*: \Lambda^k(V^*) \to \Lambda^k(V^*)$ is also orthogonal.
+    \item $\langle \alpha, \star\beta \rangle = \langle \star\alpha, \beta \rangle$ (up to sign).
+\end{enumerate}
+\end{thm}
+
+\begin{thm}{Volume of Parallelepiped}{vol_parallel}
+If $v_1, \ldots, v_k \in V$ and $\ell_i = D(v_i) \in V^*$, then:
+\[\|\ell_1 \wedge \cdots \wedge \ell_k\| = \text{Vol}(P(v_1, \ldots, v_k))\]
+where $P(v_1, \ldots, v_k)$ is the $k$-dimensional parallelepiped spanned by the vectors.
+\end{thm}
+
+\begin{proof}
+If $v_1, \ldots, v_k$ are linearly dependent, both sides are 0. Otherwise, by Gram-Schmidt, we can reduce to the orthonormal case. For orthonormal $e_1, \ldots, e_k$: $\|x_1 \wedge \cdots \wedge x_k\| = 1$ (where $x_i = D(e_i)$), and $P(e_1, \ldots, e_k)$ has unit volume.
+\end{proof}
+
+\section{Interior Product (Contraction)}
+
+\begin{defn}{Interior Product}{interior_prod}
+For $v \in V$ and $\omega \in \Lambda^k(V^*)$, the \textbf{interior product} (or \textbf{contraction}) $\iota_v \omega \in \Lambda^{k-1}(V^*)$ is defined by:
+\[(\iota_v \omega)(X_1, \ldots, X_{k-1}) = \omega(v, X_1, \ldots, X_{k-1})\]
+
+Alternative notation: $v \lrcorner \omega$ or $i_v \omega$.
+\end{defn}
+
+\begin{thm}{Properties of Interior Product}{interior_props}
+\begin{enumerate}
+    \item $\iota_v$ is linear in $v$: $\iota_{av + bw} = a\iota_v + b\iota_w$
+    \item $\iota_v \circ \iota_v = 0$
+    \item \textbf{Leibniz rule:} $\iota_v(\alpha \wedge \beta) = (\iota_v \alpha) \wedge \beta + (-1)^{|\alpha|} \alpha \wedge (\iota_v \beta)$
+    \item For $f$ a 0-form: $\iota_v(f) = 0$
+    \item For $\ell \in V^*$: $\iota_v \ell = \ell(v)$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+(2) $(\iota_v \circ \iota_v \omega)(X_1, \ldots, X_{k-2}) = \omega(v, v, X_1, \ldots, X_{k-2}) = 0$ by skew-symmetry.
+
+(3) Follows from the definition by considering the permutations.
+\end{proof}
+
+\begin{thm}{Relation to Hodge Star}{interior_hodge}
+For $V$ Euclidean with volume form $\text{vol}$ and $v \in V$:
+\[\star D(v) = \iota_v(\text{vol})\]
+where $D: V \to V^*$ is the isomorphism $D(v)(w) = \langle v, w \rangle$.
+\end{thm}
+
+\section{The Codifferential and Laplacian}
+
+\begin{defn}{Codifferential}{codiff}
+The \textbf{codifferential} $\delta: \Omega^k(M) \to \Omega^{k-1}(M)$ is defined by:
+\[\delta = (-1)^{n(k+1)+1} \star d \star\]
+On a compact oriented Riemannian manifold, $\delta$ is the formal adjoint of $d$ with respect to the $L^2$ inner product.
+\end{defn}
+
+\begin{thm}{Properties of Codifferential}{codiff_props}
+\begin{enumerate}
+    \item $\delta \circ \delta = 0$ (follows from $d \circ d = 0$)
+    \item $\delta(\omega) = 0$ for 0-forms $\omega$
+    \item $\langle d\alpha, \beta \rangle = \langle \alpha, \delta\beta \rangle$ (on compact manifolds)
+\end{enumerate}
+\end{thm}
+
+\begin{defn}{Hodge Laplacian}{laplacian}
+The \textbf{Hodge Laplacian} (or Laplace-de Rham operator) is:
+\[\Delta = d\delta + \delta d\]
+On functions, this coincides with the usual Laplacian (up to sign conventions).
+\end{defn}
+
+\begin{defn}{Harmonic Forms}{harmonic}
+A form $\omega$ is \textbf{harmonic} if $\Delta \omega = 0$.
+
+Equivalently, $\omega$ is harmonic iff $d\omega = 0$ and $\delta\omega = 0$ (i.e., closed and coclosed).
+\end{defn}
+
+\section{Vector Calculus via Differential Forms}
+
+The classical vector calculus operations in $\mathbb{R}^3$ are special cases of the exterior derivative and Hodge star.
+
+\begin{thm}{Gradient, Curl, Divergence via Forms}{vector_calc_forms}
+In $\mathbb{R}^3$ with standard coordinates $(x, y, z)$:
+
+\textbf{Gradient:} For a function $f$:
+\[df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy + \frac{\partial f}{\partial z}dz \longleftrightarrow \nabla f\]
+
+\textbf{Curl:} For a 1-form $\alpha = P\,dx + Q\,dy + R\,dz$:
+\[\star d\alpha = \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right)dx + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right)dy + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)dz\]
+which corresponds to $\nabla \times \mathbf{F}$.
+
+\begin{example}
+\textbf{(Curl Computation)}
+Let $\mathbf{F} = (y^2 z, xz^2, xy^2)$, so $\alpha = y^2 z\,dx + xz^2\,dy + xy^2\,dz$.
+
+\[d\alpha = (2yz\,dy + y^2\,dz) \wedge dx + (z^2\,dx + 2xz\,dz) \wedge dy + (y^2\,dx + 2xy\,dy) \wedge dz\]
+\[= 2yz\,dy \wedge dx + y^2\,dz \wedge dx + z^2\,dx \wedge dy + 2xz\,dz \wedge dy + y^2\,dx \wedge dz + 2xy\,dy \wedge dz\]
+\[= (2xy - 2xz)\,dy \wedge dz + (y^2 - y^2)\,dz \wedge dx + (z^2 - 2yz)\,dx \wedge dy\]
+
+Then $\star d\alpha = 2x(y-z)\,dx + 0\,dy + (z^2 - 2yz)\,dz$, so $\nabla \times \mathbf{F} = (2x(y-z), 0, z^2 - 2yz)$.
+\end{example}
+
+\textbf{Divergence:} For a 2-form $\beta = P\,dy \wedge dz + Q\,dz \wedge dx + R\,dx \wedge dy$:
+\[\star d\beta = \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\]
+which is $\nabla \cdot \mathbf{F}$.
+\end{thm}
+
+\begin{remark}
+The identities $\nabla \times (\nabla f) = 0$ and $\nabla \cdot (\nabla \times \mathbf{F}) = 0$ are both consequences of $d^2 = 0$:
+\begin{itemize}
+    \item $\text{curl}(\text{grad } f) = 0$: $\star d(df) = \star d^2 f = 0$
+    \item $\text{div}(\text{curl } \mathbf{F}) = 0$: $\star d(\star d\alpha) = 0$ (since $d^2 = 0$ after unwinding)
+\end{itemize}
+\end{remark}
+
+\begin{thm}{Laplacian on Functions}{laplacian_func}
+On $\mathbb{R}^n$, for a function $f$:
+\[\Delta f = -\delta df = -\star d \star df = -\sum_{i=1}^n \frac{\partial^2 f}{\partial x_i^2}\]
+(with appropriate sign conventions).
+\end{thm}
+
+\section{Cartan's Magic Formula}
+
+\begin{thm}{Cartan's Magic Formula}{cartan_magic}
+Let $X$ be a vector field and $\mathcal{L}_X$ the Lie derivative. Then:
+\[\mathcal{L}_X = d \circ \iota_X + \iota_X \circ d\]
+In other words: $\mathcal{L}_X \omega = d(\iota_X \omega) + \iota_X(d\omega)$.
+\end{thm}
+
+\begin{proof}[Sketch]
+Both sides are derivations of degree 0 on $\Omega^*(M)$, so it suffices to check on functions and exact 1-forms:
+\begin{itemize}
+    \item On functions $f$: $\mathcal{L}_X f = X(f) = df(X) = \iota_X(df)$ and $d(\iota_X f) = d(0) = 0$.
+    \item On $dg$: Both sides equal $d(\mathcal{L}_X g) = d(X(g))$.
+\end{itemize}
+\end{proof}
+
+\begin{cor}{Lie Derivative of Closed Forms}{lie_closed}
+If $d\omega = 0$, then $\mathcal{L}_X \omega = d(\iota_X \omega)$. Thus $\mathcal{L}_X$ preserves closed forms.
+\end{cor}
+
+\section{Physical Interpretations}
+
+Differential forms have natural physical interpretations that make vector calculus more transparent.
+
+\subsection{Work and Circulation}
+
+\begin{defn}{Work}{work_form}
+If $\mathbf{F}$ is a force field and $\gamma$ is a path, the \textbf{work} done by $\mathbf{F}$ along $\gamma$ is:
+\[\text{Work} = \int_\gamma \mathbf{F} \cdot d\mathbf{r} = \int_\gamma \alpha\]
+where $\alpha = F_1\,dx + F_2\,dy + F_3\,dz$ is the 1-form associated to $\mathbf{F}$.
+\end{defn}
+
+If $\gamma$ is a closed loop, this integral is called the \textbf{circulation} of $\mathbf{F}$.
+
+\subsection{Flux}
+
+\begin{defn}{Flux}{flux_form}
+If $\mathbf{F}$ is a vector field and $S$ is a surface, the \textbf{flux} of $\mathbf{F}$ through $S$ is:
+\[\text{Flux} = \iint_S \mathbf{F} \cdot \mathbf{n}\, dS = \int_S \beta\]
+where $\beta = F_1\,dy \wedge dz + F_2\,dz \wedge dx + F_3\,dx \wedge dy$ is the 2-form associated to $\mathbf{F}$.
+\end{defn}
+
+\begin{remark}
+The relationship is: $\beta = \iota_{\mathbf{F}}(\text{vol}) = \star D(\mathbf{F})$, where $D$ is the isomorphism $V \to V^*$.
+\end{remark}
+
+\subsection{Physical Meaning of $d$}
+
+\begin{itemize}
+    \item $df$ represents the rate of change of a scalar field
+    \item $d\alpha$ for a 1-form $\alpha$ measures the ``rotation'' (curl)
+    \item $d\beta$ for a 2-form $\beta$ measures the ``source density'' (divergence)
+\end{itemize}
+
+\subsection{Conservation Laws}
+
+\begin{thm}{Conservation via Stokes}{conservation}
+If $\mathbf{J}$ is a current density with $\nabla \cdot \mathbf{J} = 0$ (divergence-free), then the flux through any closed surface is zero---no net flow in or out.
+
+This is the content of $d\beta = 0$ for the associated 2-form.
+\end{thm}
+
+\subsection{Electromagnetism Preview}
+
+The Maxwell equations can be written elegantly as:
+\[dF = 0, \quad d\star F = J\]
+where $F = E \wedge dt + B$ is the electromagnetic 2-form and $J$ is the current 3-form.
 
 \section{Change of Variables}
 
@@ -3052,6 +4162,28 @@ For $M$ a manifold and $p \in M$:
 \end{itemize}
 \end{defn}
 
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Draw the manifold (a curved surface)
+    \draw[thick, blue] plot[smooth, tension=0.8] coordinates {(-2,-0.5) (-1,0.5) (0,0.3) (1,0.8) (2,0.2)};
+    \draw[thick, blue] plot[smooth, tension=0.8] coordinates {(-2,-0.8) (-1,0.2) (0,0) (1,0.5) (2,-0.1)};
+    
+    % Mark point p
+    \fill (0,0.15) circle (2pt) node[below right] {$p$};
+    
+    % Draw tangent plane (as a parallelogram)
+    \draw[thick, red, fill=red!10, opacity=0.5] (-1,-0.5) -- (1,-0.5) -- (1.3,0.8) -- (-0.7,0.8) -- cycle;
+    
+    % Tangent vectors
+    \draw[->, thick, MagicTeal] (0,0.15) -- (0.8,0.15) node[right] {$v$};
+    \draw[->, thick, MagicTeal] (0,0.15) -- (0.15,0.65) node[above] {$w$};
+    
+    % Labels
+    \node at (2.5,0.3) {$M$};
+    \node[red] at (1.8,0.9) {$T_pM$};
+\end{tikzpicture}
+\end{center}
+
 The tangent space is independent of the parametrization/presentation.
 
 \begin{defn}{Tangent Bundle}{tangent_bundle}
@@ -3059,6 +4191,108 @@ The \textbf{tangent bundle} is $TM = \{(p, v) : p \in M, v \in T_p M\} \subseteq
 \end{defn}
 
 $TM$ is a $2k$-dimensional manifold.
+
+\section{Measure Zero and Measurable Sets}
+
+\begin{defn}{Measure Zero}{measure_zero}
+A set $S \subseteq \mathbb{R}^n$ has \textbf{measure zero} if for every $\varepsilon > 0$, there exist countably many rectangles $R_1, R_2, \ldots$ such that:
+\begin{enumerate}
+    \item $S \subseteq \bigcup_{i=1}^\infty R_i$
+    \item $\sum_{i=1}^\infty \text{Vol}(R_i) < \varepsilon$
+\end{enumerate}
+\end{defn}
+
+\begin{thm}{Properties of Measure Zero}{meas_zero_props}
+\begin{enumerate}
+    \item Countable sets have measure zero.
+    \item Countable unions of measure zero sets have measure zero.
+    \item Subsets of measure zero sets have measure zero.
+    \item If $S \subset \mathbb{R}^n$ has measure zero and $f: \mathbb{R}^n \to \mathbb{R}^n$ is Lipschitz, then $f(S)$ has measure zero.
+    \item If $\dim M < n$, any smooth map $g: M \to \mathbb{R}^n$ has image of measure zero.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}[Sketch of (5)]
+Cover $M$ with countably many coordinate charts. Each chart has dimension $< n$, so its image lies in a ``thin'' set. The union is still measure zero.
+\end{proof}
+
+\section{Regular and Critical Values}
+
+\begin{defn}{Regular and Critical Values}{reg_crit}
+Let $f: M \to N$ be a smooth map between manifolds.
+\begin{itemize}
+    \item A point $p \in M$ is a \textbf{regular point} if $Df_p$ is surjective.
+    \item A point $p$ is a \textbf{critical point} if $Df_p$ is not surjective (i.e., $Df_p$ is degenerate).
+    \item A value $y \in N$ is a \textbf{regular value} if every $p \in f^{-1}(y)$ is regular (or if $f^{-1}(y) = \emptyset$).
+    \item Otherwise $y$ is a \textbf{critical value}.
+\end{itemize}
+\end{defn}
+
+\begin{defn}{Critical Set}{critical_set}
+The \textbf{critical set} (or \textbf{singular locus}) of $f$ is:
+\[\Sigma(f) = \{x \in M : d_x f \text{ is degenerate (not surjective)}\}\]
+The set of critical values is $f(\Sigma(f))$.
+\end{defn}
+
+\begin{thm}{Sard's Theorem}{sard}
+The set of critical values of a smooth map $f: M \to N$ has measure zero in $N$.
+\end{thm}
+
+\begin{proof}
+We prove the case $f: U \to \mathbb{R}^n$ where $U \subseteq \mathbb{R}^m$ is open.
+
+\textbf{Step 1: Reduce to a rectangle.}
+Cover $U$ by countably many closed rectangles $R_1, R_2, \ldots$. Since countable unions of measure zero sets have measure zero, it suffices to show $f(\Sigma(f) \cap R)$ has measure zero for each rectangle $R$.
+
+\textbf{Step 2: Subdivide the rectangle.}
+Fix a rectangle $R$ of side length $\ell$. Subdivide $R$ into $N^m$ small cubes of side $\ell/N$.
+
+\textbf{Step 3: Estimate on each small cube.}
+Let $Q$ be a small cube of side $s = \ell/N$ containing a critical point $x_0$.
+
+Since $f$ is $C^1$ on $R$, there exists $M > 0$ such that $\|Df_x\| \leq M$ for all $x \in R$.
+
+For $x \in Q$: $\|f(x) - f(x_0)\| \leq M \cdot \|x - x_0\| \leq M \cdot \sqrt{m} \cdot s$.
+
+So $f(Q)$ is contained in a ball of radius $Ms\sqrt{m}$ around $f(x_0)$.
+
+\textbf{Step 4: Use degeneracy.}
+Here's the key: at a critical point $x_0$, the image $Df_{x_0}(\mathbb{R}^m)$ has dimension $< n$.
+
+By Taylor: $f(x) = f(x_0) + Df_{x_0}(x - x_0) + O(\|x - x_0\|^2)$.
+
+The linear part $Df_{x_0}(x - x_0)$ lies in a subspace of dimension $< n$.
+
+The error is $O(s^2)$. So $f(Q)$ lies within distance $O(s^2)$ of a $(n-1)$-dimensional subspace.
+
+This means $f(Q)$ lies in a ``slab'' of thickness $O(s^2)$ and width $O(s)$ in the other directions.
+
+$\text{Vol}(f(Q)) \leq C \cdot s^{n-1} \cdot s^2 = C \cdot s^{n+1}$
+
+\textbf{Step 5: Sum over cubes.}
+There are at most $N^m$ cubes, each with $s = \ell/N$. The total volume of critical values is at most:
+\[\text{Vol}(f(\Sigma(f) \cap R)) \leq N^m \cdot C \cdot s^{n+1} = N^m \cdot C \cdot \left(\frac{\ell}{N}\right)^{n+1} = C\ell^{n+1} \cdot N^{m-n-1}\]
+
+If $m \leq n$, then $m - n - 1 < 0$, so this goes to 0 as $N \to \infty$.
+
+(For $m > n$, we need higher derivatives and a more refined argument, but the idea is similar.)
+\end{proof}
+
+\begin{cor}{Generic Regular Values}{generic_reg}
+Almost every $y \in N$ is a regular value. In particular, regular values are dense.
+\end{cor}
+
+\begin{thm}{Preimage Theorem}{preimage}
+If $y$ is a regular value of $f: M^m \to N^n$, then $f^{-1}(y)$ is a smooth submanifold of dimension $m - n$ (empty if $m < n$).
+\end{thm}
+
+\begin{proof}
+At any $p \in f^{-1}(y)$, $Df_p: T_p M \to T_y N$ is surjective. By the Implicit Function Theorem, near $p$ we can write $f^{-1}(y)$ as a graph over $\ker(Df_p)$, which has dimension $m - n$.
+\end{proof}
+
+\begin{remark}
+This explains why ``most'' level sets $f^{-1}(c)$ are smooth manifolds---the ``bad'' values $c$ are measure zero, so generically we're fine.
+\end{remark}
 
 \section{Manifolds with Boundary}
 
@@ -3071,6 +4305,313 @@ The \textbf{boundary} $\partial M$ consists of points mapping to $\{x_k = 0\}$; 
 \begin{example}
 $D^n = \{x \in \mathbb{R}^n : \|x\| \leq 1\}$ is a manifold with boundary $\partial D^n = S^{n-1}$.
 \end{example}
+
+\section{Bump Functions and Partitions of Unity}
+
+This is one of the most important technical tools in differential geometry!
+
+\subsection{Bump Functions}
+
+\begin{lem}{Existence of Smooth Bump Function}{bump_exist}
+There exists a $C^\infty$ function $\rho: \mathbb{R} \to [0, \infty)$ such that:
+\begin{itemize}
+    \item $\rho(x) = 0$ for $|x| \geq 1$
+    \item $\rho(x) > 0$ for $|x| < 1$
+    \item $\rho(-x) = \rho(x)$
+\end{itemize}
+\end{lem}
+
+\begin{proof}
+Consider:
+\[h(x) = \begin{cases} e^{-1/x^2} & x > 0 \\ 0 & x \leq 0 \end{cases}\]
+
+All derivatives of $e^{-1/x^2}$ go to 0 as $x \to 0^+$ (since exponential decay beats any polynomial), so $h$ is $C^\infty$.
+
+Then $\rho(x) = h(1+x) \cdot h(1-x)$ works.
+\end{proof}
+
+\begin{defn}{Bump Function in $\mathbb{R}^n$}{bump_rn}
+For $a \in \mathbb{R}^n$ and $\delta > 0$, define:
+\[\psi_{a,\delta}(x) = \rho\left(\frac{\|x - a\|^2}{\delta^2}\right)\]
+This is $C^\infty$, supported in $\overline{B_\delta(a)}$, and positive on $B_\delta(a)$.
+\end{defn}
+
+\subsection{Cut-off Functions}
+
+\begin{thm}{Existence of Cut-off Functions}{cutoff}
+Let $C \subset \mathbb{R}^n$ be compact and $U \supset C$ open. Then there exists $\sigma \in C^\infty(\mathbb{R}^n)$ with:
+\begin{itemize}
+    \item $0 \leq \sigma \leq 1$
+    \item $\sigma \equiv 1$ on $C$
+    \item $\text{supp}(\sigma) \subset U$
+\end{itemize}
+\end{thm}
+
+\begin{proof}
+Choose $\varepsilon > 0$ so that the $\varepsilon$-neighborhood $U_\varepsilon(C) \subset U$.
+
+By compactness, cover $C$ by finitely many balls $B_\varepsilon(z_1), \ldots, B_\varepsilon(z_N)$.
+
+Let $\sigma_1 = \sum_{j=1}^N \psi_{z_j, \varepsilon/2}$. This is positive on $U_{\varepsilon/2}(C)$ and supported in $U$.
+
+Similarly construct $\sigma_2$ supported on the complement of $C$ (in a bounded region).
+
+Then $\sigma = \frac{\sigma_1}{\sigma_1 + \sigma_2}$ does the job.
+\end{proof}
+
+\subsection{Partitions of Unity}
+
+\begin{defn}{Partition of Unity}{partition_unity}
+Let $\{U_j\}_{j=1}^N$ be an open cover of a compact set $C$. A \textbf{partition of unity subordinate to this cover} is a collection of $C^\infty$ functions $\theta_1, \ldots, \theta_K$ such that:
+\begin{enumerate}
+    \item $\sum_{j=1}^K \theta_j(x) = 1$ for all $x \in C$
+    \item Each $\text{supp}(\theta_j)$ is contained in some $U_i$
+\end{enumerate}
+\end{defn}
+
+\begin{thm}{Existence of Partitions of Unity}{partition_exists}
+For any compact $C$ and open cover $\{U_j\}$, a partition of unity subordinate to this cover exists.
+\end{thm}
+
+\begin{proof}
+By compactness, find finitely many balls $B_\varepsilon(z_1), \ldots, B_\varepsilon(z_K)$ covering $C$, each contained in some $U_j$.
+
+Let $\psi_j = \psi_{z_j, \varepsilon}$ be bump functions. Then $\sum_j \psi_j > 0$ on a neighborhood of $C$.
+
+Define:
+\[\theta_j = \frac{\psi_j \cdot \sigma}{\sum_k \psi_k}\]
+where $\sigma$ is a cut-off for $C$.
+
+Then $\sum_j \theta_j = \sigma = 1$ on $C$, and each $\theta_j$ is supported in some $U_i$.
+\end{proof}
+
+\subsection{Local to Global}
+
+\begin{remark}
+Why partitions of unity matter: they let us \textbf{globalize local constructions}.
+
+For instance, to integrate a $k$-form $\omega$ over a manifold $M$:
+\begin{enumerate}
+    \item Cover $M$ by coordinate charts $\{U_j\}$
+    \item Take a partition of unity $\{\theta_j\}$ subordinate to this cover
+    \item Write $\omega = \sum_j \theta_j \omega$ (each $\theta_j \omega$ is supported in a chart)
+    \item Define $\int_M \omega = \sum_j \int_{U_j} \theta_j \omega$
+\end{enumerate}
+This is well-defined (independent of choices)!
+\end{remark}
+
+\section{Stereographic Projection}
+
+\begin{defn}{Stereographic Projection}{stereo}
+Let $N = (0, \ldots, 0, 1)$ and $S = (0, \ldots, 0, -1)$ be the north and south poles of $S^n \subset \mathbb{R}^{n+1}$.
+
+The \textbf{stereographic projection from the north pole} is:
+\[p_+: S^n \setminus \{N\} \to \mathbb{R}^n, \quad p_+(x_1, \ldots, x_{n+1}) = \frac{1}{1 - x_{n+1}}(x_1, \ldots, x_n)\]
+
+Similarly for $p_-: S^n \setminus \{S\} \to \mathbb{R}^n$ from the south pole.
+\end{defn}
+
+% Stereographic projection diagram
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Draw sphere (circle)
+    \draw[thick] (0,0) circle (1);
+    
+    % North and south poles
+    \fill (0,1) circle (1.5pt) node[above] {$N$};
+    \fill (0,-1) circle (1.5pt) node[below] {$S$};
+    
+    % Point on sphere
+    \fill (0.7,0.714) circle (1.5pt) node[above right] {$p$};
+    
+    % Projection line
+    \draw[dashed] (0,1) -- (1.4,0);
+    
+    % Projection point
+    \fill (1.4,0) circle (1.5pt) node[below] {$p_+(p)$};
+    
+    % Equatorial plane
+    \draw[thick, MagicBlue] (-1.8,0) -- (1.8,0) node[right] {$\mathbb{R}^n$};
+\end{tikzpicture}
+\end{center}
+
+\begin{thm}{Properties of Stereographic Projection}{stereo_props}
+\begin{enumerate}
+    \item $p_+$ and $p_-$ are diffeomorphisms onto $\mathbb{R}^n$
+    \item On $S^n \setminus \{N, S\}$, we have $p_- \circ p_+^{-1}(x) = \frac{x}{\|x\|^2}$ (inversion)
+    \item $\{(S^n \setminus \{N\}, p_+), (S^n \setminus \{S\}, p_-)\}$ forms an atlas for $S^n$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+The inverse of $p_+$ is:
+\[p_+^{-1}(y) = \left(\frac{2y_1}{1 + \|y\|^2}, \ldots, \frac{2y_n}{1 + \|y\|^2}, \frac{\|y\|^2 - 1}{\|y\|^2 + 1}\right)\]
+
+For the transition map, direct computation gives $p_- \circ p_+^{-1}(x) = x/\|x\|^2$, which is smooth on $\mathbb{R}^n \setminus \{0\}$.
+\end{proof}
+
+\section{Vector Bundles}
+
+\begin{defn}{Vector Bundle}{vec_bundle}
+A \textbf{vector bundle of rank $r$} over a manifold $M$ is a collection of $r$-dimensional vector spaces $\{L_p\}_{p \in M}$ that ``varies smoothly'' with $p$.
+
+More precisely: for each $p \in M$, there's a neighborhood $U$ and smooth linearly independent vector fields $v_1(x), \ldots, v_r(x) \in L_x$ for $x \in U$.
+\end{defn}
+
+\begin{example}
+\begin{itemize}
+    \item \textbf{Tangent bundle} $TM = \{T_p M\}_{p \in M}$ (rank $n$ for $n$-manifold)
+    \item \textbf{Normal bundle} $NM = \{T_p M^\perp\}_{p \in M}$ for $M \subset \mathbb{R}^n$ (rank = codimension)
+    \item \textbf{Cotangent bundle} $T^*M = \{T_p^* M\}_{p \in M}$
+\end{itemize}
+\end{example}
+
+\begin{defn}{Trivial Bundle}{trivial_bundle}
+A vector bundle $L$ over $M$ is \textbf{trivial} if there exist globally defined, linearly independent sections $v_1, \ldots, v_r: M \to L$.
+
+Equivalently, $L \cong M \times \mathbb{R}^r$.
+\end{defn}
+
+\begin{example}
+\begin{itemize}
+    \item $TU$ for $U \subset \mathbb{R}^n$ is trivial (take coordinate vector fields)
+    \item $TS^1$ is trivial (take the tangent vector field going around)
+    \item $TS^2$ is \textbf{not trivial}! (``hairy ball theorem'': no nonvanishing vector field on $S^2$)
+\end{itemize}
+\end{example}
+
+\begin{example}
+\textbf{Trivial vs nontrivial:}
+\begin{itemize}
+    \item The \textbf{cylinder} $S^1 \times \mathbb{R}$ is a trivial rank-1 bundle over $S^1$
+    \item The \textbf{Möbius strip} is a nontrivial rank-1 bundle over $S^1$ (no global nonvanishing section---the ``twist'' prevents it)
+\end{itemize}
+\end{example}
+
+\begin{defn}{Codimension}{codim}
+The \textbf{codimension} of a $k$-submanifold $M \subset \mathbb{R}^n$ is $\text{codim}(M) = n - k$.
+
+This is the rank of the normal bundle.
+\end{defn}
+
+\section{Abstract Manifolds and Charts}
+
+So far we've thought of manifolds as subsets of $\mathbb{R}^n$. But we can define them more abstractly!
+
+\begin{defn}{Abstract Manifold}{abstract_mfld}
+An $n$-dimensional \textbf{smooth manifold} is a set $M$ together with:
+\begin{enumerate}
+    \item A collection of subsets $\{U_\alpha\}_{\alpha \in A}$ covering $M$ (coordinate neighborhoods)
+    \item For each $\alpha$, a bijection $\Phi_\alpha: U_\alpha \to G_\alpha \subset \mathbb{R}^n$ (coordinate map)
+\end{enumerate}
+such that:
+\begin{itemize}
+    \item Each $G_\alpha = \Phi_\alpha(U_\alpha)$ is open in $\mathbb{R}^n$
+    \item The \textbf{transition maps} $\Phi_\beta \circ \Phi_\alpha^{-1}: \Phi_\alpha(U_\alpha \cap U_\beta) \to \Phi_\beta(U_\alpha \cap U_\beta)$ are smooth diffeomorphisms
+\end{itemize}
+The collection $\{(U_\alpha, \Phi_\alpha)\}$ is called an \textbf{atlas}.
+\end{defn}
+
+\begin{remark}
+Two atlases define the same smooth structure if their union is still an atlas (i.e., transition maps between charts from different atlases are smooth).
+\end{remark}
+
+\begin{defn}{Coordinate Chart}{coord_chart}
+A pair $(U, \Phi)$ where $U \subset M$ and $\Phi: U \to G \subset \mathbb{R}^n$ is a diffeomorphism is called a \textbf{coordinate chart} (or local coordinates, or patch).
+
+The inverse $\Psi = \Phi^{-1}: G \to U$ is called a \textbf{parametrization}.
+\end{defn}
+
+\begin{example}
+\textbf{Different ways to think about $S^1$:}
+\begin{enumerate}
+    \item As $\{x^2 + y^2 = 1\} \subset \mathbb{R}^2$ (level set)
+    \item As $\{\theta \mapsto (\cos\theta, \sin\theta) : \theta \in [0, 2\pi)\}$ (parametrization)
+    \item As $\mathbb{R}/\mathbb{Z}$ (quotient---identify $\theta \sim \theta + 2\pi$)
+    \item Via two charts: $U_1 = S^1 \setminus \{(1,0)\}$, $U_2 = S^1 \setminus \{(-1,0)\}$ with angle coordinates
+\end{enumerate}
+\end{example}
+
+\subsection{Gluing Construction}
+
+\begin{remark}
+You can build manifolds by ``gluing'' pieces of $\mathbb{R}^n$ together via transition maps:
+
+Take copies $G_1, G_2, \ldots$ of open sets in $\mathbb{R}^n$. Specify gluing maps $h_{\alpha\beta}: G_\alpha \supset U_{\alpha\beta} \to U_{\beta\alpha} \subset G_\beta$ satisfying:
+\begin{itemize}
+    \item $h_{\beta\alpha} = h_{\alpha\beta}^{-1}$
+    \item $h_{\gamma\beta} \circ h_{\beta\alpha} = h_{\gamma\alpha}$ (cocycle condition)
+\end{itemize}
+Then $M = \bigsqcup G_\alpha / \sim$ where $x \sim h_{\alpha\beta}(x)$.
+\end{remark}
+
+\begin{example}
+$S^n$ via gluing: Take two copies of $\mathbb{R}^n$ and glue $\mathbb{R}^n \setminus \{0\}$ to itself via $x \mapsto x/\|x\|^2$ (inversion). This is the stereographic atlas!
+\end{example}
+
+\section{Whitney Embedding Theorem}
+
+A natural question: can every abstract manifold be realized as a submanifold of some $\mathbb{R}^N$?
+
+\begin{thm}{Whitney Embedding Theorem}{whitney}
+Every smooth $n$-dimensional manifold can be smoothly embedded in $\mathbb{R}^{2n}$.
+
+(And immersed in $\mathbb{R}^{2n-1}$ for $n > 1$.)
+\end{thm}
+
+\begin{remark}
+So our ``submanifold of $\mathbb{R}^N$'' viewpoint isn't really a restriction---every manifold fits this picture!
+\end{remark}
+
+\begin{example}
+\begin{itemize}
+    \item $S^1$ embeds in $\mathbb{R}^2$ (Whitney bound: $2 \cdot 1 = 2$, achieved!)
+    \item $\mathbb{RP}^2$ doesn't embed in $\mathbb{R}^3$, but does in $\mathbb{R}^4$ (Whitney bound: $2 \cdot 2 = 4$)
+    \item The Klein bottle doesn't embed in $\mathbb{R}^3$ but does in $\mathbb{R}^4$
+\end{itemize}
+\end{example}
+
+\section{Graphical Submanifolds}
+
+\begin{defn}{Graphical Submanifold}{graphical}
+A submanifold $M \subset V$ is \textbf{graphical with respect to a splitting $V = W_1 \oplus W_2$} if $M$ can locally be written as:
+\[M = \{(w_1, f(w_1)) : w_1 \in U \subset W_1\}\]
+for some smooth $f: U \to W_2$.
+\end{defn}
+
+\begin{thm}{Local Graph Theorem}{local_graph}
+Every $k$-submanifold $M \subset \mathbb{R}^n$ is locally graphical. More precisely:
+
+At any point $p \in M$, after possibly permuting coordinates, $M$ near $p$ is the graph of a function $f: U \subset \mathbb{R}^k \to \mathbb{R}^{n-k}$.
+\end{thm}
+
+\begin{proof}
+Use the implicit function theorem! If $M = \{F_1 = \cdots = F_{n-k} = 0\}$ near $p$ with $dF_1, \ldots, dF_{n-k}$ independent, then some $(n-k) \times (n-k)$ minor of the Jacobian is nonzero. WLOG it's the last $n-k$ variables. Then IFT gives $(x_{k+1}, \ldots, x_n) = f(x_1, \ldots, x_k)$.
+\end{proof}
+
+\begin{defn}{Splitting Diffeomorphism}{split_diffeo}
+A \textbf{splitting diffeomorphism} at $p \in M$ is a diffeomorphism $\Phi: U_p \to \mathbb{R}^n$ such that:
+\[\Phi(M \cap U_p) = \{(y_1, \ldots, y_k, 0, \ldots, 0)\}\]
+This ``straightens out'' $M$ to a coordinate plane.
+\end{defn}
+
+\begin{remark}
+Being graphical with respect to a splitting is equivalent to saying the projection $\pi_{W_1}: M \to W_1$ is a local diffeomorphism.
+\end{remark}
+
+\section{Tubular Neighborhoods}
+
+\begin{defn}{Tubular Neighborhood}{tubular}
+A \textbf{tubular neighborhood} of a submanifold $M \subset V$ is a neighborhood $U \supset M$ together with a smooth retraction $r: U \to M$ such that each fiber $r^{-1}(p)$ is a ball in the normal space $N_p M$.
+\end{defn}
+
+\begin{thm}{Existence of Tubular Neighborhoods}{tubular_exist}
+Every compact submanifold $M \subset \mathbb{R}^n$ has a tubular neighborhood.
+\end{thm}
+
+\begin{remark}
+Intuitively: you can ``thicken'' $M$ to a neighborhood where every point has a unique closest point on $M$.
+\end{remark}
 
 \section{Orientation and Integration}
 
@@ -3127,6 +4668,80 @@ Let $M$ be an oriented $k$-dimensional manifold with boundary, and let $\omega$ 
 where $\partial M$ has the induced orientation.
 \end{thm}
 
+% Stokes' theorem visualization
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % The manifold M (a region)
+    \draw[thick, fill=MagicBlue!20] plot[smooth cycle, tension=0.8] coordinates {(-2,0) (-1.5,1.5) (0.5,2) (2,1) (2.5,-0.5) (1,-1.5) (-1,-1)};
+    
+    % Boundary orientation (arrows)
+    \draw[->, thick, MagicPink] (-1.75,0.75) arc (150:100:0.5);
+    \draw[->, thick, MagicPink] (-0.5,1.85) arc (140:90:0.5);
+    \draw[->, thick, MagicPink] (1.5,1.5) arc (100:50:0.5);
+    \draw[->, thick, MagicPink] (2.3,0.2) arc (60:10:0.5);
+    \draw[->, thick, MagicPink] (1.8,-1.1) arc (330:280:0.5);
+    \draw[->, thick, MagicPink] (0,-1.4) arc (250:200:0.5);
+    \draw[->, thick, MagicPink] (-1.5,-0.5) arc (210:160:0.5);
+    
+    % Labels
+    \node at (0,0) {$M$};
+    \node[MagicPink] at (3,1) {$\partial M$};
+    
+    % The equation
+    \node at (0,-2.3) {$\displaystyle\int_M d\omega = \int_{\partial M} \omega$};
+\end{tikzpicture}
+\end{center}
+
+\begin{proof}
+We prove Stokes' theorem in three steps.
+
+\textbf{Step 1: The local case in $\mathbb{R}^k$ and $\mathbb{R}^k_+$.}
+
+\textit{Case A: Interior (no boundary).} Let $\omega$ be a compactly supported $(k-1)$-form on $\mathbb{R}^k$. We can write:
+\[\omega = \sum_{i=1}^k f_i(x) \, dx_1 \wedge \cdots \wedge \widehat{dx_i} \wedge \cdots \wedge dx_k\]
+where $\widehat{dx_i}$ means omission. Then:
+\[d\omega = \sum_{i=1}^k (-1)^{i-1} \frac{\partial f_i}{\partial x_i} \, dx_1 \wedge \cdots \wedge dx_k\]
+
+Consider one term: $\int_{\mathbb{R}^k} \frac{\partial f_i}{\partial x_i} \, dx_1 \cdots dx_k$.
+
+By Fubini, integrate first in $x_i$:
+\[\int_{-\infty}^\infty \frac{\partial f_i}{\partial x_i} \, dx_i = f_i(x_1, \ldots, \infty, \ldots, x_k) - f_i(x_1, \ldots, -\infty, \ldots, x_k) = 0\]
+since $f_i$ has compact support. So $\int_{\mathbb{R}^k} d\omega = 0 = \int_{\emptyset} \omega$.
+
+\textit{Case B: Half-space $\mathbb{R}^k_+ = \{x_k \geq 0\}$.} For $i < k$, the same argument gives 0 (integrating in $x_i$ from $-\infty$ to $\infty$).
+
+For $i = k$, the term $f_k \, dx_1 \wedge \cdots \wedge dx_{k-1}$ gives:
+\begin{align*}
+\int_{\mathbb{R}^k_+} d(f_k \, dx_1 \wedge \cdots \wedge dx_{k-1}) &= (-1)^{k-1} \int_{\mathbb{R}^{k-1}} \left[ \int_0^\infty \frac{\partial f_k}{\partial x_k} \, dx_k \right] dx_1 \cdots dx_{k-1} \\
+&= (-1)^{k-1} \int_{\mathbb{R}^{k-1}} [f_k]_{x_k=0}^{x_k=\infty} \, dx_1 \cdots dx_{k-1} \\
+&= (-1)^k \int_{\mathbb{R}^{k-1}} f_k(x_1, \ldots, x_{k-1}, 0) \, dx_1 \cdots dx_{k-1}
+\end{align*}
+
+The boundary $\partial \mathbb{R}^k_+ = \{x_k = 0\} \cong \mathbb{R}^{k-1}$ with the induced orientation gives:
+\[\int_{\partial \mathbb{R}^k_+} \omega = (-1)^k \int_{\mathbb{R}^{k-1}} f_k|_{x_k=0} \, dx_1 \cdots dx_{k-1}\]
+(The sign $(-1)^k$ comes from the induced boundary orientation: the outward normal is $-e_k$.)
+
+\textbf{Step 2: Partition of unity.}
+
+Cover $M$ by coordinate charts $\{U_\alpha\}$. Take a partition of unity $\{\theta_\alpha\}$ subordinate to this cover. Write:
+\[\omega = \sum_\alpha \theta_\alpha \omega\]
+Each $\theta_\alpha \omega$ is supported in a chart. Since $d$ and integration are linear:
+\[\int_M d\omega = \sum_\alpha \int_M d(\theta_\alpha \omega), \quad \int_{\partial M} \omega = \sum_\alpha \int_{\partial M} \theta_\alpha \omega\]
+
+So it suffices to prove $\int_M d(\theta_\alpha \omega) = \int_{\partial M} \theta_\alpha \omega$ for each $\alpha$.
+
+\textbf{Step 3: Two types of charts.}
+
+\textit{Interior charts:} If $U_\alpha$ doesn't meet $\partial M$, then $U_\alpha$ maps to $\mathbb{R}^k$ and $\theta_\alpha \omega$ has compact support. By Case A:
+\[\int_{U_\alpha} d(\theta_\alpha \omega) = 0 = \int_{\emptyset} \theta_\alpha \omega\]
+
+\textit{Boundary charts:} If $U_\alpha$ meets $\partial M$, then $U_\alpha$ maps to $\mathbb{R}^k_+$ with $\partial M \cap U_\alpha$ mapping to $\{x_k = 0\}$. By Case B:
+\[\int_{U_\alpha} d(\theta_\alpha \omega) = \int_{\partial M \cap U_\alpha} \theta_\alpha \omega\]
+
+Summing over all charts:
+\[\int_M d\omega = \sum_{\alpha: U_\alpha \cap \partial M \neq \emptyset} \int_{\partial M \cap U_\alpha} \theta_\alpha \omega = \int_{\partial M} \omega\]
+\end{proof}
+
 \textbf{Special cases:}
 \begin{itemize}
     \item $k = 1$ (curves): $\int_a^b df = f(b) - f(a)$ (Fundamental Theorem of Calculus)
@@ -3134,6 +4749,23 @@ where $\partial M$ has the induced orientation.
     \item $k = 2$ surfaces in $\mathbb{R}^3$ (Classical Stokes): $\int_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S} = \oint_{\partial S} \mathbf{F} \cdot d\mathbf{r}$
     \item $k = 3$ in $\mathbb{R}^3$ (Divergence Theorem): $\int_V \nabla \cdot \mathbf{F} \, dV = \int_{\partial V} \mathbf{F} \cdot d\mathbf{S}$
 \end{itemize}
+
+\begin{example}
+\textbf{(Using Green's Theorem to Compute Area)}
+The area of a region $D$ can be computed as:
+\[\text{Area}(D) = \frac{1}{2} \oint_{\partial D} x\,dy - y\,dx\]
+since $d(\frac{1}{2}(x\,dy - y\,dx)) = dx \wedge dy$.
+
+For the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$, parametrize $\gamma(t) = (a\cos t, b\sin t)$:
+\[\text{Area} = \frac{1}{2} \int_0^{2\pi} [a\cos t \cdot b\cos t - b\sin t \cdot (-a\sin t)]\,dt = \frac{ab}{2} \int_0^{2\pi} dt = \pi ab\]
+\end{example}
+
+\begin{example}
+\textbf{(Divergence Theorem Application)}
+Let $\mathbf{F} = (x^3, y^3, z^3)$ and $V$ be the unit ball. Then $\nabla \cdot \mathbf{F} = 3(x^2 + y^2 + z^2) = 3r^2$.
+
+\[\int_V \nabla \cdot \mathbf{F}\, dV = 3\int_0^{2\pi}\int_0^\pi\int_0^1 r^2 \cdot r^2 \sin\phi\, dr\,d\phi\,d\theta = 3 \cdot 2\pi \cdot 2 \cdot \frac{1}{5} = \frac{12\pi}{5}\]
+\end{example}
 
 \section{De Rham Cohomology}
 
@@ -3275,7 +4907,8 @@ where $n$ is the normal to $D$.
 \]
 \end{thm}
 
-\begin{example}[Hopf Link]
+\begin{example}
+\textbf{(Hopf Link)}
 The Hopf link consists of two circles in $\mathbb{R}^3$ that are linked once. Their linking number is $\pm 1$ (depending on orientations).
 \end{example}
 
@@ -3353,6 +4986,74 @@ This measures the ``failure of commutativity'' of flows: if $[X, Y] = 0$, the fl
     \item $[\mathcal{L}_X, \mathcal{L}_Y] = \mathcal{L}_{[X,Y]}$ (Jacobi identity)
 \end{enumerate}
 \end{thm}
+
+\section{Phase Flow of Vector Fields}
+
+\begin{defn}{Integral Curve}{integral_curve}
+An \textbf{integral curve} of a vector field $X$ is a curve $\gamma: I \to M$ such that
+\[\gamma'(t) = X(\gamma(t))\]
+This is just an ODE! So by existence/uniqueness, through every point there's a unique maximal integral curve.
+\end{defn}
+
+\begin{defn}{Phase Flow}{phase_flow}
+The \textbf{phase flow} of $X$ is the family of maps $\phi_t: M \to M$ given by
+\[\phi_t(p) = \gamma_p(t)\]
+where $\gamma_p$ is the integral curve starting at $p$, i.e., $\gamma_p(0) = p$.
+\end{defn}
+
+\begin{thm}{Properties of Flow}{flow_props}
+\begin{enumerate}
+    \item $\phi_0 = \text{id}$
+    \item $\phi_s \circ \phi_t = \phi_{s+t}$ (group property)
+    \item $\frac{d}{dt}\big|_{t=0} \phi_t(p) = X(p)$
+    \item $\mathcal{L}_X \omega = \frac{d}{dt}\big|_{t=0} \phi_t^* \omega$
+\end{enumerate}
+\end{thm}
+
+\begin{proof}[Sketch of (4)]
+This is the key insight: the Lie derivative measures ``infinitesimal change'' along the flow:
+\[\mathcal{L}_X \omega = \lim_{t \to 0} \frac{\phi_t^* \omega - \omega}{t} = \frac{d}{dt}\Big|_{t=0} \phi_t^* \omega\]
+\end{proof}
+
+\section{Divergence-Free Vector Fields}
+
+\begin{defn}{Divergence-Free}{div_free}
+A vector field $X$ is \textbf{divergence-free} (or \textbf{incompressible}) if $\mathcal{L}_X \omega = 0$ where $\omega$ is the volume form.
+
+By Cartan: $\mathcal{L}_X \omega = d(\iota_X \omega) + \iota_X(d\omega) = d(\iota_X \omega)$ since $d\omega = 0$ (it's a top form). So divergence-free means $d(\iota_X \omega) = 0$.
+\end{defn}
+
+\begin{thm}{Volume Preservation}{vol_preserve}
+$X$ is divergence-free if and only if its flow $\phi_t$ preserves volume:
+\[\phi_t^* \omega = \omega\]
+for all $t$.
+\end{thm}
+
+\begin{proof}
+$\frac{d}{dt} \phi_t^* \omega = \phi_t^* (\mathcal{L}_X \omega)$. If $\mathcal{L}_X \omega = 0$, then $\phi_t^* \omega$ is constant, equal to $\phi_0^* \omega = \omega$.
+\end{proof}
+
+\begin{remark}
+In $\mathbb{R}^3$: $X$ is divergence-free iff $\nabla \cdot X = 0$. This is the condition for incompressible fluid flow.
+\end{remark}
+
+\section{Contact Structures}
+
+\begin{defn}{Contact Form}{contact_form}
+A 1-form $\alpha$ on a $(2n+1)$-dimensional manifold is a \textbf{contact form} if
+\[\alpha \wedge (d\alpha)^n \neq 0\]
+everywhere. The hyperplane field $\xi = \ker \alpha$ is called a \textbf{contact structure}.
+\end{defn}
+
+\begin{example}
+On $\mathbb{R}^3$ with coordinates $(x, y, z)$:
+\[\alpha = dz - y\,dx\]
+Then $d\alpha = -dy \wedge dx = dx \wedge dy$, and $\alpha \wedge d\alpha = dz \wedge dx \wedge dy \neq 0$.
+\end{example}
+
+\begin{remark}
+Contact structures are ``maximally non-integrable'': $\alpha \wedge d\alpha \neq 0$ means the hyperplane field $\ker \alpha$ cannot be tangent to any surface. This is the opposite of what happens when $\alpha \wedge d\alpha = 0$. Contact geometry is the odd-dimensional analog of symplectic geometry.
+\end{remark}
 
 \begin{exercises}
 
