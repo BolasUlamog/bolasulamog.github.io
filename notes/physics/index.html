@@ -3,424 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Notes | Damian's Notes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Physics — Damian Burgess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Light Mode */
-            --bg: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --text: #1a1a1a;
-            --primary: #6c5ce7;
-            --secondary: #00b894;
-            --accent: #fd79a8;
-            --border: rgba(0, 0, 0, 0.08);
-            
-            /* Dark Mode (Space Theme) */
-            --bg-dark: #0B0D17;       /* Deep space */
-            --card-bg-dark: rgba(30, 30, 50, 0.85);
-            --text-dark: #D0D6F9;      /* Soft blue */
-            --primary-dark: #6F2DBD;   /* Purple nebula */
-            --secondary-dark: #45B69C; /* Teal planet */
-            --accent-dark: #FFD700;   /* Golden stars */
-            --border-dark: rgba(255, 255, 255, 0.08);
+            --bg: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-pink: #ff6b9d;
+            --chalk-blue: #64b5f6;
+            --chalk-green: #81c784;
+            --chalk-yellow: #fff59d;
+            --chalk-purple: #b39ddb;
+            --chalk-orange: #ffb74d;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
         }
-        
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--sans);
             background: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 0;
-            transition: all 0.4s ease;
+            line-height: 1.7;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
-        
-        body.dark-mode {
-            --bg: var(--bg-dark);
-            --card-bg: var(--card-bg-dark);
-            --text: var(--text-dark);
-            --primary: var(--primary-dark);
-            --secondary: var(--secondary-dark);
-            --accent: var(--accent-dark);
-            --border: var(--border-dark);
-        }
-        
+
+        a { color: var(--chalk-blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-            flex: 1;
+            padding: 3rem 2rem;
         }
-        
-        /* Space Particles */
-        .space-particle {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(1px);
-            opacity: 0.6;
-            z-index: 0;
-            pointer-events: none;
-            animation: float-up linear infinite;
-            color: var(--accent);
+
+        .back-link {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 2rem;
         }
-        
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-            }
-        }
-        
-        /* Header Section */
-        .header {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: var(--primary);
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
-            opacity: 0.1;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0 0 1rem 0;
-            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        .back-link:hover { color: var(--chalk-pink); text-decoration: none; }
+
+        h1 {
+            font-family: var(--handwritten);
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--chalk-blue), var(--chalk-purple));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
-        }
-        
-        .header .subtitle {
-            font-size: 1.1rem;
-            color: var(--text);
-            opacity: 0.8;
             margin-bottom: 0.5rem;
-            font-weight: 500;
         }
-        
-        /* Navigation */
-        .nav-container {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .nav-btn {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        
-        .nav-btn i {
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
             font-size: 1.1rem;
         }
-        
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+
+        section {
             margin-bottom: 3rem;
         }
-        
-        @media (max-width: 768px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .physics-card {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .physics-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .physics-card h2 {
-            font-size: 1.5rem;
-            margin-top: 0;
+
+        h2 {
+            font-family: var(--handwritten);
+            font-size: 1.8rem;
+            color: var(--chalk-green);
             margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
-            color: var(--accent);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px dashed rgba(255,255,255,0.1);
         }
-        
-        .physics-card h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 40px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
         }
-        
-        .physics-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .physics-card li {
-            margin-bottom: 1rem;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-        
-        .physics-card li::before {
-            content: '◆';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-size: 0.8rem;
-            top: 3px;
-        }
-        
-        .physics-card a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .physics-card a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-        
-        .experiment-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            margin-top: 1rem;
-            cursor: pointer;
+
+        .note-card {
+            background: var(--bg-card);
+            border: 2px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
             transition: all 0.3s;
-            font-family: inherit;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
         }
-        
-        .experiment-btn:hover {
-            background: var(--secondary);
-            transform: scale(1.05);
+
+        .note-card:hover {
+            border-color: var(--chalk-pink);
+            transform: translateY(-3px);
         }
-        
-        /* Dark Mode Toggle */
-        .mode-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        .note-card h3 {
+            font-family: var(--handwritten);
+            font-size: 1.4rem;
+            color: var(--chalk-yellow);
+            margin-bottom: 0.5rem;
         }
-        
-        .mode-toggle i {
-            font-size: 1.2rem;
+
+        .note-card .desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
         }
-        
-        /* Footer */
-        .footer {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
+
+        .note-card .status {
+            font-size: 0.8rem;
+            color: var(--chalk-purple);
+            font-style: italic;
+        }
+
+        .note-card a.view-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--chalk-pink);
+            font-weight: 500;
+        }
+
+        .other-section {
+            background: var(--bg-card);
+            border: 2px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .other-section h3 {
+            font-family: var(--handwritten);
+            font-size: 1.3rem;
+            color: var(--chalk-orange);
+            margin-bottom: 1rem;
+        }
+
+        .other-section ul {
+            list-style: none;
+        }
+
+        .other-section li {
+            margin-bottom: 0.6rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .other-section li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--chalk-pink);
+        }
+
+        .coming-soon {
+            background: rgba(255,255,255,0.02);
+            border: 2px dashed rgba(255,255,255,0.08);
+            border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
+            color: var(--text-muted);
         }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+
+        .coming-soon h3 {
+            font-family: var(--handwritten);
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
         }
-        
-        .social-links a {
-            color: var(--text);
-            font-size: 1.5rem;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            transform: translateY(-3px);
-            color: var(--primary);
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .container { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Space Particles -->
-    <div class="mode-toggle" id="modeToggle">
-        <i class="fas fa-moon"></i>
-    </div>
-    
     <div class="container">
-        <div class="header">
-            <h1>Physics Notes</h1>
-            <div class="subtitle">Physics is pretty cool</div>
-        </div>
-        
-        <div class="nav-container">
-            <a href="../index.html" class="nav-btn">
-                <i class="fas fa-rocket"></i> Launch Home
-            </a>
-            <a href="mechanics/" class="nav-btn">
-                <i class="fas fa-atom"></i> Mechanics
-            </a>
-            <a href="relativity/" class="nav-btn">
-                <i class="fas fa-globe-americas"></i> Relativity
-            </a>
-            <a href="thermo/" class="nav-btn">
-                <i class="fas fa-fire"></i> Thermodynamics
-            </a>
-            <a href="em/" class="nav-btn">
-                <i class="fas fa-bolt"></i> Electromagnetism
-            </a>
-        </div>
-        
-        <div class="content-grid">
+        <a href="../../" class="back-link">← back to home</a>
 
-            <div class="physics-card">
-                <h2>Exterior resources I used for hs/AP physics</h2>
-                <ul>
-                    <li><a href="https://www.youtube.com/@WeAreShowboat">We Are Snowboat</a></li>
-                    <li><a href="https://www.youtube.com/watch?v=J-h-h-writo&list=PLMZPbQXg9nt5V6t-dX93TCriDgzDKCcAr">University Physics with Dr. Viv</a></li>
-                    <li><a href="https://www.princetonreview.com/">Princeton Review Books</a></li>
-                </ul>
+        <h1>Physics</h1>
+        <p class="subtitle">Physics is pretty cool</p>
+
+        <section>
+            <h2>Lecture Notes & Topics</h2>
+            <div class="notes-grid">
+                
+                <div class="note-card">
+                    <h3>Electromagnetism</h3>
+                    <p class="desc">Electric fields, magnetic fields, Maxwell's equations.</p>
+                    <a href="em/" class="view-link">view notes →</a>
+                </div>
+
+                <div class="note-card">
+                    <h3>Mechanics</h3>
+                    <p class="desc">Kinematics, dynamics, energy, momentum.</p>
+                    <a href="mechanics/" class="view-link">view notes →</a>
+                </div>
+
+                <div class="note-card">
+                    <h3>Relativity</h3>
+                    <p class="desc">Special relativity, spacetime.</p>
+                    <a href="relativity/" class="view-link">view notes →</a>
+                </div>
+
+                <div class="note-card">
+                    <h3>Thermodynamics</h3>
+                    <p class="desc">Heat, entropy, statistical mechanics.</p>
+                    <a href="thermo/" class="view-link">view notes →</a>
+                </div>
+
             </div>
-            <div class="physics-card">
-                <h2>Physics Resources</h2>
-                <ul>
-                    <li><a href="../practice/">Practice Problems</a></li>
-                    <li><a href="../math/">Math Notes</a></li>
-                    <li><a href="../cs/">Computer Science Notes</a></li>
-                </ul>
+        </section>
+
+        <section>
+            <h2>Other Resources</h2>
+            <div class="notes-grid">
+                <div class="other-section">
+                    <h3>External HS/AP Resources</h3>
+                    <ul>
+                        <li><a href="https://www.youtube.com/@WeAreShowboat">We Are Showboat</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=J-h-h-writo&list=PLMZPbQXg9nt5V6t-dX93TCriDgzDKCcAr">University Physics with Dr. Viv</a></li>
+                        <li><a href="https://www.princetonreview.com/">Princeton Review Books</a></li>
+                    </ul>
+                </div>
+
+                <div class="other-section">
+                    <h3>Related Sections</h3>
+                    <ul>
+                        <li><a href="../practice/">Practice Problems</a></li>
+                        <li><a href="../math/">Math Notes</a></li>
+                        <li><a href="../cs/">Computer Science Notes</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
-    
-    <footer class="footer">
-        <div>Connect with me</div>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/damian-burgess-62aab4273/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/bolasulamog/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com/BolasUlamog" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="mailto:damianb@stanford.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
-        </div>
-    </footer>
-    
-    <script>
-        // Create space particles
-        function createParticles() {
-            const symbols = ['✧', '✦', '✹', '✺', '✶', '✷', '✵', '❂', '❉', '❊'];
-            
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'space-particle';
-                particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                particle.style.fontSize = `${Math.random() * 20 + 10}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                document.body.appendChild(particle);
-            }
-        }
-        
-        // Dark Mode Toggle
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
-        
-        modeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            if(body.classList.contains('dark-mode')) {
-                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
-        
-        // Initialize particles when page loads
-        window.addEventListener('load', createParticles);
-        
-        // Animate elements on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.header, .physics-card').forEach(el => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
 </body>
 </html>
