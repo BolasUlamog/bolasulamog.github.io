@@ -124,6 +124,37 @@
             font-weight: 500;
         }
 
+        .toc {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .toc-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toc-list {
+            list-style: none;
+            font-size: 0.85rem;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.4rem;
+        }
+
+        .toc-list a {
+            color: var(--text-muted);
+        }
+
+        .toc-list a:hover {
+            color: var(--chalk-blue);
+        }
+
         .other-section {
             background: var(--bg-card);
             border: 2px dashed rgba(255,255,255,0.1);
@@ -182,36 +213,59 @@
         <a href="../../" class="back-link">← back to home</a>
 
         <h1>Physics</h1>
-        <p class="subtitle">Physics is pretty cool</p>
+        <p class="subtitle">Course notes, derivations, and problem sets</p>
 
         <section>
-            <h2>Lecture Notes & Topics</h2>
+            <h2>Lecture Notes</h2>
             <div class="notes-grid">
-                
-                <div class="note-card">
-                    <h3>Electromagnetism</h3>
-                    <p class="desc">Electric fields, magnetic fields, Maxwell's equations.</p>
-                    <a href="em/" class="view-link">view notes →</a>
+                <div class="note-card" style="grid-column: span 2;">
+                    <h3>Physics 61</h3>
+                    <p class="desc">Honors mechanics &amp; special relativity: kinematics, Newton's laws, energy, momentum, rotational dynamics, the inertia tensor, gyroscopic motion, and the equivalence principle.</p>
+                    <a href="physics61.pdf" class="view-link">view notes →</a>
+                    <div class="toc">
+                        <div class="toc-title">Part I — Special Relativity</div>
+                        <ul class="toc-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1.5rem;">
+                            <li><a href="physics61.pdf#page=6">1. Length Contraction</a></li>
+                            <li><a href="physics61.pdf#page=11">2. Relativity of Simultaneity</a></li>
+                            <li><a href="physics61.pdf#page=16">3. Spacetime Diagrams</a></li>
+                            <li><a href="physics61.pdf#page=25">4. Lorentz Transformations</a></li>
+                            <li><a href="physics61.pdf#page=31">5. Spacetime Interval &amp; Causality</a></li>
+                            <li><a href="physics61.pdf#page=38">6. Four-Vectors &amp; Dynamics</a></li>
+                            <li><a href="physics61.pdf#page=45">7. Energy, Momentum, &amp; Mass</a></li>
+                            <li><a href="physics61.pdf#page=50">8. Composite Systems</a></li>
+                            <li><a href="physics61.pdf#page=54">9. Two-Body Decay</a></li>
+                        </ul>
+                        <div class="toc-title" style="margin-top: 1rem;">Part II — Newtonian Mechanics</div>
+                        <ul class="toc-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1.5rem;">
+                            <li><a href="physics61.pdf#page=58">10. Dimensional Analysis</a></li>
+                            <li><a href="physics61.pdf#page=66">11. SR → Newton's Laws</a></li>
+                            <li><a href="physics61.pdf#page=70">12. Friction &amp; Kinematics in 3D</a></li>
+                            <li><a href="physics61.pdf#page=75">13. Acceleration → Position</a></li>
+                            <li><a href="physics61.pdf#page=77">14. Pulleys, Ropes &amp; Polar Coords</a></li>
+                            <li><a href="physics61.pdf#page=87">15. Conical Pendulum</a></li>
+                            <li><a href="physics61.pdf#page=91">16–17. Diff Eqs in Mechanics</a></li>
+                            <li><a href="physics61.pdf#page=103">18. Newton's Laws &amp; Momentum</a></li>
+                            <li><a href="physics61.pdf#page=109">19. CM &amp; Rocket Science</a></li>
+                            <li><a href="physics61.pdf#page=116">20. Newton's 2nd Law Revisited</a></li>
+                            <li><a href="physics61.pdf#page=121">21. Conservative Forces &amp; PE</a></li>
+                            <li><a href="physics61.pdf#page=127">22. 3D Forces &amp; Non-Conservative</a></li>
+                        </ul>
+                        <div class="toc-title" style="margin-top: 1rem;">Part III — Rotational Dynamics &amp; Beyond</div>
+                        <ul class="toc-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1.5rem;">
+                            <li><a href="physics61.pdf#page=132">23. Angular Momentum &amp; Torque</a></li>
+                            <li><a href="physics61.pdf#page=139">24. Torque &amp; Moment of Inertia</a></li>
+                            <li><a href="physics61.pdf#page=145">25. Rotational KE &amp; Rigid Bodies</a></li>
+                            <li><a href="physics61.pdf#page=152">26. Rotation &amp; Translation</a></li>
+                            <li><a href="physics61.pdf#page=159">27. Gyroscopic Motion</a></li>
+                            <li><a href="physics61.pdf#page=163">28. Equivalence Principle</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="note-card">
-                    <h3>Mechanics</h3>
-                    <p class="desc">Kinematics, dynamics, energy, momentum.</p>
-                    <a href="mechanics/" class="view-link">view notes →</a>
+                <div class="coming-soon">
+                    <h3>More to come...</h3>
+                    <p>Future courses will appear here as PDFs.</p>
                 </div>
-
-                <div class="note-card">
-                    <h3>Relativity</h3>
-                    <p class="desc">Special relativity, spacetime.</p>
-                    <a href="relativity/" class="view-link">view notes →</a>
-                </div>
-
-                <div class="note-card">
-                    <h3>Thermodynamics</h3>
-                    <p class="desc">Heat, entropy, statistical mechanics.</p>
-                    <a href="thermo/" class="view-link">view notes →</a>
-                </div>
-
             </div>
         </section>
 
@@ -219,18 +273,16 @@
             <h2>Other Resources</h2>
             <div class="notes-grid">
                 <div class="other-section">
-                    <h3>External HS/AP Resources</h3>
+                    <h3>External Resources</h3>
                     <ul>
                         <li><a href="https://www.youtube.com/@WeAreShowboat">We Are Showboat</a></li>
                         <li><a href="https://www.youtube.com/watch?v=J-h-h-writo&list=PLMZPbQXg9nt5V6t-dX93TCriDgzDKCcAr">University Physics with Dr. Viv</a></li>
-                        <li><a href="https://www.princetonreview.com/">Princeton Review Books</a></li>
                     </ul>
                 </div>
 
                 <div class="other-section">
                     <h3>Related Sections</h3>
                     <ul>
-                        <li><a href="../practice/">Practice Problems</a></li>
                         <li><a href="../math/">Math Notes</a></li>
                         <li><a href="../cs/">Computer Science Notes</a></li>
                     </ul>
