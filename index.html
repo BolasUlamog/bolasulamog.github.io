@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Damian Burgess</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1a2e;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --bg: #0f0f1a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.07);
             --text: #e8e6e3;
             --text-muted: #a0a0a0;
             --chalk-pink: #ff6b9d;
@@ -37,12 +39,10 @@
             line-height: 1.6;
             font-size: 16px;
             min-height: 100vh;
-            position: relative;
             overflow-x: hidden;
         }
 
-        /* Starfield background */
-        .stars {
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -52,26 +52,12 @@
             z-index: 0;
         }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Floating doodles */
-        .doodle {
+        .cursor-trail {
             position: fixed;
-            font-family: var(--handwritten);
-            font-size: 2rem;
-            opacity: 0.15;
+            border-radius: 50%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 9999;
+            mix-blend-mode: screen;
         }
 
         .container {
@@ -87,11 +73,10 @@
             text-decoration: none;
         }
 
-        /* Header */
+        /* Header with typewriter */
         header {
             text-align: center;
             margin-bottom: 4rem;
-            position: relative;
         }
 
         header h1 {
@@ -100,9 +85,23 @@
             font-weight: 700;
             margin-bottom: 0.25rem;
             background: linear-gradient(135deg, var(--chalk-pink), var(--chalk-blue), var(--chalk-purple));
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            animation: gradShift 8s ease infinite;
+        }
+
+        @keyframes gradShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .tagline {
@@ -112,11 +111,27 @@
             margin-bottom: 1rem;
         }
 
+        .tagline .typed-cursor {
+            animation: blink 0.7s infinite;
+            color: var(--chalk-yellow);
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0
+            }
+        }
+
         .bio {
             color: var(--text-muted);
             max-width: 500px;
             margin: 0 auto 1.5rem;
-            font-size: 1rem;
         }
 
         .intro-links {
@@ -137,9 +152,9 @@
         .intro-links a:hover {
             color: var(--chalk-blue);
             border-color: var(--chalk-blue);
+            box-shadow: 0 0 15px rgba(100, 181, 246, 0.2);
         }
 
-        /* Section headers */
         .section-header {
             font-family: var(--handwritten);
             font-size: 2.2rem;
@@ -153,18 +168,48 @@
             position: absolute;
             bottom: -4px;
             left: 0;
-            width: 100%;
+            width: 0;
             height: 3px;
             background: linear-gradient(90deg, var(--chalk-pink), var(--chalk-blue), transparent);
             border-radius: 2px;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Sketchy underline decoration */
-        .squiggle {
-            display: block;
-            height: 8px;
-            margin-top: -8px;
-            margin-bottom: 1.5rem;
+        .section-header.visible::after {
+            width: 100%;
+        }
+
+        /* Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger .reveal:nth-child(2) {
+            transition-delay: .07s
+        }
+
+        .stagger .reveal:nth-child(3) {
+            transition-delay: .14s
+        }
+
+        .stagger .reveal:nth-child(4) {
+            transition-delay: .21s
+        }
+
+        .stagger .reveal:nth-child(5) {
+            transition-delay: .28s
+        }
+
+        .stagger .reveal:nth-child(6) {
+            transition-delay: .35s
         }
 
         /* Projects */
@@ -180,34 +225,49 @@
 
         .project-card {
             background: var(--bg-card);
-            border: 1px dashed rgba(255,255,255,0.1);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.5rem;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
+        }
+
+        .project-card .card-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .project-card:hover .card-glow {
+            opacity: 1;
         }
 
         .project-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
+            left: -100%;
+            width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--chalk-pink), var(--chalk-blue));
-            opacity: 0;
-            transition: opacity 0.3s;
+            background: linear-gradient(90deg, var(--chalk-pink), var(--chalk-blue), var(--chalk-purple));
+            transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover::before {
+            left: 0;
         }
 
         .project-card:hover {
             background: var(--bg-card-hover);
-            transform: translateY(-4px) rotate(-0.5deg);
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        .project-card:hover::before {
-            opacity: 1;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
         }
 
         .project-tag {
@@ -217,18 +277,34 @@
             display: inline-block;
         }
 
-        .tag-math { color: var(--chalk-purple); }
-        .tag-code { color: var(--chalk-green); }
-        .tag-writing { color: var(--chalk-yellow); }
-        .tag-art { color: var(--chalk-pink); }
-        .tag-research { color: var(--chalk-blue); }
-        .tag-org { color: var(--chalk-orange); }
+        .tag-math {
+            color: var(--chalk-purple);
+        }
+
+        .tag-code {
+            color: var(--chalk-green);
+        }
+
+        .tag-writing {
+            color: var(--chalk-yellow);
+        }
+
+        .tag-art {
+            color: var(--chalk-pink);
+        }
+
+        .tag-research {
+            color: var(--chalk-blue);
+        }
+
+        .tag-org {
+            color: var(--chalk-orange);
+        }
 
         .project-card h3 {
             font-family: var(--handwritten);
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
-            color: var(--text);
         }
 
         .project-card p {
@@ -243,6 +319,11 @@
             font-size: 1.1rem;
             color: var(--chalk-blue);
             margin-top: 0.75rem;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover .project-link {
+            transform: translateX(6px);
         }
 
         /* Notes */
@@ -266,33 +347,52 @@
             display: block;
             padding: 1rem;
             background: var(--bg-card);
-            border: 1px dashed rgba(255,255,255,0.1);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-link::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            box-shadow: inset 0 0 30px rgba(129, 199, 132, 0);
+            transition: box-shadow 0.4s;
+        }
+
+        .note-link:hover::after {
+            box-shadow: inset 0 0 30px rgba(129, 199, 132, 0.08);
         }
 
         .note-link:hover {
             background: var(--bg-card-hover);
             border-color: var(--chalk-green);
-            transform: rotate(1deg);
+            transform: translateY(-5px);
         }
 
         .note-link .emoji {
             font-size: 1.5rem;
             display: block;
             margin-bottom: 0.5rem;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .note-link:hover .emoji {
+            transform: scale(1.4) rotate(-8deg);
         }
 
         .note-link .title {
             font-family: var(--handwritten);
             font-size: 1.3rem;
-            color: var(--text);
         }
 
         /* Footer */
         footer {
-            border-top: 1px dashed rgba(255,255,255,0.1);
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
             margin-top: 2rem;
             text-align: center;
@@ -323,7 +423,17 @@
             opacity: 0.5;
         }
 
-        /* Responsive */
+        /* Floating doodles */
+        .doodle {
+            position: fixed;
+            font-family: var(--handwritten);
+            font-size: 2rem;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            transition: transform 0.2s ease-out;
+        }
+
         @media (max-width: 600px) {
             header h1 {
                 font-size: 2.5rem;
@@ -333,7 +443,8 @@
                 font-size: 1.2rem;
             }
 
-            .project-grid, .notes-grid {
+            .project-grid,
+            .notes-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -344,24 +455,23 @@
         }
     </style>
 </head>
-<body>
-    <!-- Starfield -->
-    <div class="stars" id="stars"></div>
 
-    <!-- Floating math doodles -->
-    <div class="doodle" style="top: 15%; left: 5%; color: var(--chalk-pink);">∫</div>
-    <div class="doodle" style="top: 25%; right: 8%; color: var(--chalk-blue);">∞</div>
-    <div class="doodle" style="top: 45%; left: 3%; color: var(--chalk-yellow);">π</div>
-    <div class="doodle" style="top: 60%; right: 5%; color: var(--chalk-purple);">∑</div>
-    <div class="doodle" style="top: 75%; left: 7%; color: var(--chalk-green);">∂</div>
-    <div class="doodle" style="top: 85%; right: 10%; color: var(--chalk-orange);">λ</div>
-    <div class="doodle" style="top: 35%; left: 92%; color: var(--chalk-pink);">★</div>
-    <div class="doodle" style="top: 55%; left: 95%; color: var(--chalk-blue);">✦</div>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="doodle" data-speed="0.02" style="top:15%;left:5%;color:var(--chalk-pink)">∫</div>
+    <div class="doodle" data-speed="0.03" style="top:25%;right:8%;color:var(--chalk-blue)">∞</div>
+    <div class="doodle" data-speed="0.015" style="top:45%;left:3%;color:var(--chalk-yellow)">π</div>
+    <div class="doodle" data-speed="0.025" style="top:60%;right:5%;color:var(--chalk-purple)">∑</div>
+    <div class="doodle" data-speed="0.02" style="top:75%;left:7%;color:var(--chalk-green)">∂</div>
+    <div class="doodle" data-speed="0.035" style="top:85%;right:10%;color:var(--chalk-orange)">λ</div>
+    <div class="doodle" data-speed="0.01" style="top:35%;left:92%;color:var(--chalk-pink)">★</div>
+    <div class="doodle" data-speed="0.04" style="top:55%;left:95%;color:var(--chalk-blue)">✦</div>
 
     <div class="container">
-        <header>
+        <header class="reveal">
             <h1>Damian Burgess</h1>
-            <div class="tagline">math, physics, & making cool things ✨</div>
+            <div class="tagline"><span id="typed-text"></span><span class="typed-cursor">|</span></div>
             <p class="bio">
                 Stanford freshman. I like hard problems, mathematical art, and building things that matter.
             </p>
@@ -373,45 +483,45 @@
         </header>
 
         <section class="projects">
-            <h2 class="section-header">Projects</h2>
-
-            <div class="project-grid">
-                <a href="https://maosc.net" class="project-card" target="_blank">
+            <h2 class="section-header reveal">Projects</h2>
+            <div class="project-grid stagger">
+                <a href="https://maosc.net" class="project-card reveal" target="_blank">
+                    <div class="card-glow"></div>
                     <span class="project-tag tag-org">~ organization ~</span>
                     <h3>MAOSC</h3>
                     <p>Math competition org I founded. We run events and write problems for students.</p>
                     <span class="project-link">maosc.net →</span>
                 </a>
-
-                <a href="desmos/" class="project-card">
+                <a href="desmos/" class="project-card reveal">
+                    <div class="card-glow"></div>
                     <span class="project-tag tag-art">~ math art ~</span>
                     <h3>Desmos Viz</h3>
                     <p>Julia sets, Brownian motion, fractals, and parametric art. Math that looks pretty.</p>
                     <span class="project-link">see the gallery →</span>
                 </a>
-
-                <a href="projects/smt-power/" class="project-card">
+                <a href="projects/smt-power/" class="project-card reveal">
+                    <div class="card-glow"></div>
                     <span class="project-tag tag-math">~ competition ~</span>
                     <h3>SMT Power Round</h3>
                     <p>Wrote the power round for Stanford Math Tournament.</p>
                     <span class="project-link">coming soon!</span>
                 </a>
-
-                <a href="projects/lighter-painter/" class="project-card">
+                <a href="projects/lighter-painter/" class="project-card reveal">
+                    <div class="card-glow"></div>
                     <span class="project-tag tag-code">~ hardware ~</span>
                     <h3>Mechanical Light Painter</h3>
                     <p>Arduino + lasers + stepper motors = automated light paintings. Built for EE14N.</p>
                     <span class="project-link">view project →</span>
                 </a>
-
-                <a href="writing/" class="project-card">
+                <a href="writing/" class="project-card reveal">
+                    <div class="card-glow"></div>
                     <span class="project-tag tag-writing">~ writing ~</span>
                     <h3>Creative Writing</h3>
                     <p>Poetry, short stories, and other words I've strung together.</p>
                     <span class="project-link">read →</span>
                 </a>
-
-                <div class="project-card" style="opacity: 0.6;">
+                <div class="project-card reveal" style="opacity: 0.6;">
+                    <div class="card-glow"></div>
                     <span class="project-tag tag-research">~ research ~</span>
                     <h3>AMO Physics</h3>
                     <p>Upcoming summer research in atomic, molecular, and optical physics.</p>
@@ -421,30 +531,25 @@
         </section>
 
         <section class="notes">
-            <h2 class="section-header">Notes</h2>
-            <p class="notes-intro">Course notes & problem sets from classes and self-study.</p>
-
-            <div class="notes-grid">
-                <a href="notes/math/" class="note-link">
-                    <span class="emoji">∫</span>
-                    <span class="title">Math</span>
+            <h2 class="section-header reveal">Notes</h2>
+            <p class="notes-intro reveal">Course notes & problem sets from classes and self-study.</p>
+            <div class="notes-grid stagger">
+                <a href="notes/math/" class="note-link reveal">
+                    <span class="emoji">∫</span><span class="title">Math</span>
                 </a>
-                <a href="notes/physics/" class="note-link">
-                    <span class="emoji">⚛</span>
-                    <span class="title">Physics</span>
+                <a href="notes/physics/" class="note-link reveal">
+                    <span class="emoji">⚛</span><span class="title">Physics</span>
                 </a>
-                <a href="notes/cs/" class="note-link">
-                    <span class="emoji">💻</span>
-                    <span class="title">CS</span>
+                <a href="notes/cs/" class="note-link reveal">
+                    <span class="emoji">💻</span><span class="title">CS</span>
                 </a>
-                <a href="notes/ss/" class="note-link">
-                    <span class="emoji">📊</span>
-                    <span class="title">Social Science</span>
+                <a href="notes/ss/" class="note-link reveal">
+                    <span class="emoji">📊</span><span class="title">Social Science</span>
                 </a>
             </div>
         </section>
 
-        <footer>
+        <footer class="reveal">
             <div class="footer-links">
                 <a href="mailto:damianb@stanford.edu">damianb@stanford.edu</a>
                 <a href="https://github.com/BolasUlamog">GitHub</a>
@@ -456,20 +561,175 @@
     </div>
 
     <script>
-        // Generate random stars
-        const starsContainer = document.getElementById('stars');
-        const starCount = 80;
+        // === CANVAS: Constellation stars that connect near cursor ===
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H;
+        function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+        resize();
+        addEventListener('resize', resize);
 
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            starsContainer.appendChild(star);
+        const mouse = { x: -500, y: -500 };
+        addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+        const dots = Array.from({ length: 100 }, () => ({
+            x: Math.random() * innerWidth,
+            y: Math.random() * innerHeight,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.5 + 0.5,
+            phase: Math.random() * Math.PI * 2,
+        }));
+
+        // Shooting stars
+        const shoots = [];
+        function addShoot() {
+            shoots.push({
+                x: Math.random() * W, y: Math.random() * H * 0.3,
+                vx: (Math.random() * 3 + 2) * (Math.random() > 0.5 ? 1 : -1),
+                vy: Math.random() * 2 + 1, life: 1, decay: Math.random() * 0.012 + 0.008
+            });
         }
+
+        let t = 0;
+        function frame() {
+            ctx.clearRect(0, 0, W, H);
+            t++;
+
+            // Subtle aurora
+            [[0.25, 0.3, 260], [0.7, 0.5, 200], [0.5, 0.8, 330]].forEach(([bx, by, hue]) => {
+                const x = (bx + Math.sin(t * 0.0004) * 0.1) * W;
+                const y = (by + Math.cos(t * 0.0003) * 0.08) * H;
+                const g = ctx.createRadialGradient(x, y, 0, x, y, Math.min(W, H) * 0.25);
+                g.addColorStop(0, `hsla(${hue},60%,50%,0.035)`);
+                g.addColorStop(1, 'transparent');
+                ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+            });
+
+            // Move dots & draw connections to cursor
+            for (const d of dots) {
+                d.x += d.vx; d.y += d.vy;
+                if (d.x < 0 || d.x > W) d.vx *= -1;
+                if (d.y < 0 || d.y > H) d.vy *= -1;
+
+                const a = 0.3 + 0.5 * Math.sin(t * 0.015 + d.phase);
+                ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,${a})`; ctx.fill();
+
+                // Connect to cursor
+                const dist = Math.hypot(d.x - mouse.x, d.y - mouse.y);
+                if (dist < 150) {
+                    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(100,181,246,${(1 - dist / 150) * 0.25})`;
+                    ctx.lineWidth = 0.8; ctx.stroke();
+                }
+
+                // Connect dots near each other
+                for (const d2 of dots) {
+                    const dd = Math.hypot(d.x - d2.x, d.y - d2.y);
+                    if (dd < 80 && dd > 0) {
+                        ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y);
+                        ctx.strokeStyle = `rgba(255,255,255,${(1 - dd / 80) * 0.06})`;
+                        ctx.lineWidth = 0.5; ctx.stroke();
+                    }
+                }
+            }
+
+            // Shooting stars
+            if (Math.random() < 0.005) addShoot();
+            for (let i = shoots.length - 1; i >= 0; i--) {
+                const s = shoots[i]; s.x += s.vx; s.y += s.vy; s.life -= s.decay;
+                if (s.life <= 0) { shoots.splice(i, 1); continue; }
+                const len = 35, mag = Math.hypot(s.vx, s.vy);
+                const tx = s.x - s.vx / mag * len, ty = s.y - s.vy / mag * len;
+                const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
+                g.addColorStop(0, 'rgba(255,255,255,0)');
+                g.addColorStop(1, `rgba(255,255,255,${s.life * 0.7})`);
+                ctx.strokeStyle = g; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(s.x, s.y); ctx.stroke();
+            }
+
+            requestAnimationFrame(frame);
+        }
+        frame();
+
+        // === CURSOR PARTICLE TRAIL ===
+        const trail = [];
+        addEventListener('mousemove', e => {
+            for (let i = 0; i < 2; i++) {
+                trail.push({
+                    x: e.clientX + (Math.random() - 0.5) * 8,
+                    y: e.clientY + (Math.random() - 0.5) * 8,
+                    life: 1,
+                    hue: 200 + Math.random() * 60,
+                    el: null
+                });
+            }
+        });
+        setInterval(() => {
+            for (let i = trail.length - 1; i >= 0; i--) {
+                const p = trail[i];
+                if (!p.el) {
+                    p.el = document.createElement('div');
+                    p.el.className = 'cursor-trail';
+                    document.body.appendChild(p.el);
+                }
+                p.life -= 0.04;
+                if (p.life <= 0) {
+                    p.el.remove(); trail.splice(i, 1); continue;
+                }
+                const s = p.life * 5;
+                p.el.style.cssText = `left:${p.x - s / 2}px;top:${p.y - s / 2}px;width:${s}px;height:${s}px;background:hsla(${p.hue},70%,70%,${p.life * 0.5})`;
+                p.y -= 0.3;
+            }
+        }, 20);
+
+        // === TYPEWRITER TAGLINE ===
+        const phrases = [
+            'math, physics, & making cool things ✨'
+        ];
+        let pi = 0, ci = 0, deleting = false, pause = 0;
+        const typedEl = document.getElementById('typed-text');
+        setInterval(() => {
+            if (pause > 0) { pause--; return; }
+            const phrase = phrases[pi];
+            if (!deleting) {
+                ci++;
+                typedEl.textContent = phrase.slice(0, ci);
+                if (ci === phrase.length) { deleting = true; pause = 60; }
+            } else {
+                ci--;
+                typedEl.textContent = phrase.slice(0, ci);
+                if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; pause = 10; }
+            }
+        }, 55);
+
+        // === PARALLAX DOODLES ===
+        const doodles = document.querySelectorAll('.doodle');
+        addEventListener('mousemove', e => {
+            const cx = innerWidth / 2, cy = innerHeight / 2;
+            doodles.forEach(d => {
+                const s = parseFloat(d.dataset.speed);
+                d.style.transform = `translate(${(e.clientX - cx) * s}px,${(e.clientY - cy) * s}px)`;
+            });
+        });
+
+        // === SCROLL REVEAL ===
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // === CARD GLOW TRACKING ===
+        document.querySelectorAll('.project-card').forEach(card => {
+            const glow = card.querySelector('.card-glow');
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const x = e.clientX - r.left, y = e.clientY - r.top;
+                glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100,181,246,0.1), transparent 60%)`;
+            });
+        });
     </script>
 </body>
+
 </html>
