@@ -1,0 +1,818 @@
+/* Ephemeral Archive — per-file stages & expressive typography */
+
+:root {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+    --ease-dissolve: cubic-bezier(0.4, 0, 0.2, 1);
+    --stage-dur: 1.35s;
+    --layer-dur: 1.65s;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body {
+    background: #050506;
+    color: #e8e4df;
+    overflow-x: hidden;
+    transition: color 0.6s var(--ease-dissolve);
+}
+
+/* ─── Stage shell ─── */
+
+.stage {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #08080a;
+}
+
+.stage-scene {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity var(--stage-dur) var(--ease-dissolve),
+        visibility 0s linear var(--stage-dur);
+}
+
+.stage-scene.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition:
+        opacity var(--stage-dur) var(--ease-out-expo),
+        visibility 0s;
+}
+
+.stage-layer {
+    position: absolute;
+    inset: 0;
+    will-change: opacity, transform;
+}
+
+.stage-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+}
+
+.stage-img--cover {
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Intro void */
+.stage-wash--void {
+    background: radial-gradient(ellipse 90% 70% at 50% 35%, #1a1a1e, #050506 72%);
+}
+
+.stage-layer--grain {
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* File 001 — stars + heartbeat */
+.stage-vignette--fear {
+    background: radial-gradient(ellipse 80% 60% at 50% 80%, rgba(80, 0, 20, 0.35), transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%);
+    opacity: 0;
+    transition: opacity var(--layer-dur) var(--ease-out-expo) 0.3s;
+}
+
+.stage-scene--001.is-active .stage-vignette--fear { opacity: 1; }
+
+.stage-scene--001 .stage-layer--bg {
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity calc(var(--layer-dur) * 1.2) var(--ease-out-expo), transform 2.4s var(--ease-out-expo);
+}
+
+.stage-scene--001.is-active .stage-layer--bg { opacity: 1; transform: scale(1); }
+.stage-scene--001.is-active .stage-img--drift-slow {
+    animation: drift-slow 40s var(--ease-in-out) infinite alternate;
+}
+
+.stage-scene--001 .stage-layer--pulse {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(8vh);
+    transition: opacity 1.2s var(--ease-out-expo) 0.5s, transform 1.4s var(--ease-out-expo) 0.45s;
+}
+
+.stage-scene--001.is-active .stage-layer--pulse {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stage-img--ekg {
+    width: min(92vw, 720px);
+    height: auto;
+    max-height: 42vh;
+    object-fit: contain;
+    filter: drop-shadow(0 0 28px rgba(255, 40, 60, 0.45));
+    animation: ekg-throb 2.8s var(--ease-in-out) infinite;
+}
+
+@keyframes ekg-throb {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 40, 60, 0.35)); opacity: 0.92; }
+    50% { filter: drop-shadow(0 0 42px rgba(255, 60, 80, 0.7)); opacity: 1; }
+}
+
+@keyframes drift-slow {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+}
+
+/* File 002 — scythe collage (4 images) */
+.stage-scene--002 .stage-layer--wash { opacity: 1; z-index: 0; }
+.stage-scene--002 .stage-layer--rise { z-index: 1; }
+.stage-scene--002 .stage-layer--float { z-index: 2; }
+.stage-scene--002 .stage-layer--shimmer { z-index: 3; }
+.stage-scene--002 .stage-layer--cloud-rise { z-index: 4; }
+
+.stage-scene--002 .stage-layer--rise {
+    opacity: 0;
+    transform: translateY(18vh) scale(1.05);
+    transition: opacity 1.4s var(--ease-out-expo) 0.15s, transform 1.8s var(--ease-out-expo) 0.1s;
+}
+
+.stage-scene--002.is-active .stage-layer--rise {
+    opacity: 0.85;
+    transform: translateY(0) scale(1);
+}
+
+.stage-img--city {
+    object-fit: cover;
+    object-position: center bottom;
+    height: 78%;
+    top: auto;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.stage-scene--002 .stage-layer--float {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.88);
+    transition: opacity 1.5s var(--ease-out-expo) 0.45s, transform 1.7s var(--ease-out-expo) 0.4s;
+}
+
+.stage-scene--002.is-active .stage-layer--float {
+    opacity: 1;
+    transform: scale(1);
+    animation: hoods-breathe 7s var(--ease-in-out) infinite;
+}
+
+.stage-img--hoods {
+    width: min(85vw, 520px);
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 40px rgba(0, 200, 220, 0.15));
+}
+
+.stage-scene--002 .stage-layer--shimmer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.7) rotate(-4deg);
+    transition: opacity 1.8s var(--ease-out-expo) 0.7s, transform 2s var(--ease-out-expo) 0.65s;
+    mix-blend-mode: screen;
+}
+
+.stage-scene--002.is-active .stage-layer--shimmer {
+    opacity: 0.75;
+    transform: scale(1) rotate(0deg);
+}
+
+.stage-img--butterfly {
+    width: min(55vw, 380px);
+    height: auto;
+    object-fit: contain;
+    animation: butterfly-float 9s var(--ease-in-out) infinite alternate;
+}
+
+.stage-scene--002 .stage-layer--cloud-rise {
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 1.2s var(--ease-out-expo) 0.9s, transform 1.6s var(--ease-out-expo) 0.85s;
+}
+
+.stage-scene--002.is-active .stage-layer--cloud-rise {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stage-img--clouds {
+    width: 100%;
+    height: auto;
+    max-height: 55vh;
+    object-fit: cover;
+    object-position: bottom center;
+}
+
+@keyframes hoods-breathe {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.02) translateY(-1vh); }
+}
+
+@keyframes butterfly-float {
+    from { transform: translateY(-2vh) rotate(-2deg); }
+    to { transform: translateY(2vh) rotate(2deg); }
+}
+
+/* File 003 — lottery sketch */
+.stage-wash--gold {
+    background: linear-gradient(135deg, rgba(255, 220, 150, 0.12) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity var(--layer-dur) var(--ease-out-expo) 0.2s;
+}
+
+.stage-scene--003.is-active .stage-wash--gold { opacity: 1; }
+
+.stage-scene--003 .stage-layer--bg {
+    opacity: 0;
+    transition: opacity var(--layer-dur) var(--ease-out-expo);
+}
+
+.stage-scene--003.is-active .stage-layer--bg { opacity: 1; }
+.stage-scene--003.is-active .stage-img--warm-zoom {
+    animation: warm-zoom 26s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes warm-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+}
+
+/* File 004 — clinical void */
+.stage-img--void { object-fit: cover; background: #000; }
+
+.stage-layer--scan {
+    opacity: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255, 50, 70, 0.03) 3px,
+        rgba(255, 50, 70, 0.03) 4px
+    );
+    transition: opacity 0.8s ease;
+}
+
+.stage-scene--004.is-active .stage-layer--scan {
+    opacity: 1;
+    animation: scan-roll 8s linear infinite;
+}
+
+.stage-vignette--clinical {
+    background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(180, 0, 30, 0.08) 100%);
+    opacity: 0;
+    transition: opacity 1s ease 0.2s;
+}
+
+.stage-scene--004.is-active .stage-vignette--clinical { opacity: 1; }
+
+@keyframes scan-roll {
+    from { background-position: 0 0; }
+    to { background-position: 0 120px; }
+}
+
+/* File 005 — ship */
+.stage-wash--horizon {
+    background: linear-gradient(180deg, rgba(255, 200, 120, 0.15) 0%, transparent 40%, rgba(0, 40, 80, 0.25) 100%);
+    opacity: 0;
+    transition: opacity 1s ease 0.3s;
+}
+
+.stage-scene--005.is-active .stage-wash--horizon { opacity: 1; }
+
+.stage-scene--005 .stage-layer--bg {
+    opacity: 0;
+    transition: opacity var(--layer-dur) var(--ease-out-expo);
+}
+
+.stage-scene--005.is-active .stage-layer--bg { opacity: 1; }
+.stage-scene--005.is-active .stage-img--sail-zoom {
+    animation: sail-zoom 24s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes sail-zoom {
+    from { transform: scale(1) translateY(0); }
+    to { transform: scale(1.1) translateY(-2%); }
+}
+
+/* File 006 — frieren field */
+.stage-wash--dusk {
+    background: linear-gradient(180deg, rgba(255, 210, 160, 0.2) 0%, transparent 45%);
+    opacity: 0;
+    transition: opacity 1.2s ease 0.25s;
+}
+
+.stage-scene--006.is-active .stage-wash--dusk { opacity: 1; }
+
+.stage-layer--petals {
+    opacity: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    background-size: 80px 80px;
+    transition: opacity 1.5s ease 0.5s;
+}
+
+.stage-scene--006.is-active .stage-layer--petals {
+    opacity: 0.25;
+    animation: petals-drift 20s linear infinite;
+}
+
+.stage-scene--006.is-active .stage-img--bloom-pan {
+    animation: bloom-pan 32s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes bloom-pan {
+    from { transform: scale(1.02); object-position: 50% 40%; }
+    to { transform: scale(1.1); object-position: 50% 55%; }
+}
+
+@keyframes petals-drift {
+    from { background-position: 0 0; }
+    to { background-position: 80px 120px; }
+}
+
+/* File 007 — starry night cutout */
+.stage-layer--starry {
+    opacity: 0;
+    transition: opacity var(--layer-dur) var(--ease-out-expo);
+}
+
+.stage-scene--007.is-active .stage-layer--starry { opacity: 1; }
+
+.stage-img--starry {
+    object-fit: contain;
+    object-position: center top;
+    background: #000;
+}
+
+.stage-scene--007.is-active .stage-img--starry {
+    animation: starry-sway 18s var(--ease-in-out) infinite alternate;
+}
+
+.stage-wash--ink {
+    background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+@keyframes starry-sway {
+    from { transform: scale(1) translateX(0); }
+    to { transform: scale(1.03) translateX(1%); }
+}
+
+/* ─── Nav ─── */
+
+.archive-nav {
+    position: fixed;
+    top: 1.1rem;
+    left: 1.25rem;
+    z-index: 20;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    color: #9a9590;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 10, 12, 0.7);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.45rem 0.7rem;
+    border-radius: 2px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+}
+
+body[data-active-file="intro"] .archive-nav,
+body[data-active-file="004"] .archive-nav {
+    font-family: "IBM Plex Mono", monospace;
+    color: #9a9590;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 10, 12, 0.7);
+}
+
+body[data-active-file="001"] .archive-nav {
+    font-family: "Crimson Pro", serif;
+    color: #ffb4b4;
+    border-color: rgba(255, 80, 90, 0.25);
+    background: rgba(20, 0, 8, 0.65);
+}
+
+body[data-active-file="002"] .archive-nav {
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 600;
+    color: #7ee8ff;
+    border-color: rgba(0, 220, 255, 0.2);
+    background: rgba(0, 12, 20, 0.7);
+}
+
+body[data-active-file="003"] .archive-nav {
+    font-family: "Cormorant Garamond", serif;
+    color: #e8d4a8;
+    border-color: rgba(220, 180, 100, 0.25);
+    background: rgba(40, 30, 10, 0.55);
+}
+
+body[data-active-file="005"] .archive-nav {
+    font-family: "Bangers", cursive;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    color: #ffe8b0;
+    border-color: rgba(255, 180, 80, 0.35);
+    background: rgba(10, 30, 60, 0.55);
+}
+
+body[data-active-file="006"] .archive-nav {
+    font-family: "Lora", serif;
+    font-style: italic;
+    color: #f5e6d8;
+    border-color: rgba(255, 220, 200, 0.2);
+    background: rgba(50, 35, 30, 0.5);
+}
+
+body[data-active-file="007"] .archive-nav {
+    font-family: "IM Fell English", serif;
+    font-style: italic;
+    color: #c8d4ff;
+    border-color: rgba(150, 180, 255, 0.2);
+    background: rgba(5, 5, 15, 0.75);
+}
+
+.archive-nav:hover { color: #fff; }
+
+/* ─── Scroll sections ─── */
+
+.archive-scroll { position: relative; z-index: 1; }
+
+.archive-file {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5.5rem 1.25rem;
+}
+
+.file-card {
+    width: min(44rem, 94vw);
+    padding: 2rem 2.35rem;
+    border-radius: 4px;
+    backdrop-filter: blur(16px) saturate(1.15);
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    transition:
+        transform 0.7s var(--ease-out-expo),
+        box-shadow 0.7s var(--ease-out-expo),
+        border-color 0.5s ease;
+}
+
+.archive-file.is-visible .file-card {
+    transform: translateY(-4px);
+}
+
+.file-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+    opacity: 0.85;
+}
+
+.file-heading {
+    margin-bottom: 1.1rem;
+    line-height: 1.2;
+}
+
+.file-body {
+    line-height: 1.8;
+}
+
+.file-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.file-meta dt {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.archive-footer {
+    min-height: 40vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 3rem 1rem 5rem;
+}
+
+.archive-footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.45;
+}
+
+/* ─── Theme: Intro (clinical catalog) ─── */
+
+.theme-intro {
+    font-family: "Literata", Georgia, serif;
+    background: rgba(14, 14, 16, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.5);
+    color: #ddd9d4;
+}
+
+.theme-intro .file-label,
+.theme-intro .file-meta dt {
+    font-family: "IBM Plex Mono", monospace;
+    color: #8a9aaa;
+}
+
+.theme-intro .file-title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(1.4rem, 4vw, 1.95rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+}
+
+.theme-intro .file-subtitle {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.82rem;
+    color: #8a8580;
+    margin-bottom: 1.5rem;
+}
+
+.theme-intro .file-meta { border-color: rgba(255, 255, 255, 0.08); }
+
+/* ─── Theme 001: fear / heartbeat ─── */
+
+.theme-001 {
+    font-family: "Crimson Pro", Georgia, serif;
+    font-size: 1.12rem;
+    background: rgba(8, 0, 4, 0.78);
+    border: 1px solid rgba(255, 70, 90, 0.2);
+    box-shadow: 0 0 60px rgba(255, 0, 40, 0.12), 0 24px 80px rgba(0, 0, 0, 0.55);
+    color: #f0d8dc;
+}
+
+.theme-001 .file-label {
+    font-family: "IBM Plex Mono", monospace;
+    color: #ff6b7a;
+    animation: label-flicker 4s step-end infinite;
+}
+
+.theme-001 .file-heading {
+    font-family: "Crimson Pro", serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 5vw, 2.35rem);
+    font-style: italic;
+    letter-spacing: 0.02em;
+    color: #ffeef0;
+    text-shadow: 0 0 30px rgba(255, 50, 70, 0.35);
+}
+
+.theme-001 .file-body {
+    letter-spacing: 0.03em;
+    font-weight: 400;
+}
+
+@keyframes label-flicker {
+    0%, 92%, 100% { opacity: 0.85; }
+    93% { opacity: 0.4; }
+    94% { opacity: 1; }
+}
+
+/* ─── Theme 002: scythe / duality ─── */
+
+.theme-002 {
+    font-family: "Rajdhani", "DM Sans", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, rgba(0, 18, 28, 0.82), rgba(0, 8, 16, 0.88));
+    border: 1px solid rgba(0, 220, 255, 0.18);
+    box-shadow: 0 0 50px rgba(0, 180, 220, 0.08), inset 0 0 80px rgba(0, 100, 140, 0.06);
+    color: #d4eef5;
+}
+
+.theme-002 .file-label {
+    font-family: "IBM Plex Mono", monospace;
+    color: #5ce8ff;
+    letter-spacing: 0.18em;
+}
+
+.theme-002 .file-heading {
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.35rem, 4vw, 1.85rem);
+    letter-spacing: 0.04em;
+    background: linear-gradient(90deg, #a8b8c8, #5ce8ff 50%, #7ee8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.theme-002 .file-body { line-height: 1.75; }
+
+/* ─── Theme 003: lottery / sketch wealth ─── */
+
+.theme-003 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.15rem;
+    background: rgba(42, 32, 18, 0.55);
+    border: 1px solid rgba(220, 180, 100, 0.28);
+    box-shadow: 0 16px 60px rgba(80, 50, 10, 0.35);
+    color: #f5ecd8;
+}
+
+.theme-003 .file-label {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    color: #d4b06a;
+}
+
+.theme-003 .file-heading {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 5vw, 2.5rem);
+    color: #fff5e0;
+    letter-spacing: 0.01em;
+}
+
+.theme-003 .file-body {
+    font-style: italic;
+    color: #ebe0c8;
+}
+
+/* ─── Theme 004: hypochondria / monitor ─── */
+
+.theme-004 {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.92rem;
+    line-height: 1.85;
+    background: rgba(0, 0, 0, 0.88);
+    border: 1px solid rgba(255, 50, 70, 0.35);
+    box-shadow: 0 0 24px rgba(255, 0, 50, 0.15), inset 0 0 40px rgba(255, 0, 0, 0.04);
+    color: #ff8a96;
+}
+
+.theme-004 .file-label {
+    color: #ff3d55;
+    text-shadow: 0 0 12px rgba(255, 40, 60, 0.5);
+}
+
+.theme-004 .file-heading {
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+    border-left: 3px solid #ff3d55;
+    padding-left: 0.75rem;
+}
+
+.theme-004 .file-body {
+    color: #ffb8c0;
+}
+
+/* ─── Theme 005: adventure / ship ─── */
+
+.theme-005 {
+    font-family: "DM Sans", sans-serif;
+    background: rgba(8, 24, 48, 0.65);
+    border: 2px solid rgba(255, 200, 100, 0.35);
+    border-radius: 8px;
+    box-shadow: 0 12px 50px rgba(255, 140, 40, 0.15);
+    color: #fff8ee;
+}
+
+.theme-005 .file-label {
+    font-family: "Permanent Marker", cursive;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: #ffd080;
+}
+
+.theme-005 .file-heading {
+    font-family: "Bangers", cursive;
+    font-size: clamp(2.2rem, 8vw, 3.4rem);
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-shadow: 3px 3px 0 #c45c00, 5px 5px 0 rgba(0, 0, 0, 0.35);
+    transform: rotate(-1deg);
+}
+
+.theme-005 .file-body--verse {
+    font-family: "Shrikhand", cursive;
+    font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+    line-height: 1.65;
+    font-weight: 400;
+    color: #ffe8c8;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+/* ─── Theme 006: love / frieren ─── */
+
+.theme-006 {
+    font-family: "Lora", Georgia, serif;
+    font-size: 1.08rem;
+    background: rgba(48, 36, 32, 0.62);
+    border: 1px solid rgba(255, 230, 210, 0.2);
+    box-shadow: 0 20px 70px rgba(120, 80, 60, 0.25);
+    color: #faf3eb;
+}
+
+.theme-006 .file-label {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    color: #e8d0c0;
+}
+
+.theme-006 .file-heading {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+    font-style: italic;
+    color: #fff8f2;
+}
+
+.theme-006 .file-body {
+    font-style: italic;
+    line-height: 1.9;
+    color: #f0e6dc;
+}
+
+/* ─── Theme 007: college / starry drain ─── */
+
+.theme-007 {
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: 1.1rem;
+    background: rgba(4, 4, 12, 0.82);
+    border: 1px solid rgba(140, 160, 220, 0.2);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    color: #d8dce8;
+}
+
+.theme-007 .file-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62rem;
+    color: #8898c8;
+}
+
+.theme-007 .file-heading {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-style: italic;
+    color: #e8ecff;
+    letter-spacing: 0.02em;
+}
+
+.theme-007 .file-body {
+    line-height: 1.85;
+    color: #c8ccd8;
+}
+
+.theme-007 .file-body em {
+    font-style: italic;
+    color: #a8b8e8;
+}
+
+@media (max-width: 600px) {
+    .file-card { padding: 1.35rem 1.15rem; }
+    .archive-file { padding: 4.5rem 0.85rem; }
+    .theme-005 .file-heading { font-size: 2rem; }
+}
