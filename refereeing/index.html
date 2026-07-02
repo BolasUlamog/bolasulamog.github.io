@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referee Game Log | Damian Burgess</title>
+    <meta name="description" content="Damian Burgess's soccer referee game log — tracking every match officiated across youth and high school leagues.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8f9fb;
+            --bg-card: #ffffff;
+            --border: #e2e5ea;
+            --border-light: #eef0f3;
+            --text: #1a1d23;
+            --text-secondary: #5f6672;
+            --text-tertiary: #8a91a0;
+            --accent: #2563eb;
+            --accent-light: #eff4ff;
+            --green: #16a34a;
+            --green-light: #f0fdf4;
+            --yellow: #ca8a04;
+            --yellow-light: #fefce8;
+            --orange: #ea580c;
+            --orange-light: #fff7ed;
+            --purple: #7c3aed;
+            --purple-light: #f5f3ff;
+            --red: #dc2626;
+            --red-light: #fef2f2;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg-secondary);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .topbar {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+
+        .topbar-back {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: color 0.15s;
+            text-decoration: none;
+        }
+
+        .topbar-back:hover { color: var(--accent); }
+        .topbar-back svg { width: 16px; height: 16px; }
+        .topbar-divider { width: 1px; height: 20px; background: var(--border); }
+        .topbar-title { font-weight: 600; font-size: 0.9rem; }
+
+        .topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+        .topbar-badge {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .live-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22,163,74,0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(22,163,74,0); }
+        }
+
+        .container { max-width: 1080px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        a { color: inherit; text-decoration: none; }
+
+        .page-header { margin-bottom: 2rem; }
+        .page-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+        .page-header p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.25rem 1rem;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+        .stat-card-label {
+            font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.05em; color: var(--text-tertiary); margin-bottom: 0.5rem;
+        }
+
+        .stat-card-value {
+            font-size: 2rem; font-weight: 700; letter-spacing: -0.02em;
+            line-height: 1; margin-bottom: 0.35rem;
+        }
+
+        .stat-card-sub { font-size: 0.8rem; color: var(--text-secondary); }
+        .stat-accent-blue .stat-card-value { color: var(--accent); }
+        .stat-accent-green .stat-card-value { color: var(--green); }
+        .stat-accent-purple .stat-card-value { color: var(--purple); }
+        .stat-accent-orange .stat-card-value { color: var(--orange); }
+
+        .tabs-bar {
+            display: flex; align-items: center; gap: 0.25rem;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 3px;
+            margin-bottom: 1.5rem; width: fit-content;
+        }
+
+        .tab-btn {
+            font-family: var(--sans); font-size: 0.82rem; font-weight: 500;
+            padding: 0.4rem 1rem; border: none; border-radius: 6px;
+            background: transparent; color: var(--text-secondary);
+            cursor: pointer; transition: all 0.15s;
+        }
+
+        .tab-btn:hover { color: var(--text); background: var(--bg-secondary); }
+        .tab-btn.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-sm); }
+
+        .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-light);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .card-header h2 { font-size: 0.95rem; font-weight: 600; }
+        .card-body { padding: 0; }
+        .card-body-padded { padding: 1.25rem; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead th {
+            text-align: left; padding: 0.65rem 1rem; font-size: 0.72rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+            color: var(--text-tertiary); background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border); white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 0.6rem 1rem; font-size: 0.88rem;
+            border-bottom: 1px solid var(--border-light); white-space: nowrap;
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: rgba(37,99,235,0.02); }
+        .td-year { font-family: var(--mono); font-size: 0.8rem; color: var(--text-secondary); }
+
+        .badge {
+            display: inline-block; padding: 0.15rem 0.55rem; border-radius: 4px;
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em;
+        }
+
+        .badge-blue { background: var(--accent-light); color: var(--accent); }
+        .badge-yellow { background: var(--yellow-light); color: var(--yellow); }
+        .badge-purple { background: var(--purple-light); color: var(--purple); }
+        .badge-green { background: var(--green-light); color: var(--green); }
+        .badge-orange { background: var(--orange-light); color: var(--orange); }
+        .badge-red { background: var(--red-light); color: var(--red); }
+        .badge-neutral { background: var(--bg-secondary); color: var(--text-secondary); }
+
+        .game-count { font-family: var(--mono); font-weight: 600; font-size: 0.88rem; }
+        .age-label { font-weight: 600; font-size: 0.88rem; }
+
+        .bar-chart { display: flex; flex-direction: column; gap: 0.65rem; }
+        .bar-row { display: flex; align-items: center; gap: 0.6rem; }
+
+        .bar-label {
+            font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
+            min-width: 80px; text-align: right;
+        }
+
+        .bar-track {
+            flex: 1; height: 20px; background: var(--bg-secondary);
+            border-radius: 4px; overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%; border-radius: 4px;
+            transition: width 0.8s cubic-bezier(0.16,1,0.3,1); width: 0;
+        }
+
+        .bar-fill-blue { background: var(--accent); }
+        .bar-fill-green { background: var(--green); }
+        .bar-fill-purple { background: var(--purple); }
+        .bar-fill-orange { background: var(--orange); }
+        .bar-fill-yellow { background: #eab308; }
+        .bar-fill-red { background: var(--red); }
+
+        .bar-value {
+            font-family: var(--mono); font-size: 0.78rem; font-weight: 500;
+            min-width: 28px; color: var(--text-secondary);
+        }
+
+        .sidebar-stack { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .year-cards { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .year-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.65rem 0.85rem; background: var(--bg-secondary);
+            border-radius: var(--radius); transition: background 0.15s;
+        }
+
+        .year-card:hover { background: var(--accent-light); }
+        .year-card-label { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; }
+        .year-card-value { font-family: var(--mono); font-size: 0.88rem; font-weight: 700; color: var(--accent); }
+
+        .year-card-bar {
+            flex: 1; margin: 0 0.75rem; height: 4px;
+            background: var(--border); border-radius: 2px; overflow: hidden;
+        }
+
+        .year-card-bar-fill {
+            height: 100%; background: var(--accent); border-radius: 2px;
+            transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .color-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+
+        .color-item {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 0.5rem; background: var(--bg-secondary); border-radius: var(--radius);
+        }
+
+        .color-dot {
+            width: 16px; height: 16px; border-radius: 3px;
+            margin-bottom: 0.3rem; border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .color-item-count { font-family: var(--mono); font-size: 0.85rem; font-weight: 600; }
+        .color-item-label { font-size: 0.68rem; color: var(--text-tertiary); }
+
+        .filter-row { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+        .filter-pill {
+            font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+            padding: 0.25rem 0.65rem; border: 1px solid var(--border);
+            border-radius: 20px; background: transparent; color: var(--text-secondary);
+            cursor: pointer; transition: all 0.15s;
+        }
+
+        .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
+        .filter-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+        .loading-overlay {
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem; color: var(--text-tertiary); gap: 0.5rem; font-size: 0.9rem;
+        }
+
+        .spinner {
+            width: 16px; height: 16px; border: 2px solid var(--border);
+            border-top-color: var(--accent); border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state {
+            text-align: center; padding: 2.5rem 1rem;
+            color: var(--text-tertiary); font-size: 0.9rem;
+        }
+
+        .fade-in { opacity: 0; transform: translateY(8px); animation: fadeUp 0.4s ease forwards; }
+        .fade-in:nth-child(1) { animation-delay: 0s; }
+        .fade-in:nth-child(2) { animation-delay: 0.05s; }
+        .fade-in:nth-child(3) { animation-delay: 0.1s; }
+        .fade-in:nth-child(4) { animation-delay: 0.15s; }
+
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .table-fade tbody tr { opacity: 0; animation: fadeUp 0.25s ease forwards; }
+        .table-fade tbody tr:nth-child(1) { animation-delay: 0.02s; }
+        .table-fade tbody tr:nth-child(2) { animation-delay: 0.04s; }
+        .table-fade tbody tr:nth-child(3) { animation-delay: 0.06s; }
+        .table-fade tbody tr:nth-child(4) { animation-delay: 0.08s; }
+        .table-fade tbody tr:nth-child(5) { animation-delay: 0.1s; }
+        .table-fade tbody tr:nth-child(6) { animation-delay: 0.12s; }
+        .table-fade tbody tr:nth-child(7) { animation-delay: 0.14s; }
+        .table-fade tbody tr:nth-child(8) { animation-delay: 0.16s; }
+        .table-fade tbody tr:nth-child(9) { animation-delay: 0.18s; }
+        .table-fade tbody tr:nth-child(10) { animation-delay: 0.2s; }
+        .table-fade tbody tr:nth-child(n+11) { animation-delay: 0.22s; }
+
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+
+        @media (max-width: 640px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .topbar { padding: 0.75rem 1rem; }
+            .container { padding: 1.5rem 1rem 3rem; }
+            .page-header h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="topbar">
+        <div class="topbar-left">
+            <a href="../" class="topbar-back">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
+                Home
+            </a>
+            <div class="topbar-divider"></div>
+            <span class="topbar-title">Referee Game Log</span>
+        </div>
+        <div class="topbar-right">
+            <span class="live-indicator"><span class="live-dot"></span> Live from Sheets</span>
+            <span class="topbar-badge" id="topbar-total">—</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header fade-in">
+            <h1>Game Log</h1>
+            <p>Every game officiated across youth and high school soccer — updated live from the spreadsheet.</p>
+        </div>
+
+        <div class="stats-row" id="stats-row">
+            <div class="stat-card stat-accent-blue fade-in">
+                <div class="stat-card-label">Total Games</div>
+                <div class="stat-card-value" id="stat-total">—</div>
+                <div class="stat-card-sub" id="stat-total-sub">Loading...</div>
+            </div>
+            <div class="stat-card stat-accent-green fade-in">
+                <div class="stat-card-label">Seasons</div>
+                <div class="stat-card-value" id="stat-seasons">—</div>
+                <div class="stat-card-sub" id="stat-seasons-sub"></div>
+            </div>
+            <div class="stat-card stat-accent-purple fade-in">
+                <div class="stat-card-label">Leagues</div>
+                <div class="stat-card-value" id="stat-leagues">—</div>
+                <div class="stat-card-sub" id="stat-leagues-sub"></div>
+            </div>
+            <div class="stat-card stat-accent-orange fade-in">
+                <div class="stat-card-label">Age Groups</div>
+                <div class="stat-card-value" id="stat-ages">—</div>
+                <div class="stat-card-sub" id="stat-ages-sub"></div>
+            </div>
+        </div>
+
+        <div class="tabs-bar" id="year-tabs"></div>
+
+        <div class="content-grid">
+            <div class="card table-fade" id="table-card">
+                <div class="card-header">
+                    <h2>Game Log</h2>
+                    <div class="filter-row" id="filter-bar">
+                        <button class="filter-pill active" data-filter="all">All</button>
+                        <button class="filter-pill" data-filter="youth">Youth</button>
+                        <button class="filter-pill" data-filter="hs">High School</button>
+                    </div>
+                </div>
+                <div class="card-body" id="table-body">
+                    <div class="loading-overlay"><div class="spinner"></div> Loading from Google Sheets…</div>
+                </div>
+            </div>
+
+            <div class="sidebar-stack">
+                <div class="card">
+                    <div class="card-header"><h2>By Year</h2></div>
+                    <div class="card-body-padded"><div class="year-cards" id="year-cards"></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>By Position</h2></div>
+                    <div class="card-body-padded"><div class="bar-chart" id="chart-position"></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>By Age Group</h2></div>
+                    <div class="card-body-padded"><div class="bar-chart" id="chart-age"></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>Cards Shown</h2></div>
+                    <div class="card-body-padded"><div class="color-grid" id="color-grid"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Visualization API for JSONP-based sheet access (bypasses CORS) -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current');
+
+        const SHEET_ID = '1ZZ1GFMtNO54HkKsMYHBoVyuHheUIWSkSrGsWRol9fD4';
+
+        // Query a sheet tab and return rows as arrays of values
+        function querySheet(sheetName) {
+            return new Promise((resolve, reject) => {
+                const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}`;
+                const query = new google.visualization.Query(url);
+                query.send(response => {
+                    if (response.isError()) {
+                        reject(new Error(response.getMessage()));
+                        return;
+                    }
+                    const table = response.getDataTable();
+                    const cols = table.getNumberOfColumns();
+                    const rowCount = table.getNumberOfRows();
+                    const rows = [];
+                    for (let r = 0; r < rowCount; r++) {
+                        const row = [];
+                        for (let c = 0; c < cols; c++) {
+                            row.push(table.getValue(r, c));
+                        }
+                        rows.push(row);
+                    }
+                    resolve(rows);
+                });
+            });
+        }
+
+        // === PARSERS ===
+        function divLabel(d) {
+            if (d === 1) return 'Comp';
+            if (d === 4) return 'Rec';
+            return d != null ? String(d) : '—';
+        }
+
+        function titleCase(s) {
+            if (!s) return '';
+            return s.split(' ').map(w => {
+                const up = w.toUpperCase();
+                if (up === 'JV' || up === 'VARSITY') return up === 'JV' ? 'JV' : 'Varsity';
+                if (up === 'AR') return 'AR';
+                return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+            }).join(' ');
+        }
+
+        function parseGames2022(rows) {
+            const games = [];
+            for (const r of rows) {
+                const age = r[0], pos = r[1], count = r[2], league = r[3];
+                if (typeof age !== 'number' || typeof count !== 'number' || count === 0) continue;
+                games.push({ year: 2022, age: 'U' + age, div: 'Rec', pos: String(pos), games: count, league: String(league || ''), type: 'youth' });
+            }
+            return games;
+        }
+
+        function parseGamesSheet(rows, year) {
+            const games = [];
+            for (const r of rows) {
+                const rawAge = r[0];
+                const div = r[1];
+                const pos = r[2];
+                const count = r[3];
+                if (count == null || count === 0 || typeof count !== 'number') continue;
+                if (typeof pos === 'string' && pos.toLowerCase().includes('total')) continue;
+
+                let age, type, league;
+                if (typeof rawAge === 'number') {
+                    age = 'U' + rawAge;
+                    type = 'youth';
+                } else if (typeof rawAge === 'string' && rawAge.trim() !== '') {
+                    age = titleCase(rawAge);
+                    type = 'hs';
+                } else {
+                    continue; // skip blank age rows and summary rows
+                }
+
+                // Figure out league: for 2023 it's col 4, for 2024 it's col 5
+                if (year === 2023) {
+                    league = r[4] ? String(r[4]).trim().replace(/\.\s*$/, '') : '—';
+                } else {
+                    // 2024: League #1 = col 5, League #2 = col 8
+                    const l1 = r[5] ? String(r[5]).trim() : '';
+                    const l2 = r[8] ? String(r[8]).trim() : '';
+                    league = l1 || l2 || '—';
+                    if (l1 && l2) league = l1 + ' / ' + l2;
+                }
+
+                games.push({
+                    year, age, div: type === 'hs' ? '—' : divLabel(div),
+                    pos: titleCase(String(pos)),
+                    games: count, league, type
+                });
+            }
+            return games;
+        }
+
+        function parseGeneral(rows) {
+            const summary = { totalGames: 0, byYear: {}, byAge: {}, byPosition: {}, cardColors: {} };
+            for (const r of rows) {
+                // Total row: col0 = "Games (#): ", col1 = number
+                if (typeof r[0] === 'string' && r[0].includes('Games (#)')) {
+                    summary.totalGames = r[1] || 0;
+                }
+                // Year/Games row
+                if (typeof r[0] === 'number' && r[0] >= 2020 && r[0] <= 2030 && typeof r[1] === 'number') {
+                    summary.byYear[r[0]] = r[1];
+                }
+                // Age (col 3,4)
+                if (r[3] != null && r[4] != null && typeof r[4] === 'number' && r[3] !== 'Age Group') {
+                    const label = typeof r[3] === 'number' ? String(r[3]) : String(r[3]).replace(/"/g, '');
+                    summary.byAge[label] = r[4];
+                }
+                // Position (col 6,7)
+                if (r[6] != null && r[7] != null && typeof r[7] === 'number' && r[6] !== 'Position') {
+                    summary.byPosition[r[6]] = r[7];
+                }
+                // Color (col 9,10)
+                if (r[9] != null && r[10] != null && typeof r[10] === 'number') {
+                    const label = String(r[9]).trim();
+                    if (label && label !== 'Color') summary.cardColors[label] = r[10];
+                }
+            }
+            return summary;
+        }
+
+        // === STATE ===
+        let allGames = [];
+        let summary = {};
+        let currentYear = 'all';
+        let currentFilter = 'all';
+
+        // === RENDERING ===
+        function posCategory(pos) {
+            const p = pos.toLowerCase();
+            if (p.includes('solo') || (p.includes('center') && p.includes('1'))) return 'solo';
+            if (p.includes('center')) return 'center';
+            if (p.includes('ar')) return 'ar';
+            if (p.includes('dual')) return 'dual';
+            return 'other';
+        }
+
+        function posBadgeClass(pos) {
+            const c = posCategory(pos);
+            return c === 'ar' ? 'badge-blue' : c === 'center' ? 'badge-yellow'
+                : c === 'dual' ? 'badge-purple' : c === 'solo' ? 'badge-orange' : 'badge-neutral';
+        }
+
+        function leagueBadgeClass(league) {
+            const l = league.toLowerCase();
+            return l.includes('rpsc') ? 'badge-green' : l.includes('windsor') || l.includes('wind') ? 'badge-orange'
+                : l.includes('nbsra') ? 'badge-blue' : l.includes('wesco') ? 'badge-purple' : 'badge-neutral';
+        }
+
+        function getFiltered() {
+            return allGames.filter(g => {
+                if (currentYear !== 'all' && g.year !== parseInt(currentYear)) return false;
+                if (currentFilter === 'youth') return g.type === 'youth';
+                if (currentFilter === 'hs') return g.type === 'hs';
+                return true;
+            });
+        }
+
+        function renderTable() {
+            const tableBody = document.getElementById('table-body');
+            const filtered = getFiltered();
+            if (filtered.length === 0) {
+                tableBody.innerHTML = '<div class="empty-state">No games match these filters</div>';
+                return;
+            }
+            tableBody.innerHTML = `<table><thead><tr>
+                <th>Year</th><th>Age Group</th><th>Division</th><th>Position</th><th>Games</th><th>League</th>
+                </tr></thead><tbody>${filtered.map(g => `<tr>
+                    <td class="td-year">${g.year}</td>
+                    <td><span class="age-label">${g.age}</span></td>
+                    <td><span style="color:var(--text-secondary);font-size:0.82rem">${g.div}</span></td>
+                    <td><span class="badge ${posBadgeClass(g.pos)}">${g.pos}</span></td>
+                    <td><span class="game-count">${g.games}</span></td>
+                    <td><span class="badge ${leagueBadgeClass(g.league)}">${g.league}</span></td>
+                </tr>`).join('')}</tbody></table>`;
+            const card = document.getElementById('table-card');
+            card.classList.remove('table-fade');
+            void card.offsetWidth;
+            card.classList.add('table-fade');
+        }
+
+        function renderYearTabs() {
+            const years = [...new Set(allGames.map(g => g.year))].sort((a, b) => b - a);
+            const container = document.getElementById('year-tabs');
+            container.innerHTML = `<button class="tab-btn active" data-year="all">All Time</button>`
+                + years.map(y => `<button class="tab-btn" data-year="${y}">${y}</button>`).join('');
+            container.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentYear = btn.dataset.year;
+                    renderTable(); renderCharts(); updateStats();
+                });
+            });
+        }
+
+        function renderCharts() {
+            const filtered = getFiltered();
+            const barColors = ['bar-fill-blue', 'bar-fill-green', 'bar-fill-yellow', 'bar-fill-purple', 'bar-fill-orange', 'bar-fill-red'];
+
+            let posMap, ageMap;
+            if (currentYear === 'all' && currentFilter === 'all' && Object.keys(summary.byPosition || {}).length) {
+                posMap = { ...summary.byPosition };
+                ageMap = { ...summary.byAge };
+            } else {
+                posMap = {}; ageMap = {};
+                filtered.forEach(g => {
+                    const pl = posCategory(g.pos) === 'ar' ? 'AR' :
+                        posCategory(g.pos) === 'center' ? 'Center (3)' :
+                        posCategory(g.pos) === 'dual' ? 'Dual' : 'Center (1)';
+                    posMap[pl] = (posMap[pl] || 0) + g.games;
+                    let al = g.age;
+                    if (al.includes('JV')) al = 'JV';
+                    else if (al.includes('Varsity')) al = 'Varsity';
+                    else if (al.toLowerCase().includes('alum') || al.toLowerCase().includes('other')) al = '"Other"';
+                    ageMap[al] = (ageMap[al] || 0) + g.games;
+                });
+            }
+
+            const posChart = document.getElementById('chart-position');
+            const maxPos = Math.max(...Object.values(posMap), 1);
+            posChart.innerHTML = Object.entries(posMap).sort((a, b) => b[1] - a[1])
+                .map(([l, c], i) => `<div class="bar-row"><span class="bar-label">${l}</span>
+                    <div class="bar-track"><div class="bar-fill ${barColors[i % barColors.length]}" data-width="${c / maxPos * 100}"></div></div>
+                    <span class="bar-value">${c}</span></div>`).join('');
+
+            const ageChart = document.getElementById('chart-age');
+            const maxAge = Math.max(...Object.values(ageMap), 1);
+            ageChart.innerHTML = Object.entries(ageMap).filter(([, c]) => c > 0)
+                .sort((a, b) => b[1] - a[1])
+                .map(([l, c], i) => `<div class="bar-row"><span class="bar-label">${l}</span>
+                    <div class="bar-track"><div class="bar-fill ${barColors[i % barColors.length]}" data-width="${c / maxAge * 100}"></div></div>
+                    <span class="bar-value">${c}</span></div>`).join('');
+
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
+                    setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 50);
+                });
+                document.querySelectorAll('.year-card-bar-fill[data-width]').forEach(bar => {
+                    setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 50);
+                });
+            });
+        }
+
+        function renderYearCards() {
+            const container = document.getElementById('year-cards');
+            const years = Object.entries(summary.byYear || {}).sort((a, b) => parseInt(b[0]) - parseInt(a[0]));
+            const max = Math.max(...years.map(([, v]) => v), 1);
+            container.innerHTML = years.map(([y, c]) => `<div class="year-card">
+                <span class="year-card-label">${y}</span>
+                <div class="year-card-bar"><div class="year-card-bar-fill" data-width="${c / max * 100}"></div></div>
+                <span class="year-card-value">${c}</span></div>`).join('');
+        }
+
+        function renderColorGrid() {
+            const container = document.getElementById('color-grid');
+            const colorMap = { Yellow: '#facc15', Red: '#ef4444', Blue: '#3b82f6', Green: '#22c55e', Black: '#171717', Pink: '#f472b6' };
+            const colors = summary.cardColors || {};
+            container.innerHTML = Object.entries(colorMap).map(([name, bg]) => `<div class="color-item">
+                <div class="color-dot" style="background:${bg}"></div>
+                <span class="color-item-count">${colors[name] ?? '—'}</span>
+                <span class="color-item-label">${name}</span></div>`).join('');
+        }
+
+        function updateStats() {
+            const filtered = getFiltered();
+            const total = currentYear === 'all' && currentFilter === 'all'
+                ? (summary.totalGames || filtered.reduce((s, g) => s + g.games, 0))
+                : filtered.reduce((s, g) => s + g.games, 0);
+            const seasons = [...new Set(filtered.map(g => g.year))].sort();
+            const leagues = [...new Set(filtered.flatMap(g => g.league.split('/').map(l => l.trim())).filter(l => l !== '—'))];
+            const ages = new Set(filtered.map(g => g.age));
+
+            animateCounter(document.getElementById('stat-total'), total);
+            document.getElementById('stat-total-sub').textContent = seasons.length ? `${seasons[0]} – ${seasons[seasons.length - 1]}` : '';
+            document.getElementById('stat-seasons').textContent = seasons.length;
+            document.getElementById('stat-seasons-sub').textContent = seasons.join(', ');
+            document.getElementById('stat-leagues').textContent = leagues.length;
+            document.getElementById('stat-leagues-sub').textContent = leagues.join(' · ');
+            document.getElementById('stat-ages').textContent = ages.size;
+            document.getElementById('stat-ages-sub').textContent = ages.size + ' groups';
+            document.getElementById('topbar-total').textContent = total + ' games';
+        }
+
+        function animateCounter(el, target) {
+            const start = parseInt(el.textContent) || 0;
+            if (isNaN(target)) { el.textContent = target; return; }
+            const duration = 600, startTime = performance.now();
+            function tick(now) {
+                const p = Math.min((now - startTime) / duration, 1);
+                el.textContent = Math.round(start + (target - start) * (1 - Math.pow(1 - p, 3)));
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentFilter = pill.dataset.filter;
+                renderTable(); renderCharts(); updateStats();
+            });
+        });
+
+        // === INIT ===
+        google.charts.setOnLoadCallback(async function init() {
+            try {
+                const [generalRows, rows2022, rows2023, rows2024] = await Promise.all([
+                    querySheet('Games (general)'),
+                    querySheet('GAMES 2022'),
+                    querySheet('GAMES 2023'),
+                    querySheet('GAMES 2024'),
+                ]);
+
+                summary = parseGeneral(generalRows);
+                allGames = [
+                    ...parseGames2022(rows2022),
+                    ...parseGamesSheet(rows2023, 2023),
+                    ...parseGamesSheet(rows2024, 2024),
+                ];
+
+                renderYearTabs();
+                renderYearCards();
+                renderColorGrid();
+                renderTable();
+                renderCharts();
+                updateStats();
+            } catch (err) {
+                console.error('Failed to load:', err);
+                document.getElementById('table-body').innerHTML =
+                    `<div class="empty-state">Failed to load data from Google Sheets.<br><small style="color:var(--red)">${err.message}</small></div>`;
+            }
+        });
+    </script>
+</body>
+
+</html>
