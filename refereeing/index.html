@@ -420,43 +420,60 @@
                     <div class="card-body-padded"><div class="bar-chart" id="chart-age"></div></div>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h2>Cards Shown</h2></div>
-                    <div class="card-body-padded"><div class="color-grid" id="color-grid"></div></div>
+                    <div class="card-header"><h2>Jersey Colors</h2></div>
+                    <div class="card-body-padded">
+                        <div class="color-grid" id="color-grid"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Google Visualization API for JSONP-based sheet access (bypasses CORS) -->
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        google.charts.load('current');
-
         const SHEET_ID = '1ZZ1GFMtNO54HkKsMYHBoVyuHheUIWSkSrGsWRol9fD4';
 
-        // Query a sheet tab and return rows as arrays of values
-        function querySheet(sheetName) {
+        const HS_LABELS_2023 = ['GIRLS JV', 'BOYS JV', 'GIRLS VARSITY', 'BOYS VARSITY', 'Alum'];
+        const HS_LABELS_2024 = [
+            'GIRLS JV', 'GIRLS JV', 'GIRLS JV', 'GIRLS JV',
+            'BOYS JV', 'BOYS JV', 'BOYS JV', 'BOYS JV',
+            'GIRLS VARSITY', 'GIRLS VARSITY', 'GIRLS VARSITY', 'GIRLS VARSITY',
+            'BOYS VARSITY', 'BOYS VARSITY', 'BOYS VARSITY', 'BOYS VARSITY',
+        ];
+
+        // Load via classic JSONP endpoint directly, bypassing the Google JS loader entirely
+        function querySheetJSONP(sheetName) {
             return new Promise((resolve, reject) => {
-                const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}`;
-                const query = new google.visualization.Query(url);
-                query.send(response => {
-                    if (response.isError()) {
-                        reject(new Error(response.getMessage()));
+                const callbackName = 'callback_' + Math.random().toString(36).substr(2, 9);
+                const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&tqx=responseHandler:${callbackName}`;
+                
+                const script = document.createElement('script');
+                script.src = url;
+
+                window[callbackName] = function(response) {
+                    cleanup();
+                    if (response.status === 'error') {
+                        reject(new Error(response.errors[0].detailed_message));
                         return;
                     }
-                    const table = response.getDataTable();
-                    const cols = table.getNumberOfColumns();
-                    const rowCount = table.getNumberOfRows();
-                    const rows = [];
-                    for (let r = 0; r < rowCount; r++) {
-                        const row = [];
-                        for (let c = 0; c < cols; c++) {
-                            row.push(table.getValue(r, c));
-                        }
-                        rows.push(row);
-                    }
+                    
+                    const cols = response.table.cols;
+                    const rows = response.table.rows.map(r => {
+                        return r.c.map(cell => (cell && cell.v !== undefined) ? cell.v : null);
+                    });
                     resolve(rows);
-                });
+                };
+
+                script.onerror = function() {
+                    cleanup();
+                    reject(new Error('Network error or blocked script'));
+                };
+
+                function cleanup() {
+                    document.body.removeChild(script);
+                    delete window[callbackName];
+                }
+
+                document.body.appendChild(script);
             });
         }
 
@@ -489,14 +506,14 @@
 
         function parseGamesSheet(rows, year) {
             const games = [];
+            let hsIndex = 0;
             for (const r of rows) {
                 const rawAge = r[0];
                 const div = r[1];
                 const pos = r[2];
                 const count = r[3];
-                if (count == null || count === 0 || typeof count !== 'number') continue;
-                if (typeof pos === 'string' && pos.toLowerCase().includes('total')) continue;
 
+                // Determine age label and type first to keep the sequential index aligned
                 let age, type, league;
                 if (typeof rawAge === 'number') {
                     age = 'U' + rawAge;
@@ -504,15 +521,25 @@
                 } else if (typeof rawAge === 'string' && rawAge.trim() !== '') {
                     age = titleCase(rawAge);
                     type = 'hs';
+                } else if (rawAge == null || rawAge === '') {
+                    // Fallback to HS labels when age column is null/empty
+                    const labels = year === 2023 ? HS_LABELS_2023 : HS_LABELS_2024;
+                    const hsLabel = labels[hsIndex] || 'Unknown';
+                    hsIndex++;
+                    
+                    age = titleCase(hsLabel);
+                    type = 'hs';
                 } else {
-                    continue; // skip blank age rows and summary rows
+                    continue; 
                 }
 
-                // Figure out league: for 2023 it's col 4, for 2024 it's col 5
+                // Now check counts and skip if zero or invalid
+                if (count == null || count === 0 || typeof count !== 'number') continue;
+                if (typeof pos === 'string' && pos.toLowerCase().includes('total')) continue;
+
                 if (year === 2023) {
                     league = r[4] ? String(r[4]).trim().replace(/\.\s*$/, '') : '—';
                 } else {
-                    // 2024: League #1 = col 5, League #2 = col 8
                     const l1 = r[5] ? String(r[5]).trim() : '';
                     const l2 = r[8] ? String(r[8]).trim() : '';
                     league = l1 || l2 || '—';
@@ -530,28 +557,36 @@
 
         function parseGeneral(rows) {
             const summary = { totalGames: 0, byYear: {}, byAge: {}, byPosition: {}, cardColors: {} };
+            
+            const cardColorLabels = ['Yellow', 'Red', 'Blue', 'Green', 'Black', 'Pink'];
+            let cardIndex = 0;
+
             for (const r of rows) {
-                // Total row: col0 = "Games (#): ", col1 = number
                 if (typeof r[0] === 'string' && r[0].includes('Games (#)')) {
                     summary.totalGames = r[1] || 0;
                 }
-                // Year/Games row
-                if (typeof r[0] === 'number' && r[0] >= 2020 && r[0] <= 2030 && typeof r[1] === 'number') {
-                    summary.byYear[r[0]] = r[1];
+                const parsedYear = r[0] != null ? parseInt(r[0]) : null;
+                if (parsedYear != null && !isNaN(parsedYear) && parsedYear >= 2020 && parsedYear <= 2030 && typeof r[1] === 'number') {
+                    summary.byYear[parsedYear] = r[1];
                 }
-                // Age (col 3,4)
                 if (r[3] != null && r[4] != null && typeof r[4] === 'number' && r[3] !== 'Age Group') {
                     const label = typeof r[3] === 'number' ? String(r[3]) : String(r[3]).replace(/"/g, '');
                     summary.byAge[label] = r[4];
                 }
-                // Position (col 6,7)
                 if (r[6] != null && r[7] != null && typeof r[7] === 'number' && r[6] !== 'Position') {
                     summary.byPosition[r[6]] = r[7];
                 }
-                // Color (col 9,10)
-                if (r[9] != null && r[10] != null && typeof r[10] === 'number') {
-                    const label = String(r[9]).trim();
-                    if (label && label !== 'Color') summary.cardColors[label] = r[10];
+                // Only start parsing jersey colors when we reach the years rows (where r[0] is 2022/2023/2024 or null for the rows below them)
+                const isYearRowOrBelow = (r[0] === 2022 || r[0] === 2023 || r[0] === 2024 || r[0] === '2022' || r[0] === '2023' || r[0] === '2024' || r[0] === null || r[0] === undefined);
+                const hasValueInCol10 = r[10] != null && typeof r[10] === 'number';
+                
+                // Exclude the pay headers / totals in the first few rows by verifying we are in the years block
+                if (isYearRowOrBelow && hasValueInCol10 && cardIndex < cardColorLabels.length && !r[0]?.toString().includes('Games')) {
+                    // Skip the first row containing pay amount (2158) if it gets here
+                    if (r[10] > 1000) continue;
+                    
+                    summary.cardColors[cardColorLabels[cardIndex]] = r[10];
+                    cardIndex++;
                 }
             }
             return summary;
@@ -562,6 +597,55 @@
         let summary = {};
         let currentYear = 'all';
         let currentFilter = 'all';
+
+        // Preloaded 2025 games from games.csv (so they show up immediately before they are filled in the sheet)
+        const local2025Games = [
+            { year: 2025, age: 'U14', div: 'Comp', pos: 'AR', games: 1, league: 'RPSC', type: 'youth' },
+            { year: 2025, age: 'U16', div: 'Comp', pos: 'AR', games: 1, league: 'RPSC', type: 'youth' },
+            { year: 2025, age: 'U16', div: 'Comp', pos: 'AR', games: 1, league: 'RPSC', type: 'youth' },
+            { year: 2025, age: 'U15', div: 'Comp', pos: 'AR', games: 1, league: 'RPSC', type: 'youth' },
+            { year: 2025, age: 'U17', div: 'Comp', pos: 'AR', games: 1, league: 'RPSC', type: 'youth' }, // Scrimmage U17
+            { year: 2025, age: 'U10', div: 'Rec', pos: 'Center (3)', games: 1, league: 'WYSL', type: 'youth' },
+            { year: 2025, age: 'U10', div: 'Rec', pos: 'Center (3)', games: 1, league: 'WYSL', type: 'youth' }, // Cancelled but paid
+            { year: 2025, age: 'U17', div: 'Comp', pos: 'AR', games: 1, league: 'RPSC', type: 'youth' }
+        ];
+
+        // === PARSERS ===
+        function parseGames2025Sheet(rows) {
+            const games = [];
+            for (const r of rows) {
+                const rawAge = r[0];
+                const div = r[1];
+                const pos = r[2];
+                if (rawAge == null || pos == null) continue;
+                if (typeof pos === 'string' && pos.toLowerCase().includes('total')) continue;
+
+                let age = typeof rawAge === 'number' ? 'U' + rawAge : titleCase(String(rawAge));
+                let type = (typeof rawAge === 'number') ? 'youth' : 'hs';
+
+                // Loop through League #1, #2, #3 columns
+                const leagues = [
+                    { name: r[3], count: r[4] },
+                    { name: r[5], count: r[6] },
+                    { name: r[7], count: r[8] }
+                ];
+
+                for (const league of leagues) {
+                    if (league.name && typeof league.count === 'number' && league.count > 0) {
+                        games.push({
+                            year: 2025,
+                            age,
+                            div: type === 'hs' ? '—' : divLabel(div),
+                            pos: titleCase(String(pos)),
+                            games: league.count,
+                            league: String(league.name).trim().replace(/\.\s*$/, ''),
+                            type
+                        });
+                    }
+                }
+            }
+            return games;
+        }
 
         // === RENDERING ===
         function posCategory(pos) {
@@ -581,7 +665,7 @@
 
         function leagueBadgeClass(league) {
             const l = league.toLowerCase();
-            return l.includes('rpsc') ? 'badge-green' : l.includes('windsor') || l.includes('wind') ? 'badge-orange'
+            return l.includes('rpsc') ? 'badge-green' : l.includes('windsor') || l.includes('wind') || l.includes('wysl') ? 'badge-orange'
                 : l.includes('nbsra') ? 'badge-blue' : l.includes('wesco') ? 'badge-purple' : 'badge-neutral';
         }
 
@@ -636,24 +720,29 @@
             const filtered = getFiltered();
             const barColors = ['bar-fill-blue', 'bar-fill-green', 'bar-fill-yellow', 'bar-fill-purple', 'bar-fill-orange', 'bar-fill-red'];
 
-            let posMap, ageMap;
-            if (currentYear === 'all' && currentFilter === 'all' && Object.keys(summary.byPosition || {}).length) {
-                posMap = { ...summary.byPosition };
-                ageMap = { ...summary.byAge };
-            } else {
-                posMap = {}; ageMap = {};
-                filtered.forEach(g => {
-                    const pl = posCategory(g.pos) === 'ar' ? 'AR' :
-                        posCategory(g.pos) === 'center' ? 'Center (3)' :
-                        posCategory(g.pos) === 'dual' ? 'Dual' : 'Center (1)';
-                    posMap[pl] = (posMap[pl] || 0) + g.games;
-                    let al = g.age;
-                    if (al.includes('JV')) al = 'JV';
-                    else if (al.includes('Varsity')) al = 'Varsity';
-                    else if (al.toLowerCase().includes('alum') || al.toLowerCase().includes('other')) al = '"Other"';
-                    ageMap[al] = (ageMap[al] || 0) + g.games;
-                });
-            }
+            let posMap = { 'AR': 0, 'Center (3)': 0, 'Dual': 0, 'Center (1)': 0 };
+            
+            const ageOrder = ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '19', 'JV', 'Varsity', 'Other'];
+            let ageMap = {};
+            ageOrder.forEach(age => ageMap[age] = 0);
+
+            filtered.forEach(g => {
+                const pl = posCategory(g.pos) === 'ar' ? 'AR' :
+                    posCategory(g.pos) === 'center' ? 'Center (3)' :
+                    posCategory(g.pos) === 'dual' ? 'Dual' : 'Center (1)';
+                posMap[pl] = (posMap[pl] || 0) + g.games;
+                
+                let al = g.age ? String(g.age).replace(/^U/, '') : '';
+                if (al.includes('JV')) al = 'JV';
+                else if (al.includes('Varsity')) al = 'Varsity';
+                else if (al.toLowerCase().includes('alum') || al.toLowerCase().includes('other')) al = 'Other';
+                
+                if (ageMap[al] !== undefined) {
+                    ageMap[al] += g.games;
+                } else {
+                    ageMap[al] = g.games;
+                }
+            });
 
             const posChart = document.getElementById('chart-position');
             const maxPos = Math.max(...Object.values(posMap), 1);
@@ -664,11 +753,13 @@
 
             const ageChart = document.getElementById('chart-age');
             const maxAge = Math.max(...Object.values(ageMap), 1);
-            ageChart.innerHTML = Object.entries(ageMap).filter(([, c]) => c > 0)
-                .sort((a, b) => b[1] - a[1])
-                .map(([l, c], i) => `<div class="bar-row"><span class="bar-label">${l}</span>
-                    <div class="bar-track"><div class="bar-fill ${barColors[i % barColors.length]}" data-width="${c / maxAge * 100}"></div></div>
-                    <span class="bar-value">${c}</span></div>`).join('');
+            
+            ageChart.innerHTML = ageOrder
+                .map(l => ({ label: l, count: ageMap[l] || 0 }))
+                .filter(item => item.count > 0 || item.label === '17' || item.label === '19')
+                .map((item, i) => `<div class="bar-row"><span class="bar-label">${item.label}</span>
+                    <div class="bar-track"><div class="bar-fill ${barColors[i % barColors.length]}" data-width="${item.count / maxAge * 100}"></div></div>
+                    <span class="bar-value">${item.count}</span></div>`).join('');
 
             requestAnimationFrame(() => {
                 document.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
@@ -690,6 +781,7 @@
                 <span class="year-card-value">${c}</span></div>`).join('');
         }
 
+        // Setup cards count
         function renderColorGrid() {
             const container = document.getElementById('color-grid');
             const colorMap = { Yellow: '#facc15', Red: '#ef4444', Blue: '#3b82f6', Green: '#22c55e', Black: '#171717', Pink: '#f472b6' };
@@ -742,21 +834,35 @@
         });
 
         // === INIT ===
-        google.charts.setOnLoadCallback(async function init() {
+        async function init() {
             try {
-                const [generalRows, rows2022, rows2023, rows2024] = await Promise.all([
-                    querySheet('Games (general)'),
-                    querySheet('GAMES 2022'),
-                    querySheet('GAMES 2023'),
-                    querySheet('GAMES 2024'),
+                const [generalRows, rows2022, rows2023, rows2024, rows2025] = await Promise.all([
+                    querySheetJSONP('Games (general)'),
+                    querySheetJSONP('GAMES 2022'),
+                    querySheetJSONP('GAMES 2023'),
+                    querySheetJSONP('GAMES 2024'),
+                    querySheetJSONP('GAMES 2025').catch(err => {
+                        console.warn('GAMES 2025 tab not available yet in Google Sheets, using local fallback.', err);
+                        return [];
+                    })
                 ]);
 
                 summary = parseGeneral(generalRows);
+                
+                const games2025 = rows2025 && rows2025.length > 0 ? parseGames2025Sheet(rows2025) : [];
+                const final2025 = games2025.length > 0 ? games2025 : local2025Games;
+
                 allGames = [
                     ...parseGames2022(rows2022),
                     ...parseGamesSheet(rows2023, 2023),
                     ...parseGamesSheet(rows2024, 2024),
+                    ...final2025
                 ];
+
+                // Dynamically update the summary totals for 2025
+                const total2025Games = final2025.reduce((sum, g) => sum + g.games, 0);
+                summary.byYear['2025'] = total2025Games;
+                summary.totalGames = (summary.totalGames || 0) + total2025Games;
 
                 renderYearTabs();
                 renderYearCards();
@@ -769,7 +875,9 @@
                 document.getElementById('table-body').innerHTML =
                     `<div class="empty-state">Failed to load data from Google Sheets.<br><small style="color:var(--red)">${err.message}</small></div>`;
             }
-        });
+        }
+
+        init();
     </script>
 </body>
 
