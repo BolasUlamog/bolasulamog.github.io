@@ -8,6 +8,7 @@ const tabsList = document.getElementById('tabs-list');
 const plotBtn = document.getElementById('plot-btn');
 const downloadBtn = document.getElementById('download-btn');
 const zeroInterceptToggle = document.getElementById('zero-intercept-toggle');
+const currentXAxisToggle = document.getElementById('current-xaxis-toggle');
 const plotContainer = document.getElementById('plot-container');
 
 // Global State
@@ -180,6 +181,9 @@ plotBtn.addEventListener('click', plotData);
 zeroInterceptToggle.addEventListener('change', () => {
     if (parsedWorkbook) plotData();
 });
+currentXAxisToggle.addEventListener('change', () => {
+    if (parsedWorkbook) plotData();
+});
 
 // Linear Regression Engine
 function linearRegression(x, y, forceZeroIntercept) {
@@ -241,6 +245,7 @@ function plotData() {
     }
 
     const forceZeroIntercept = zeroInterceptToggle.checked;
+    const useCurrentXAxis = currentXAxisToggle ? currentXAxisToggle.checked : false;
     
     let plotData = [];
     
@@ -282,7 +287,7 @@ function plotData() {
 
         // 1. Plot raw points (transparent)
         plotData.push({
-            x: rawData.map(d => d.pout),
+            x: rawData.map(d => useCurrentXAxis ? d.current : d.pout),
             y: rawData.map(d => d.dt),
             mode: 'markers',
             type: 'scatter',
@@ -316,9 +321,14 @@ function plotData() {
                 dtStd = Math.sqrt(group.dt.reduce((sq, n) => sq + Math.pow(n - dtMean, 2), 0) / (group.dt.length - 1));
             }
 
-            xData.push(pMean);
+            if (useCurrentXAxis) {
+                xData.push(parseFloat(c));
+                xErr.push(0);
+            } else {
+                xData.push(pMean);
+                xErr.push(pStd);
+            }
             yData.push(dtMean);
-            xErr.push(pStd);
             yErr.push(dtStd);
         });
 
@@ -345,7 +355,8 @@ function plotData() {
             eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
         }
 
-        const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;Slope: ${fit.slope.toFixed(3)} mK/mW<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
+        const slopeUnits = useCurrentXAxis ? 'mK/A' : 'mK/mW';
+        const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;Slope: ${fit.slope.toFixed(3)} ${slopeUnits}<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
 
         plotData.push({
             x: fit.fitX,
@@ -363,12 +374,12 @@ function plotData() {
     }
 
     const layout = {
-        title: { text: '$\\Delta T \\text{ vs } P_{out}$', font: { color: 'black', size: 22 } },
+        title: { text: useCurrentXAxis ? '$\\Delta T \\text{ vs Current}$' : '$\\Delta T \\text{ vs } P_{out}$', font: { color: 'black', size: 22 } },
         paper_bgcolor: '#ffffff',
         plot_bgcolor: '#ffffff',
         font: { family: '"Times New Roman", Times, serif', color: 'black', size: 14 },
         xaxis: { 
-            title: { text: '$\\text{Power Out } (P_{out}) \\text{ [mW]}$', font: { color: 'black', size: 18 } },
+            title: { text: useCurrentXAxis ? '$\\text{Current [A]}$' : '$\\text{Power Out } (P_{out}) \\text{ [mW]}$', font: { color: 'black', size: 18 } },
             showgrid: false,
             zeroline: false,
             showline: true,
