@@ -9,6 +9,7 @@ const plotBtn = document.getElementById('plot-btn');
 const downloadBtn = document.getElementById('download-btn');
 const zeroInterceptToggle = document.getElementById('zero-intercept-toggle');
 const currentXAxisToggle = document.getElementById('current-xaxis-toggle');
+const barChartToggle = document.getElementById('bar-chart-toggle');
 const plotContainer = document.getElementById('plot-container');
 
 // Global State
@@ -184,6 +185,9 @@ zeroInterceptToggle.addEventListener('change', () => {
 currentXAxisToggle.addEventListener('change', () => {
     if (parsedWorkbook) plotData();
 });
+barChartToggle.addEventListener('change', () => {
+    if (parsedWorkbook) plotData();
+});
 
 // Linear Regression Engine
 function linearRegression(x, y, forceZeroIntercept) {
@@ -246,6 +250,7 @@ function plotData() {
 
     const forceZeroIntercept = zeroInterceptToggle.checked;
     const useCurrentXAxis = currentXAxisToggle ? currentXAxisToggle.checked : false;
+    const isBarChart = barChartToggle ? barChartToggle.checked : false;
     
     let plotData = [];
     
@@ -286,15 +291,17 @@ function plotData() {
         const color = colors[idx % colors.length];
 
         // 1. Plot raw points (transparent)
-        plotData.push({
-            x: rawData.map(d => useCurrentXAxis ? d.current : d.pout),
-            y: rawData.map(d => d.dt),
-            mode: 'markers',
-            type: 'scatter',
-            name: `${tabName} Raw Points`,
-            marker: { color: color, opacity: 0.4, size: 6, symbol: 'x' },
-            showlegend: true
-        });
+        if (!isBarChart) {
+            plotData.push({
+                x: rawData.map(d => useCurrentXAxis ? d.current : d.pout),
+                y: rawData.map(d => d.dt),
+                mode: 'markers',
+                type: 'scatter',
+                name: `${tabName} Raw Points`,
+                marker: { color: color, opacity: 0.4, size: 6, symbol: 'x' },
+                showlegend: true
+            });
+        }
 
         // Group by Current to get means and stddevs
         const grouped = {};
@@ -333,69 +340,77 @@ function plotData() {
         });
 
         // 2. Plot Grouped means with Error Bars
-        plotData.push({
-            x: xData,
-            y: yData,
-            mode: 'markers',
-            type: 'scatter',
-            name: `${tabName} Mean ± SD`,
-            error_x: { type: 'data', array: xErr, visible: true, color: color, thickness: 1.5 },
-            error_y: { type: 'data', array: yErr, visible: true, color: color, thickness: 1.5 },
-            marker: { color: color, size: 8, symbol: 'circle', line: {color: 'black', width: 1} }
-        });
-
-        // 3. Regression Fit
-        let fit;
-        let eqStr = "";
-        
-        if (useCurrentXAxis) {
-            // For Current vs dT, fit y = a*x^2 + b
-            // We can reuse linearRegression by mapping x -> x^2
-            const xSquared = xData.map(val => val * val);
-            fit = linearRegression(xSquared, yData, forceZeroIntercept);
-            
-            // Generate curve points
-            let minX = 0;
-            let maxX = Math.max(...xData) * 1.05;
-            fit.fitX = [];
-            fit.fitY = [];
-            for (let i = 0; i <= 100; i++) {
-                let x = minX + (maxX - minX) * (i / 100);
-                fit.fitX.push(x);
-                fit.fitY.push(fit.slope * (x * x) + fit.intercept);
-            }
-
-            if (forceZeroIntercept) {
-                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i><sup>2</sup>`;
-            } else {
-                const sign = fit.intercept >= 0 ? '+' : '-';
-                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i><sup>2</sup> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
-            }
+        if (isBarChart) {
+            plotData.push({
+                x: xData,
+                y: yData,
+                type: 'bar',
+                name: `${tabName} Mean ± SD`,
+                error_y: { type: 'data', array: yErr, visible: true, color: 'black', thickness: 1.5 },
+                marker: { color: color, line: {color: 'black', width: 1} }
+            });
         } else {
-            // Linear Fit
-            fit = linearRegression(xData, yData, forceZeroIntercept);
+            plotData.push({
+                x: xData,
+                y: yData,
+                mode: 'markers',
+                type: 'scatter',
+                name: `${tabName} Mean ± SD`,
+                error_x: { type: 'data', array: xErr, visible: true, color: color, thickness: 1.5 },
+                error_y: { type: 'data', array: yErr, visible: true, color: color, thickness: 1.5 },
+                marker: { color: color, size: 8, symbol: 'circle', line: {color: 'black', width: 1} }
+            });
+
+            // 3. Regression Fit
+            let fit;
+            let eqStr = "";
             
-            if (forceZeroIntercept) {
-                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i>`;
+            if (useCurrentXAxis) {
+                // For Current vs dT, fit y = a*x^2 + b
+                const xSquared = xData.map(val => val * val);
+                fit = linearRegression(xSquared, yData, forceZeroIntercept);
+                
+                let minX = 0;
+                let maxX = Math.max(...xData) * 1.05;
+                fit.fitX = [];
+                fit.fitY = [];
+                for (let i = 0; i <= 100; i++) {
+                    let x = minX + (maxX - minX) * (i / 100);
+                    fit.fitX.push(x);
+                    fit.fitY.push(fit.slope * (x * x) + fit.intercept);
+                }
+
+                if (forceZeroIntercept) {
+                    eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i><sup>2</sup>`;
+                } else {
+                    const sign = fit.intercept >= 0 ? '+' : '-';
+                    eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i><sup>2</sup> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+                }
             } else {
-                const sign = fit.intercept >= 0 ? '+' : '-';
-                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+                // Linear Fit
+                fit = linearRegression(xData, yData, forceZeroIntercept);
+                
+                if (forceZeroIntercept) {
+                    eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i>`;
+                } else {
+                    const sign = fit.intercept >= 0 ? '+' : '-';
+                    eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+                }
             }
+
+            const slopeUnits = useCurrentXAxis ? 'mK/A<sup>2</sup>' : 'mK/mW';
+            const slopeLabel = useCurrentXAxis ? 'Coeff' : 'Slope';
+            const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;${slopeLabel}: ${fit.slope.toFixed(3)} ${slopeUnits}<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
+
+            plotData.push({
+                x: fit.fitX,
+                y: fit.fitY,
+                mode: 'lines',
+                type: 'scatter',
+                name: legendLabel,
+                line: { color: color, dash: 'dash', width: 2 }
+            });
         }
-
-        const slopeUnits = useCurrentXAxis ? 'mK/A<sup>2</sup>' : 'mK/mW';
-        // Note: For quadratic, the "Slope" is technically the coefficient of x^2
-        const slopeLabel = useCurrentXAxis ? 'Coeff' : 'Slope';
-        const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;${slopeLabel}: ${fit.slope.toFixed(3)} ${slopeUnits}<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
-
-        plotData.push({
-            x: fit.fitX,
-            y: fit.fitY,
-            mode: 'lines',
-            type: 'scatter',
-            name: legendLabel,
-            line: { color: color, dash: 'dash', width: 2 }
-        });
     });
 
     if (!hasValidData) {
@@ -447,7 +462,8 @@ function plotData() {
             yanchor: 'top'
         },
         margin: { l: 80, r: 40, t: 80, b: 80 },
-        hovermode: 'closest'
+        hovermode: 'closest',
+        barmode: isBarChart ? 'group' : 'overlay'
     };
 
     const config = {
