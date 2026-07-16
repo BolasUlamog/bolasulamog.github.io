@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGraph - Physics Data Analyzer</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <!-- SheetJS -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Controls Area -->
+        <aside class="controls-panel glass-panel">
+            <div class="header">
+                <h1>PGraph <span>Analyzer</span></h1>
+                <p>Analyze $\Delta T$ vs $P_{out}$ data dynamically from Google Sheets.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="sheet-url">Google Sheet URL</label>
+                <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/...">
+                <button id="load-btn" class="primary-btn">Load Data</button>
+            </div>
+
+            <div class="options-group">
+                <h3>Analysis Options</h3>
+                <label class="toggle-container">
+                    <input type="checkbox" id="zero-intercept-toggle">
+                    <span class="checkmark"></span>
+                    Force Zero Intercept
+                </label>
+            </div>
+
+            <div class="tabs-group" id="tabs-group" style="display: none;">
+                <h3>Select Tabs to Plot</h3>
+                <div id="tabs-list" class="tabs-list">
+                    <!-- Checkboxes will be populated here dynamically -->
+                </div>
+                <button id="plot-btn" class="primary-btn">Plot Selected</button>
+            </div>
+            
+            <div id="status-message" class="status-message"></div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="plot-panel glass-panel">
+            <div id="plot-container" class="plot-container">
+                <div class="placeholder-text">Enter a Google Sheet URL to begin plotting.</div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
