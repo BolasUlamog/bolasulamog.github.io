@@ -339,13 +339,13 @@ function plotData() {
         
         let eqStr = "";
         if (forceZeroIntercept) {
-            eqStr = `y = ${fit.slope.toFixed(3)}x`;
+            eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i>`;
         } else {
             const sign = fit.intercept >= 0 ? '+' : '-';
-            eqStr = `y = ${fit.slope.toFixed(3)}x ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+            eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
         }
 
-        const legendLabel = `${tabName} Fit<br>$\\quad ${eqStr}$<br>$\\quad \\text{Slope: } ${fit.slope.toFixed(3)} \\text{ mK/mW}$<br>$\\quad R^2: ${fit.r2.toFixed(4)}$`;
+        const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;Slope: ${fit.slope.toFixed(3)} mK/mW<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
 
         plotData.push({
             x: fit.fitX,
