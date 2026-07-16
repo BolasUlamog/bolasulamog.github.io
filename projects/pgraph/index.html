@@ -43,7 +43,10 @@
                 <div id="tabs-list" class="tabs-list">
                     <!-- Checkboxes will be populated here dynamically -->
                 </div>
-                <button id="plot-btn" class="primary-btn">Plot Selected</button>
+                <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                    <button id="plot-btn" class="primary-btn">Plot Selected</button>
+                    <button id="download-btn" class="secondary-btn" style="display: none;">Download Graph (PNG)</button>
+                </div>
             </div>
             
             <div id="status-message" class="status-message"></div>

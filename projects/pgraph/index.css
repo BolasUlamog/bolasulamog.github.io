@@ -161,6 +161,27 @@ input[type="text"]:focus {
     transform: none;
 }
 
+.secondary-btn {
+    background-color: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.secondary-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    box-shadow: var(--shadow-glow);
+}
+
 /* Checkbox toggle */
 .toggle-container {
     display: flex;

@@ -5,6 +5,7 @@ const statusMessage = document.getElementById('status-message');
 const tabsGroup = document.getElementById('tabs-group');
 const tabsList = document.getElementById('tabs-list');
 const plotBtn = document.getElementById('plot-btn');
+const downloadBtn = document.getElementById('download-btn');
 const zeroInterceptToggle = document.getElementById('zero-intercept-toggle');
 const plotContainer = document.getElementById('plot-container');
 
@@ -253,9 +254,9 @@ function plotData() {
             mode: 'markers',
             type: 'scatter',
             name: `${tabName} Mean ± SD`,
-            error_x: { type: 'data', array: xErr, visible: true, color: color },
-            error_y: { type: 'data', array: yErr, visible: true, color: color },
-            marker: { color: color, size: 8, symbol: 'circle' }
+            error_x: { type: 'data', array: xErr, visible: true, color: color, thickness: 1.5 },
+            error_y: { type: 'data', array: yErr, visible: true, color: color, thickness: 1.5 },
+            marker: { color: color, size: 8, symbol: 'circle', line: {color: 'black', width: 1} }
         });
 
         // 3. Linear Regression Fit
@@ -269,7 +270,7 @@ function plotData() {
             eqStr = `y = ${fit.slope.toFixed(3)}x ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
         }
 
-        const legendLabel = `${tabName} Fit<br>${eqStr}<br>Slope: ${fit.slope.toFixed(3)} mK/mW<br>R²: ${fit.r2.toFixed(4)}`;
+        const legendLabel = `${tabName} Fit<br>$\\quad ${eqStr}$<br>$\\quad \\text{Slope: } ${fit.slope.toFixed(3)} \\text{ mK/mW}$<br>$\\quad R^2: ${fit.r2.toFixed(4)}$`;
 
         plotData.push({
             x: fit.fitX,
@@ -287,31 +288,49 @@ function plotData() {
     }
 
     const layout = {
-        title: { text: 'ΔT vs P_out', font: { color: '#f8fafc', size: 20 } },
-        paper_bgcolor: 'rgba(0,0,0,0)',
-        plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { family: 'Inter, sans-serif', color: '#94a3b8' },
+        title: { text: '$\\Delta T \\text{ vs } P_{out}$', font: { color: 'black', size: 22 } },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#ffffff',
+        font: { family: '"Times New Roman", Times, serif', color: 'black', size: 14 },
         xaxis: { 
-            title: { text: 'Power Out (P_out) [mW]', font: { color: '#f8fafc' } },
-            gridcolor: 'rgba(255,255,255,0.1)',
-            zerolinecolor: 'rgba(255,255,255,0.3)',
-            zerolinewidth: 1,
-            tickfont: { color: '#94a3b8' }
+            title: { text: '$\\text{Power Out } (P_{out}) \\text{ [mW]}$', font: { color: 'black', size: 18 } },
+            showgrid: false,
+            zeroline: false,
+            showline: true,
+            linecolor: 'black',
+            linewidth: 1.5,
+            mirror: 'ticks',
+            ticks: 'inside',
+            tickwidth: 1.5,
+            ticklen: 6,
+            tickcolor: 'black',
+            tickfont: { color: 'black', size: 14 }
         },
         yaxis: { 
-            title: { text: 'Change in Temperature (ΔT) [mK]', font: { color: '#f8fafc' } },
-            gridcolor: 'rgba(255,255,255,0.1)',
-            zerolinecolor: 'rgba(255,255,255,0.3)',
-            zerolinewidth: 1,
-            tickfont: { color: '#94a3b8' }
+            title: { text: '$\\text{Change in Temperature } (\\Delta T) \\text{ [mK]}$', font: { color: 'black', size: 18 } },
+            showgrid: false,
+            zeroline: false,
+            showline: true,
+            linecolor: 'black',
+            linewidth: 1.5,
+            mirror: 'ticks',
+            ticks: 'inside',
+            tickwidth: 1.5,
+            ticklen: 6,
+            tickcolor: 'black',
+            tickfont: { color: 'black', size: 14 }
         },
         legend: {
-            font: { color: '#f8fafc' },
-            bgcolor: 'rgba(15,23,42,0.8)',
-            bordercolor: 'rgba(255,255,255,0.1)',
-            borderwidth: 1
+            font: { color: 'black', size: 13 },
+            bgcolor: 'rgba(255,255,255,0.9)',
+            bordercolor: 'black',
+            borderwidth: 1,
+            x: 0.02,
+            y: 0.98,
+            xanchor: 'left',
+            yanchor: 'top'
         },
-        margin: { l: 70, r: 30, t: 70, b: 70 },
+        margin: { l: 80, r: 40, t: 80, b: 80 },
         hovermode: 'closest'
     };
 
@@ -320,14 +339,27 @@ function plotData() {
         displaylogo: false,
         toImageButtonOptions: {
             format: 'png',
-            filename: 'comparison_plot',
-            height: 700,
+            filename: 'pgraph_export',
+            height: 800,
             width: 1000,
-            scale: 2
+            scale: 3
         }
     };
 
     plotContainer.innerHTML = '';
-    Plotly.newPlot(plotContainer, plotData, layout, config);
+    Plotly.newPlot(plotContainer, plotData, layout, config).then(() => {
+        downloadBtn.style.display = 'flex';
+    });
+    
     setStatus('Plot updated.', 'success');
 }
+
+downloadBtn.addEventListener('click', () => {
+    Plotly.downloadImage(plotContainer, {
+        format: 'png',
+        filename: 'pgraph_scientific_plot',
+        width: 1000,
+        height: 800,
+        scale: 3
+    });
+});
