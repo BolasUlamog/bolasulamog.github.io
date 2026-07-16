@@ -26,7 +26,15 @@
             <div class="input-group">
                 <label for="sheet-url">Google Sheet URL</label>
                 <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/...">
-                <button id="load-btn" class="primary-btn">Load Data</button>
+                <button id="load-btn" class="primary-btn">Fetch Data</button>
+            </div>
+            
+            <div style="text-align: center; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600;">OR</div>
+            
+            <div class="input-group">
+                <label for="file-upload">Upload Excel File (.xlsx)</label>
+                <input type="file" id="file-upload" accept=".xlsx, .xls, .csv" style="display: none;">
+                <button id="upload-btn" class="secondary-btn" style="width: 100%;">Select File...</button>
             </div>
 
             <div class="options-group">

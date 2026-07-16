@@ -1,6 +1,7 @@
-// Elements
 const sheetUrlInput = document.getElementById('sheet-url');
 const loadBtn = document.getElementById('load-btn');
+const fileUpload = document.getElementById('file-upload');
+const uploadBtn = document.getElementById('upload-btn');
 const statusMessage = document.getElementById('status-message');
 const tabsGroup = document.getElementById('tabs-group');
 const tabsList = document.getElementById('tabs-list');
@@ -11,6 +12,80 @@ const plotContainer = document.getElementById('plot-container');
 
 // Global State
 let parsedWorkbook = null;
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    const savedUrl = localStorage.getItem('pgraph_sheet_url');
+    if (savedUrl) {
+        sheetUrlInput.value = savedUrl;
+    }
+});
+
+// Update status message
+function setStatus(message, type = '') {
+    statusMessage.textContent = message;
+    statusMessage.className = 'status-message ' + type;
+}
+
+// Populate Tabs UI once a workbook is loaded
+function processLoadedWorkbook(workbook) {
+    parsedWorkbook = workbook;
+    tabsList.innerHTML = '';
+    workbook.SheetNames.forEach((name) => {
+        const label = document.createElement('label');
+        label.className = 'toggle-container';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = name;
+        checkbox.checked = true; // Default to checked
+        
+        const checkmark = document.createElement('span');
+        checkmark.className = 'checkmark';
+        
+        label.appendChild(checkbox);
+        label.appendChild(checkmark);
+        label.appendChild(document.createTextNode(name));
+        
+        tabsList.appendChild(label);
+    });
+
+    tabsGroup.style.display = 'flex';
+    setStatus('Spreadsheet loaded successfully!', 'success');
+    plotData();
+}
+
+// Handle File Upload Button Click
+uploadBtn.addEventListener('click', () => {
+    fileUpload.click();
+});
+
+// Handle Local File Selection
+fileUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setStatus('Reading local file...', 'loading');
+    tabsGroup.style.display = 'none';
+    parsedWorkbook = null;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            processLoadedWorkbook(workbook);
+        } catch (err) {
+            setStatus('Failed to parse file. Make sure it is a valid Excel file.', 'error');
+            console.error(err);
+        }
+    };
+    reader.onerror = () => {
+        setStatus('Error reading file.', 'error');
+    };
+    reader.readAsArrayBuffer(file);
+});
+
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
