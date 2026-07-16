@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script>
     <!-- SheetJS -->
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=2">
 </head>
 <body>
     <div class="app-container">
@@ -33,7 +33,8 @@
             
             <div class="input-group">
                 <label for="file-upload">Upload Excel File (.xlsx)</label>
-                <input type="file" id="file-upload" accept=".xlsx, .xls, .csv" style="display: none;">
+                <!-- Use absolute positioning instead of display:none to ensure browser click() works -->
+                <input type="file" id="file-upload" accept=".xlsx, .xls, .csv" style="position: absolute; width: 0; height: 0; opacity: 0; z-index: -1;">
                 <button id="upload-btn" class="secondary-btn" style="width: 100%;">Select File...</button>
             </div>
 
@@ -67,6 +68,6 @@
             </div>
         </main>
     </div>
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
