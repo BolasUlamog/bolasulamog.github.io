@@ -342,7 +342,7 @@ function plotData() {
         // 2. Plot Grouped means with Error Bars
         if (isBarChart) {
             plotData.push({
-                x: xData,
+                x: xData.map(String),
                 y: yData,
                 type: 'bar',
                 name: `${tabName} Mean ± SD`,
@@ -425,6 +425,7 @@ function plotData() {
         font: { family: '"Times New Roman", Times, serif', color: 'black', size: 14 },
         xaxis: { 
             title: { text: useCurrentXAxis ? '$\\text{Current [A]}$' : '$\\text{Power Out } (P_{out}) \\text{ [mW]}$', font: { color: 'black', size: 18 } },
+            type: isBarChart ? 'category' : '-',
             showgrid: false,
             zeroline: false,
             showline: true,
