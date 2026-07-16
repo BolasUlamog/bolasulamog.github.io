@@ -54,7 +54,8 @@ loadBtn.addEventListener('click', async () => {
 
     try {
         const exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
-        const response = await fetch(exportUrl);
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(exportUrl)}`;
+        const response = await fetch(proxyUrl);
         
         if (!response.ok) {
             throw new Error('Failed to fetch data. Ensure the sheet is public ("Anyone with link can view").');
