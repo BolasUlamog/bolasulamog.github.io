@@ -344,19 +344,49 @@ function plotData() {
             marker: { color: color, size: 8, symbol: 'circle', line: {color: 'black', width: 1} }
         });
 
-        // 3. Linear Regression Fit
-        const fit = linearRegression(xData, yData, forceZeroIntercept);
-        
+        // 3. Regression Fit
+        let fit;
         let eqStr = "";
-        if (forceZeroIntercept) {
-            eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i>`;
+        
+        if (useCurrentXAxis) {
+            // For Current vs dT, fit y = a*x^2 + b
+            // We can reuse linearRegression by mapping x -> x^2
+            const xSquared = xData.map(val => val * val);
+            fit = linearRegression(xSquared, yData, forceZeroIntercept);
+            
+            // Generate curve points
+            let minX = 0;
+            let maxX = Math.max(...xData) * 1.05;
+            fit.fitX = [];
+            fit.fitY = [];
+            for (let i = 0; i <= 100; i++) {
+                let x = minX + (maxX - minX) * (i / 100);
+                fit.fitX.push(x);
+                fit.fitY.push(fit.slope * (x * x) + fit.intercept);
+            }
+
+            if (forceZeroIntercept) {
+                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i><sup>2</sup>`;
+            } else {
+                const sign = fit.intercept >= 0 ? '+' : '-';
+                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i><sup>2</sup> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+            }
         } else {
-            const sign = fit.intercept >= 0 ? '+' : '-';
-            eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+            // Linear Fit
+            fit = linearRegression(xData, yData, forceZeroIntercept);
+            
+            if (forceZeroIntercept) {
+                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i>`;
+            } else {
+                const sign = fit.intercept >= 0 ? '+' : '-';
+                eqStr = `<i>y</i> = ${fit.slope.toFixed(3)}<i>x</i> ${sign} ${Math.abs(fit.intercept).toFixed(3)}`;
+            }
         }
 
-        const slopeUnits = useCurrentXAxis ? 'mK/A' : 'mK/mW';
-        const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;Slope: ${fit.slope.toFixed(3)} ${slopeUnits}<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
+        const slopeUnits = useCurrentXAxis ? 'mK/A<sup>2</sup>' : 'mK/mW';
+        // Note: For quadratic, the "Slope" is technically the coefficient of x^2
+        const slopeLabel = useCurrentXAxis ? 'Coeff' : 'Slope';
+        const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;${slopeLabel}: ${fit.slope.toFixed(3)} ${slopeUnits}<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
 
         plotData.push({
             x: fit.fitX,
