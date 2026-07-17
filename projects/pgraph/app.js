@@ -33,13 +33,42 @@ function setStatus(message, type = '') {
 function processLoadedWorkbook(workbook) {
     parsedWorkbook = workbook;
     tabsList.innerHTML = '';
+    parsedWorkbook.expandedTabs = [];
     workbook.SheetNames.forEach((name) => {
+        const worksheet = workbook.Sheets[name];
+        const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        if (rows.length > 0) {
+            const headers = rows[0].map(h => String(h || '').trim());
+            
+            // Find all columns that look like photodetector columns (e.g. MS30A1 P_1)
+            let foundPhotodetector = false;
+            headers.forEach((h, colIdx) => {
+                if (h.includes('P_1') || h.includes('P_2')) {
+                    if (colIdx > 0 && headers[colIdx - 1].includes('Current')) {
+                        parsedWorkbook.expandedTabs.push({ 
+                            name: `${name} - ${h}`, 
+                            originalTab: name, 
+                            type: 'Photodetector',
+                            curCol: colIdx - 1,
+                            pCol: colIdx
+                        });
+                        foundPhotodetector = true;
+                    }
+                }
+            });
+            
+            if (foundPhotodetector) return;
+        }
+        parsedWorkbook.expandedTabs.push({ name: name, originalTab: name, type: 'standard' });
+    });
+
+    parsedWorkbook.expandedTabs.forEach((tabObj) => {
         const label = document.createElement('label');
         label.className = 'toggle-container';
         
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.value = name;
+        checkbox.value = tabObj.name;
         checkbox.checked = true; // Default to checked
         
         const checkmark = document.createElement('span');
@@ -47,7 +76,7 @@ function processLoadedWorkbook(workbook) {
         
         label.appendChild(checkbox);
         label.appendChild(checkmark);
-        label.appendChild(document.createTextNode(name));
+        label.appendChild(document.createTextNode(tabObj.name));
         
         tabsList.appendChild(label);
     });
@@ -145,15 +174,41 @@ loadBtn.addEventListener('click', async () => {
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         parsedWorkbook = workbook;
 
-        // Populate tabs
-        tabsList.innerHTML = '';
-        workbook.SheetNames.forEach((name, index) => {
+        parsedWorkbook.expandedTabs = [];
+        workbook.SheetNames.forEach((name) => {
+            const worksheet = workbook.Sheets[name];
+            const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            if (rows.length > 0) {
+                const headers = rows[0].map(h => String(h || '').trim());
+                
+                let foundPhotodetector = false;
+                headers.forEach((h, colIdx) => {
+                    if (h.includes('P_1') || h.includes('P_2')) {
+                        if (colIdx > 0 && headers[colIdx - 1].includes('Current')) {
+                            parsedWorkbook.expandedTabs.push({ 
+                                name: `${name} - ${h}`, 
+                                originalTab: name, 
+                                type: 'Photodetector',
+                                curCol: colIdx - 1,
+                                pCol: colIdx
+                            });
+                            foundPhotodetector = true;
+                        }
+                    }
+                });
+                
+                if (foundPhotodetector) return;
+            }
+            parsedWorkbook.expandedTabs.push({ name: name, originalTab: name, type: 'standard' });
+        });
+
+        parsedWorkbook.expandedTabs.forEach((tabObj) => {
             const label = document.createElement('label');
             label.className = 'toggle-container';
             
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.value = name;
+            checkbox.value = tabObj.name;
             checkbox.checked = true; // Default to checked
             
             const checkmark = document.createElement('span');
@@ -161,7 +216,7 @@ loadBtn.addEventListener('click', async () => {
             
             label.appendChild(checkbox);
             label.appendChild(checkmark);
-            label.appendChild(document.createTextNode(name));
+            label.appendChild(document.createTextNode(tabObj.name));
             
             tabsList.appendChild(label);
         });
@@ -261,26 +316,47 @@ function plotData() {
     ];
 
     let hasValidData = false;
+    let isPhotodetectorPlot = false;
 
     selectedTabs.forEach((tabName, idx) => {
-        const worksheet = parsedWorkbook.Sheets[tabName];
+        const tabObj = parsedWorkbook.expandedTabs.find(t => t.name === tabName);
+        if (!tabObj) return;
+
+        const worksheet = parsedWorkbook.Sheets[tabObj.originalTab];
         // Convert sheet to JSON, array of arrays to get cols 0, 1, 2
         const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
         
         if (rows.length < 2) return; // Need at least header + 1 row
 
-        // Assuming Col 0: Current, Col 1: P_out, Col 2: dT
         let rawData = [];
         
-        for (let i = 1; i < rows.length; i++) {
-            let row = rows[i];
-            if (row.length >= 3) {
-                let current = parseFloat(row[0]);
-                let pout = parseFloat(row[1]);
-                let dt = parseFloat(row[2]);
-                
-                if (!isNaN(current) && !isNaN(pout) && !isNaN(dt)) {
-                    rawData.push({ current, pout, dt });
+        if (tabObj.type === 'Photodetector') {
+            isPhotodetectorPlot = true;
+            const curCol = tabObj.curCol;
+            const pCol = tabObj.pCol;
+            
+            for (let i = 1; i < rows.length; i++) {
+                let row = rows[i];
+                if (row.length > pCol) {
+                    let current = parseFloat(row[curCol]);
+                    let p = parseFloat(row[pCol]);
+                    if (!isNaN(current) && !isNaN(p)) {
+                        // Map Power to dt (Y-axis), Current to pout (X-axis when current toggle is off)
+                        rawData.push({ current: current, pout: current, dt: p });
+                    }
+                }
+            }
+        } else {
+            for (let i = 1; i < rows.length; i++) {
+                let row = rows[i];
+                if (row.length >= 3) {
+                    let current = parseFloat(row[0]);
+                    let pout = parseFloat(row[1]);
+                    let dt = parseFloat(row[2]);
+                    
+                    if (!isNaN(current) && !isNaN(pout) && !isNaN(dt)) {
+                        rawData.push({ current, pout, dt });
+                    }
                 }
             }
         }
@@ -398,7 +474,13 @@ function plotData() {
                 }
             }
 
-            const slopeUnits = useCurrentXAxis ? 'mK/A<sup>2</sup>' : 'mK/mW';
+            let slopeUnits = '';
+            if (isPhotodetectorPlot) {
+                slopeUnits = useCurrentXAxis ? 'mW/A<sup>2</sup>' : 'mW/A';
+            } else {
+                slopeUnits = useCurrentXAxis ? 'mK/A<sup>2</sup>' : 'mK/mW';
+            }
+        
             const slopeLabel = useCurrentXAxis ? 'Coeff' : 'Slope';
             const legendLabel = `${tabName} Fit<br>&nbsp;&nbsp;&nbsp;&nbsp;${eqStr}<br>&nbsp;&nbsp;&nbsp;&nbsp;${slopeLabel}: ${fit.slope.toFixed(3)} ${slopeUnits}<br>&nbsp;&nbsp;&nbsp;&nbsp;R<sup>2</sup>: ${fit.r2.toFixed(4)}`;
 
@@ -419,12 +501,12 @@ function plotData() {
     }
 
     const layout = {
-        title: { text: useCurrentXAxis ? '$\\Delta T \\text{ vs Current}$' : '$\\Delta T \\text{ vs } P_{out}$', font: { color: 'black', size: 22 } },
+        title: { text: isPhotodetectorPlot ? '$\\text{Power vs Current}$' : (useCurrentXAxis ? '$\\Delta T \\text{ vs Current}$' : '$\\Delta T \\text{ vs } P_{out}$'), font: { color: 'black', size: 22 } },
         paper_bgcolor: '#ffffff',
         plot_bgcolor: '#ffffff',
         font: { family: '"Times New Roman", Times, serif', color: 'black', size: 14 },
         xaxis: { 
-            title: { text: useCurrentXAxis ? '$\\text{Current [A]}$' : '$\\text{Power Out } (P_{out}) \\text{ [mW]}$', font: { color: 'black', size: 18 } },
+            title: { text: isPhotodetectorPlot ? '$\\text{Current [A]}$' : (useCurrentXAxis ? '$\\text{Current [A]}$' : '$\\text{Power Out } (P_{out}) \\text{ [mW]}$'), font: { color: 'black', size: 18 } },
             type: isBarChart ? 'category' : '-',
             showgrid: false,
             zeroline: false,
@@ -439,7 +521,7 @@ function plotData() {
             tickfont: { color: 'black', size: 14 }
         },
         yaxis: { 
-            title: { text: '$\\text{Change in Temperature } (\\Delta T) \\text{ [mK]}$', font: { color: 'black', size: 18 } },
+            title: { text: isPhotodetectorPlot ? '$\\text{Power } (P) \\text{ [mW]}$' : '$\\text{Change in Temperature } (\\Delta T) \\text{ [mK]}$', font: { color: 'black', size: 18 } },
             showgrid: false,
             zeroline: false,
             showline: true,
