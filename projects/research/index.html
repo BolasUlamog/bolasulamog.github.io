@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f1a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.07);
+            --text: #e8e6e3;
+            --text-muted: #a0a0a0;
+            --chalk-blue: #64b5f6;
+            --handwritten: 'Caveat', cursive;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .header {
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-family: var(--handwritten);
+            font-size: 3rem;
+            color: var(--text);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 40px;
+            color: var(--chalk-blue);
+            text-decoration: none;
+            font-family: var(--handwritten);
+            font-size: 1.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 30px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-tag {
+            font-family: var(--handwritten);
+            color: var(--chalk-blue);
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .project-link {
+            color: var(--chalk-blue);
+            font-family: var(--handwritten);
+            font-size: 1.2rem;
+        }
+
+        .paper-reference {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .paper-reference a {
+            color: var(--chalk-blue);
+            text-decoration: none;
+        }
+
+        .paper-reference a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../" class="back-link">← back to home</a>
+        
+        <div class="header">
+            <h1>Research Projects</h1>
+            <p>A collection of my research work over the years.</p>
+        </div>
+
+        <div class="projects-grid">
+            <a href="../amo/" class="project-card">
+                <span class="project-tag">~ summer 2026 ~</span>
+                <h3>Atomic, Molecular, and Optical Physics</h3>
+                <p>Background radiation of a fiber and photodetector characterization using a slow-light fiber Bragg grating.</p>
+                <div class="paper-reference">
+                    Related paper: <object href="https://opg.optica.org/ol/abstract.cfm?uri=ol-50-13-4398" onclick="event.preventDefault(); window.open(this.getAttribute('href'), '_blank');">Detection of gamma irradiation with milligray resolution using a slow-light fiber Bragg grating</object>
+                </div>
+                <span class="project-link" style="display: block; margin-top: 20px;">view project documentation →</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
