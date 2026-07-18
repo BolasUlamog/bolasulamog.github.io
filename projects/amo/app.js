@@ -246,7 +246,7 @@ function renderComparisonGraph(containerId, tabNames, options = {}) {
 
         // Use forceZeroIntercept for standard delta T plots
         const forceZeroIntercept = (!isPhotodetectorPlot && !isBarChart);
-        const fit = linearRegression(rawData.map(d=>d.x), rawData.map(d=>d.y), forceZeroIntercept);
+        const fit = linearRegression(xData, yData, forceZeroIntercept);
         const color = colors[idx % colors.length];
         const slopeUnits = isPhotodetectorPlot ? 'mW/A' : 'mK/mW';
 
