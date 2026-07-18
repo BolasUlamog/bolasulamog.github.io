@@ -1,0 +1,212 @@
+Tab 1
+
+For computing the code, there are some important points:
+1.​ For the detector, the maximum is about 3.5 V_out (3.36ish)
+2.​ Polarization can cause bumps next to the main peak. Slow basically there might be a slow
+axis and a fast axis, and not going into details, if you have a difference in time you will
+have a difference in frequency. (polarization is caused by the plates), if you see two
+peaks, you might want to change the plates just a bit (if the second peak is larger than half
+or too high) BUT ONLY MOVE THE POLARIZATION CONTROLLER AFTER THE
+MODULATOR. And keep the second two aligned and the first one you can move as you
+want. (you only want linear state of polarization)
+3.​ You want skinny thinner peaks
+4.​ Start with a large resolution (MAKE SURE TO HAVE A BLACK BOX BECAUSE OF
+TEMPERATURE FLUX IN ROOM!!!) with coarse intervals and then make a smaller
+interval with finer intervals. It's O(n).
+5.​ He will give me a video explaining stuff.
+6.​ So in order to bring the laser outside of the control of the computer, we can press on the
+local mode button, which lets you control it from the device directly. There is also the
+active button, which means that the light is currently in the fiber. If you press it, then the
+green light is off, which means the laser isn’t on. Now you press on the edit button, but
+there are two things you can edit (wl and power), but edit the one in blue which is the
+wavelength. And then you can adjust with the wheel or the button, but the button is more
+precise. If you are in the PM or 10th of PM level (two last digits), you ONLY GO UP.
+7.​ Then we do the lock thing, which tracks to the right wavelength but the amount of power.
+Once you adjust it to the right wavelength, then you put it into this thing:
+
+8.​ Ok then you lock the output button after connecting all the wires (and making sure that it
+also outputs to the computer cus like we need to log the data
+9.​ Again, make sure that you have both boxes now on top of the FBG in order to decrease
+the amount of temperature fluctuations
+
+10.​Depending on which side of the peak, you might need to change the sign of the PID. (this
+does all the computations to say where you should stay). But the ones that are on is the P
+and I (sometimes we will need to change the sign of the P) (like if it’s on the left side and
+tries to go down then that’s not good)
+11.​What does the LIA do? The LIA just says “the peak shifted by that much”, and it gives
+the information to the PID, which tells the laser what to add to its wavelength, and this
+becomes a loop, and they all talk to each other. The PID goal wants to put the value on
+the LIA zero. (the LEFT one wants to go to zero on the LIA), the middle is the
+accumulated tuning (for example if the peak is somewhere, and the temperature drops by
+1 degree, then the peak shifts left, so this just demonstrated the difference)***
+
+***we can convert the volts into a temperature difference:
+
+1.​ There are two important codes
+a.​ laser_sweep_LIA_DAQ.m, this is used for the laser sweep, this is used in order to
+find the proper wavelength in which to lock, and then you lock.
+b.​ temperatureMeasurement_LISA_DAQ_TRCL_saveBin_60s_algo_fiber_ampl.m,
+this will measure the temperature as a function of time, when it is locked. And
+this one turns on the pump laser. For example, in training we did it with a pump of
+0 mW:
+
+2.​ Now we will put on the pump to a certain current
+a.​ The pump laser doesn’t know how much power it outputs so we have to use a
+reader and can’t specify this, we can only specify the amount of current
+b.​ Make sure to set this to 100 mW or an appropriate range and then zero it when the
+laser is off. But if it is close to 100 mW, adapt it to the next scale. Then we will
+have to remeasure the amount of power from each current and then you tell the
+code what the power was. But you need to change it manually since it can’t be
+connected to the computer which sucks, and then you use a watch stopwatch or
+phone. Ten seconds of no power and then after another 20 you turn off again. And
+then wait 20. You have to use your stopwatch and start at the same time as the
+code, and then read the power at 26. And then you can have a two column like
+note with the pump current vs pump power.
+c.​ Then the code will compute the temperature change (average between 20 and 30
+seconds and you compare it with the pump power that you got)
+
+​
+​
+​
+Now we change to 0.6 for the current, then 0.8, etc etc etc. I will add some
+pictures of like good/bad data for referenced, but note that this data should be
+inversed from what we got (since hotter vs colder)
+
+Also like one of the lasers only goes up to 1.6 A so we have to use the other one
+
+Note that the tunable laser also requires a passcode which is just “1234”
+
+theory
+
+locking
+
+Ok so here are the steps for adjusting the wavelength:
+1.​ First you want to have the following setup:
+
+This should be set to 30 Mhz and 6 V, and the cord should connect to the right side of the LIA
+
+This should be connected in this fashion.
+Lastly, the settings should be similar to this, and just adjust the settings as you go on.
+
+Here are a series of photos (after adjustments)
+
+Now which one should we choose? It seems like the first one, but after increasing the resolution
+we find that the second one is better:
+
+Now we need to adjust the cables:
+
+Now make sure that the Optical Power Meter is maximized, after putting it in manual mode, and
+then lock it!
+
+7/8
+
+Ok so there is an issue with the power output in the laser:
+If we look at the current setup:
+
+After measuring the light coming out of the APC connector, it is noted that the radius of the light
+is very wide on the infrared sensor card. There is also less power than expected. I redid the splice
+a couple of days ago with simon and got a lot more power output there, and it worked with a
+shorter test cord but as soon as I tried connecting it to the fiber I’m going to use in my
+experiment it broke again. Here’s some data that I collected:
+I only got 68 mW of power this time, which is concerning.
+Also the light is very very scattered when I hold it to the paper:
+
+Now I’m going to cut the fiber right after the splice, since I assume that the connector got
+damaged. Yes I replaced it and now it read over 300 mW and is much better and looks gaussian.
+Now I moved it back to 40mW. See the interesting thing is that when I connected it to the apc
+
+connector on the fiber to be irradiated it broke again. Maybe light was reflected back up which
+caused it to break again? Who knows.
+Anyways so I’ve respliced it for a second time. So let me try to splice it to another pigtail. : (
+And then I will do the same ig. And if it doesn’t work well then idk.
+This is before I respliced it though:
+(it read about 48mW)
+(the first image is the straight fiber before the splice and the second image is when I bent it to try
+to see if there was a breakage in the fiber)
+
+When I bent it it read even higher at 55.6 mW.
+
+Keep in mind both of these are giving me the same amount of power, which is around 48 mW. I
+will test the distance though, while curling and not curling (left and right):​
+
+7/9
+
+Today is a continuation of yesterday in a sense. My goal is at least to finish testing for the second
+fiber and to fix all of the power issues.
+I just retested the fiber that connects to the Isolator and it has a normal distribution and good
+centering for the light, along with a strong amount of power (~50 mW) for ~0.4 A. Now I’m
+planning on splicing it because I want to see if the connector is the problem. If the connector
+isn’t the problem then I’m going to splice a new connector for the fiber that is to be irradiated.
+Here’s a picture of the new splice with the old connector.
+
+If we turn on the pump @ 0.4 A…
+It worked, which is absolute bonkers to me lmao.
+
+Ok I just connected it and it works, which is awesome. Now I’m going to splice them together. If
+something goes wrong, that means there is probably a defect in the fiber to be irradiated.
+
+Ok wow it worked. Here some pictures. Now my last concern is that putting it in the thing (like
+the holder thing will somehow break it but this is unlikely). Here are more documenting pictures.
+
+Now time to plug it in:
+And it worked!!!! Yay!
+Now I’m going to lock:
+
+Ended up unlocking and then relocking after I got some stuff to eat since I hadn’t eaten yet today.
+- 4:39 pm rn and I’m locking again.
+
+Now I’m doing some tests with 0 pump power and here are some pictures : )
+
+Now let’s do some with 40,41,... yippee
+
+Here’s some pictures at 0.4 A vs 0.55 A, little difference means low background absorption : D
+
+Ok this fiber was very very good. I realized since it had such a low absorption, this means that
+there was so much noise when it was at low power. My R^2 was at 0.93 when I stopped art
+around 310 mW and then is now at 0.97 when I’m at 435 mW. Here’s how it looks rn : D
+
+The slope is like twice as good as Bastien’s 2 years ago lmao. Very satisfying after it literally not
+working.
+Added some more points…
+
+Actually here’s a picture of what it looked like a while ago:
+
+Final graph:
+
+7/10
+
+Ok I’m back in the lab again today. I’m going to measure the length of the fibers so that I can
+find out how much power is dissipated along a certain section of the wire. These lengths will be
+available on my spreadsheet. Nvm i’m just gonna wrzap
+
+7/15
+
+Here is some data that I collected vs old data. I think that the old power meter wasn’t as
+sensitive as the new one so it didn’t accurately catch the amount of power that was going
+through the fiber:
+Here is the old vs new SG1744L fiber:
+
+Here is a comparison of the temperature difference when at the same amount of pump current,
+which is pretty similar:
+
+Here is the old vs new for the MS30A1 fiber:
+
+Here is a comparison of the temperature difference when at the same amount of pump current,
+which is pretty similar:
+
+7/17
+
+So basically I need to see how sensitive the photodetectors are because the data I got on the
+MS30A1 fiber (on photodetector 1 vs photodetector 2) is a lot different. If I compare the data
+that I get on P_out vs I on the MS30A1 fiber, I get a ratio of slopes that is equal to
+1.94647965811. Now we can compare the normalized graph vs the initial readings.
+
+However, the ratio for the SG1744L, which should be about the same, was different. This is
+interesting. I’m thinking it might be because of a slight difference in set-up for one of the
+photodetectors. Tomorrow I’m going to gather data on how the spatial location impacts the
+reading of the second photodetector, and possibly the first one as well. For this fiber I got a ratio
+of 1.43567658. Interestingly, when we renormalize it with this value, the slopes are very similar:
+
+Now we will do the same comparisons for the SG1744L fiber:
+
+

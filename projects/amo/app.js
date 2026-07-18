@@ -109,14 +109,10 @@ function linearRegression(x, y, forceZeroIntercept = false) {
         m = sumX2 === 0 ? 0 : sumXY / sumX2;
         b = 0;
         
-        let sumY = 0;
-        for(let i=0; i<n; i++) sumY += y[i];
-        let meanY = sumY / n;
-        
         let ss_tot = 0, ss_res = 0;
         for(let i=0; i<n; i++) {
             ss_res += Math.pow(y[i] - (m * x[i]), 2);
-            ss_tot += Math.pow(y[i] - meanY, 2);
+            ss_tot += Math.pow(y[i], 2);
         }
         let r2 = ss_tot !== 0 ? 1 - (ss_res / ss_tot) : 0;
         
